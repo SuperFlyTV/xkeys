@@ -6,23 +6,13 @@ Disclaimer: This module is very young and should not be used in production yet!
 
 Licence: MIT
 
-## Device support
-
-Testing and contributions are much appreciated! 
-If you have one of the untested devices below, please test it and tell us how it works!
-
-* XK-24: Tested & working
-* XK-60: Not tested
-* XK-80: Not tested
-* XK-4: Not tested
-* XK-8: Not tested
-* XK-16: Not tested
-* XK-12 JOG: Not tested
-* XK-12 JOYSTICK: Not tested
-* XR-32: Not tested
-* XKE-28: Not tested
-
 The project is based on the documentation available here: http://xkeys.com/PISupport/DeveloperHIDDataReports.php
+
+## Installation
+
+`$ npm install --save xkeys`
+
+
 
 ## Example
 
@@ -52,3 +42,28 @@ myXkeysPanel.on('joystick', position => {
 	console.log('Joystick has changed:'+position); // {x, y, z}
 });
 ```
+
+
+## Device support
+
+Testing and contributions are much appreciated! 
+If you have one of the untested devices below, please test it and tell us how it works!
+
+## Supported
+These devices have been tested to work:
+
+* XK-24
+
+## Not tested
+
+Support for these devices is implemented, but not tested:
+
+* XK-60: Not tested
+* XK-80: Not tested
+* XK-4: Not tested
+* XK-8: Not tested
+* XK-16: Not tested
+* XK-12 JOG: Not tested
+* XK-12 JOYSTICK: Not tested
+* XR-32: Not tested
+* XKE-28: Not tested
