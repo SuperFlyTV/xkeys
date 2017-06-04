@@ -1,0 +1,38 @@
+{
+  "name": "xkeys",
+  "version": "0.0.1",
+  "description": "NodeJs package to interact with the X-keys panels",
+  "main": "index.js",
+  "dependencies": {
+    "node-hid": "^0.5.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperFlyTV/xkeys.git"
+  },
+  "keywords": [
+    "xkeys",
+    "x-keys",
+    "hid",
+    "usb",
+    "hardware",
+    "interface",
+    "controller"
+  ],
+  "author": {
+    "name": "Johan Nyman",
+    "email": "johan@superfly.tv"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SuperFlyTV/xkeys/issues"
+  },
+  "homepage": "https://github.com/SuperFlyTV/xkeys#readme",
+  "files": [
+    "*.js"
+  ],
+  "engines": {
+    "node": ">=4"
+  },
+  "readmeFilename": "README.md"
+}
