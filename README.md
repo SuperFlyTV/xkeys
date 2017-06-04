@@ -47,14 +47,14 @@ myXkeysPanel.on('joystick', position => {
 ## Device support
 
 Testing and contributions are much appreciated! 
-If you have one of the untested devices below, please test it and tell us how it works!
+If you have one of the untested devices below, please test it and tell us how it works in an Issue!
 
-## Supported
+### Supported
 These devices have been tested to work:
 
 * XK-24
 
-## Not tested
+### Not tested (yet)
 
 Support for these devices is implemented, but not tested:
 
