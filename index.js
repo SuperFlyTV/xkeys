@@ -266,7 +266,11 @@ class XKeys extends EventEmitter {
 		for (var i in intArray) {
 			intArray[i] = parseInt(intArray[i]);
 		}
-		return this.device.write(intArray);
+		try {
+			return this.device.write(intArray);
+		} catch (e) {
+			this.emit('error',e);
+		}
 	}
 
 	/**
