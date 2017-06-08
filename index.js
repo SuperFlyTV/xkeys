@@ -10,27 +10,31 @@ const PRODUCTS = {
 		productId: [1029,1028,1027,1249],
 		columns: 	4,
 		rows: 		6,
-		hasPS: 	true
+		hasPS: 		true,
+		bankSize: 	32
 	},
 	XK4: {	// This has not been tested
 		identifier: 'XK-4',
 		columns: 	4,
 		rows: 		1,
-		hasPS: 	false // unknown
+		hasPS: 		false, // unknown
+		bankSize: 	32 // unknown
 	},
 	XK8: {	// This has not been tested
 		identifier: 'XK-8',
 		columns: 	8,
 		rows: 		1,
-		hasPS: 	false // unknown
+		hasPS: 		false, // unknown
+		bankSize: 	32 // unknown
 	},
 	XK12JOG: {	// This has not been tested
 		identifier: 'XK-12 Jog',
 		productId: [1062,1064],
 		columns: 	4,
 		rows: 		3,
-		hasPS: 	true,
-		hasJog: 1
+		hasPS: 		true,
+		hasJog: 	1,
+		bankSize: 	32,
 	},
 	XK12JOYSTICK: {	// This has not been tested
 		identifier: 'XK-12 Shuttle',
@@ -38,42 +42,49 @@ const PRODUCTS = {
 		columns: 	4,
 		rows: 		3,
 		hasPS: 	true,
-		hasJoystick: 1
+		hasJoystick: 1,
+		bankSize: 	32,
 	},
 	XK16: {	// This has not been tested
 		identifier: 'XK-16',
 		productId: [1269,1270],
 		columns: 	4,
-		rows: 		4, // not really rows, but the data comes like that (it it physically one row)
-		hasPS: 	false // unknown
+		rows: 		4, // not really rows, but the data comes like that (it is physically one row)
+		hasPS: 		false, // unknown
+		bankSize: 	32 // unknown
 	},
 	XR32: {	// This has not been tested
 		identifier: 'XR-32',
 		columns: 	16,
 		rows: 		2,
-		hasPS: 	false // unknown
+		hasPS: 		false, // unknown
+		bankSize: 	128
 	},
 	XK60: {	// This has not been tested
 		identifier: 'XK-60',
 		productId: [1239,1240],
 		columns: 	10,
 		rows: 		8,
-		hasPS: 	true,
-		banks: 2
+		hasPS: 		true,
+		banks: 		2,
+		bankSize: 	80
 	},
 	XK80: {
 		identifier: 'XK-80',
 		productId: [1237,1238],
 		columns: 	10,
 		rows: 		8,
-		hasPS: 	true,
-		banks: 2
+		hasPS: 		true,
+		banks: 		2,
+		bankSize: 	80
 	},
 	XKE128: {	// This has not been tested
 		identifier: 'XKE-128',
+		productId: [1227,1227,1229,1230],
 		columns: 	16,
 		rows: 		8,
-		hasPS: 	false // unknown
+		hasPS: 		false, // unknown
+		bankSize: 	128
 	}
 };
 
@@ -183,8 +194,6 @@ class XKeys extends EventEmitter {
 				d = data.readUInt32LE(9); // Joystick Z (twist of joystick)
 				analogStates['joystick_z'] = (d < 128 ? d : d-256);
 			}
-
-			//console.log(buttonStates);
 
 			for (var key in buttonStates) {
 				// compare with previous button states:
@@ -303,12 +312,15 @@ class XKeys extends EventEmitter {
 	  * @param {flashing} boolean: flashing or not (if on)
 	  * @returns undefined
      */
-    setBacklight(keyIndex, on, flashing) {
+    setBacklight(keyIndex, on, redLight, flashing) {
     	if (keyIndex === 'PS') return; // PS-button has no backlight
 
     	this.verifyKeyIndex(keyIndex);
-    	var message = this.padMessage([0, 181, keyIndex, (on ? (flashing ? 2 : 1) : 0 )]);
-
+    	
+    	if (redLight) {
+    		keyIndex = parseInt(keyIndex) + (this.deviceType.bankSize || 0);
+    	}
+    	var message = this.padMessage([0, 181, keyIndex, (on ? (flashing ? 2 : 1) : 0 ) , 1]);
     	this.write(message);
     }
     /**
