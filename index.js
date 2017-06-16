@@ -156,7 +156,7 @@ class XKeys extends EventEmitter {
 			// first column is on word 2
 
 			var buttonStates = {};
-			var buttonStates2 = {}; // additional buttons, such as the program switch 'PS'
+			var buttonStates2 = {}; // alternative buttons, such as the program switch 'PS'
 			var analogStates = {}; // Analogue states, such as jog-wheels, shuttle etc
 			var d, mask, bit;
 			for (var x=0; x<this.deviceType.columns; x++ ) {
@@ -212,10 +212,10 @@ class XKeys extends EventEmitter {
 				if ((this._buttonStates2[key]||0) != buttonStates2[key]) {
 					if (buttonStates2[key]) { // key is pressed
 						this.emit('down', key);
-						this.emit('downAdd', key);
+						this.emit('downAlt', key);
 					} else {
 						this.emit('up', key);
-						this.emit('upAdd', key);
+						this.emit('upAlt', key);
 					}
 				}
 			}
@@ -290,7 +290,6 @@ class XKeys extends EventEmitter {
     	return Object.assign({}, this._buttonStates); // Return copy
     }
 
-
     /**
 	 * Sets the LED of a key
 	  * @param {keyIndex} the LED to set the color of (0 = green, 1 = red)
@@ -341,6 +340,16 @@ class XKeys extends EventEmitter {
     		message = this.padMessage([0,187,intensity]);
     	}
 
+    	this.write(message);
+    }
+    /**
+	 * Sets the backlight of all keys
+	  * @param {on} boolean: on or off
+	  * @param {redLight} boolean: if to set the red or blue backlights
+	  * @returns undefined
+     */
+    setAllBacklights(on, redLight) {
+    	var message = this.padMessage([0, 182, (redLight ? 1 : 0 ) , ( on ? 255 : 0 ) ]);
     	this.write(message);
     }
     /**
