@@ -36,18 +36,8 @@ myXkeysPanel.on('up', keyIndex => {
 	myXkeysPanel.setBacklight(keyIndex, false);
 });
 
-// Other functions:
-// Set the LED of a key (Note)
-// myXkeysPanel.setLED(keyIndex, on, flashing)
-
-// myXkeysPanel.setBacklight(keyIndex, on, flashing)
-
-
-
-
-// 
 // --- Experimental functions ---
-// The functions below are implemented, but NOT tested with hardware yet.
+// The functions below are implemented, but not tested with any hardware yet.
 // 
 
 myXkeysPanel.on('jog', deltaPos => {
@@ -71,21 +61,11 @@ myXkeysPanel.on('joystick', position => {
 * 'joystick': [UNTESTED] Triggered when the joystick is moved. Emitted with ({x, y, z}) (the values may vary between -128 - 127).
 
 
-
-
-
-```javascript
-
-myXkeysPanel.on('down', keyIndex => {
-	console.log('Key pressed: '+keyIndex);
-	myXkeysPanel.setBacklight(keyIndex, true);
-});
-```
-
-### Setting lights
+### Setting things
 #### Set backlight of a button
 ```javascript
 .setBacklight(keyIndex, on, redLight, flashing);
+
 // Examples:
 // Light up the backlight of bank 1 (blue light)
 .setBacklight(keyIndex, true);
@@ -96,6 +76,7 @@ myXkeysPanel.on('down', keyIndex => {
 #### Set the LEDs (the red/green status LED's)
 ```javascript
 .setLED(keyIndex, on, flashing)
+
 // Examples:
 // Light up the green LED
 .setBacklight(0, true);
@@ -106,7 +87,8 @@ myXkeysPanel.on('down', keyIndex => {
 #### Set backlight intensity
 ```javascript
 .setBacklightIntensity(intensity)
-// Examples:
+
+// Example:
 // Set max intensity
 .setBacklightIntensity(255)
 ```
@@ -114,7 +96,8 @@ myXkeysPanel.on('down', keyIndex => {
 #### Set all backlights on or off
 ```javascript
 .setAllBacklights(on, redLight)
-// Examples:
+
+// Example:
 // Light up all buttons
 .setAllBacklights(true, false)
 .setAllBacklights(true, true)
@@ -122,15 +105,14 @@ myXkeysPanel.on('down', keyIndex => {
 
 #### Set flashing frequency
 ```javascript
-// the frequency can be set to 1-255, where 1 is fastest and 255 is the slowest. 255 is approximately 4 seconds between flashes.
+// The frequency can be set to 1-255, where 1 is fastest and 255 is the slowest. 
+// 255 is approximately 4 seconds between flashes.
 .setFrequency(frequency)
 
-// Examples:
+// Example:
 // Set the frequency to a pretty fast flash
 .setFrequency(8)
 ```
-
-
 
 
 ## Device support
