@@ -38,7 +38,7 @@ myXkeysPanel.on('up', keyIndex => {
 
 // --- Experimental functions ---
 // The functions below are implemented, but not tested with any hardware yet.
-// 
+//
 
 myXkeysPanel.on('jog', deltaPos => {
 	console.log('Jog position has changed: '+deltaPos);
@@ -69,7 +69,7 @@ myXkeysPanel.on('joystick', position => {
 // Examples:
 // Light up the backlight of bank 1 (blue light)
 .setBacklight(keyIndex, true);
-// Flash the backlight of bank 2 (red light) 
+// Flash the backlight of bank 2 (red light)
 .setBacklight(keyIndex, true, true, true);
 ```
 
@@ -105,7 +105,7 @@ myXkeysPanel.on('joystick', position => {
 
 #### Set flashing frequency
 ```javascript
-// The frequency can be set to 1-255, where 1 is fastest and 255 is the slowest. 
+// The frequency can be set to 1-255, where 1 is fastest and 255 is the slowest.
 // 255 is approximately 4 seconds between flashes.
 .setFrequency(frequency)
 
@@ -117,20 +117,20 @@ myXkeysPanel.on('joystick', position => {
 
 ## Device support
 
-Testing and contributions are much appreciated! 
+Testing and contributions are much appreciated!
 If you have one of the untested devices below, please test it and tell us how it works in an Issue!
 
 ### Supported
 These devices have been tested to work:
 
 * XK-24
+* XK-80
 
 ### Not tested (yet)
 
 Support for these devices is implemented, but not tested:
 
 * XK-60: Not tested
-* XK-80: Not tested
 * XK-4: Not tested
 * XK-8: Not tested
 * XK-16: Not tested
