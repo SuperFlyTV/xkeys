@@ -15,6 +15,7 @@ const PRODUCTS = {
 	},
 	XK4: {	// This has not been tested
 		identifier: 'XK-4',
+		productId: [1127,1128,1129,1253],
 		columns: 	4,
 		rows: 		1,
 		hasPS: 		false, // unknown
@@ -22,6 +23,7 @@ const PRODUCTS = {
 	},
 	XK8: {	// This has not been tested
 		identifier: 'XK-8',
+		productId: [1130,1131,1132,1252],
 		columns: 	8,
 		rows: 		1,
 		hasPS: 		false, // unknown
@@ -47,7 +49,7 @@ const PRODUCTS = {
 	},
 	XK16: {	// This has not been tested
 		identifier: 'XK-16',
-		productId: [1269,1270],
+		productId: [1269,1270,1049,1050,1051,1251],
 		columns: 	4,
 		rows: 		4, // not really rows, but the data comes like that (it is physically one row)
 		hasPS: 		false, // unknown
@@ -55,6 +57,7 @@ const PRODUCTS = {
 	},
 	XR32: {	// This has not been tested
 		identifier: 'XR-32',
+		productId: [1279,1280,1281,1282],
 		columns: 	16,
 		rows: 		2,
 		hasPS: 		false, // unknown
@@ -62,7 +65,7 @@ const PRODUCTS = {
 	},
 	XK60: {	// This has not been tested
 		identifier: 'XK-60',
-		productId: [1239,1240],
+		productId: [1239,1240,1121,1122,1123,1254],
 		columns: 	10,
 		rows: 		8,
 		hasPS: 		true,
@@ -71,7 +74,7 @@ const PRODUCTS = {
 	},
 	XK80: {
 		identifier: 'XK-80',
-		productId: [1237,1238],
+		productId: [1237,1238,1089,1090,1091,1250],
 		columns: 	10,
 		rows: 		8,
 		hasPS: 		true,
@@ -80,7 +83,7 @@ const PRODUCTS = {
 	},
 	XKE128: {	// This has not been tested
 		identifier: 'XKE-128',
-		productId: [1227,1227,1229,1230],
+		productId: [1227,1228,1229,1230],
 		columns: 	16,
 		rows: 		8,
 		hasPS: 		false, // unknown
@@ -94,13 +97,15 @@ class XKeys extends EventEmitter {
 		const devices = HID.devices();
 
 		if (devicePath) {
-			this.devicePath = devicePath; 
+			this.devicePath = devicePath;
 			this.device = new HID.HID(devicePath);
 		} else {
+
 			// Device not provided, will then select any connected device:
-			
 			const connectedXKeys = devices.filter(device => {
-				return device.vendorId === VENDOR_ID;
+
+				// Ensures device with usage 1 is selected (other usage "id's" do not seem to work)
+				return (device.vendorId === VENDOR_ID && device.usage === 1);
 			});
 			if (!connectedXKeys.length) {
 				throw new Error('No X-keys are connected.');
@@ -119,19 +124,17 @@ class XKeys extends EventEmitter {
 			}
 		}
 
-		
-		
 		for (var key in PRODUCTS) {
 			//if ( (deviceInfo.product||'').match(new RegExp('^'+PRODUCTS[key].identifier),'i')) {
-			if ( 
-					PRODUCTS[key].productId 
+			if (
+					PRODUCTS[key].productId
 				&& 	PRODUCTS[key].productId.indexOf(deviceInfo.productId) != -1
 			) {
 				this.deviceType = PRODUCTS[key];
 				break;
 			}
 		};
-		
+
 		if (! this.deviceType ) {
 			console.log(this.device)
 			console.log(deviceInfo)
@@ -152,7 +155,7 @@ class XKeys extends EventEmitter {
 			var d = data.readUInt32LE(2)
 
 			var bit = d & (1 << 0) ? 1 : 0;
-			
+
 			// first column is on word 2
 
 			var buttonStates = {};
@@ -222,7 +225,7 @@ class XKeys extends EventEmitter {
 			for (var key in analogStates) {
 				// compare with previous states:
 				if (
-					(this._analogStates[key]||0) != analogStates[key] 
+					(this._analogStates[key]||0) != analogStates[key]
 					|| analogStates[key] != 0
 				) {
 					if (
@@ -241,7 +244,7 @@ class XKeys extends EventEmitter {
 							z: analogStates['joystick_z'],
 						});
 					}
-						
+
 				}
 			}
 
@@ -319,7 +322,7 @@ class XKeys extends EventEmitter {
     	if (keyIndex === 'PS') return; // PS-button has no backlight
 
     	this.verifyKeyIndex(keyIndex);
-    	
+
     	if (redLight) {
     		keyIndex = parseInt(keyIndex) + (this.deviceType.bankSize || 0);
     	}
