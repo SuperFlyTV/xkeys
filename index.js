@@ -105,10 +105,11 @@ class XKeys extends EventEmitter {
 			const connectedXKeys = devices.filter(device => {
 
 				// Ensures device with usage 1 is selected (other usage "id's" do not seem to work)
-				return (device.vendorId === VENDOR_ID && device.usage === 1);
+
+				return (device.vendorId === XKeys.vendorId && device.usage === 1);
 			});
 			if (!connectedXKeys.length) {
-				throw new Error('No X-keys are connected.');
+				throw new Error('Could not find any connected X-keys panels.');
 			}
 			this.devicePath = connectedXKeys[0].path;
 			this.device = new HID.HID(connectedXKeys[0].path);
@@ -257,6 +258,10 @@ class XKeys extends EventEmitter {
 			this.emit('error', err);
 		});
 
+	}
+
+	static get vendorId() {
+		return VENDOR_ID;
 	}
 
 	/**
