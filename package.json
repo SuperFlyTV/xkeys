@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/SuperFlyTV/xkeys.git"
   },
+  "scripts": {
+    "test": "node test.js"
+  },
   "keywords": [
     "xkeys",
     "x-keys",
