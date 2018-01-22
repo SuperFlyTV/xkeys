@@ -36,10 +36,13 @@ const PRODUCTS = {
 		rows: 		3,
 		hasPS: 		true,
 		hasJog: 	1,
+		jogByte: 	8,
+		hasShuttle: 1,
+		shuttleByte:9,
 		bankSize: 	32,
 	},
 	XK12JOYSTICK: {	// This has not been tested
-		identifier: "XK-12 Shuttle",
+		identifier: "XK-12 Joystick",
 		productId: [1065,1067],
 		columns: 	4,
 		rows: 		3,
@@ -88,7 +91,20 @@ const PRODUCTS = {
 		rows: 		8,
 		hasPS: 		false, // unknown
 		bankSize: 	128
-	}
+	},
+	XK68JOGSHUTTLE: {	// This has not been tested
+		identifier: "XK-68 Jog-Shuttle",
+		productId: [1114, 1116],
+		columns: 	10,
+		rows: 		8,
+		hasPS: 		true,
+		hasJog: 	1,
+		jogByte: 	18,
+		hasShuttle: 1,
+		shuttleByte:19,
+		bankSize: 	68,
+		disableKeys: [29,30,31, 37,38,39, 45,46,47, 53,54,55]
+	},
 };
 
 class XKeys extends EventEmitter {
@@ -96,9 +112,25 @@ class XKeys extends EventEmitter {
 		super();
 		const devices = HID.devices();
 
+		var deviceInfo = null;
+
 		if (devicePath) {
-			this.devicePath = devicePath;
-			this.device = new HID.HID(devicePath);
+
+
+			if ( devicePath === Object(devicePath) ) { // is object, this is for testing
+				var obj = devicePath;
+
+				this.devicePath = obj.devicePath;
+				this.device = obj;
+
+				deviceInfo = obj;
+
+			} else {
+				this.devicePath = devicePath;
+				this.device = new HID.HID(devicePath);
+			}
+
+
 		} else {
 
 			// Device not provided, will then select any connected device:
@@ -114,16 +146,22 @@ class XKeys extends EventEmitter {
 			this.devicePath = connectedXKeys[0].path;
 			this.device = new HID.HID(connectedXKeys[0].path);
 		}
-
+		
 		// Which device is it?
 		this.deviceType = null;
-		var deviceInfo = null;
-		for (var deviceKey in devices) {
-			if (devices[deviceKey].path === this.devicePath) {
-				deviceInfo = devices[deviceKey];
-				break;
+		
+		if (!deviceInfo) {
+
+			for (var deviceKey in devices) {
+				if (devices[deviceKey].path === this.devicePath) {
+					deviceInfo = devices[deviceKey];
+					break;
+				}
 			}
 		}
+		
+
+
 
 		for (var productKey in PRODUCTS) {
 			//if ( (deviceInfo.product||"").match(new RegExp("^"+PRODUCTS[key].identifier),"i")) {
@@ -152,11 +190,7 @@ class XKeys extends EventEmitter {
 
 		this.device.on("data", data => {
 
-
-			//var d = data.readUInt32LE(2);
-			//var bit = d & (1 << 0) ? 1 : 0;
-
-			// first column is on word 2
+			// Note: first column is on word 2
 
 			var buttonStates = {};
 			var buttonStates2 = {}; // alternative buttons, such as the program switch "PS"
@@ -181,19 +215,31 @@ class XKeys extends EventEmitter {
 				buttonStates2.PS = bit;
 			}
 			if (this.deviceType.hasJog) {
-				d = data.readUInt32LE(7); // Jog
-				analogStates.jog = (d < 128 ? d : d-256);
 
-				d = data.readUInt32LE(8); // Shuttle
+				d = data[this.deviceType.jogByte -2]; // Jog
+				analogStates.jog = (d < 128 ? d : d-256);
+			}
+			if (this.deviceType.hasShuttle) {
+				d = data[ this.deviceType.shuttleByte -2]; // Shuttle
 				analogStates.shuttle = (d < 128 ? d : d-256);
 			}
 			if (this.deviceType.hasJoystick) {
 				d = data.readUInt32LE(7); // Joystick X
 				analogStates.joystick_x = (d < 128 ? d : d-256);
+
 				d = data.readUInt32LE(8); // Joystick Y
 				analogStates.joystick_y = (d < 128 ? d : d-256);
+
 				d = data.readUInt32LE(9); // Joystick Z (twist of joystick)
 				analogStates.joystick_z = (d < 128 ? d : d-256);
+
+			}
+
+			// Disabled/nonexisting keys:
+			if (this.deviceType.disableKeys) {
+				this.deviceType.disableKeys.forEach((keyIndex) => {
+					buttonStates[keyIndex] = 0;
+				});
 			}
 
 			for (var buttonStateKey in buttonStates) {
