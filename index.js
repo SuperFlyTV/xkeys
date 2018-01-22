@@ -1,12 +1,12 @@
-const HID = require('node-hid');
-const EventEmitter = require('events');
+const HID = require("node-hid");
+const EventEmitter = require("events");
 
 // Note: This is based on info from http://xkeys.com/PISupport/DeveloperHIDDataReports.php
 
 const VENDOR_ID = 1523;
 const PRODUCTS = {
 	XK24: {
-		identifier: 'XK-24',
+		identifier: "XK-24",
 		productId: [1029,1028,1027,1249],
 		columns: 	4,
 		rows: 		6,
@@ -14,7 +14,7 @@ const PRODUCTS = {
 		bankSize: 	32
 	},
 	XK4: {	// This has not been tested
-		identifier: 'XK-4',
+		identifier: "XK-4",
 		productId: [1127,1128,1129,1253],
 		columns: 	4,
 		rows: 		1,
@@ -22,7 +22,7 @@ const PRODUCTS = {
 		bankSize: 	32 // unknown
 	},
 	XK8: {	// This has not been tested
-		identifier: 'XK-8',
+		identifier: "XK-8",
 		productId: [1130,1131,1132,1252],
 		columns: 	8,
 		rows: 		1,
@@ -30,7 +30,7 @@ const PRODUCTS = {
 		bankSize: 	32 // unknown
 	},
 	XK12JOG: {	// This has not been tested
-		identifier: 'XK-12 Jog',
+		identifier: "XK-12 Jog",
 		productId: [1062,1064],
 		columns: 	4,
 		rows: 		3,
@@ -39,16 +39,16 @@ const PRODUCTS = {
 		bankSize: 	32,
 	},
 	XK12JOYSTICK: {	// This has not been tested
-		identifier: 'XK-12 Shuttle',
+		identifier: "XK-12 Shuttle",
 		productId: [1065,1067],
 		columns: 	4,
 		rows: 		3,
-		hasPS: 	true,
+		hasPS: 		true,
 		hasJoystick: 1,
 		bankSize: 	32,
 	},
 	XK16: {	// This has not been tested
-		identifier: 'XK-16',
+		identifier: "XK-16",
 		productId: [1269,1270,1049,1050,1051,1251],
 		columns: 	4,
 		rows: 		4, // not really rows, but the data comes like that (it is physically one row)
@@ -56,7 +56,7 @@ const PRODUCTS = {
 		bankSize: 	32 // unknown
 	},
 	XR32: {	// This has not been tested
-		identifier: 'XR-32',
+		identifier: "XR-32",
 		productId: [1279,1280,1281,1282],
 		columns: 	16,
 		rows: 		2,
@@ -64,7 +64,7 @@ const PRODUCTS = {
 		bankSize: 	128
 	},
 	XK60: {	// This has not been tested
-		identifier: 'XK-60',
+		identifier: "XK-60",
 		productId: [1239,1240,1121,1122,1123,1254],
 		columns: 	10,
 		rows: 		8,
@@ -73,7 +73,7 @@ const PRODUCTS = {
 		bankSize: 	80
 	},
 	XK80: {
-		identifier: 'XK-80',
+		identifier: "XK-80",
 		productId: [1237,1238,1089,1090,1091,1250],
 		columns: 	10,
 		rows: 		8,
@@ -82,7 +82,7 @@ const PRODUCTS = {
 		bankSize: 	80
 	},
 	XKE128: {	// This has not been tested
-		identifier: 'XKE-128',
+		identifier: "XKE-128",
 		productId: [1227,1228,1229,1230],
 		columns: 	16,
 		rows: 		8,
@@ -109,7 +109,7 @@ class XKeys extends EventEmitter {
 				return (device.vendorId === XKeys.vendorId && device.usage === 1);
 			});
 			if (!connectedXKeys.length) {
-				throw new Error('Could not find any connected X-keys panels.');
+				throw new Error("Could not find any connected X-keys panels.");
 			}
 			this.devicePath = connectedXKeys[0].path;
 			this.device = new HID.HID(connectedXKeys[0].path);
@@ -118,27 +118,27 @@ class XKeys extends EventEmitter {
 		// Which device is it?
 		this.deviceType = null;
 		var deviceInfo = null;
-		for (var key in devices) {
-			if (devices[key].path == this.devicePath) {
-				deviceInfo = devices[key];
+		for (var deviceKey in devices) {
+			if (devices[deviceKey].path === this.devicePath) {
+				deviceInfo = devices[deviceKey];
 				break;
 			}
 		}
 
-		for (var key in PRODUCTS) {
-			//if ( (deviceInfo.product||'').match(new RegExp('^'+PRODUCTS[key].identifier),'i')) {
+		for (var productKey in PRODUCTS) {
+			//if ( (deviceInfo.product||"").match(new RegExp("^"+PRODUCTS[key].identifier),"i")) {
 			if (
-					PRODUCTS[key].productId
-				&& 	PRODUCTS[key].productId.indexOf(deviceInfo.productId) != -1
+				PRODUCTS[productKey].productId &&
+				PRODUCTS[productKey].productId.indexOf(deviceInfo.productId) !== -1
 			) {
-				this.deviceType = PRODUCTS[key];
+				this.deviceType = PRODUCTS[productKey];
 				break;
 			}
-		};
+		}
 
 		if (! this.deviceType ) {
-			console.log(this.device)
-			console.log(deviceInfo)
+			console.log(this.device);
+			console.log(deviceInfo);
 			throw new Error(
 				"Unknown/Unsupported X-keys: '"+deviceInfo.product+"' (id: "+deviceInfo.productId+").\n"+
 				"Please open an issue on our github page and we'll look into it!"
@@ -150,27 +150,24 @@ class XKeys extends EventEmitter {
 		this._analogStates = {};
 
 
-		this.device.on('data', data => {
+		this.device.on("data", data => {
 
 
-			var d = data.readUInt32LE(2)
-
-			var bit = d & (1 << 0) ? 1 : 0;
+			//var d = data.readUInt32LE(2);
+			//var bit = d & (1 << 0) ? 1 : 0;
 
 			// first column is on word 2
 
 			var buttonStates = {};
-			var buttonStates2 = {}; // alternative buttons, such as the program switch 'PS'
+			var buttonStates2 = {}; // alternative buttons, such as the program switch "PS"
 			var analogStates = {}; // Analogue states, such as jog-wheels, shuttle etc
-			var d, mask, bit;
+			var d, bit;
 			for (var x=0; x<this.deviceType.columns; x++ ) {
 				for (var y=0; y<this.deviceType.rows; y++ ) {
 
 					var keyIndex = x*8 + y;
 
-					d = data.readUInt32LE(2+x)
-
-					//mask = Math.pow(2,y);
+					d = data.readUInt32LE(2+x);
 
 					bit = d & (1 << y) ? 1 : 0;
 
@@ -179,70 +176,70 @@ class XKeys extends EventEmitter {
 			}
 			if (this.deviceType.hasPS) {
 				// program switch-button is on word 1
-				d = data.readUInt32LE(1)
+				d = data.readUInt32LE(1);
 				bit = d & (1 << 0) ? 1 : 0;
-				buttonStates2['PS'] = bit;
+				buttonStates2.PS = bit;
 			}
 			if (this.deviceType.hasJog) {
 				d = data.readUInt32LE(7); // Jog
-				analogStates['jog'] = (d < 128 ? d : d-256);
+				analogStates.jog = (d < 128 ? d : d-256);
 
 				d = data.readUInt32LE(8); // Shuttle
-				analogStates['shuttle'] = (d < 128 ? d : d-256);
+				analogStates.shuttle = (d < 128 ? d : d-256);
 			}
 			if (this.deviceType.hasJoystick) {
 				d = data.readUInt32LE(7); // Joystick X
-				analogStates['joystick_x'] = (d < 128 ? d : d-256);
+				analogStates.joystick_x = (d < 128 ? d : d-256);
 				d = data.readUInt32LE(8); // Joystick Y
-				analogStates['joystick_y'] = (d < 128 ? d : d-256);
+				analogStates.joystick_y = (d < 128 ? d : d-256);
 				d = data.readUInt32LE(9); // Joystick Z (twist of joystick)
-				analogStates['joystick_z'] = (d < 128 ? d : d-256);
+				analogStates.joystick_z = (d < 128 ? d : d-256);
 			}
 
-			for (var key in buttonStates) {
+			for (var buttonStateKey in buttonStates) {
 				// compare with previous button states:
-				if ((this._buttonStates[key]||0) != buttonStates[key]) {
-					if (buttonStates[key]) { // key is pressed
-						this.emit('down', key);
-						this.emit('downKey', key);
+				if ((this._buttonStates[buttonStateKey]||0) !== buttonStates[buttonStateKey]) {
+					if (buttonStates[buttonStateKey]) { // key is pressed
+						this.emit("down", buttonStateKey);
+						this.emit("downKey", buttonStateKey);
 					} else {
-						this.emit('up', key);
-						this.emit('upKey', key);
+						this.emit("up", buttonStateKey);
+						this.emit("upKey", buttonStateKey);
 					}
 				}
 			}
-			for (var key in buttonStates2) {
+			for (var buttonStates2Key in buttonStates2) {
 				// compare with previous button states:
-				if ((this._buttonStates2[key]||0) != buttonStates2[key]) {
-					if (buttonStates2[key]) { // key is pressed
-						this.emit('down', key);
-						this.emit('downAlt', key);
+				if ((this._buttonStates2[buttonStates2Key]||0) !== buttonStates2[buttonStates2Key]) {
+					if (buttonStates2[buttonStates2Key]) { // key is pressed
+						this.emit("down", buttonStates2Key);
+						this.emit("downAlt", buttonStates2Key);
 					} else {
-						this.emit('up', key);
-						this.emit('upAlt', key);
+						this.emit("up", buttonStates2Key);
+						this.emit("upAlt", buttonStates2Key);
 					}
 				}
 			}
-			for (var key in analogStates) {
+			for (var analogStateKey in analogStates) {
 				// compare with previous states:
 				if (
-					(this._analogStates[key]||0) != analogStates[key]
-					|| analogStates[key] != 0
+					(this._analogStates[analogStateKey]||0) !== analogStates[analogStateKey] ||
+					analogStates[analogStateKey] !== 0
 				) {
 					if (
-							key == 'jog'
-						|| 	key == 'shuttle'
+						analogStateKey === "jog" ||
+						analogStateKey === "shuttle"
 					) {
-						this.emit(key , analogStates[key]);
+						this.emit(analogStateKey , analogStates[analogStateKey]);
 					} else if (
-							key == 'joystick_x'
-						|| 	key == 'joystick_y'
-						|| 	key == 'joystick_z'
+						analogStateKey === "joystick_x" ||
+						analogStateKey === "joystick_y" ||
+						analogStateKey === "joystick_z"
 					) {
-						this.emit('joystick', {
-							x: analogStates['joystick_x'],
-							y: analogStates['joystick_y'],
-							z: analogStates['joystick_z'],
+						this.emit("joystick", {
+							x: analogStates.joystick_x,
+							y: analogStates.joystick_y,
+							z: analogStates.joystick_z,
 						});
 					}
 
@@ -254,8 +251,8 @@ class XKeys extends EventEmitter {
 			this._analogStates = analogStates;
 		});
 
-		this.device.on('error', err => {
-			this.emit('error', err);
+		this.device.on("error", err => {
+			this.emit("error", err);
 		});
 
 	}
@@ -277,18 +274,8 @@ class XKeys extends EventEmitter {
 		try {
 			return this.device.write(intArray);
 		} catch (e) {
-			this.emit('error',e);
+			this.emit("error",e);
 		}
-	}
-
-	/**
-	 * Sends a HID feature report to the X-keys device.
-	 *
-	 * @param {Buffer} buffer The buffer send to the device.
-	 * @returns undefined
-	 */
-	sendFeatureReport(buffer) {
-		return this.device.sendFeatureReport(StreamDeck.bufferToIntArray(buffer));
 	}
 
 	/**
@@ -308,8 +295,8 @@ class XKeys extends EventEmitter {
     setLED(keyIndex, on, flashing) {
 
     	var ledIndex = 0;
-    	if (keyIndex == 0) ledIndex = 6;
-    	if (keyIndex == 1) ledIndex = 7;
+    	if (keyIndex === 0) ledIndex = 6;
+    	if (keyIndex === 1) ledIndex = 7;
 
 
     	var message = this.padMessage([0,179,ledIndex,(on ? (flashing ? 2 : 1) : 0)]);
@@ -324,7 +311,7 @@ class XKeys extends EventEmitter {
 	  * @returns undefined
      */
     setBacklight(keyIndex, on, redLight, flashing) {
-    	if (keyIndex === 'PS') return; // PS-button has no backlight
+    	if (keyIndex === "PS") return; // PS-button has no backlight
 
     	this.verifyKeyIndex(keyIndex);
 
@@ -342,7 +329,7 @@ class XKeys extends EventEmitter {
     setBacklightIntensity(intensity) {
     	intensity = Math.max(Math.min(intensity,255),0);
     	var message = [];
-    	if (this.deviceType.banks == 2 ) {
+    	if (this.deviceType.banks === 2 ) {
     		message = this.padMessage([0,187,intensity, intensity]);
     	} else {
     		message = this.padMessage([0,187,intensity]);
@@ -367,7 +354,7 @@ class XKeys extends EventEmitter {
      */
     setFrequency(frequency) {
     	if (!(frequency>=1 && frequency <= 255) ) {
-    		throw new Error("Invalid frequency: "+keyIndex);
+    		throw new Error("Invalid frequency: "+frequency);
     	}
 
     	var message = this.padMessage([0,180,frequency]);
