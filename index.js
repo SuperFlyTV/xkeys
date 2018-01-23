@@ -269,8 +269,7 @@ class XKeys extends EventEmitter {
 			for (var analogStateKey in analogStates) {
 				// compare with previous states:
 				if (
-					(this._analogStates[analogStateKey]||0) !== analogStates[analogStateKey] ||
-					analogStates[analogStateKey] !== 0
+					(this._analogStates[analogStateKey]||0) !== analogStates[analogStateKey]
 				) {
 					if (
 						analogStateKey === "jog" ||
@@ -287,6 +286,8 @@ class XKeys extends EventEmitter {
 							y: analogStates.joystick_y,
 							z: analogStates.joystick_z,
 						});
+					} else {
+						throw new Error("Internal error: Unknown analogStateKey: '"+analogStateKey+"'");
 					}
 
 				}
