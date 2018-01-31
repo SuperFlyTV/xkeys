@@ -43,6 +43,9 @@ myXkeysPanel.on('up', keyIndex => {
 myXkeysPanel.on('jog', deltaPos => {
 	console.log('Jog position has changed: '+deltaPos);
 });
+myXkeysPanel.on('shuttle', shuttlePos => {
+	console.log('Shuttle position has changed: '+shuttlePos);
+});
 myXkeysPanel.on('joystick', position => {
 	console.log('Joystick has changed:'+position); // {x, y, z}
 });
@@ -146,13 +149,14 @@ if (connectedXKeys.length) {
 Testing and contributions are much appreciated!
 If you have one of the untested devices below, please test it and tell us how it works in an Issue!
 
-### Supported
+### Supported devices
 These devices have been tested to work:
 
 * XK-24
 * XK-80
+* XK-68 Jog + Shuttle
 
-### Not tested (yet)
+### Not tested devices (yet)
 
 Support for these devices is implemented, but not tested:
 
@@ -160,7 +164,9 @@ Support for these devices is implemented, but not tested:
 * XK-4: Not tested
 * XK-8: Not tested
 * XK-16: Not tested
-* XK-12 JOG: Not tested
-* XK-12 JOYSTICK: Not tested
+* XK-12 Jog: Not tested
+* XK-12 Joystick: Not tested
 * XR-32: Not tested
 * XKE-28: Not tested
+
+If you have access to any of the untested devices listed above, it would be very nice if you could provide some data to add to the tests! Just run the **logHMI.js**-file  and [post an issue](issues) with the results in the generated file **log.txt**.
