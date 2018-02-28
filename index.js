@@ -102,7 +102,8 @@ const PRODUCTS = {
 		jogByte: 	18,
 		hasShuttle: 1,
 		shuttleByte:19,
-		bankSize: 	68,
+		bankSize: 	80,
+		banks: 2,
 		disableKeys: [29,30,31, 37,38,39, 45,46,47, 53,54,55]
 	},
 };
