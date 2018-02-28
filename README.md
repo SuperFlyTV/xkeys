@@ -79,15 +79,17 @@ if (connectedXKeys.length) {
 
 ```
 
-### Listeners
+### Events
 
 * 'downKey' & 'upKey': Triggered when a regular button is pressed/released. Emitted with (keyIndex).
 * 'downAlt' & 'upAlt': Triggered when an alternative button is pressed/released, such as the "program switch" (keyIndex 'PS'). Emitted with (keyIndex).
 * 'down' & 'up': Triggered when ANY button is pressed/released. Emitted with (keyIndex).
 
-* 'jog': Triggered when the jog wheel is moved. Emitted with (jogValue) (the value may vary between -128 - 127). [UNTESTED]
-* 'shuttle': Triggered when the shuttle is moved. Emitted with (shuttleValue) (the value may vary between -128 - 127). [UNTESTED]
-* 'joystick': Triggered when the joystick is moved. Emitted with ({x, y, z}) (the values may vary between -128 - 127). [UNTESTED]
+* 'jog': Triggered when the jog wheel is moved. Emitted with (jogValue)
+* 'shuttle': Triggered when the shuttle is moved. Emitted with (shuttleValue)
+* 'joystick': Triggered when the joystick is moved. Emitted with ({x, y, z})
+
+* 'error': Triggered on error. Emitted with (error).
 
 
 ### Setting things
