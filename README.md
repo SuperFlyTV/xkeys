@@ -2,8 +2,6 @@
 
 An Nodejs/NPM module to interact with the X-keys panels.
 
-Disclaimer: This module is very young and should not be used in production yet!
-
 Licence: MIT
 
 The project is based on the documentation available here: http://xkeys.com/PISupport/DeveloperHIDDataReports.php
@@ -157,6 +155,7 @@ These devices have been tested to work:
 * XK-24
 * XK-80
 * XK-68 Jog + Shuttle
+* XK-12 Jog
 
 ### Not tested devices (yet)
 
@@ -166,7 +165,6 @@ Support for these devices is implemented, but not tested:
 * XK-4: Not tested
 * XK-8: Not tested
 * XK-16: Not tested
-* XK-12 Jog: Not tested
 * XK-12 Joystick: Not tested
 * XR-32: Not tested
 * XKE-28: Not tested
