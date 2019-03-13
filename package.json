@@ -1,6 +1,6 @@
 {
   "name": "xkeys",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "NodeJs package to interact with the X-keys panels",
   "main": "index.js",
   "dependencies": {
