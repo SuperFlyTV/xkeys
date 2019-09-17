@@ -38,6 +38,24 @@ jobs:
           at: ~/project
       - run: yarn install
       - run: yarn ci
+  Test node-10:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: yarn install
+      - run: yarn ci
+  Test node-12:
+    <<: *defaults
+    docker:
+      - image: circleci/node:12
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: yarn install
+      - run: yarn ci
   Send Coverage:
     <<: *defaults
     steps:
@@ -112,10 +130,18 @@ workflows:
       - Test node-8:
           requires:
             - Checkout Code
+      - Test node-10:
+          requires:
+            - Checkout Code
+      - Test node-12:
+          requires:
+            - Checkout Code
       - Send Coverage:
           requires:
             - Check for vulnerabilities
             - Test node-8
+            - Test node-10
+            - Test node-12
           filters:
             branches:
               only:
