@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@types/node-hid": "^0.7.1",
-    "node-hid": "^0.7.7",
+    "@types/node-hid": "^0.7.3",
+    "node-hid": "^0.7.9",
     "tslib": "^1.9.3"
   },
   "repository": {
