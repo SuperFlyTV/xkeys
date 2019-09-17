@@ -16,6 +16,7 @@ jobs:
             - yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
             - yarn-cache-{{ .Branch }}
             - yarn-cache-
+      - run: sudo apt-get install libusb-1.0-0-dev libudev-dev
       - run: yarn install
       - save_cache:
           key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
@@ -102,7 +103,7 @@ jobs:
 
 workflows:
   version: 2
-  Test build and deploy(master only):
+  Test build and deploy:
     jobs:
       - Checkout Code
       - Check for vulnerabilities:
