@@ -1,6 +1,8 @@
 # xkeys
 
-An Nodejs/NPM module to interact with the X-keys panels.
+[![CircleCI](https://circleci.com/gh/SuperFlyTV/xkeys.svg?style=svg)](https://circleci.com/gh/SuperFlyTV/xkeys)
+
+A NodeJS module to interact with the X-keys panels.
 
 Licence: MIT
 
@@ -9,6 +11,8 @@ The project is based on the documentation available here: http://xkeys.com/PISup
 ## Installation
 
 `$ npm install --save xkeys`
+or
+`$ yarn add xkeys`
 
 
 
