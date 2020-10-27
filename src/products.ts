@@ -35,6 +35,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		columns: 	4,
 		rows: 		6,
 		hasPS: 		true,
+		banks: 		2,
 		bankSize: 	32
 	},
 	XK4: {	// This has not been tested
@@ -63,6 +64,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		jogByte: 	8,
 		hasShuttle: true,
 		shuttleByte: 9,
+		banks: 		2,
 		bankSize: 	32
 	},
 	XK12JOYSTICK: {	// This has not been tested
@@ -72,6 +74,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		rows: 		3,
 		hasPS: 		true,
 		hasJoystick: true,
+		banks: 		2,
 		bankSize: 	32
 	},
 	XK16: {	// This has not been tested
@@ -80,6 +83,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		columns: 	4,
 		rows: 		4, // not really rows, but the data comes like that (it is physically one row)
 		hasPS: 		false, // unknown
+		banks: 		2,
 		bankSize: 	32 // unknown
 	},
 	XR32: {	// This has not been tested
@@ -114,6 +118,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		columns: 	16,
 		rows: 		8,
 		hasPS: 		false, // unknown
+		banks: 		2,
 		bankSize: 	128
 	},
 	XK68JOGSHUTTLE: {	// This has not been tested
@@ -126,8 +131,8 @@ export const PRODUCTS: {[name: string]: Product} = {
 		jogByte: 	18,
 		hasShuttle: true,
 		shuttleByte: 19,
+		banks: 		2,
 		bankSize: 	80,
-		banks: 2,
 		disableKeys: [29,30,31, 37,38,39, 45,46,47, 53,54,55]
 	}
 }
