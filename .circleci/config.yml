@@ -21,6 +21,7 @@ jobs:
           key: yarn-cache-10-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths: [node_modules]
       - run: yarn test
+      - run: yarn build
 
   test-node-12:
     docker:
@@ -46,6 +47,7 @@ jobs:
           paths: [node_modules]
 
       - run: yarn test
+      - run: yarn build
       - run: yarn send-coverage
       - run: yarn docs:test
 
@@ -80,6 +82,7 @@ jobs:
           key: yarn-cache-latest-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths: [node_modules]
       - run: yarn test
+      - run: yarn build
 
   validate-dependencies:
     docker:

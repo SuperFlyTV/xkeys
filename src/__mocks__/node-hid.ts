@@ -15,7 +15,7 @@ export interface Device {
 
 // export class HID extends EventEmitter {
 export class HID extends EventEmitter {
-	constructor (path: string) {
+	constructor (_path: string) {
 		super()
 	}
 	// constructor(vid: number, pid: number);
@@ -53,6 +53,6 @@ export class HID extends EventEmitter {
 export function devices (): Device[] {
 	return []
 }
-export function setDriverType (type: 'hidraw' | 'libusb'): void {
+export function setDriverType (_type: 'hidraw' | 'libusb'): void {
 	// void
 }
