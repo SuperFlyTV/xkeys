@@ -2,7 +2,7 @@ import { XKeys } from '..'
 
 function testData (xkeysDevice: XKeys, orgStr) {
 	const str: string = orgStr.replace(/ /g,'')
-	const d = []
+	const d: number[] = []
 	for (let i = 0; i < str.length; i += 2) {
 
 		const s = str.slice(i,i + 2)
@@ -27,7 +27,7 @@ describe('xkeys mock', () => {
 		}
 	}
 	resetEvents()
-	function assertEvent (evtName: string, keyName: string | number, value: any) {
+	function assertEvent (evtName: string, keyName: string | number | null, value: any) {
 		if (keyName) {
 			if (events[evtName][keyName] !== value) {
 				console.log(events)
@@ -40,7 +40,7 @@ describe('xkeys mock', () => {
 			}
 		}
 	}
-	function assertEventNot (evtName: string, keyName: string | number, value: any) {
+	function assertEventNot (evtName: string, keyName: string | number | null, value: any) {
 		if (keyName) {
 			if (events[evtName][keyName] === value) {
 				console.log(events)
@@ -53,7 +53,7 @@ describe('xkeys mock', () => {
 			}
 		}
 	}
-	function assertEventOnlyValue (evtName: string, keyName: string | number, value: any) {
+	function assertEventOnlyValue (evtName: string, keyName: string | number | null, value: any) {
 		assertEvent(evtName, keyName, value)
 		for (const key in events[evtName]) {
 
