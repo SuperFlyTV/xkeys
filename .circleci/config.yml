@@ -16,7 +16,7 @@ jobs:
             - yarn-cache-10-{{ .Branch }}-{{ checksum "yarn.lock" }}
             - yarn-cache-10-{{ .Branch }}
             - yarn-cache-10-
-      - run: yarn install
+      - run: yarn install-ci
       - save_cache:
           key: yarn-cache-10-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths: [node_modules]
@@ -39,7 +39,7 @@ jobs:
             - yarn-cache-12-{{ .Branch }}
             - yarn-cache-12-
 
-      - run: yarn install
+      - run: yarn install-ci
 
       - save_cache:
           key: yarn-cache-12-{{ .Branch }}-{{ checksum "yarn.lock" }}
@@ -75,7 +75,7 @@ jobs:
             - yarn-cache-latest-{{ .Branch }}-{{ checksum "yarn.lock" }}
             - yarn-cache-latest-{{ .Branch }}
             - yarn-cache-latest-
-      - run: yarn install
+      - run: yarn install-ci
       - save_cache:
           key: yarn-cache-latest-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths: [node_modules]
@@ -96,7 +96,7 @@ jobs:
             - yarn-cache-12-{{ .Branch }}
             - yarn-cache-12-
 
-      - run: yarn install
+      - run: yarn install-ci
       - run:
           name: yarn validate:dependencies
           command: |
@@ -121,7 +121,7 @@ jobs:
             - yarn-cache-12-{{ .Branch }}
             - yarn-cache-12-
 
-      - run: yarn install
+      - run: yarn install-ci
       - run: yarn validate:dependencies
       - run: yarn validate:dev-dependencies
 
@@ -169,7 +169,7 @@ jobs:
               git push --follow-tags origin HEAD
             fi
       # Build and deploy
-      - run: yarn install
+      - run: yarn install-ci
       - run: yarn build
       - run:
           name: Write NPM Token to ~/.npmrc
@@ -216,7 +216,7 @@ jobs:
             PRERELEASE_TAG=nightly-$(echo $CIRCLE_BRANCH | sed -r 's/[^a-z0-9]+/-/gi')
             yarn release --prerelease $PRERELEASE_TAG-$COMMIT_DATE-$GIT_HASH --skip.changelog --skip.tag --skip.commit
       # Build and deploy
-      - run: yarn install
+      - run: yarn install-ci
       - run: yarn build
       - run:
           name: Write NPM Token to ~/.npmrc
