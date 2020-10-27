@@ -173,4 +173,10 @@ Support for these devices is implemented, but not tested:
 * XR-32: Not tested
 * XKE-28: Not tested
 
-If you have access to any of the untested devices listed above, it would be very nice if you could provide some data to add to the tests! Just run the **logHMI.js**-file  and [post an issue](https://github.com/SuperFlyTV/xkeys/issues) with the results in the generated file **log.txt**.
+If you have access to any of the untested devices listed above, it would be very nice if you could provide some data to add to the tests!
+Just do
+```
+npm install
+npm run logHMI
+```
+and [post an issue](https://github.com/SuperFlyTV/xkeys/issues) with the results in the generated file **log.txt**.
