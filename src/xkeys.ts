@@ -36,7 +36,7 @@ export class XKeys extends EventEmitter {
 	/** Analogue states, such as jog-wheels, shuttle etc */
 	private _analogStates: AnalogStates = {}
 
-	constructor (devicePath: HID.HID | string) {
+	constructor (devicePath?: HID.HID | string) {
 		super()
 		const devices = HID.devices()
 
@@ -294,7 +294,7 @@ export class XKeys extends EventEmitter {
 	 * @param {flashing} boolean: flashing or not (if on)
 	 * @returns undefined
 	 */
-	setBacklight (keyIndex: number | string, on: boolean, redLight: boolean, flashing?: boolean): void {
+	setBacklight (keyIndex: number | string, on: boolean, redLight?: boolean, flashing?: boolean): void {
 		if (keyIndex === 'PS') return // PS-button has no backlight
 
 		this.verifyKeyIndex(keyIndex)
