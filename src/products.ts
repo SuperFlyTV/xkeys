@@ -40,7 +40,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 	},
 	XK4: {	// This has not been tested
 		identifier: 'XK-4',
-		productId: [1127,1128,1129,1253],
+		productId: [1127,1128,1129,1253, 1049],
 		columns: 	4,
 		rows: 		1,
 		hasPS: 		false, // unknown
@@ -79,7 +79,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 	},
 	XK16: {	// This has not been tested
 		identifier: 'XK-16',
-		productId: [1269,1270,1049,1050,1051,1251],
+		productId: [1269,1270,1050,1051,1251],
 		columns: 	4,
 		rows: 		4, // not really rows, but the data comes like that (it is physically one row)
 		hasPS: 		false, // unknown

@@ -28,18 +28,29 @@ describe('xkeys mock', () => {
 	}
 	resetEvents()
 	function assertEvent (evtName: string, keyName: string | number, value: any) {
-
 		if (keyName) {
-			if (events[evtName][keyName] !== value) throw new Error('Assert Error: ' + evtName + '.' + keyName + ' not equal to ' + value + ', is ' + events[evtName][keyName])
+			if (events[evtName][keyName] !== value) {
+				console.log(events)
+				throw new Error('Assert Error: ' + evtName + '.' + keyName + ' not equal to ' + value + ', is ' + events[evtName][keyName])
+			}
 		} else {
-			if (events[evtName] !== value) throw new Error('Assert Error: ' + evtName + ' not equal to ' + value + ', is ' + events[evtName])
+			if (events[evtName] !== value) {
+				console.log(events)
+				throw new Error('Assert Error: ' + evtName + ' not equal to ' + value + ', is ' + events[evtName])
+			}
 		}
 	}
 	function assertEventNot (evtName: string, keyName: string | number, value: any) {
 		if (keyName) {
-			if (events[evtName][keyName] === value) throw new Error('Assert Error: ' + evtName + ',' + keyName + ' not different to ' + value + ', is ' + events[evtName][keyName])
+			if (events[evtName][keyName] === value) {
+				console.log(events)
+				throw new Error('Assert Error: ' + evtName + ',' + keyName + ' not different to ' + value + ', is ' + events[evtName][keyName])
+			}
 		} else {
-			if (events[evtName] === value) throw new Error('Assert Error: ' + evtName + ' not different to ' + value + ', is ' + events[evtName])
+			if (events[evtName] === value) {
+				console.log(events)
+				throw new Error('Assert Error: ' + evtName + ' not different to ' + value + ', is ' + events[evtName])
+			}
 		}
 	}
 	function assertEventOnlyValue (evtName: string, keyName: string | number, value: any) {
@@ -537,5 +548,41 @@ describe('xkeys mock', () => {
 		softKeys()
 		buttonOnTheTop()
 	})
+	test('XK-4', () => {
+		// This test is based upon https://github.com/SuperFlyTV/xkeys/issues/9
+		// Thanks to https://github.com/KnutHelstad
 
+		const panel = setupTestPanel({
+			productId: 1049
+		})
+
+		// clicking through all keys:
+
+		// I pressed button 1 here
+		testData(panel, '0000 01000000 03b30af8 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEventOnlyValue('down', '0', true)
+		testData(panel, '0000 00000000 03b30c25 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEvent('up', '0', true)
+		assertEvent('down', '0', false)
+
+		// I pressed button 2 here
+		testData(panel, '0000 00010000 03b31054 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEventOnlyValue('down', '8', true)
+		testData(panel, '0000 00000000 03b3118f 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEvent('up', '8', true)
+		assertEvent('down', '8', false)
+
+		// I pressed button 3 here
+		testData(panel, '0000 00000100 03b316b6 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEventOnlyValue('down', '16', true)
+		testData(panel, '0000 00000000 03b317f1 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEvent('up', '16', true)
+		assertEvent('down', '16', false)
+		// I pressed button 4 here
+		testData(panel, '0000 00000001 03b31aff 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEventOnlyValue('down', '24', true)
+		testData(panel, '0000 00000000 03b31c0d 00000000 00000000 00000000 00000000 00000000 0000')
+		assertEvent('up', '24', true)
+		assertEvent('down', '24', false)
+	})
 })
