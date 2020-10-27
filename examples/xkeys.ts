@@ -1,7 +1,7 @@
-const XKeys = require('xkeys')
+import { XKeys } from '../src'
 
 // Connect to an x-keys panel:
-var myXkeysPanel = new XKeys()
+const myXkeysPanel = new XKeys()
 
 // Listen to pressed keys:
 myXkeysPanel.on('down', keyIndex => {
@@ -15,6 +15,7 @@ myXkeysPanel.on('up', keyIndex => {
 	console.log('Key released: ' + keyIndex)
 
 	// Turn off button light when released:
+	myXkeysPanel.setBacklight(keyIndex, false)
 	myXkeysPanel.setBacklight(keyIndex, false)
 })
 
