@@ -44,6 +44,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		columns: 	4,
 		rows: 		1,
 		hasPS: 		false, // unknown
+		banks: 		1, // only has blue light
 		bankSize: 	32 // unknown
 	},
 	XK8: {	// This has not been tested
@@ -52,6 +53,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		columns: 	8,
 		rows: 		1,
 		hasPS: 		false, // unknown
+		banks: 		1, // only has blue light
 		bankSize: 	32 // unknown
 	},
 	XK12JOG: {	// This has not been tested
@@ -83,7 +85,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		columns: 	4,
 		rows: 		4, // not really rows, but the data comes like that (it is physically one row)
 		hasPS: 		false, // unknown
-		banks: 		2,
+		banks: 		1, // only has blue light
 		bankSize: 	32 // unknown
 	},
 	XR32: {	// This has not been tested
