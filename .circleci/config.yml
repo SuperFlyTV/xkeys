@@ -8,7 +8,7 @@ jobs:
           password: $DOCKERHUB_PASS
     working_directory: ~/project
     environment:
-      npm_config_build_from_source: node-hid
+      npm_config_ignore_scripts: node-hid
     steps:
       - checkout
       - restore_cache:
@@ -16,11 +16,6 @@ jobs:
             - yarn-cache-10-{{ .Branch }}-{{ checksum "yarn.lock" }}
             - yarn-cache-10-{{ .Branch }}
             - yarn-cache-10-
-      # https://github.com/node-hid/node-hid#linux-kernel-26--install-examples-shown-for-debianubuntu
-      - run: apt install build-essential git
-      - run: apt install gcc-4.8 g++-4.8 && export CXX=g++-4.8
-      - run: apt install libusb-1.0-0 libusb-1.0-0-dev
-      - run: apt install libudev-dev
       - run: yarn install
       - save_cache:
           key: yarn-cache-10-{{ .Branch }}-{{ checksum "yarn.lock" }}
