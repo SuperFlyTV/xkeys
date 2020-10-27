@@ -308,14 +308,18 @@ export class XKeys extends EventEmitter {
 	/**
 	 * Sets the backlightintensity of the device
 	 * @param {intensity} 0-255
-	 * @returns undefined
 	 */
-	setBacklightIntensity (intensity: number): void {
-		intensity = Math.max(Math.min(intensity,255),0)
+	setBacklightIntensity (blueIntensity: number, redIntensity?: number): void {
+		if (redIntensity === undefined) redIntensity = blueIntensity
+
+		blueIntensity = Math.max(Math.min(blueIntensity, 255), 0)
+		redIntensity = Math.max(Math.min(redIntensity, 255), 0)
+
+		console.log('this.deviceType.banks', this.deviceType.banks)
 		const message = (
 			this.deviceType.banks === 2 ?
-			this.padMessage([0,187,intensity, intensity]) :
-			this.padMessage([0,187,intensity])
+			this.padMessage([0, 187, blueIntensity, redIntensity]) :
+			this.padMessage([0, 187, blueIntensity])
 		)
 		this.write(message)
 	}
