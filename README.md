@@ -70,7 +70,7 @@ const XKeys = require('xkeys');
 
 const devices = HID.devices();
 const connectedXKeys = devices.filter(device => {
-	return (device.vendorId === XKeys.vendorId && device.usage === 1); // Make sure that the usage-property is set to 1
+	return (device.vendorId === XKeys.vendorId && device.interface === 0); // Make sure that the interface-property is set to 0
 });
 
 if (connectedXKeys.length) {

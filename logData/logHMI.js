@@ -41,7 +41,7 @@ if (devices.length) {
 		log('product       ',device.product);
 		log('vendorId      ',device.vendorId);
 		log('productId     ',device.productId);
-		log('usage         ',device.usage);
+		log('interface     ',device.interface);
 		//log(device);
 
 

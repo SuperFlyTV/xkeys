@@ -63,9 +63,11 @@ export class XKeys extends EventEmitter {
 			// Device not provided, will then select any connected device:
 			const connectedXKeys = devices.filter(device => {
 
-				// Ensures device with usage 1 is selected (other usage id's do not seem to work)
+				// Ensures device with interface 0 is selected (other interface id's do not seem to work)
 
-				return (device.vendorId === XKeys.vendorId && device.usage === 1)
+				// Note: device.usage has been removed in node-hid: https://github.com/SuperFlyTV/xkeys/issues/4
+				// Using interface instead:
+				return (device.vendorId === XKeys.vendorId && device.interface === 0)
 			})
 			if (!connectedXKeys.length) {
 				throw new Error('Could not find any connected X-keys panels.')
