@@ -1,4 +1,4 @@
-import { XKeys } from '../src'
+import { XKeys } from 'xkeys'
 
 // Connect to an x-keys panel:
 const myXkeysPanel = new XKeys()

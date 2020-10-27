@@ -22,35 +22,39 @@ or
 
 ```javascript
 
-const XKeys = require('xkeys');
+const { XKeys } = require('xkeys')
 
-var myXkeysPanel = new XKeys();
+// Connect to an x-keys panel:
+var myXkeysPanel = new XKeys()
 
 // Listen to pressed keys:
 myXkeysPanel.on('down', keyIndex => {
-	console.log('Key pressed: '+keyIndex);
-	myXkeysPanel.setBacklight(keyIndex, true);
-});
+	console.log('Key pressed: ' + keyIndex)
+
+	// Light up a button when pressed:
+	myXkeysPanel.setBacklight(keyIndex, true)
+})
 // Listen to released keys:
 myXkeysPanel.on('up', keyIndex => {
-	console.log('Key released: '+keyIndex);
+	console.log('Key released: ' + keyIndex)
 
-	myXkeysPanel.setBacklight(keyIndex, false);
-});
+	// Turn off button light when released:
+	myXkeysPanel.setBacklight(keyIndex, false)
+})
 
-// --- Experimental functions ---
-// The functions below are implemented, but not tested with any hardware yet.
-//
-
+// Listen to jog wheel changes:
 myXkeysPanel.on('jog', deltaPos => {
-	console.log('Jog position has changed: '+deltaPos);
-});
+	console.log('Jog position has changed: ' + deltaPos)
+})
+// Listen to shuttle changes:
 myXkeysPanel.on('shuttle', shuttlePos => {
-	console.log('Shuttle position has changed: '+shuttlePos);
-});
+	console.log('Shuttle position has changed: ' + shuttlePos)
+})
+// Listen to joystick changes:
 myXkeysPanel.on('joystick', position => {
-	console.log('Joystick has changed:'+position); // {x, y, z}
-});
+	console.log('Joystick has changed:' + position) // {x, y, z}
+})
+
 
 ```
 

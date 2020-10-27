@@ -1,4 +1,4 @@
-const { XKeys } = require('../dist/index')
+const { XKeys } = require('xkeys')
 
 // Connect to an x-keys panel:
 var myXkeysPanel = new XKeys()
