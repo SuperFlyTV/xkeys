@@ -161,6 +161,7 @@ If you have one of the untested devices below, please test it and tell us how it
 These devices have been tested to work:
 
 * XK-24
+* XK-60
 * XK-80
 * XK-68 Jog + Shuttle
 * XK-12 Jog
@@ -169,7 +170,6 @@ These devices have been tested to work:
 
 Support for these devices is implemented, but not tested:
 
-* XK-60: Not tested
 * XK-4: Not tested
 * XK-8: Not tested
 * XK-16: Not tested
