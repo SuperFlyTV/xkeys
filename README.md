@@ -94,6 +94,7 @@ if (connectedXKeys.length) {
 * 'jog': Triggered when the jog wheel is moved. Emitted with (jogValue)
 * 'shuttle': Triggered when the shuttle is moved. Emitted with (shuttleValue)
 * 'joystick': Triggered when the joystick is moved. Emitted with ({x, y, z})
+* 'tbar': Triggered when the T-bar is moved. Emitted with (tbarPosition, rawPosition)
 
 * 'error': Triggered on error. Emitted with (error).
 
@@ -165,6 +166,7 @@ These devices have been tested to work:
 * XK-80
 * XK-68 Jog + Shuttle
 * XK-12 Jog
+* XKE-124 T-bar
 
 ### Not tested devices (yet)
 
@@ -175,7 +177,7 @@ Support for these devices is implemented, but not tested:
 * XK-16: Not tested
 * XK-12 Joystick: Not tested
 * XR-32: Not tested
-* XKE-28: Not tested
+* XKE-128: Not tested
 
 If you have access to any of the untested devices listed above, it would be very nice if you could provide some data to add to the tests!
 Just do

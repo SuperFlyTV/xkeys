@@ -20,6 +20,10 @@ export interface AnalogStates {
 	joystick_y?: number
 	/** -127 to 127 */
 	joystick_z?: number
+	/** 0 to 255 */
+	tbar?: number
+	/** 0 to 4096 */
+	tbar_raw?: number
 }
 type Message = (string | number)[]
 
@@ -167,6 +171,13 @@ export class XKeys extends EventEmitter {
 				analogStates.joystick_z = (d < 128 ? d : d - 256)
 
 			}
+			if (this.deviceType.hasTbar) {
+				let d = data[(this.deviceType.tbarByte || 0) - 2] // T-bar (calibrated)
+				analogStates.tbar = d
+
+				d = data.readUInt16BE((this.deviceType.tbarByteRaw || 0) - 2) // T-bar (uncalibrated)
+				analogStates.tbar_raw = d
+			}
 
 			// Disabled/nonexisting keys:
 			if (this.deviceType.disableKeys) {
@@ -210,6 +221,10 @@ export class XKeys extends EventEmitter {
 					) {
 						this.emit(analogStateKey , analogStates[analogStateKey])
 					} else if (
+						analogStateKey === 'tbar_raw'
+					) {
+						this.emit('tbar', analogStates.tbar, analogStates.tbar_raw)
+					} else if (
 						analogStateKey === 'joystick_x' ||
 						analogStateKey === 'joystick_y' ||
 						analogStateKey === 'joystick_z'
@@ -219,7 +234,9 @@ export class XKeys extends EventEmitter {
 							y: analogStates.joystick_y,
 							z: analogStates.joystick_z
 						})
-					} else {
+					} else if (
+						analogStateKey !== 'tbar' // ignore tbar updates because event is emitted on tbar_raw update
+					) {
 						throw new Error(`Internal error: Unknown analogStateKey: "${analogStateKey}"`)
 					}
 

@@ -17,6 +17,9 @@ export interface ProductBase {
 	jogByte?: number
 	hasShuttle?: true
 	shuttleByte?: number
+	hasTbar?: true
+	tbarByte?: number
+	tbarByteRaw?: number
 }
 export interface ProductJog extends ProductBase {
 	hasJog: true
@@ -26,7 +29,12 @@ export interface ProductShuttle extends ProductBase {
 	hasShuttle: true
 	shuttleByte: number
 }
-export type Product = ProductBase | ProductJog | ProductShuttle
+export interface ProductTbar extends ProductBase {
+	hasTbar: true
+	tbarByte: number
+	tbarByteRaw: number
+}
+export type Product = ProductBase | ProductJog | ProductShuttle | ProductTbar
 
 export const PRODUCTS: {[name: string]: Product} = {
 	XK24: {
@@ -113,6 +121,19 @@ export const PRODUCTS: {[name: string]: Product} = {
 		hasPS: 		true,
 		banks: 		2,
 		bankSize: 	80
+	},
+	XKE124TBAR: {
+		identifier: 'XKE-124 T-bar',
+		productId: [1275,1276,1277,1278],
+		columns:	16,
+		rows:		8,
+		hasPS:		false,
+		hasTbar:	true,
+		tbarByte:	30,
+		tbarByteRaw: 31,
+		banks:		2,
+		bankSize:	128,
+		disableKeys: [108,109,110,111]
 	},
 	XKE128: {	// This has not been tested
 		identifier: 'XKE-128',
