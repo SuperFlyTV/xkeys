@@ -12,6 +12,12 @@
     "name": "Johan Nyman",
     "email": "johan@superfly.tv"
   },
+  "contributors": [
+    {
+      "name": "Andreas Reich",
+      "url": "https://github.com/cyraxx"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/SuperFlyTV/xkeys/issues"
