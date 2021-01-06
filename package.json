@@ -1,6 +1,6 @@
 {
   "name": "xkeys",
-  "version": "1.0.0",
+  "version": "1.1.0-0",
   "description": "NodeJs package to interact with the X-keys panels",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -44,7 +44,8 @@
     "ci": "yarn test",
     "validate:dependencies": "yarn audit --groups dependencies",
     "validate:dev-dependencies": "yarn audit --groups devDependencies",
-    "logHMI": "node ./logData/logHMI.js"
+    "logHMI": "node ./logData/logHMI.js",
+    "prepareChangelog": "standard-version --prerelease"
   },
   "scripts-info": {
     "info": "Display information about the scripts",
