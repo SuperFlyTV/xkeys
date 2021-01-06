@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/SuperFlyTV/xkeys/compare/v1.0.0...v1.1.0) (2021-01-06)
+
 ### [1.1.0-0](https://github.com/SuperFlyTV/xkeys/compare/v1.0.0...v1.0.1-0) (2021-01-06)
 * Add support for XKE-124 T-bar ([PR](https://github.com/SuperFlyTV/xkeys/pull/23))
 
