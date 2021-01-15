@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/SuperFlyTV/xkeys/compare/v1.1.0...v1.1.1) (2021-01-15)
+
+
+### Bug Fixes
+
+* remove spammy console.log [release] ([e3a0feb](https://github.com/SuperFlyTV/xkeys/commit/e3a0feb0b48686adc1eb2b431a140c25c721c906))
+
 ## [1.1.0](https://github.com/SuperFlyTV/xkeys/compare/v1.0.0...v1.1.0) (2021-01-06)
 
 ### [1.1.0-0](https://github.com/SuperFlyTV/xkeys/compare/v1.0.0...v1.0.1-0) (2021-01-06)
