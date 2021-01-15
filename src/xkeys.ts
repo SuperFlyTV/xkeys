@@ -334,7 +334,6 @@ export class XKeys extends EventEmitter {
 		blueIntensity = Math.max(Math.min(blueIntensity, 255), 0)
 		redIntensity = Math.max(Math.min(redIntensity, 255), 0)
 
-		console.log('this.deviceType.banks', this.deviceType.banks)
 		const message = (
 			this.deviceType.banks === 2 ?
 			this.padMessage([0, 187, blueIntensity, redIntensity]) :
