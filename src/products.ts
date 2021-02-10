@@ -113,6 +113,22 @@ export const PRODUCTS: {[name: string]: Product} = {
 		banks: 		2,
 		bankSize: 	80
 	},
+	XK64JOGTBAR: {
+		identifier: 'XKE-64 JogT-bar',
+		productId: [1325],
+		columns: 10,
+		rows: 8,
+		hasPS: false,
+		hasTbar: true,
+		tbarByte: 19,
+		tbarByteRaw: 17,
+		hasJog: true,
+		jogByte: 20,
+		hasShuttle: true,
+		shuttleByte: 21,
+		banks: 2,
+		bankSize: 80
+	},
 	XK80: {
 		identifier: 'XK-80',
 		productId: [1237,1238,1089,1090,1091,1250],
