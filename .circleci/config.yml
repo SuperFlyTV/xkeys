@@ -49,7 +49,6 @@ jobs:
       - run: yarn test
       - run: yarn build
       - run: yarn send-coverage
-      - run: yarn docs:test
 
       - persist_to_workspace:
           root: .

@@ -16,7 +16,6 @@ myXkeysPanel.on('up', keyIndex => {
 
 	// Turn off button light when released:
 	myXkeysPanel.setBacklight(keyIndex, false)
-	myXkeysPanel.setBacklight(keyIndex, false)
 })
 
 // Listen to jog wheel changes:
@@ -30,4 +29,8 @@ myXkeysPanel.on('shuttle', shuttlePos => {
 // Listen to joystick changes:
 myXkeysPanel.on('joystick', position => {
 	console.log('Joystick has changed:' + position) // {x, y, z}
+})
+// Listen to t-bar changes:
+myXkeysPanel.on('tbar', (position, rawPosition) => {
+    console.log('T-bar position has changed: ' + position + ' (uncalibrated: ' + rawPosition + ')')
 })
