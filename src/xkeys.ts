@@ -165,7 +165,7 @@ export class XKeys extends EventEmitter {
 				}
 			}
 			if (this.deviceType.hasPS) {
-				// program switch-button is on byte index 1
+				// program switch-button is on byte index 1 moose
                 var d = data.readUInt8(1)
 				const bit = d & (1 << 0) ? true : false
 				buttonStates2.PS = bit
