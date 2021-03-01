@@ -125,20 +125,39 @@ export class XKeys extends EventEmitter {
 			)
 		}
 
-		this.device.on('data', data => {
+		this.device.on('data', (data: Buffer) => {
 
-			// Note: first column is on word 2
+			if (!deviceInfo) return
 
 			const buttonStates: ButtonStates = {}
 			const buttonStates2: ButtonStates2 = { PS: false }
 			const analogStates: AnalogStates = {}
 
+			// UID, unit id, is used to uniquely identify a ceratin panel, from factory it's set to 0. It can be set by a user to be able to find a reconnected panel.
+			var UID = data.readUInt8(0) // the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
+			// @ts-ignore
+			var PID = deviceInfo.productId // from USB hardware ID
+			var productName = this.deviceType.identifier // name from products file
+
+			// var keyCol = 1 // use a 1 based system for Rows and Columns
+			// var keyRow = 1
+
+			var dd = data.readUInt8(1)
+			// The genData bit is set when the message is a reply to the Generate Data message
+			var genData = dd & (1 << 1) ? true : false
+			if (genData ) {
+				this.emit('unitID',  UID, PID, productName)
+			}
+
+
+			// Note: first button data (column) is on byte index 2
+
 			for (let x: number = 0; x < this.deviceType.columns; x++) {
 				for (let y: number = 0; y < this.deviceType.rows; y++) {
 
-					const keyIndex: number = x * 8 + y
+					var keyIndex = x * this.deviceType.rows + y
 
-					const d = data.readUInt32LE(2 + x)
+                    var d = data.readUInt8(2 + x)
 
 					const bit = d & (1 << y) ? true : false
 
@@ -146,40 +165,39 @@ export class XKeys extends EventEmitter {
 				}
 			}
 			if (this.deviceType.hasPS) {
-				// program switch-button is on word 1
-				const d = data.readUInt32LE(1)
+				// program switch-button is on byte index 1
+                var d = data.readUInt8(1)
 				const bit = d & (1 << 0) ? true : false
 				buttonStates2.PS = bit
 			}
-			if (this.deviceType.hasJog) {
+			if (this.deviceType.hasJog && this.deviceType.jogByte !== undefined ) {
 
-				const d = data[(this.deviceType.jogByte || 0) - 2] // Jog
+				var d = data[(this.deviceType.jogByte ) ] // Jog
 				analogStates.jog = (d < 128 ? d : d - 256)
 			}
-			if (this.deviceType.hasShuttle) {
-				const d = data[(this.deviceType.shuttleByte || 0) - 2] // Shuttle
+			if (this.deviceType.hasShuttle && this.deviceType.shuttleByte !== undefined) {
+				var d = data[(this.deviceType.shuttleByte ) ] // Shuttle
 				analogStates.shuttle = (d < 128 ? d : d - 256)
 			}
 			if (this.deviceType.hasJoystick) {
-				let d = data.readUInt32LE(7) // Joystick X
-				analogStates.joystick_x = (d < 128 ? d : d - 256)
-
-				d = data.readUInt32LE(8) // Joystick Y
-				analogStates.joystick_y = (d < 128 ? d : d - 256)
-
-				d = data.readUInt32LE(9) // Joystick Z (twist of joystick)
-				analogStates.joystick_z = (d < 128 ? d : d - 256)
+				var d = data.readUInt8(6); // Joystick X
+                analogStates.joystick_x = (d < 128 ? d : d - 256);
+                d = data.readUInt8(7); // Joystick Y
+                analogStates.joystick_y = (d < 128 ? -d : -(d - 256));
+                d = data.readUInt8(8); // Joystick Z (twist of joystick)
+                analogStates.joystick_z = (d); // joystick z is a continuous value that rolls over to 0 after 255
 
 			}
-			if (this.deviceType.hasTbar) {
-				let d = data[(this.deviceType.tbarByte || 0) - 2] // T-bar (calibrated)
+			if (this.deviceType.hasTbar && this.deviceType.tbarByte !== undefined) {
+				var d = data.readUInt8(this.deviceType.tbarByte ) // T-bar (calibrated)
 				analogStates.tbar = d
 
-				d = data.readUInt16BE((this.deviceType.tbarByteRaw || 0) - 2) // T-bar (uncalibrated)
-				analogStates.tbar_raw = d
+				// Note: The uncalibrated shouldn't be used at all, it's only used by manufacturer
+				// d = data.readUInt16BE((this.deviceType.tbarByteRaw || 0) - 2) // T-bar (uncalibrated)
+				// analogStates.tbar_raw = d
 			}
 
-			// Disabled/nonexisting keys:
+			// Disabled/nonexisting keys: // important as some keys in the jog & shuttle devices are used to shuttle events.
 			if (this.deviceType.disableKeys) {
 				this.deviceType.disableKeys.forEach((keyIndex) => {
 					buttonStates[keyIndex] = false
@@ -190,11 +208,11 @@ export class XKeys extends EventEmitter {
 				// compare with previous button states:
 				if ((this._buttonStates[buttonStateKey] || false) !== buttonStates[buttonStateKey]) {
 					if (buttonStates[buttonStateKey]) { // key is pressed
-						this.emit('down', buttonStateKey)
-						this.emit('downKey', buttonStateKey)
+						this.emit('down', buttonStateKey, UID, PID, productName);
+                        this.emit('downKey', buttonStateKey, UID, PID, productName);
 					} else {
-						this.emit('up', buttonStateKey)
-						this.emit('upKey', buttonStateKey)
+						this.emit('up', buttonStateKey,UID, PID, productName);
+                        this.emit('upKey', buttonStateKey, UID, PID, productName);
 					}
 				}
 			}
@@ -202,11 +220,11 @@ export class XKeys extends EventEmitter {
 				// compare with previous button states:
 				if ((this._buttonStates2[buttonStates2Key] || false) !== buttonStates2[buttonStates2Key]) {
 					if (buttonStates2[buttonStates2Key]) { // key is pressed
-						this.emit('down', buttonStates2Key)
-						this.emit('downAlt', buttonStates2Key)
+						this.emit('down', buttonStates2Key, UID, PID, productName);
+                        this.emit('downAlt', buttonStates2Key, UID, PID, productName);
 					} else {
-						this.emit('up', buttonStates2Key)
-						this.emit('upAlt', buttonStates2Key)
+						this.emit('up', buttonStates2Key, UID, PID, productName);
+                        this.emit('upAlt', buttonStates2Key, UID, PID, productName);
 					}
 				}
 			}
@@ -220,10 +238,9 @@ export class XKeys extends EventEmitter {
 						analogStateKey === 'shuttle'
 					) {
 						this.emit(analogStateKey , analogStates[analogStateKey])
-					} else if (
-						analogStateKey === 'tbar_raw'
-					) {
-						this.emit('tbar', analogStates.tbar, analogStates.tbar_raw)
+					} else if (analogStateKey === 'tbar') {
+						this.emit('tbar', analogStates.tbar)
+
 					} else if (
 						analogStateKey === 'joystick_x' ||
 						analogStateKey === 'joystick_y' ||
