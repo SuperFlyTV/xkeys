@@ -147,7 +147,7 @@ export const PRODUCTS: {[name: string]: Product} = {
 		rows:		8,
 		hasPS:		false,
 		hasTbar:	true,
-		tbarByte:	28,	 // should only use cal t-bar on byte index 28
+		tbarByte:	28,	 // should only use cal t-bar on byte index 28 n
 		tbarByteRaw: 	29,
 		banks:		2,
 		bankSize:	128,
