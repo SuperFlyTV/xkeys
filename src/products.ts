@@ -9,12 +9,16 @@ export interface ProductBase {
 	bankSize: number
 
 	hasJoystick?: boolean
+	joyXbyte?: number
+	joyYbyte?: number
+	joyZbyte?: number
 
 	banks?: number
 	disableKeys?: number[]
 
 	hasJog?: true
 	jogByte?: number
+	
 	hasShuttle?: true
 	shuttleByte?: number
 	hasTbar?: true
@@ -38,7 +42,7 @@ export type Product = ProductBase | ProductJog | ProductShuttle | ProductTbar
 
 export const PRODUCTS: {[name: string]: Product} = {
 
-	// Note: The byte numbers are byte index (starts with 0) and will be offset from documentation by -2
+	// Note: The byte numbers are byte index (starts with 0) and will be offset from PIE SDK documentation by -2
 	// these byte index are used to access the exact byte in the data report.
 
 	XK24: {
@@ -88,10 +92,9 @@ export const PRODUCTS: {[name: string]: Product} = {
 		rows: 		3,
 		hasPS: 		true,
 		hasJoystick: true,
-		// joyXbyte:		7
-		// joyYbyte:		8
-		// joyZbyte:		9 // twist of stick
-
+		joyXbyte:	6,
+		joyYbyte:	7,
+		joyZbyte:	8, // twist of stick
 		banks: 		2,
 		bankSize: 	32
 	},
