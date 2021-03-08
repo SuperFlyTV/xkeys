@@ -2,6 +2,7 @@ import * as HID from 'node-hid'
 import { EventEmitter } from 'events'
 import { PRODUCTS, Product, VENDOR_ID } from './products'
 
+
 export type ButtonStates = {[keyIndex: number]: boolean}
 export interface ButtonStates2 {
 	[index: string]: boolean
@@ -36,7 +37,7 @@ export class XKeys extends EventEmitter {
 	/** All button states */
 	private _buttonStates: ButtonStates = {}
 	/** Alternative buttons, such as the program switch 'PS' */
-	private _buttonStates2: ButtonStates2 = { PS: false }
+	//private _buttonStates2: ButtonStates2 = { PS: false }
 	/** Analogue states, such as jog-wheels, shuttle etc */
 	private _analogStates: AnalogStates = {}
 
@@ -71,6 +72,7 @@ export class XKeys extends EventEmitter {
 
 				// Note: device.usage has been removed in node-hid: https://github.com/SuperFlyTV/xkeys/issues/4
 				// Using interface instead:
+				
 				return (device.vendorId === XKeys.vendorId && device.interface === 0)
 			})
 			if (!connectedXKeys.length) {
@@ -129,16 +131,32 @@ export class XKeys extends EventEmitter {
 
 			if (!deviceInfo) return
 
+			if (data.readUInt8(1)===214){ // this is a special report that does not correlate to the regular data report, it is ceated by sending getVersion
+
+				var firmVersion = data.readUInt8(10)
+				var dUID = data.readUInt8(0) // the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
+				var dPID = data.readUInt16LE(11) // PID is also in this report as a double check. 
+				this.emit('firmVersion',  firmVersion,dUID,dPID, )
+				return // quit here because this data would be interperted as button data and give bad results. 
+			}
+			if( data.readUInt8(1) >3) return // Protect against all special data reports now and into the future. 
+			 
 			const buttonStates: ButtonStates = {}
-			const buttonStates2: ButtonStates2 = { PS: false }
+			//const buttonStates2: ButtonStates2 = { PS: false }
 			const analogStates: AnalogStates = {}
 
-			// UID, unit id, is used to uniquely identify a ceratin panel, from factory it's set to 0. It can be set by a user to be able to find a reconnected panel.
+			// UID, unit id, is used to uniquely identify a certain panel, from factory it's set to 0. It can be set by a user to be able to find a reconnected panel.
 			var UID = data.readUInt8(0) // the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
 			// @ts-ignore
 			var PID = deviceInfo.productId // from USB hardware ID
 			var productName = this.deviceType.identifier // name from products file
 
+			var timeStamp = 0
+
+			if (this.deviceType.timeStamp !== undefined ) {
+
+				timeStamp = data.readUInt32BE(this.deviceType.timeStamp) // Time stamp is 4 bytes, use UInt32BE 
+			}
 			// var keyCol = 1 // use a 1 based system for Rows and Columns
 			// var keyRow = 1
 
@@ -150,12 +168,13 @@ export class XKeys extends EventEmitter {
 			}
 
 
-			// Note: first button data (column) is on byte index 2
+			// Note: first button data (bByte) is on byte index 2
 
-			for (let x: number = 0; x < this.deviceType.columns; x++) {
-				for (let y: number = 0; y < this.deviceType.rows; y++) {
+			for (let x: number = 0; x < this.deviceType.bBytes; x++) {
+				for (let y: number = 0; y < this.deviceType.bBits; y++) {
 
-					var keyIndex = x * this.deviceType.rows + y
+					var keyIndex = (x * this.deviceType.bBits + y)+1 // this more accurately displays the total key number, but confuses the index for other use, such as LED addressing. 
+					//var keyIndex = x * 8 + y // this creates a key index based on the data bytes and skips some keys for many products. 
 
                     var d = data.readUInt8(2 + x)
 
@@ -165,10 +184,10 @@ export class XKeys extends EventEmitter {
 				}
 			}
 			if (this.deviceType.hasPS) {
-				// program switch-button is on byte index 1 moose
+				// program switch-button is on byte index 1 , bit 1
                 var d = data.readUInt8(1)
 				const bit = d & (1 << 0) ? true : false
-				buttonStates2.PS = bit
+				buttonStates[0]  = bit // always keyIndex of 0
 			}
 			if (this.deviceType.hasJog && this.deviceType.jogByte !== undefined ) {
 
@@ -192,12 +211,10 @@ export class XKeys extends EventEmitter {
 				var d = data.readUInt8(this.deviceType.tbarByte ) // T-bar (calibrated)
 				analogStates.tbar = d
 
-				// Note: The uncalibrated shouldn't be used at all, it's only used by manufacturer
-				// d = data.readUInt16BE((this.deviceType.tbarByteRaw || 0) - 2) // T-bar (uncalibrated)
-				// analogStates.tbar_raw = d
+				
 			}
 
-			// Disabled/nonexisting keys: // important as some keys in the jog & shuttle devices are used to shuttle events.
+			// Disabled/nonexisting keys: // important as some keys in the jog & shuttle devices are used for shuttle events in hardware.
 			if (this.deviceType.disableKeys) {
 				this.deviceType.disableKeys.forEach((keyIndex) => {
 					buttonStates[keyIndex] = false
@@ -207,16 +224,17 @@ export class XKeys extends EventEmitter {
 			for (const buttonStateKey in buttonStates) {
 				// compare with previous button states:
 				if ((this._buttonStates[buttonStateKey] || false) !== buttonStates[buttonStateKey]) {
+					var btnRowCol = this.btnLocation(buttonStateKey)
 					if (buttonStates[buttonStateKey]) { // key is pressed
-						this.emit('down', buttonStateKey, UID, PID, productName);
-                        this.emit('downKey', buttonStateKey, UID, PID, productName);
+						this.emit('down', buttonStateKey,btnRowCol, UID, PID, productName,timeStamp);
+                       // this.emit('downKey', buttonStateKey, UID, PID, productName);
 					} else {
-						this.emit('up', buttonStateKey,UID, PID, productName);
-                        this.emit('upKey', buttonStateKey, UID, PID, productName);
+						this.emit('up', buttonStateKey,btnRowCol,UID, PID, productName,timeStamp);
+                       // this.emit('upKey', buttonStateKey, UID, PID, productName);
 					}
 				}
 			}
-			for (const buttonStates2Key in buttonStates2) {
+			/**for (const buttonStates2Key in buttonStates2) {
 				// compare with previous button states:
 				if ((this._buttonStates2[buttonStates2Key] || false) !== buttonStates2[buttonStates2Key]) {
 					if (buttonStates2[buttonStates2Key]) { // key is pressed
@@ -228,6 +246,7 @@ export class XKeys extends EventEmitter {
 					}
 				}
 			}
+			*/
 			for (const analogStateKey in analogStates) {
 				// compare with previous states:
 				if (
@@ -261,7 +280,7 @@ export class XKeys extends EventEmitter {
 			}
 
 			this._buttonStates	= buttonStates
-			this._buttonStates2	= buttonStates2
+			//this._buttonStates2	= buttonStates2
 			this._analogStates	= analogStates
 		})
 
@@ -307,17 +326,17 @@ export class XKeys extends EventEmitter {
 	}
 
 	/**
-	 * Sets the LED of a key
-	 * @param {keyIndex} the LED to set the color of (0 = green, 1 = red)
+	 * Sets the LED on the unit, usually a red and green LED at the top of many X-keys 
+	 * @param {ledIndex} the LED to set (1 = green, 2 = red)
 	 * @param {on} boolean: on or off
 	 * @param {flashing} boolean: flashing or not (if on)
 	 * @returns undefined
 	 */
-	setLED (keyIndex: 0 | 1, on: boolean, flashing?: boolean): void {
+	setIndicatorLED (ledIndex: number, on: boolean, flashing?: boolean): void {
 
-		let ledIndex = 0
-		if (keyIndex === 0) ledIndex = 6
-		if (keyIndex === 1) ledIndex = 7
+		//force to 6 or 7
+		if (ledIndex <= 1) ledIndex = 6
+		if (ledIndex >= 2) ledIndex = 7
 
 		const message = this.padMessage([0,179,ledIndex,(on ? (flashing ? 2 : 1) : 0)])
 
@@ -331,14 +350,35 @@ export class XKeys extends EventEmitter {
 	 * @returns undefined
 	 */
 	setBacklight (keyIndex: number | string, on: boolean, redLight?: boolean, flashing?: boolean): void {
-		if (keyIndex === 'PS') return // PS-button has no backlight
+		if (keyIndex === 0) return // PS-button has no backlight
 
 		this.verifyKeyIndex(keyIndex)
+		keyIndex = (typeof keyIndex === 'string' ? parseInt(keyIndex, 10) : keyIndex)
 
-		if (redLight) {
-			keyIndex = (typeof keyIndex === 'string' ? parseInt(keyIndex, 10) : keyIndex) + (this.deviceType.bankSize || 0)
+		var location = this.btnLocation(keyIndex)
+
+		
+
+		var ledIndex = ((location[1]-1) * 8 + location[0])-1
+		
+
+		
+
+		if (this.deviceType.backLiteType===3){ // backlight LED type 3, is the stick keys, that requires special mapping. 
+			ledIndex=location[1]-1 // 0 based linear numbering sort of...
+			if(ledIndex>11) ledIndex = ledIndex + 4
+			else if(ledIndex>5) ledIndex = ledIndex + 2
 		}
-		const message = this.padMessage([0, 181, keyIndex, (on ? (flashing ? 2 : 1) : 0) , 1])
+		if (this.deviceType.backLiteType===4){ // backlight LED type 4, is the 40 keys, that requires special mapping. 
+			ledIndex=keyIndex-1 // 0 based linear numbering sort of...
+			
+		}
+		if (redLight) {
+			ledIndex = ledIndex + (this.deviceType.bankSize || 0)
+		}
+
+
+		const message = this.padMessage([0, 181, ledIndex, (on ? (flashing ? 2 : 1) : 0) , 1])
 		this.write(message)
 	}
 	/**
@@ -352,7 +392,7 @@ export class XKeys extends EventEmitter {
 		redIntensity = Math.max(Math.min(redIntensity, 255), 0)
 
 		const message = (
-			this.deviceType.banks === 2 ?
+			this.deviceType.backLiteType === 2 ?
 			this.padMessage([0, 187, blueIntensity, redIntensity]) :
 			this.padMessage([0, 187, blueIntensity])
 		)
@@ -379,6 +419,16 @@ export class XKeys extends EventEmitter {
         this.write(message);
     };
 	/**
+     * Gets the frimware version and UID : forces the unit to send a special data report with firmware version and Unit ID. 
+     * @param none
+     * @returns undefined //an input report will be generated by the X-keys with byte 2 set to 214. This has the firmware version and UID. 
+     */
+    getVersion() {
+        
+        var message = this.padMessage([0, 214]);
+        this.write(message);
+    };
+	/**
 	 * Sets the flash frequency
 	 * @param {frequency} 1-255, where 1 is fastest and 255 is the slowest. 255 is approximately 4 seconds between flashes.
 	 * @returns undefined
@@ -391,10 +441,55 @@ export class XKeys extends EventEmitter {
 		const message = this.padMessage([0,180,frequency])
 		this.write(message)
 	}
+	/**
+	 * Sets the UID value in the X-keys  hardware
+	 * @param {UID} 0-255, 0 is factory default, writes to EEPROM do not use excessivley
+	 * @returns undefined
+	 */
+	setUID (UID: number) {
+		if (!(UID >= 0 && UID <= 255)) {
+			throw new Error(`Invalid UID: ${UID}`)
+		}
+
+		const message = this.padMessage([0,189,UID])
+		this.write(message)
+	}
+
+	/**
+	 * Sets the 2x16 LCD display 
+	 * @param {line}  1 for top line, 2 for bottom line.
+	 *  @param {disChar} //string to display, empty string to clear
+	 *  @param {backlight}  0 for off, 1 for on.
+	 * @returns undefined
+	 */
+	writeLcdDisplay (line: number,disChar: string, backlight:boolean) { 
+		
+		var byteVals = [0,206,0,1,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32]  // load the array with 206 op code and spaces
+
+		// change line number to 0 or 1 and set line # byte
+		if (line<2) line=0
+		if (line >1) line = 1 
+		byteVals[2]=line
+		// change backlight to 0 or 1 and set backlight byte 
+		var liteByte
+		if (backlight) {liteByte=1} else {liteByte=0}
+		byteVals[3]=liteByte // set the LCD backlight on or off.
+		// loop throught the string and load array with acsii byte values
+		var i;
+		for (i = 0; i < disChar.length; i++) {
+			byteVals[i+4]=disChar.charCodeAt(i);
+			if (i>15) break // quit at 16 chars
+		  }
+		
+		const message = this.padMessage(byteVals)
+		this.write(message)
+		
+	}
+	
 	verifyKeyIndex (keyIndex: number | string) {
 		keyIndex = (typeof keyIndex === 'string' ? parseInt(keyIndex, 10) : keyIndex)
 
-		if (!(keyIndex >= 0 && keyIndex < 8 * this.deviceType.columns)) {
+		if (!(keyIndex >= 0 && keyIndex < 8 * this.deviceType.bBytes+1)) {
 			throw new Error(`Invalid keyIndex: ${keyIndex}`)
 		}
 	}
@@ -404,5 +499,15 @@ export class XKeys extends EventEmitter {
 			message.push(0)
 		}
 		return message
+	}
+	btnLocation (keyIndex: number | string): number[] {
+		keyIndex = (typeof keyIndex === 'string' ? parseInt(keyIndex, 10) : keyIndex)
+		var location = [0,0]
+		location[0]= keyIndex-(this.deviceType.bBits*( Math.ceil(keyIndex/this.deviceType.bBits)-1))
+		location[1]= Math.ceil(keyIndex/this.deviceType.bBits)
+		if (this.deviceType.btnLocation !== undefined){
+		 location = this.deviceType.btnLocation[keyIndex]
+		}
+		return location
 	}
 }
