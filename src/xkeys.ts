@@ -173,7 +173,7 @@ export class XKeys extends EventEmitter {
 			for (let x: number = 0; x < this.deviceType.bBytes; x++) {
 				for (let y: number = 0; y < this.deviceType.bBits; y++) {
 
-					var keyIndex = (x * this.deviceType.bBits + y)+1 // this more accurately displays the total key number, but confuses the index for other use, such as LED addressing. 
+					var keyIndex = (x * this.deviceType.bBits + y)+1 // add 1 so PS is at index 0, more accurately displays the total key number, but confuses the index for other use, such as LED addressing. 
 					//var keyIndex = x * 8 + y // this creates a key index based on the data bytes and skips some keys for many products. 
 
                     var d = data.readUInt8(2 + x)
@@ -184,9 +184,9 @@ export class XKeys extends EventEmitter {
 				}
 			}
 			if (this.deviceType.hasPS) {
-				// program switch-button is on byte index 1 , bit 1
+				// program switch/button is on byte index 1 , bit 1
                 var d = data.readUInt8(1)
-				const bit = d & (1 << 0) ? true : false
+				const bit = d & (1 << 0) ? true : false  // get first bit only
 				buttonStates[0]  = bit // always keyIndex of 0
 			}
 			if (this.deviceType.hasJog && this.deviceType.jogByte !== undefined ) {
@@ -224,7 +224,7 @@ export class XKeys extends EventEmitter {
 			for (const buttonStateKey in buttonStates) {
 				// compare with previous button states:
 				if ((this._buttonStates[buttonStateKey] || false) !== buttonStates[buttonStateKey]) {
-					var btnRowCol = this.btnLocation(buttonStateKey)
+					var btnRowCol = this.findBtnLocation(buttonStateKey)
 					if (buttonStates[buttonStateKey]) { // key is pressed
 						this.emit('down', buttonStateKey,btnRowCol, UID, PID, productName,timeStamp);
                        // this.emit('downKey', buttonStateKey, UID, PID, productName);
@@ -355,7 +355,7 @@ export class XKeys extends EventEmitter {
 		this.verifyKeyIndex(keyIndex)
 		keyIndex = (typeof keyIndex === 'string' ? parseInt(keyIndex, 10) : keyIndex)
 
-		var location = this.btnLocation(keyIndex)
+		var location = this.findBtnLocation(keyIndex)
 
 		
 
@@ -369,12 +369,39 @@ export class XKeys extends EventEmitter {
 			if(ledIndex>11) ledIndex = ledIndex + 4
 			else if(ledIndex>5) ledIndex = ledIndex + 2
 		}
-		if (this.deviceType.backLiteType===4){ // backlight LED type 4, is the 40 keys, that requires special mapping. 
+		else if (this.deviceType.backLiteType===4){ // backlight LED type 4, is the 40 keys, that requires special mapping. 
 			ledIndex=keyIndex-1 // 0 based linear numbering sort of...
 			
 		}
+		else if (this.deviceType.backLiteType===5){ // backlight LED type 5 is the RGB 24 keys
+		
+			var red =0
+			var green =0
+			var blue =127
+			var flash =0
+
+			if (flashing)flash=1
+
+			if (redLight){
+				red =128
+				blue =0
+
+			}
+
+			if (!on){
+				red=0
+				green=0
+				blue=0
+				flash =0
+			}
+
+
+		const message = this.padMessage([0, 181, ledIndex, green,red,blue,flash]) // Byte order is actually G,R,B,F
+		this.write(message)
+		return 
+		}
 		if (redLight) {
-			ledIndex = ledIndex + (this.deviceType.bankSize || 0)
+			ledIndex = ledIndex + (this.deviceType.backLite2offset || 0)
 		}
 
 
@@ -405,6 +432,28 @@ export class XKeys extends EventEmitter {
 	 * @returns undefined
 	 */
 	setAllBacklights (on: boolean, redLight: boolean) {
+		if (this.deviceType.backLiteType===5){ // backlight LED type 5 is the RGB 24 keys
+		
+			var red =0
+			var green =0
+			var blue =127
+			
+			if (redLight){
+				red =128
+				blue =0
+			}
+
+			if (!on){
+				red=0
+				green=0
+				blue=0
+			}
+
+
+		const message = this.padMessage([0, 182,  green,red,blue]) // Byte order is actually G,R,B
+		this.write(message)
+		return 
+		}
 		const message = this.padMessage([0, 182, (redLight ? 1 : 0) , (on ? 255 : 0) ])
 		this.write(message)
 	}
@@ -429,7 +478,7 @@ export class XKeys extends EventEmitter {
         this.write(message);
     };
 	/**
-	 * Sets the flash frequency
+	 * Sets the flash frequency of LEDs for the entire X-keys. Flashing will always be synchronized
 	 * @param {frequency} 1-255, where 1 is fastest and 255 is the slowest. 255 is approximately 4 seconds between flashes.
 	 * @returns undefined
 	 */
@@ -462,8 +511,8 @@ export class XKeys extends EventEmitter {
 	 *  @param {backlight}  0 for off, 1 for on.
 	 * @returns undefined
 	 */
-	writeLcdDisplay (line: number,disChar: string, backlight:boolean) { 
-		
+	writeLcdDisplay (line: number,displayChar: string, backlight:boolean) { 
+		if (!this.deviceType.hasLCD) return // only used for LCD display devices. 
 		var byteVals = [0,206,0,1,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32]  // load the array with 206 op code and spaces
 
 		// change line number to 0 or 1 and set line # byte
@@ -476,8 +525,8 @@ export class XKeys extends EventEmitter {
 		byteVals[3]=liteByte // set the LCD backlight on or off.
 		// loop throught the string and load array with acsii byte values
 		var i;
-		for (i = 0; i < disChar.length; i++) {
-			byteVals[i+4]=disChar.charCodeAt(i);
+		for (i = 0; i < displayChar.length; i++) {
+			byteVals[i+4]=displayChar.charCodeAt(i);
 			if (i>15) break // quit at 16 chars
 		  }
 		
@@ -500,11 +549,15 @@ export class XKeys extends EventEmitter {
 		}
 		return message
 	}
-	btnLocation (keyIndex: number | string): number[] {
+	findBtnLocation (keyIndex: number | string): number[] {
 		keyIndex = (typeof keyIndex === 'string' ? parseInt(keyIndex, 10) : keyIndex)
 		var location = [0,0]
+		// derive the Row and Column from the key index for many products
+		if (keyIndex!==0) {// program switch is always on index 0 and always R:0, C:0 unless remapped by btnLocaion array
 		location[0]= keyIndex-(this.deviceType.bBits*( Math.ceil(keyIndex/this.deviceType.bBits)-1))
 		location[1]= Math.ceil(keyIndex/this.deviceType.bBits)
+		}
+		// if the product has a btnLocaion array, then look up the Row and Column
 		if (this.deviceType.btnLocation !== undefined){
 		 location = this.deviceType.btnLocation[keyIndex]
 		}
