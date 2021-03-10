@@ -9,10 +9,11 @@ const devices = HID.devices()
 // I would like to be able to search the products.ts data 
 // How do we connect to 2 or more devices?
 //Can we connect, call genData, check the UID and then disiconnect?
-// sould be able to list which PIDs (more than one) we would like to connect to
+// should be able to list which PIDs (more than one) we would like to connect to
 
 
-var badPID = 1443 // hard coded PID to exclude for tests
+
+var badPID = 0 //  1443 // hard coded PID to exclude for tests
 
 const connectedXKeys = devices.filter(device => {
 	return (device.vendorId === XKeys.vendorId && device.usagePage === 12 && device.usage === 1 && (device.interface===0 ||device.interface===-1 )&& device.productId!==badPID) // Make sure that it is consumer page and the interface-property is set to 0 or -1
@@ -59,14 +60,16 @@ myXkeysPanel.on('down', (keyIndex, keyLocation,  UID, PID, productName, timeStam
 	console.log('Key pressed:  Index: ' + keyIndex + ' Row: '+ keyLocation[0] +' Col: '+ keyLocation[1]+' UID: ' + UID+' PID: '+PID+' Name: '+ productName+ ' Time Stamp: '+ timeStamp)  // report the key index and the Unit ID UID
 
 	// Light up a button when pressed:
-	myXkeysPanel.setBacklight(keyIndex, true,true)
+	myXkeysPanel.setAllBacklights(true,true)
+	myXkeysPanel.setBacklight(keyIndex, true,false) // set the current key to blue
 	
 	//if(UID!==5) myXkeysPanel.setUID(5)  // test of setting UID Caution: this is an EEPROM command, do not set it often 
 
 
 	myXkeysPanel.setIndicatorLED(2,true,true)  // test of setting LEDs at the top, 1 is green 2 is red
-	//myXkeysPanel.writeLcdDisplay(1,'Moose + Rat',true)  // test of setting lcd line 1, (line #, text, backlight)
-	//myXkeysPanel.writeLcdDisplay(2,'Wombat & Cow',true)  // test of setting lcd line 2
+	
+	myXkeysPanel.writeLcdDisplay(1,'Moose + Rat',true)  // test of setting lcd line 1, (line #, text, backlight)
+	myXkeysPanel.writeLcdDisplay(2,'Wombat & Cow',true)  // test of setting lcd line 2
 
 })
 // Listen to released keys:
@@ -74,7 +77,8 @@ myXkeysPanel.on('up', (keyIndex, keyLocation,  UID, PID, productName,timeStamp) 
 	console.log('Key released: Index: ' + keyIndex + ' Row: '+ keyLocation[0] +' Col: '+ keyLocation[1]+' UID: ' + UID+' PID: '+PID+' Name: '+ productName+ ' Time Stamp: '+ timeStamp)
 
 	// Turn off button light when released:
-	myXkeysPanel.setBacklight(keyIndex, false,true)
+	myXkeysPanel.setBacklight(keyIndex, false,false)
+	myXkeysPanel.setAllBacklights(false,true)
 	myXkeysPanel.setIndicatorLED(2,false,false) 
 })
 
