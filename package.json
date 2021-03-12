@@ -70,6 +70,9 @@
     "node-hid": "^2.1.1",
     "tslib": "^2.1.0"
   },
+  "optionalDependencies": {
+    "usb-detection": "^4.10.0"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.19",
     "@types/node": "^12.12.2",
