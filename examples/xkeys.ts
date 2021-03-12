@@ -1,36 +1,52 @@
-import { XKeys } from 'xkeys'
+import { XKeys, XKeysWatcher } from '../'
 
-// Connect to an x-keys panel:
-const myXkeysPanel = new XKeys()
+// Set up the watcher for xkeys
+const watcher = new XKeysWatcher()
 
-// Listen to pressed keys:
-myXkeysPanel.on('down', keyIndex => {
-	console.log('Key pressed: ' + keyIndex)
+watcher.on('connected', (xkeysPanel: XKeys) => {
+	console.log(`X-keys panel of type ${xkeysPanel.info.name} connected`)
 
-	// Light up a button when pressed:
-	myXkeysPanel.setBacklight(keyIndex, true)
-})
-// Listen to released keys:
-myXkeysPanel.on('up', keyIndex => {
-	console.log('Key released: ' + keyIndex)
+	xkeysPanel.on('disconnected', () => {
+		console.log(`X-keys panel of type ${xkeysPanel.info.name} was disconnected`)
+		// Clean up stuff
+		xkeysPanel.removeAllListeners()
+	})
+	xkeysPanel.on('error', (...errs) => {
+		console.log('X-keys error:', ...errs)
+	})
 
-	// Turn off button light when released:
-	myXkeysPanel.setBacklight(keyIndex, false)
+	// Listen to pressed keys:
+	xkeysPanel.on('down', (keyIndex, metadata) => {
+		console.log('Key pressed ', keyIndex, metadata)
+
+		// Light up a button when pressed:
+		xkeysPanel.setBacklight(keyIndex, 'red')
+	})
+	// Listen to released keys:
+	xkeysPanel.on('up', (keyIndex, metadata) => {
+		console.log('Key released', keyIndex, metadata)
+
+		// Turn off button light when released:
+		xkeysPanel.setBacklight(keyIndex, false)
+	})
+
+	// Listen to jog wheel changes:
+	xkeysPanel.on('jog', (index, deltaPos, metadata) => {
+		console.log(`Jog ${index} position has changed`, deltaPos, metadata)
+	})
+	// Listen to shuttle changes:
+	xkeysPanel.on('shuttle', (index, shuttlePos, metadata) => {
+		console.log(`Shuttle ${index} position has changed`, shuttlePos, metadata)
+	})
+	// Listen to joystick changes:
+	xkeysPanel.on('joystick', (index, position, metadata) => {
+		console.log(`Joystick ${index} position has changed`, position, metadata) // {x, y, z}
+	})
+	// Listen to t-bar changes:
+	xkeysPanel.on('tbar', (index, position, metadata) => {
+		console.log(`T-bar ${index} position has changed`, position, metadata)
+	})
 })
 
-// Listen to jog wheel changes:
-myXkeysPanel.on('jog', deltaPos => {
-	console.log('Jog position has changed: ' + deltaPos)
-})
-// Listen to shuttle changes:
-myXkeysPanel.on('shuttle', shuttlePos => {
-	console.log('Shuttle position has changed: ' + shuttlePos)
-})
-// Listen to joystick changes:
-myXkeysPanel.on('joystick', position => {
-	console.log('Joystick has changed:' + position) // {x, y, z}
-})
-// Listen to t-bar changes:
-myXkeysPanel.on('tbar', (position, rawPosition) => {
-    console.log('T-bar position has changed: ' + position + ' (uncalibrated: ' + rawPosition + ')')
-})
+// To stop watching, call
+// watcher.stop()
