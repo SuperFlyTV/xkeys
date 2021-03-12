@@ -13,10 +13,18 @@ export interface Device {
 	usage?: number
 }
 
+let mockWriteHandler: undefined | ((hid: HID, message: number[]) => void) = undefined
+export function setMockWriteHandler(handler: (hid: HID, message: number[]) => void) {
+	mockWriteHandler = handler
+}
+
 // export class HID extends EventEmitter {
 export class HID extends EventEmitter {
-	constructor (_path: string) {
+	private mockWriteHandler
+
+	constructor(_path: string) {
 		super()
+		this.mockWriteHandler = mockWriteHandler
 	}
 	// constructor(vid: number, pid: number);
 	close(): void {
