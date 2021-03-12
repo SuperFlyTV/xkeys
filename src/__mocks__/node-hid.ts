@@ -19,40 +19,41 @@ export class HID extends EventEmitter {
 		super()
 	}
 	// constructor(vid: number, pid: number);
-	close (): void {
+	close(): void {
 		// void
 	}
-	pause (): void {
+	pause(): void {
 		// void
 	}
-	read (_callback: (err: any, data: number[]) => void): void {
+	read(_callback: (err: any, data: number[]) => void): void {
 		// void
 	}
-	readSync (): number[] {
+	readSync(): number[] {
 		return []
 	}
-	readTimeout (_timeOut: number): number[] {
+	readTimeout(_timeOut: number): number[] {
 		return []
 	}
-	sendFeatureReport (_data: number[]): number {
+	sendFeatureReport(_data: number[]): number {
 		return 0
 	}
-	getFeatureReport (_reportIdd: number, _reportLength: number): number[] {
+	getFeatureReport(_reportIdd: number, _reportLength: number): number[] {
 		return []
 	}
-	resume (): void {
+	resume(): void {
 		// void
 	}
-	write (_values: number[]): number {
+	write(message: number[]): number {
+		this.mockWriteHandler?.(this, message)
 		return 0
 	}
-	setNonBlocking (_noBlock: boolean): void {
+	setNonBlocking(_noBlock: boolean): void {
 		// void
 	}
 }
-export function devices (): Device[] {
+export function devices(): Device[] {
 	return []
 }
-export function setDriverType (_type: 'hidraw' | 'libusb'): void {
+export function setDriverType(_type: 'hidraw' | 'libusb'): void {
 	// void
 }
