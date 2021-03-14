@@ -1,3 +1,7 @@
+/*
+ * This file contains helper functions used in tests.
+ * It is not exported to the resulting package.
+ */
 export function describeEvent(event: string, args: any[]): string {
 	const metadataStr = (metadata: any) => {
 		const strs: string[] = []

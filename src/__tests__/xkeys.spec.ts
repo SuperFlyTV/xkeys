@@ -4,7 +4,7 @@ import * as HIDMock from '../__mocks__/node-hid'
 import { describeEvent } from './lib'
 import { XKeys, XKeysEvents } from '../'
 
-describe('xkeys mock', () => {
+describe('Recorded tests', () => {
 	async function setupTestPanel(params: { productId: number }): Promise<XKeys> {
 		const hidDevice = {
 			vendorId: XKeys.vendorId,
