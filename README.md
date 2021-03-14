@@ -16,8 +16,8 @@ $ npm install --save xkeys
 
 ## BREAKING CHANGES
 
-Please note that version `>=2.0.0` is a BREAKING CHANGE, as most of the API have changed.
-If you're upgrading from `<2.0.0`, plase read the docs carefully.
+Please note that version `2.0.0` is a _BREAKING CHANGE_, as most of the API have changed.
+If you're upgrading from `<2.0.0`, please read the [_Migrations_](#Migrations) section below.
 
 ## Getting started
 
@@ -213,3 +213,27 @@ See [src/xkeys.ts](src/xkeys.ts) for more functionality.
 Thanks to official support from [P.I Enginneering, the X-keys manufacturer](https://xkeys.com/), there is support for all official (and some experimental) devices.
 
 See the full list in [src/products.ts](src/products.ts)
+
+## Migrations
+
+### 2.0.0
+
+Version `2.0.0` is a breaking changes, which requires several changes in how to use the library.
+
+The most notable changes are:
+
+| Before, `<2.0.0`                                     | Changes in `>=2.0.0`                                                                                                                                                          |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `let myXkeys = new XKeys()`                          | `let myXkeys = await XKeys.setupXkeysPanel()`                                                                                                                                 |
+| `myXkeys.on('down', (keyIndex) => {} )`              | The numbering of `keyIndexes` has changed:<br/>_ The PS-button is on index 0.<br/>_ Other buttons start on index 1.<br/>\* Numbering of buttons have changed for some models. |
+| `myXkeys.on('downKey', (keyIndex) => {} )`           | Use `.on('down')` instead                                                                                                                                                     |
+| `myXkeys.on('upKey', (keyIndex) => {} )`             | Use `.on('up')` instead                                                                                                                                                       |
+| `myXkeys.on('downAlt', (keyIndex) => {} )`           | Use `.on('down')` instead (PS-button is on index 0)                                                                                                                           |
+| `myXkeys.on('upAlt', (keyIndex) => {} )`             | Use `.on('up')` instead (PS-button is on index 0)                                                                                                                             |
+| `myXkeys.on('jog', (position) => {} )`               | `myXkeys.on('jog', (index, position) => {} )`                                                                                                                                 |
+| `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )`                                                                                                                             |
+| `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )`                                                                                                                                |
+| `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )`                                                                                                                            |
+| `myXkeys.setBacklight(...)`                          | Arguments changed, see docs                                                                                                                                                   |
+| `myXkeys.setAllBacklights(...)`                      | Arguments changed, see docs                                                                                                                                                   |
+| `myXkeys.setLED(...)`                                | `myXkeys.setIndicatorLED(...)`                                                                                                                                                |
