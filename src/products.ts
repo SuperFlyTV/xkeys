@@ -361,7 +361,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKMatrix: literal<Product>({
 		name: 'XK-128 Matrix', // this is a bare encoder board that can encode a 8x16 switch matrix
-		productId: [1227, 1230],
+		productId: [1030, 1032],
 		bBytes: 16,
 		bBits: 8,
 		colCount: 16, //  number of virtual columns
@@ -405,6 +405,14 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
 		timestamp: 18, // ms time since device boot 4 byte BE
+		btnLocation: [
+			[0, 0],
+			[0, 0], // the keyIndex of 1 on this product does not exsit
+			[1, 1],
+			[1, 2],
+			[1, 3],
+
+		],
 		disableKeys: [1],
 	}),
 	XK3SI: literal<Product>({
@@ -525,8 +533,8 @@ export const PRODUCTS: { [name: string]: Product } = {
 		productId: [1324],
 		bBytes: 2,
 		bBits: 8, // see documentation
-		colCount: 3, //  3 ports per side of unit ,
-		rowCount: 4, // each port has 2 switches
+		colCount: 6, //  3 ports per side of unit ,
+		rowCount: 2, // each port has 2 switches
 		hasPS: false, // none
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
@@ -536,16 +544,26 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XCDMX512TRJ45: literal<Product>({
 		name: 'XC-DMX512-T RJ45', // RJ45 connector for DMX512 and four 3.5 mm ports, contacts for a stereo Plug
-		productId: [1224],
+		productId: [1225],
 		bBytes: 1,
 		bBits: 8, // see documentation
-		colCount: 2, //  2 ports per side of unit ,
-		rowCount: 4, // each port has 2 switches
+		colCount: 4, //  2 ports per side of unit ,
+		rowCount: 2, // each port has 2 switches
 		hasPS: false, // none
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
 		hasDMX: true,
-
+		btnLocation: [ // columns are port number and row 1 is the first switch on the port and 2 is second
+			[0, 0],
+			[2, 1],
+			[1, 1],
+			[2, 2],
+			[1, 2],
+			[2, 3],
+			[1, 3],
+			[2, 4],
+			[1, 4],
+		],
 		//Sends DMX512 Data to DMX512 devivces on the , see documentation
 	}),
 
@@ -565,7 +583,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	XKE180BROAD: literal<Product>({
 		name: 'XKE-180 Broadcast Keyboard', //
 		productId: [1443],
-		bBytes: 30,
+		bBytes: 31,
 		bBits: 7, //
 		layout: [
 			['Keys', 0, 1, 1, 2, 24],
