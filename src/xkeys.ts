@@ -153,15 +153,15 @@ export class XKeys extends EventEmitter {
 
 		this._productId = deviceInfo.productId
 
-		for (const productKey in PRODUCTS) {
-			if (PRODUCTS[productKey].productId && PRODUCTS[productKey].productId.indexOf(this._productId) !== -1) {
-				this.product = PRODUCTS[productKey]
+		for (const product of Object.values(PRODUCTS)) {
+			if (product.productId.includes(this._productId)) {
+				this.product = product
 				break
 			}
 		}
 		if (!this.product) {
 			throw new Error(
-				`Unknown/Unsupported X-keys: "${deviceInfo.product}" (id: "${deviceInfo.productId}").\nPlease open an issue on our github page and we'll look into it!`
+				`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}").\nPlease report this as an issue on our github page!`
 			)
 		}
 

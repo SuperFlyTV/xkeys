@@ -4,5 +4,5 @@ module.exports = {
 		node: true,
 		jest: true,
 	},
-	ignorePatterns: ['**/dist/**/*', '**/__tests__/**/*', '**/__mocks__/**/*', '**/examples/**/*'],
+	ignorePatterns: ['**/dist/**/*', '**/__tests__/**/*', '**/__mocks__/**/*', '**/examples/**/*', '**/scripts/**/*'],
 }

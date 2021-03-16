@@ -1,74 +1,11 @@
-import { XKeys } from '..'
+import * as fs from 'fs'
 import * as HID from 'node-hid'
+import * as HIDMock from '../__mocks__/node-hid'
+import { describeEvent } from './lib'
+import { XKeys, XKeysEvents } from '../'
 
-function testData(xkeysDevice: XKeys, orgStr: string) {
-	const str: string = orgStr.replace(/ /g, '')
-	const d: number[] = []
-	for (let i = 0; i < str.length; i += 2) {
-		const s = str.slice(i, i + 2)
-		const v = parseInt(s, 16)
-
-		d.push(v)
-	}
-	const b = Buffer.from(d)
-
-	// @ts-ignore hack
-	xkeysDevice._debuggingEvents['data'](b)
-}
-
-describe('xkeys mock', () => {
-	let events
-	function resetEvents() {
-		events = {
-			down: {},
-			up: {},
-		}
-	}
-	resetEvents()
-	function assertEvent(evtName: string, keyName: string | number | null, value: any) {
-		if (keyName) {
-			if (events[evtName][keyName] !== value) {
-				console.log(events)
-				throw new Error(
-					'Assert Error: ' + evtName + '.' + keyName + ' not equal to ' + value + ', is ' + events[evtName][keyName]
-				)
-			}
-		} else {
-			if (events[evtName] !== value) {
-				console.log(events)
-				throw new Error('Assert Error: ' + evtName + ' not equal to ' + value + ', is ' + events[evtName])
-			}
-		}
-	}
-	function assertEventNot(evtName: string, keyName: string | number | null, value: any) {
-		if (keyName) {
-			if (events[evtName][keyName] === value) {
-				console.log(events)
-				throw new Error(
-					'Assert Error: ' + evtName + ',' + keyName + ' not different to ' + value + ', is ' + events[evtName][keyName]
-				)
-			}
-		} else {
-			if (events[evtName] === value) {
-				console.log(events)
-				throw new Error('Assert Error: ' + evtName + ' not different to ' + value + ', is ' + events[evtName])
-			}
-		}
-	}
-	function assertEventOnlyValue(evtName: string, keyName: string | number | null, value: any) {
-		assertEvent(evtName, keyName, value)
-		for (const key in events[evtName]) {
-			if (key !== keyName) {
-				assertEventNot(evtName, key, value)
-			}
-		}
-	}
+describe('Recorded tests', () => {
 	async function setupTestPanel(params: { productId: number }): Promise<XKeys> {
-		// const evts = {}
-		// params.on = (evt, fcn) => {
-		// 	evts[evt] = fcn
-		// }
-
 		const hidDevice = {
 			vendorId: XKeys.vendorId,
 			productId: params.productId,
@@ -76,533 +13,89 @@ describe('xkeys mock', () => {
 			path: 'mockPath',
 		} as HID.Device
 
-		// @ts-ignore mock
-		HID.setMockWriteHandler(handleWriteMessage)
+		HIDMock.setMockWriteHandler(handleXkeysMessages)
 
 		const myXkeysPanel = await XKeys.setupXkeysPanel(hidDevice)
-
-		// const myXkeysPanel = new XKeys('mockDevicePath', {}, {
-		// 	product: 'N/A',
-		// 	productId: params.productId
-		// })
-		// await myXkeysPanel.init()
-		// @ts-ignore inject
-		// myXkeysPanel._debuggingEvents = evts
-
-		myXkeysPanel.on('down', (keyIndex) => {
-			events['down'][keyIndex] = true
-			events['up'][keyIndex] = false
-		})
-		myXkeysPanel.on('up', (keyIndex) => {
-			events['down'][keyIndex] = false
-			events['up'][keyIndex] = true
-		})
-		myXkeysPanel.on('jog', (value) => {
-			events['jog'] = value
-
-			events['jogAcc'] = (events['jogAcc'] || 0) + value
-		})
-		myXkeysPanel.on('shuttle', (value) => {
-			events['shuttle'] = value
-		})
 
 		return myXkeysPanel
 	}
 	beforeAll(() => {
-		// @ts-ignore mock
+		expect(HIDMock.setMockWriteHandler).toBeTruthy()
+		// @ts-expect-error mock
 		expect(HID.setMockWriteHandler).toBeTruthy()
 	})
-	beforeEach(() => {
-		resetEvents()
-	})
-	test.only('XK-24', async () => {
-		console.log('aaaaaaaa')
-		const panel = await setupTestPanel({
-			productId: 1029,
+	beforeEach(() => {})
+
+	const dirPath = './src/__tests__/recordings/'
+
+	fs.readdirSync(dirPath).forEach((file) => {
+		test(`Recording "${file}"`, async () => {
+			const recording: any = JSON.parse(fs.readFileSync(dirPath + file, 'utf-8'))
+
+			const xkeysDevice = await setupTestPanel({
+				productId: recording.device.productId,
+			})
+			let lastDescription: string[] = []
+
+			const handleEvent = (event: keyof XKeysEvents) => {
+				xkeysDevice.on(event, (...args: any[]) => {
+					lastDescription.push(describeEvent(event, args))
+				})
+			}
+			handleEvent('down')
+			handleEvent('up')
+			handleEvent('jog')
+			handleEvent('shuttle')
+			handleEvent('joystick')
+			handleEvent('tbar')
+			handleEvent('disconnected')
+
+			// Go through all recorded events:
+			// (ie mock that data comes from the device, and check that the right events are emitted from the class)
+			expect(recording.events.length).toBeGreaterThanOrEqual(1)
+			for (const event of recording.events) {
+				expect(event.data).toHaveLength(1)
+
+				for (const data of event.data) {
+					// Mock the device sending data:
+					// @ts-expect-error hack
+					xkeysDevice.device.emit('data', Buffer.from(data, 'hex'))
+				}
+				expect(lastDescription).toEqual([event.description])
+
+				lastDescription = []
+			}
+
+			// Go through all recorded actions:
+			// (ie trigger a method on the class, verify that the data sent to the device is correct)
+			expect(recording.actions.length).toBeGreaterThanOrEqual(1)
+			resetSentData()
+			for (const action of recording.actions) {
+				try {
+					expect(xkeysDevice[action.method]).toBeTruthy()
+					expect(action.anomaly).toBeFalsy()
+
+					xkeysDevice[action.method](...action.arguments)
+
+					expect(sentData).toEqual(action.sentData)
+					resetSentData()
+				} catch (err) {
+					console.log('action', action)
+					throw err
+				}
+			}
 		})
-		console.log('bbbbbbbbbb')
-		// clicking through all keys:
-		testData(panel, '0100 01000000 008f5fe6 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '0', true)
-		testData(panel, '0100 00000000 008f6042 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEvent('up', '0', true)
-		assertEvent('down', '0', false)
-		testData(panel, '0100 02000000 008f6106 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '1', true)
-		testData(panel, '0100 00000000 008f615b 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 04000000 008f6237 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '2', true)
-		testData(panel, '0100 00000000 008f6286 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 08000000 008f633e 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '3', true)
-		testData(panel, '0100 00000000 008f638b 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 10000000 008f6457 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '4', true)
-		testData(panel, '0100 00000000 008f64a7 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 20000000 008f6532 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '5', true)
-		testData(panel, '0100 00000000 008f6582 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00010000 008f66c7 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '8', true)
-		testData(panel, '0100 00000000 008f6710 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00020000 008f67e1 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '9', true)
-		testData(panel, '0100 00000000 008f6831 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00040000 008f68e9 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '10', true)
-		testData(panel, '0100 00000000 008f6935 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00080000 008f69f1 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '11', true)
-		testData(panel, '0100 00000000 008f6a31 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00100000 008f6af4 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '12', true)
-		testData(panel, '0100 00000000 008f6b35 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00200000 008f6bd1 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '13', true)
-		testData(panel, '0100 00000000 008f6c11 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000100 008f6d75 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '16', true)
-		testData(panel, '0100 00000000 008f6dbe 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000200 008f6e91 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '17', true)
-		testData(panel, '0100 00000000 008f6ee4 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000400 008f6fb8 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '18', true)
-		testData(panel, '0100 00000000 008f6ffd 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000800 008f70b9 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '19', true)
-		testData(panel, '0100 00000000 008f70fe 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00001000 008f71c6 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '20', true)
-		testData(panel, '0100 00000000 008f7207 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00002000 008f7283 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '21', true)
-		testData(panel, '0100 00000000 008f72c8 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000001 008f7404 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '24', true)
-		testData(panel, '0100 00000000 008f7456 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000002 008f7532 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '25', true)
-		testData(panel, '0100 00000000 008f757a 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000004 008f764c 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '26', true)
-		testData(panel, '0100 00000000 008f7698 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000008 008f7744 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '27', true)
-		testData(panel, '0100 00000000 008f7789 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000010 008f7845 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '28', true)
-		testData(panel, '0100 00000000 008f7885 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0100 00000020 008f78f1 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '29', true)
-		testData(panel, '0100 00000000 008f793d 00000000 00000000 00000000 00000000 00000000 0000')
-		testData(panel, '0101 00000000 008f7d09 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', 'PS', true)
-		testData(panel, '0100 00000000 008f7d74 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEvent('down', 'PS', false)
-	})
-	test('XK-68', async () => {
-		// XK-68 Jog Shuttle
-
-		const panel = await setupTestPanel({
-			productId: 1114,
-		})
-
-		function buttonOnTheTop() {
-			resetEvents()
-
-			testData(panel, '0101 0000 0000 0080 0000 0000 0000 0500 0000 0015 ef7f 0000 0000 0000 0000 0000')
-			assertEvent('down', 'PS', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0015 f057 0000 0000 0000 0000 0000')
-			assertEvent('up', 'PS', true)
-		}
-
-		function jogFullClockwise() {
-			resetEvents()
-
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 3c9f 0000 0000 0000 0000 0000')
-			assertEvent('jog', null, 1)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 3cbd 0000 0000 0000 0000 0000')
-			assertEvent('jog', null, 0)
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 41c7 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 41e4 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 4504 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 4521 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 4855 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 4872 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 4ae5 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 4b02 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 4e41 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 4e60 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 5097 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 50b4 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 52ac 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 52c9 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 557c 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 559a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0080 0080 0000 0000 0000 0400 0100 000e 57fa 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 5818 0000 0000 0000 0000 0000')
-
-			assertEvent('jogAcc', 10, undefined)
-		}
-
-		function jogFullCounterClockwise() {
-			resetEvents()
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e 9f44 0000 0000 0000 0000 0000')
-			assertEvent('jog', null, -1)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e 9f61 0000 0000 0000 0000 0000')
-			assertEvent('jog', null, 0)
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e a388 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e a3a5 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e a66a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e a688 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e a86a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e a888 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e aa6a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e aa88 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e ac72 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e ac90 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e af18 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e af36 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e b21f 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e b23d 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e b4fc 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e b51a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 8080 0000 0000 0000 0400 ff00 000e b758 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 000e b777 0000 0000 0000 0000 0000')
-
-			assertEvent('jogAcc', -10, undefined)
-		}
-		function shuttleLeftThenCentre() {
-			resetEvents()
-			testData(panel, '0100 0000 0000 0000 0000 0000 0001 0400 00ff 0005 d6f8 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, -1)
-			testData(panel, '0100 0000 0000 0000 0000 0000 0002 0400 00fe 0005 d862 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0000 0000 0000 0004 0400 00fd 0005 d992 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0008 0400 00fc 0005 dab8 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0010 0400 00fb 0005 dcbd 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0020 0400 00fa 0005 de77 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0040 0400 00f9 0005 dfcc 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, -7)
-			testData(panel, '0100 0000 0000 0000 0000 0000 0020 0400 00fa 0005 e5b4 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0010 0400 00fb 0005 e676 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0008 0400 00fc 0005 e7fa 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0004 0400 00fd 0005 e979 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0002 0400 00fe 0005 ea50 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0001 0400 00ff 0005 ebb3 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0005 ecf6 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 0)
-		}
-		function softKeys() {
-			resetEvents()
-			// console.log('row 1')
-			testData(panel, '0100 0100 0000 0080 0000 0000 0000 0400 0000 0010 65d8 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '0', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6656 0000 0000 0000 0000 0000')
-			assertEvent('down', '0', false)
-
-			testData(panel, '0100 0001 0000 0080 0000 0000 0000 0400 0000 0010 66f8 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '8', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6770 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0100 0080 0000 0000 0000 0400 0000 0010 6814 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '16', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 687a 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0001 0080 0000 0000 0000 0400 0000 0010 691b 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '24', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6982 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0180 0000 0000 0000 0400 0000 0010 6a3a 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '32', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6aa2 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0081 0000 0000 0000 0400 0000 0010 6b45 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '40', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6baa 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0100 0000 0000 0400 0000 0010 6c50 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '48', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6cc3 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0001 0000 0000 0400 0000 0010 6d54 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '56', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6db8 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0100 0000 0400 0000 0010 6e56 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '64', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6ec1 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0001 0000 0400 0000 0010 6f4c 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '72', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 6fa4 0000 0000 0000 0000 0000')
-
-			// console.log('row 2')
-			testData(panel, '0100 0200 0000 0080 0000 0000 0000 0400 0000 0010 7148 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '1', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 71b4 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0002 0000 0080 0000 0000 0000 0400 0000 0010 7245 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '9', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 72b5 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0200 0080 0000 0000 0000 0400 0000 0010 7342 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 73af 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0002 0080 0000 0000 0000 0400 0000 0010 743c 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 74b0 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0280 0000 0000 0000 0400 0000 0010 7547 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 75b6 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0082 0000 0000 0000 0400 0000 0010 7656 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 76c2 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0200 0000 0000 0400 0000 0010 7758 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 77bf 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0002 0000 0000 0400 0000 0010 7858 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 78c4 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0200 0000 0400 0000 0010 795a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 79c5 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0002 0000 0400 0000 0010 7a4c 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 7aa1 0000 0000 0000 0000 0000')
-
-			// console.log('row 3')
-			testData(panel, '0100 0400 0000 0080 0000 0000 0000 0400 0000 0010 7c4c 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '2', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 7cb0 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0004 0000 0080 0000 0000 0000 0400 0000 0010 7d51 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 7db3 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0400 0080 0000 0000 0000 0400 0000 0010 7e55 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 7eaa 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0004 0080 0000 0000 0000 0400 0000 0010 7f52 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 7fbd 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0480 0000 0000 0000 0400 0000 0010 8067 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 80d7 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0084 0000 0000 0000 0400 0000 0010 816a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 81e1 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0400 0000 0000 0400 0000 0010 826f 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 82dd 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0004 0000 0000 0400 0000 0010 8365 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 83d5 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0400 0000 0400 0000 0010 846b 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 84cf 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0004 0000 0400 0000 0010 855c 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 85c2 0000 0000 0000 0000 0000')
-
-			// console.log('row 4')
-			testData(panel, '0100 0800 0000 0080 0000 0000 0000 0400 0000 0010 878b 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '3', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 87f2 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0008 0000 0080 0000 0000 0000 0400 0000 0010 889f 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 8905 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0800 0080 0000 0000 0000 0400 0000 0010 899d 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 89fe 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0008 0080 0000 0000 0000 0400 0000 0010 8aa0 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 8afe 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0880 0000 0000 0000 0400 0000 0010 8ba8 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 8c04 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0088 0000 0000 0000 0400 0000 0010 8cb1 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 8d16 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0800 0000 0000 0400 0000 0010 8db0 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 8e10 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0008 0000 0000 0400 0000 0010 8eb6 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 8f20 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0800 0000 0400 0000 0010 8fc3 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 902b 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0008 0000 0400 0000 0010 90b3 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 910f 0000 0000 0000 0000 0000')
-
-			// console.log('row 5')
-			testData(panel, '0100 1000 0000 0080 0000 0000 0000 0400 0000 0010 92bf 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '4', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9322 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0010 0000 0080 0000 0000 0000 0400 0000 0010 93c5 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9421 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 1000 0080 0000 0000 0000 0400 0000 0010 94d6 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9536 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0010 0080 0000 0000 0000 0400 0000 0010 95db 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9638 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 1080 0000 0000 0000 0400 0000 0010 96d9 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9745 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0090 0000 0000 0000 0400 0000 0010 97eb 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9854 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 1000 0000 0000 0400 0000 0010 98df 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9945 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0010 0000 0000 0400 0000 0010 99d2 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9a41 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 1000 0000 0400 0000 0010 9ad3 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9b35 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0010 0000 0400 0000 0010 9be4 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9c4a 0000 0000 0000 0000 0000')
-
-			// console.log('row 6 (rows 6-8 are missing keys 4-7 to make space for the jogwheel)')
-			testData(panel, '0100 2000 0000 0080 0000 0000 0000 0400 0000 0010 9e19 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '5', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9e79 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0020 0000 0080 0000 0000 0000 0400 0000 0010 9f17 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 9f7c 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 2000 0080 0000 0000 0000 0400 0000 0010 a00a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 a06e 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0020 0000 0000 0400 0000 0010 a1db 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 a23c 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 2000 0000 0400 0000 0010 a2ca 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 a327 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0020 0000 0400 0000 0010 a3b4 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '77', true)
-
-			// console.log('row 7')
-			testData(panel, '0100 4000 0000 0080 0000 0000 0000 0400 0000 0010 a5ae 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '6', true)
-
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 a60f 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0040 0000 0080 0000 0000 0000 0400 0000 0010 a6a4 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 a70a 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 4000 0080 0000 0000 0000 0400 0000 0010 a791 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 a7f4 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0040 0000 0000 0400 0000 0010 a98c 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 a9ed 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 4000 0000 0400 0000 0010 aa7b 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 aad5 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0040 0000 0400 0000 0010 ab5e 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 abb6 0000 0000 0000 0000 0000')
-
-			// console.log('row 8')
-			testData(panel, '0100 8000 0000 0080 0000 0000 0000 0400 0000 0010 ad5a 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 adb4 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0080 0000 0080 0000 0000 0000 0400 0000 0010 ae4b 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 aea5 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 8000 0080 0000 0000 0000 0400 0000 0010 af3b 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 af91 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0080 0000 0000 0400 0000 0010 b121 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 b178 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 8000 0000 0400 0000 0010 b209 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 b25f 0000 0000 0000 0000 0000')
-
-			testData(panel, '0100 0000 0000 0080 0000 0080 0000 0400 0000 0010 b2e0 0000 0000 0000 0000 0000')
-			assertEventOnlyValue('down', '79', true)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0010 b354 0000 0000 0000 0000 0000')
-			assertEvent('down', '79', false)
-		}
-
-		function shuttleRightThenCentre() {
-			resetEvents()
-
-			testData(panel, '0100 0000 0000 0000 0000 0000 0100 0400 0001 0006 3467 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 1)
-			testData(panel, '0100 0000 0000 0000 0000 0000 0200 0400 0002 0006 3612 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 2)
-			testData(panel, '0100 0000 0000 0000 0000 0000 0400 0400 0003 0006 3754 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0800 0400 0004 0006 38e5 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 1000 0400 0005 0006 3a65 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 2000 0400 0006 0006 3bdc 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 6)
-			testData(panel, '0100 0000 0000 0000 0000 0000 4000 0400 0007 0006 3ce6 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 7)
-			testData(panel, '0100 0000 0000 0000 0000 0000 2000 0400 0006 0006 404b 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 6)
-			testData(panel, '0100 0000 0000 0000 0000 0000 1000 0400 0005 0006 40ee 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0800 0400 0004 0006 4246 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0400 0400 0003 0006 4392 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0200 0400 0002 0006 4509 0000 0000 0000 0000 0000')
-			testData(panel, '0100 0000 0000 0000 0000 0000 0100 0400 0001 0006 46b1 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 1)
-			testData(panel, '0100 0000 0000 0080 0000 0000 0000 0400 0000 0006 480b 0000 0000 0000 0000 0000')
-			assertEvent('shuttle', null, 0)
-		}
-
-		jogFullClockwise()
-		jogFullCounterClockwise()
-		shuttleLeftThenCentre()
-		shuttleRightThenCentre()
-		softKeys()
-		buttonOnTheTop()
-	})
-	test('XK-4', async () => {
-		// This test is based upon https://github.com/SuperFlyTV/xkeys/issues/9
-		// Thanks to https://github.com/KnutHelstad
-
-		const panel = await setupTestPanel({
-			productId: 1049,
-		})
-
-		// clicking through all keys:
-
-		// I pressed button 1 here
-		testData(panel, '0000 01000000 03b30af8 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '0', true)
-		testData(panel, '0000 00000000 03b30c25 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEvent('up', '0', true)
-		assertEvent('down', '0', false)
-
-		// I pressed button 2 here
-		testData(panel, '0000 00010000 03b31054 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '8', true)
-		testData(panel, '0000 00000000 03b3118f 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEvent('up', '8', true)
-		assertEvent('down', '8', false)
-
-		// I pressed button 3 here
-		testData(panel, '0000 00000100 03b316b6 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '16', true)
-		testData(panel, '0000 00000000 03b317f1 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEvent('up', '16', true)
-		assertEvent('down', '16', false)
-		// I pressed button 4 here
-		testData(panel, '0000 00000001 03b31aff 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEventOnlyValue('down', '24', true)
-		testData(panel, '0000 00000000 03b31c0d 00000000 00000000 00000000 00000000 00000000 0000')
-		assertEvent('up', '24', true)
-		assertEvent('down', '24', false)
 	})
 })
 
-function handleWriteMessage(hid: HID.HID, message: number[]) {
+/** Data sent to the panel */
+let sentData: string[] = []
+
+function handleXkeysMessages(hid: HID.HID, message: number[]) {
+	// Replies to a few of the messages that are sent to the XKeys
+
+	sentData.push(Buffer.from(message).toString('hex'))
+
 	const firmVersion: number = 0
 	const unitID: number = 0
 
@@ -616,6 +109,7 @@ function handleWriteMessage(hid: HID.HID, message: number[]) {
 		hid.emit('data', data)
 		return
 	}
+	let reply = false
 
 	// Reply with full state:
 	const values: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // length?
@@ -625,11 +119,17 @@ function handleWriteMessage(hid: HID.HID, message: number[]) {
 	if (message[1] === 177) {
 		// generateData
 		values[1] += 2 // set the genData flag
+		reply = true
 	}
 
-	const data = Buffer.alloc(128) // length?
-	values.forEach((value, index) => {
-		data.writeUInt8(value, index)
-	})
-	hid.emit('data', data)
+	if (reply) {
+		const data = Buffer.alloc(128) // length?
+		values.forEach((value, index) => {
+			data.writeUInt8(value, index)
+		})
+		hid.emit('data', data)
+	}
+}
+function resetSentData() {
+	sentData = []
 }
