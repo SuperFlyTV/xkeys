@@ -356,6 +356,8 @@ export class XKeys extends EventEmitter {
 			name: this.product.name,
 			productId: this._productId,
 			unitId: this.unitId,
+			firmwareVersion: this._firmwareVersion, // added this imporant to defend against older firmware bugs
+
 
 			colCount: this.product.colCount,
 			rowCount: this.product.rowCount,
