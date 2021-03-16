@@ -220,6 +220,7 @@ export class XKeys extends EventEmitter {
 			for (let x = 0; x < this.product.bBytes; x++) {
 				for (let y = 0; y < this.product.bBits; y++) {
 					const index = x * this.product.bBits + y + 1 // add 1 so PS is at index 0, more accurately displays the total button number, but confuses the index for other use, such as LED addressing.
+
 					const d = data.readUInt8(2 + x)
 
 					const bit = d & (1 << y) ? true : false
@@ -359,6 +360,7 @@ export class XKeys extends EventEmitter {
 			name: this.product.name,
 			productId: this._productId,
 			unitId: this.unitId,
+			firmwareVersion: this._firmwareVersion, // added this imporant to defend against older firmware bugs
 
 			colCount: this.product.colCount,
 			rowCount: this.product.rowCount,

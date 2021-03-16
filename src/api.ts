@@ -68,6 +68,8 @@ export interface XKeysInfo {
 	 * From factory it's set to 0, but it can be changed using xkeys.setUnitId()
 	 */
 	unitId: number
+	/** firmware version of the device	 */
+	firmwareVersion: number
 
 	/** The number of physical columns */
 	colCount: number
