@@ -215,7 +215,6 @@ export class XKeys extends EventEmitter {
 			for (let x = 0; x < this.product.bBytes; x++) {
 				for (let y = 0; y < this.product.bBits; y++) {
 					const index = x * this.product.bBits + y + 1 // add 1 so PS is at index 0, more accurately displays the total key number, but confuses the index for other use, such as LED addressing.
-					//var keyIndex = x * 8 + y // this creates a key index based on the data bytes and skips some keys for many products.
 
 					const d = data.readUInt8(2 + x)
 
