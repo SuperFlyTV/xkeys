@@ -555,7 +555,7 @@ export class XKeys extends EventEmitter {
 	 * @param backlight  0 for off, 1 for on.
 	 * @returns undefined
 	 */
-	writeLCDDisplay(line: number, displayChar: string, backlight: boolean): void {
+	writeLcdDisplay(line: number, displayChar: string, backlight: boolean): void {
 		this.ensureInitialized()
 		if (!this.product.hasLCD) return // only used for LCD display devices.
 		const byteVals = [0, 206, 0, 1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] // load the array with 206 op code and spaces
