@@ -30,7 +30,7 @@ export interface Product {
 	 */
 	layout?: [string, number, number, number, number, number][]
 
-	/** Maps the (internal) keyIndex to a [Row, Column] */
+	/** Maps the (internal) btnIndex to a [Row, Column] */
 	btnLocation?: [number, number][]
 
 	timestamp?: number // the index of the start to the 4 byte time stamp
@@ -41,10 +41,10 @@ export interface Product {
 		joyZbyte: number
 	}[]
 
-	/** used to determine what keyIndex to back light mapping should be used. */
+	/** used to determine what btnIndex to back light mapping should be used. */
 	backLightType: BackLightType
-	/** blocks certain keyIndex from calling key events. */
-	disableKeys?: number[]
+	/** blocks certain btnIndex from calling button events. */
+	disableButtons?: number[]
 
 	hasJog?: { jogByte: number }[]
 	hasShuttle?: { shuttleByte: number }[]
@@ -62,11 +62,11 @@ export enum BackLightType {
 	NONE = 0,
 	/** Legacy LED:s, blue and red backlights */
 	LEGACY = 2,
-	/** Only blue light. Is the stick keys, that requires special mapping. */
-	STICK_KEYS = 3,
-	/** Backlight LED type 4, is the 40 keys, map keyIndex-1 to ledIndex */
+	/** Only blue light. Is the stick buttons, that requires special mapping. */
+	STICK_BUTTONS = 3,
+	/** Backlight LED type 4, is the 40 buttons, map btnIndex-1 to ledIndex */
 	LINEAR = 4,
-	/** Backlight LED type 5 is the RGB 24 keys */
+	/** Backlight LED type 5 is the RGB 24 buttons */
 	REMAP_24 = 5,
 }
 
@@ -107,7 +107,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 4, // number of physical columns
 		rowCount: 1, // number of physical rows
 		hasPS: true, // slide switch on end
-		backLightType: BackLightType.STICK_KEYS, // only has blue light
+		backLightType: BackLightType.STICK_BUTTONS, // only has blue light
 		backLight2offset: 0, //
 		timestamp: 6, // ms time since device boot 4 byte BE
 	}),
@@ -119,7 +119,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 8, // number of physical columns
 		rowCount: 1, // number of physical rows
 		hasPS: true, // slide switch on end
-		backLightType: BackLightType.STICK_KEYS, // only has blue light
+		backLightType: BackLightType.STICK_BUTTONS, // only has blue light
 		backLight2offset: 0, //
 		timestamp: 6, // ms time since device boot 4 byte BE
 		btnLocation: [
@@ -132,7 +132,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1, 7],
 			[1, 4],
 			[1, 8],
-		], // map key index to [Row,Column] 0,0 is program switch
+		], // map button index to [Row,Column] 0,0 is program switch
 	}),
 	XK16: literal<Product>({
 		name: 'XK-16 Stick',
@@ -142,8 +142,8 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 16, // number of physical columns
 		rowCount: 1, // number of physical rows
 		hasPS: true, // slide switch on end
-		backLightType: BackLightType.STICK_KEYS, // only has blue backlight
-		backLight2offset: 0, // only one set of LEDs under keys
+		backLightType: BackLightType.STICK_BUTTONS, // only has blue backlight
+		backLight2offset: 0, // only one set of LEDs under the buttons
 		timestamp: 6, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
@@ -222,7 +222,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80, // offset used to access second bank of LEDs, usually the red is on bank 2
 		timestamp: 18, // ms time since device boot 4 byte BE
-		disableKeys: [28, 29, 30, 36, 37, 38, 44, 45, 46, 52, 53, 54], // these are the index of the "hole" created by the joystick in the center, they will always be 0
+		disableButtons: [28, 29, 30, 36, 37, 38, 44, 45, 46, 52, 53, 54], // these are the index of the "hole" created by the joystick in the center, they will always be 0
 	}),
 	XKR32: literal<Product>({
 		// discontinued product, XKE 40 is viable replacement
@@ -245,7 +245,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 20, // number of physical columns,
 		rowCount: 2, //  number of physical rows
 		hasPS: true, // behind small hole on right side.
-		backLightType: BackLightType.LINEAR, // map keyIndex-1  to ledIndex
+		backLightType: BackLightType.LINEAR, // map btnIndex-1  to ledIndex
 		backLight2offset: 40, // off set to control second led bank.
 		timestamp: 31, // ms time since device boot 4 byte BE
 		btnLocation: [
@@ -309,7 +309,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80,
 		timestamp: 12, // ms time since device boot 4 byte BE
-		//disableKeys: 	[2,10,18,26,34,42,50,58,66,74,19,20,21,22,23,59,60,61,] // these keys are not installed on the 60 key unit, these bytes will always be 0.
+		//disableButtons: 	[2,10,18,26,34,42,50,58,66,74,19,20,21,22,23,59,60,61,] // these buttons are not installed on the 60 button unit, these bytes will always be 0.
 	}),
 	XK80: literal<Product>({
 		name: 'XK-80',
@@ -345,7 +345,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 128,
 		//timeStamp:	31, // the XKE-124 T-bar has no time stamp for technical reasons
-		disableKeys: [109, 110, 111, 112],
+		disableButtons: [109, 110, 111, 112],
 	}),
 	XKE128: literal<Product>({
 		name: 'XKE-128',
@@ -370,8 +370,8 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.NONE, // no back light, only the 2 standard indicator LEDs, also availe on header, see documentation
 		backLight2offset: 0,
 		timestamp: 18, // ms time since device boot 4 byte BE
-		// many keys may be disabled or not as the custom wiring determines this.
-		// to prevent phantom keys, external diodes may be required, if diodes not used the board may be set by write command 215, see documentation
+		// many buttons may be disabled or not as the custom wiring determines this.
+		// to prevent phantom buttons, external diodes may be required, if diodes not used the board may be set by write command 215, see documentation
 	}),
 	XK68JOGSHUTTLE: literal<Product>({
 		name: 'XK-68 Jog-Shuttle',
@@ -392,7 +392,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80,
 		timestamp: 18, // ms time since device boot 4 byte BE
-		disableKeys: [30, 31, 32, 38, 39, 40, 46, 47, 48, 54, 55, 56],
+		disableButtons: [30, 31, 32, 38, 39, 40, 46, 47, 48, 54, 55, 56],
 	}),
 	XK3FOOT: literal<Product>({
 		name: 'XK-3 Foot Pedal',
@@ -405,7 +405,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
 		timestamp: 18, // ms time since device boot 4 byte BE
-		disableKeys: [1],
+		disableButtons: [1],
 	}),
 	XK3SI: literal<Product>({
 		name: 'XK-3 Switch Interface', // one 3.5 mm port, contacts for a TRRS Plug
@@ -426,7 +426,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[2, 0],
 			[1, 3],
 		], // bit 3 has been mapped to R1,C0 this is the bit that is set if any plug is in the 3.5 mm socket. Helps tell between no switch attached or just no switches pressed.
-		disableKeys: [4], // Exclude index 4, redundent on index 3, note some or all of the keys may be triggered when plugging switch into 3.5 mm socket
+		disableButtons: [4], // Exclude index 4, redundent on index 3, note some or all of the buttons may be triggered when plugging switch into 3.5 mm socket
 	}),
 	XK12SI: literal<Product>({
 		name: 'XK-12 Switch Interface', // six 3.5 mm ports, contacts for a stereo Plug
@@ -458,7 +458,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[2, 6],
 			[1, 6],
 		], // column indicates port #, mono plugs map to row 1, stereo plugs to row 1 and 2
-		// due to the stereo jack some keys may always be down when a single pole (mono) plug is plugged in.
+		// due to the stereo jack some buttons may always be down when a single pole (mono) plug is plugged in.
 	}),
 	XKHD15WI: literal<Product>({
 		name: 'XK-HD15 Wire Interface', // HD15 connector for 10 inputs and two 3.5 mm ports, contacts for a stereo Plug
@@ -608,6 +608,6 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80,
 		timestamp: 31, // ms time since device boot 4 byte BE
-		disableKeys: [6, 7, 8, 14, 15, 16, 22, 23, 24, 30, 31, 32, 73, 74, 75, 73], // These bits are messy, better to ignore them
+		disableButtons: [6, 7, 8, 14, 15, 16, 22, 23, 24, 30, 31, 32, 73, 74, 75, 73], // These bits are messy, better to ignore them
 	}),
 }

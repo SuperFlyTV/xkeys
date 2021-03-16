@@ -12,8 +12,8 @@ XKeys.setupXkeysPanel()
 			console.log('X-keys error:', ...errs)
 		})
 
-		xkeysPanel.on('down', (keyIndex, metadata) => {
-			console.log('Key pressed', keyIndex, metadata)
+		xkeysPanel.on('down', (btnIndex, metadata) => {
+			console.log('Button pressed', btnIndex, metadata)
 		})
 
 		// ...

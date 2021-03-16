@@ -12,13 +12,13 @@ export function describeEvent(event: string, args: any[]): string {
 	}
 
 	if (event === 'down') {
-		const keyIndex = args[0]
+		const btnIndex = args[0]
 		const metadata = args[1]
-		return `Button ${keyIndex} pressed.  Metadata: ${metadataStr(metadata)}`
+		return `Button ${btnIndex} pressed.  Metadata: ${metadataStr(metadata)}`
 	} else if (event === 'up') {
-		const keyIndex = args[0]
+		const btnIndex = args[0]
 		const metadata = args[1]
-		return `Button ${keyIndex} released. Metadata: ${metadataStr(metadata)}`
+		return `Button ${btnIndex} released. Metadata: ${metadataStr(metadata)}`
 	} else if (event === 'jog') {
 		const index = args[0]
 		const value = args[1]

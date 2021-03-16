@@ -7,7 +7,7 @@ import {
 	Color,
 	EventMetadata,
 	HID_Device,
-	KeyEventMetadata,
+	ButtonEventMetadata,
 	XKeysEvents,
 	XKeysInfo,
 } from './api'
@@ -59,17 +59,17 @@ export class XKeys extends EventEmitter {
 
 		if (!devicePathOrHIDDevice) {
 			// Device not provided, will then select any connected device:
-			const connectedXKeys = XKeys.listAllConnectedPanels()
-			if (!connectedXKeys.length) {
+			const connectedXkeys = XKeys.listAllConnectedPanels()
+			if (!connectedXkeys.length) {
 				throw new Error('Could not find any connected X-keys panels.')
 			}
 			// Just select the first one:
-			devicePath = connectedXKeys[0].path
+			devicePath = connectedXkeys[0].path
 			device = new HID.HID(devicePath)
 
 			deviceInfo = {
-				product: connectedXKeys[0].product,
-				productId: connectedXKeys[0].productId,
+				product: connectedXkeys[0].product,
+				productId: connectedXkeys[0].productId,
 			}
 		} else if (isHID_Device(devicePathOrHIDDevice)) {
 			// is HID.Device
@@ -112,9 +112,9 @@ export class XKeys extends EventEmitter {
 			}
 		}
 
-		if (!device) throw new Error('Error setting up XKeys: device not found')
-		if (!devicePath) throw new Error('Error setting up XKeys: devicePath not found')
-		if (!deviceInfo) throw new Error('Error setting up XKeys: deviceInfo not found')
+		if (!device) throw new Error('Error setting up X-keys: device not found')
+		if (!devicePath) throw new Error('Error setting up X-keys: devicePath not found')
+		if (!deviceInfo) throw new Error('Error setting up X-keys: deviceInfo not found')
 
 		const xkeys = new XKeys(devicePath, device, deviceInfo)
 
@@ -123,17 +123,22 @@ export class XKeys extends EventEmitter {
 
 		return xkeys
 	}
-	/** Returns a list of all connected xkeys-HID-devices */
+	/** Returns a list of all connected X-keys-HID-devices */
 	static listAllConnectedPanels(): HID_Device[] {
-		const connectedXKeys = HID.devices().filter((device) => {
+		const connectedXkeys = HID.devices().filter((device) => {
 			// Ensures device with interface 0 is selected (other interface ids do not seem to work)
 
 			// Note: device.usage has been removed in node-hid: https://github.com/SuperFlyTV/xkeys/issues/4
 			// Using interface instead:
 
 			return device.vendorId === XKeys.vendorId && device.interface === 0 && device.path
+			// todo: change this to lookup in products.ts instead?
+
+			if (device.vendorId === XKeys.vendorId && device.path) {
+				return false
+			}
 		})
-		return connectedXKeys as HID_Device[]
+		return connectedXkeys as HID_Device[]
 	}
 
 	/** Vendor id for the X-keys panels */
@@ -214,9 +219,7 @@ export class XKeys extends EventEmitter {
 
 			for (let x = 0; x < this.product.bBytes; x++) {
 				for (let y = 0; y < this.product.bBits; y++) {
-					const index = x * this.product.bBits + y + 1 // add 1 so PS is at index 0, more accurately displays the total key number, but confuses the index for other use, such as LED addressing.
-					//var keyIndex = x * 8 + y // this creates a key index based on the data bytes and skips some keys for many products.
-
+					const index = x * this.product.bBits + y + 1 // add 1 so PS is at index 0, more accurately displays the total button number, but confuses the index for other use, such as LED addressing.
 					const d = data.readUInt8(2 + x)
 
 					const bit = d & (1 << y) ? true : false
@@ -228,7 +231,7 @@ export class XKeys extends EventEmitter {
 				// program switch/button is on byte index 1 , bit 1
 				const d = data.readUInt8(1)
 				const bit = d & (1 << 0) ? true : false // get first bit only
-				buttonStates.set(0, bit) // always keyIndex of PS to 0
+				buttonStates.set(0, bit) // always btnIndex of PS to 0
 			}
 			this.product.hasJog?.forEach((jog, index) => {
 				const d = data[jog.jogByte] // Jog
@@ -254,10 +257,10 @@ export class XKeys extends EventEmitter {
 				analogStates.tbar[index] = d
 			})
 
-			// Disabled/nonexisting keys: important as some keys in the jog & shuttle devices are used for shuttle events in hardware.
-			if (this.product.disableKeys) {
-				this.product.disableKeys.forEach((keyIndex) => {
-					buttonStates.set(keyIndex, false)
+			// Disabled/nonexisting buttons: important as some "buttons" in the jog & shuttle devices are used for shuttle events in hardware.
+			if (this.product.disableButtons) {
+				this.product.disableButtons.forEach((btnIndex) => {
+					buttonStates.set(btnIndex, false)
 				})
 			}
 
@@ -266,13 +269,13 @@ export class XKeys extends EventEmitter {
 				if ((this._buttonStates.get(index) || false) !== buttonStates.get(index)) {
 					const btnLocation = this._findBtnLocation(index)
 
-					const metadata: KeyEventMetadata = {
+					const metadata: ButtonEventMetadata = {
 						row: btnLocation.row,
 						col: btnLocation.col,
 						timestamp: timestamp,
 					}
 					if (buttonState) {
-						// key is pressed
+						// Button is pressed
 						this.emit('down', index, metadata)
 					} else {
 						this.emit('up', index, metadata)
@@ -384,9 +387,9 @@ export class XKeys extends EventEmitter {
 	}
 
 	/**
-	 * Returns an object with current Key states
+	 * Returns an object with current Button states
 	 */
-	getKeys(): ButtonStates {
+	getButtons(): ButtonStates {
 		return Object.assign({}, this._buttonStates) // Return copy
 	}
 
@@ -406,35 +409,35 @@ export class XKeys extends EventEmitter {
 		this._write([0, 179, ledIndex, on ? (flashing ? 2 : 1) : 0])
 	}
 	/**
-	 * Sets the backlight of a key
-	 * @param keyIndex The key of which to set the backlight color
+	 * Sets the backlight of a button
+	 * @param btnIndex The button of which to set the backlight color
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
 	 * @param flashing boolean: flashing or not (if on)
 	 * @returns undefined
 	 */
 	setBacklight(
-		keyIndex: number,
+		btnIndex: number,
 		/** RGB, RRGGBB, #RRGGBB */
 		color: Color | string | boolean | null,
 		flashing?: boolean
 	): void {
 		this.ensureInitialized()
-		if (keyIndex === 0) return // PS-button has no backlight
+		if (btnIndex === 0) return // PS-button has no backlight
 
-		this._verifyKeyIndex(keyIndex)
+		this._verifyButtonIndex(btnIndex)
 		color = this._interpretColor(color, this.product.backLightType)
 
-		const location = this._findBtnLocation(keyIndex)
+		const location = this._findBtnLocation(btnIndex)
 
 		if (this.product.backLightType === BackLightType.REMAP_24) {
 			const ledIndex = (location.col - 1) * 8 + location.row - 1
-			// backlight LED type 5 is the RGB 24 keys
+			// backlight LED type 5 is the RGB 24 buttons
 			this._write([0, 181, ledIndex, color.g, color.r, color.b, flashing ? 1 : 0]) // Byte order is actually G,R,B,F)
 			return
 		}
 
-		if (this.product.backLightType === BackLightType.STICK_KEYS) {
-			// The stick keys, that requires special mapping.
+		if (this.product.backLightType === BackLightType.STICK_BUTTONS) {
+			// The stick buttons, that requires special mapping.
 
 			let ledIndex = location.col - 1 // 0 based linear numbering sort of...
 			if (ledIndex > 11) ledIndex = ledIndex + 4
@@ -443,9 +446,9 @@ export class XKeys extends EventEmitter {
 			const on: boolean = color.r > 0 || color.g > 0 || color.b > 0
 			this._write([0, 181, ledIndex, on ? (flashing ? 2 : 1) : 0, 1])
 		} else if (this.product.backLightType === BackLightType.LINEAR) {
-			// The 40 keys, that requires special mapping.
+			// The 40 buttons, that requires special mapping.
 
-			const ledIndex = keyIndex - 1 // 0 based linear numbering sort of...
+			const ledIndex = btnIndex - 1 // 0 based linear numbering sort of...
 
 			const on: boolean = color.r > 0 || color.g > 0 || color.b > 0
 
@@ -464,7 +467,7 @@ export class XKeys extends EventEmitter {
 		}
 	}
 	/**
-	 * Sets the backlight of all keys
+	 * Sets the backlight of all buttons
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
 	 */
 	setAllBacklights(color: Color | string | boolean | null): void {
@@ -472,7 +475,7 @@ export class XKeys extends EventEmitter {
 		color = this._interpretColor(color, this.product.backLightType)
 
 		if (this.product.backLightType === BackLightType.REMAP_24) {
-			// backlight LED type 5 is the RGB 24 keys
+			// backlight LED type 5 is the RGB 24 buttons
 
 			this._write([0, 182, color.g, color.r, color.b]) // Byte order is actually G,R,B
 		} else {
@@ -553,7 +556,7 @@ export class XKeys extends EventEmitter {
 	 * @param backlight  0 for off, 1 for on.
 	 * @returns undefined
 	 */
-	writeLCDDisplay(line: number, displayChar: string, backlight: boolean): void {
+	writeLcdDisplay(line: number, displayChar: string, backlight: boolean): void {
 		this.ensureInitialized()
 		if (!this.product.hasLCD) return // only used for LCD display devices.
 		const byteVals = [0, 206, 0, 1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] // load the array with 206 op code and spaces
@@ -617,24 +620,24 @@ export class XKeys extends EventEmitter {
 		return message
 	}
 
-	private _verifyKeyIndex(keyIndex: number): void {
-		if (!(keyIndex >= 0 && keyIndex < 8 * this.product.bBytes + 1)) {
-			throw new Error(`Invalid keyIndex: ${keyIndex}`)
+	private _verifyButtonIndex(btnIndex: number): void {
+		if (!(btnIndex >= 0 && btnIndex < 8 * this.product.bBytes + 1)) {
+			throw new Error(`Invalid btnIndex: ${btnIndex}`)
 		}
 	}
-	private _findBtnLocation(keyIndex: number): { row: number; col: number } {
+	private _findBtnLocation(btnIndex: number): { row: number; col: number } {
 		let location: { row: number; col: number } = { row: 0, col: 0 }
-		// derive the Row and Column from the key index for many products
-		if (keyIndex !== 0) {
+		// derive the Row and Column from the button index for many products
+		if (btnIndex !== 0) {
 			// program switch is always on index 0 and always R:0, C:0 unless remapped by btnLocaion array
-			location.row = keyIndex - this.product.bBits * (Math.ceil(keyIndex / this.product.bBits) - 1)
-			location.col = Math.ceil(keyIndex / this.product.bBits)
+			location.row = btnIndex - this.product.bBits * (Math.ceil(btnIndex / this.product.bBits) - 1)
+			location.col = Math.ceil(btnIndex / this.product.bBits)
 		}
 		// if the product has a btnLocaion array, then look up the Row and Column
 		if (this.product.btnLocation !== undefined) {
 			location = {
-				row: this.product.btnLocation[keyIndex][0],
-				col: this.product.btnLocation[keyIndex][1],
+				row: this.product.btnLocation[btnIndex][0],
+				col: this.product.btnLocation[btnIndex][1],
 			}
 		}
 		return location

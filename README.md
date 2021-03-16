@@ -44,19 +44,19 @@ watcher.on('connected', (xkeysPanel) => {
 		console.log('X-keys error:', ...errs)
 	})
 
-	// Listen to pressed keys:
-	xkeysPanel.on('down', (keyIndex, metadata) => {
-		console.log('Key pressed ', keyIndex, metadata)
+	// Listen to pressed buttons:
+	xkeysPanel.on('down', (btnIndex, metadata) => {
+		console.log('Button pressed ', btnIndex, metadata)
 
 		// Light up a button when pressed:
-		xkeysPanel.setBacklight(keyIndex, 'red')
+		xkeysPanel.setBacklight(btnIndex, 'red')
 	})
-	// Listen to released keys:
-	xkeysPanel.on('up', (keyIndex, metadata) => {
-		console.log('Key released', keyIndex, metadata)
+	// Listen to released buttons:
+	xkeysPanel.on('up', (btnIndex, metadata) => {
+		console.log('Button released', btnIndex, metadata)
 
 		// Turn off button light when released:
-		xkeysPanel.setBacklight(keyIndex, false)
+		xkeysPanel.setBacklight(btnIndex, false)
 	})
 
 	// Listen to jog wheel changes:
@@ -98,8 +98,8 @@ XKeys.setupXkeysPanel()
 			console.log('X-keys error:', ...errs)
 		})
 
-		xkeysPanel.on('down', (keyIndex, metadata) => {
-			console.log('Key pressed', keyIndex, metadata)
+		xkeysPanel.on('down', (btnIndex, metadata) => {
+			console.log('Button pressed', btnIndex, metadata)
 		})
 
 		// ...
@@ -128,7 +128,7 @@ XKeys.listAllConnectedPanels().forEach(() => {
 
 | Event            | Description                                                                       |
 | ---------------- | --------------------------------------------------------------------------------- | --- |
-| `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(keyIndex, metadata)`. |     |
+| `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(btnIndex, metadata)`. |     |
 | `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(jogValue)`                  |
 | `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(shuttleValue)`                |
 | `"joystick"`     | Triggered when the joystick is moved. Emitted with `({x, y, z})`                  |
@@ -140,20 +140,20 @@ XKeys.listAllConnectedPanels().forEach(() => {
 #### Set backlight of a button
 
 ```javascript
-xkeysPanel.setBacklight(keyIndex, color)
+xkeysPanel.setBacklight(btnIndex, color)
 
 // Examples:
 // Set blue light
-xkeysPanel.setBacklight(keyIndex, '0000ff')
+xkeysPanel.setBacklight(btnIndex, '0000ff')
 // Set any available default light
-xkeysPanel.setBacklight(keyIndex, true)
+xkeysPanel.setBacklight(btnIndex, true)
 // Turn off light
-xkeysPanel.setBacklight(keyIndex, false)
+xkeysPanel.setBacklight(btnIndex, false)
 // Set flashing light
-xkeysPanel.setBacklight(keyIndex, 'red', true)
+xkeysPanel.setBacklight(btnIndex, 'red', true)
 
 // Set color (for RGB-supported devices)
-xkeysPanel.setBacklight(keyIndex, 'ff3300')
+xkeysPanel.setBacklight(btnIndex, 'ff3300')
 ```
 
 #### Set the LEDs (the red/green status LED's)
@@ -225,15 +225,15 @@ The most notable changes are:
 | Before, `<2.0.0`                                     | Changes in `>=2.0.0`                                                                                                                                                          |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `let myXkeys = new XKeys()`                          | `let myXkeys = await XKeys.setupXkeysPanel()`                                                                                                                                 |
-| `myXkeys.on('down', (keyIndex) => {} )`              | The numbering of `keyIndexes` has changed:<br/>_ The PS-button is on index 0.<br/>_ Other buttons start on index 1.<br/>\* Numbering of buttons have changed for some models. |
-| `myXkeys.on('downKey', (keyIndex) => {} )`           | Use `.on('down')` instead                                                                                                                                                     |
-| `myXkeys.on('upKey', (keyIndex) => {} )`             | Use `.on('up')` instead                                                                                                                                                       |
-| `myXkeys.on('downAlt', (keyIndex) => {} )`           | Use `.on('down')` instead (PS-button is on index 0)                                                                                                                           |
-| `myXkeys.on('upAlt', (keyIndex) => {} )`             | Use `.on('up')` instead (PS-button is on index 0)                                                                                                                             |
+| `myXkeys.on('down', (btnIndex) => {} )`              | The numbering of `btnIndexes` has changed:<br/>_ The PS-button is on index 0.<br/>_ Other buttons start on index 1.<br/>\* Numbering of buttons have changed for some models. |
+| `myXkeys.on('downKey', (btnIndex) => {} )`           | Use `.on('down')` instead                                                                                                                                                     |
+| `myXkeys.on('upKey', (btnIndex) => {} )`             | Use `.on('up')` instead                                                                                                                                                       |
+| `myXkeys.on('downAlt', (btnIndex) => {} )`           | Use `.on('down')` instead (PS-button is on index 0)                                                                                                                           |
+| `myXkeys.on('upAlt', (btnIndex) => {} )`             | Use `.on('up')` instead (PS-button is on index 0)                                                                                                                             |
 | `myXkeys.on('jog', (position) => {} )`               | `myXkeys.on('jog', (index, position) => {} )`                                                                                                                                 |
 | `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )`                                                                                                                             |
 | `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )`                                                                                                                                |
 | `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )`                                                                                                                            |
 | `myXkeys.setBacklight(...)`                          | Arguments changed, see docs                                                                                                                                                   |
 | `myXkeys.setAllBacklights(...)`                      | Arguments changed, see docs                                                                                                                                                   |
-| `myXkeys.setLED(...)`                                | `myXkeys.setIndicatorLED(...)`                                                                                                                                                |
+| `myXkeys.setLED(index, ...)`                                | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one) |

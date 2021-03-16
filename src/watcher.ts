@@ -31,11 +31,11 @@ function USBDetect(): USBDetectType {
 
 	// else emit error:
 
-	throw `XKeysWatcher requires the dependency "usb-detection" to be installed, It might have been skipped due to your platform being unsupported (this is an issue with "usb-detection", not the xkeys library).
+	throw `XKeysWatcher requires the dependency "usb-detection" to be installed, It might have been skipped due to your platform being unsupported (this is an issue with "usb-detection", not the X-keys library).
 
 You can try to install the depencency manually, by running "npm install usb-detection".
 
-If you're unable to install the "usb-detection" library, you can still connect to xkeys panels manually by using XKeys.setupXkeysPanel() instead.
+If you're unable to install the "usb-detection" library, you can still connect to X-keys panels manually by using XKeys.setupXkeysPanel() instead.
 `
 }
 
@@ -53,7 +53,7 @@ export declare interface XKeysWatcher {
 let watcherCount = 0
 /**
  * Set up a watcher for newly connected X-keys panels.
- * Note: It is highly recommended to set up a listener for the disconnected event on the xkeys-panel, to clean up after a disconnected device.
+ * Note: It is highly recommended to set up a listener for the disconnected event on the X-keys panel, to clean up after a disconnected device.
  */
 export class XKeysWatcher extends EventEmitter {
 	private seenDevicePaths: {
@@ -80,7 +80,7 @@ export class XKeysWatcher extends EventEmitter {
 		USBDetect().on(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
 		USBDetect().on(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
 
-		// Also do a sweep for all currently connected xkeys:
+		// Also do a sweep for all currently connected X-keys panels:
 		this.updateConnectedDevices()
 	}
 	public stop(): void {
@@ -181,7 +181,7 @@ export class XKeysWatcher extends EventEmitter {
 				if (this.seenDevicePaths[devicePath]) {
 					// yes, it is still connected
 
-					// Listen to the disconnected event, because often if comes faster from the xkeys than from this watcher.
+					// Listen to the disconnected event, because often if comes faster from the X-keys than from this watcher.
 					const onDisconnected = () => {
 						delete this.seenDevicePaths[devicePath]
 						xkeysPanel.removeListener('disconnected', onDisconnected)

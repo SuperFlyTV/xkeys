@@ -20,6 +20,7 @@ export interface AnalogStates {
 	// todo: Implement these:
 	// slider?: number[] // x with feedback
 	// trackball?: {x: number, y: number}[]
+	// trackpad?: {x: number, y: number, z: number}[] // z: proximity/force
 }
 export interface JoystickValue {
 	/** -127 to 127 */
@@ -38,17 +39,17 @@ export interface EventMetadata {
 	 */
 	timestamp: number
 }
-export interface KeyEventMetadata extends EventMetadata {
-	/** Row of the key location*/
+export interface ButtonEventMetadata extends EventMetadata {
+	/** Row of the button location*/
 	row: number
-	/** Column of the key location */
+	/** Column of the button location */
 	col: number
 }
 export interface XKeysEvents {
 	// Note: This interface defines strong typings for any events that are emitted by the XKeys class.
 
-	down: (keyIndex: number, metadata: KeyEventMetadata) => void
-	up: (keyIndex: number, metadata: KeyEventMetadata) => void
+	down: (btnIndex: number, metadata: ButtonEventMetadata) => void
+	up: (btnIndex: number, metadata: ButtonEventMetadata) => void
 
 	jog: (index: number, newValue: number, eventMetadata: EventMetadata) => void
 	shuttle: (index: number, newValue: number, eventMetadata: EventMetadata) => void

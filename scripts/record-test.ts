@@ -23,7 +23,7 @@ console.log('=============================================')
 const panels = XKeys.listAllConnectedPanels()
 
 if (panels.length !== 1) {
-	console.log('Make sure only one X-keys panel is plugged in, then restart this script!')
+	console.log('Make one (and only one) X-keys panel is plugged in, then restart this script!')
 	console.log(`${panels.length} connected panels found:`)
 
 	panels.forEach((device) => {
@@ -228,7 +228,7 @@ async function startRecording(panel: HID_Device) {
 	console.log(``)
 	console.log(`The recordings will be stored under ./src/__tests__/recordings/`)
 	console.log(``)
-	console.log(`When done, hit CTRL+C to exit the recording.`)
+	console.log(`After you're done, hit CTRL+C to exit the recording.`)
 
 	let bufferedData: Buffer[] = []
 
@@ -255,8 +255,8 @@ async function startRecording(panel: HID_Device) {
 				console.log(description)
 
 				if (event === 'down') {
-					const keyIndex = args[0]
-					colorLoop = doColorLoop(xkeys, keyIndex)
+					const btnIndex = args[0]
+					colorLoop = doColorLoop(xkeys, btnIndex)
 				} else if (event === 'up') {
 					if (colorLoop) {
 						colorLoop.stop()
@@ -289,43 +289,43 @@ function askQuestion(query: string): Promise<string | number> {
 		})
 	)
 }
-function doColorLoop(xkeys: XKeys, keyIndex: number) {
+function doColorLoop(xkeys: XKeys, btnIndex: number) {
 	let active = true
 
 	const doLoop = async () => {
 		while (active) {
-			xkeys.setBacklight(keyIndex, '0000ff')
+			xkeys.setBacklight(btnIndex, '0000ff')
 			await waitTime(300)
-			xkeys.setBacklight(keyIndex, '000000')
+			xkeys.setBacklight(btnIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(keyIndex, 'ff0000')
+			xkeys.setBacklight(btnIndex, 'ff0000')
 			await waitTime(300)
-			xkeys.setBacklight(keyIndex, '000000')
+			xkeys.setBacklight(btnIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(keyIndex, '00ff00')
+			xkeys.setBacklight(btnIndex, '00ff00')
 			await waitTime(300)
-			xkeys.setBacklight(keyIndex, '000000')
+			xkeys.setBacklight(btnIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(keyIndex, 'ffffff')
+			xkeys.setBacklight(btnIndex, 'ffffff')
 			await waitTime(300)
-			xkeys.setBacklight(keyIndex, '000000')
+			xkeys.setBacklight(btnIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(keyIndex, '000000')
+			xkeys.setBacklight(btnIndex, '000000')
 			await waitTime(300)
-			xkeys.setBacklight(keyIndex, '000000')
+			xkeys.setBacklight(btnIndex, '000000')
 			await waitTime(200)
 
 			await waitTime(1000)
 		}
-		xkeys.setBacklight(keyIndex, '000000')
+		xkeys.setBacklight(btnIndex, '000000')
 	}
 
 	doLoop().catch(console.log)

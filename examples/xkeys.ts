@@ -15,19 +15,19 @@ watcher.on('connected', (xkeysPanel: XKeys) => {
 		console.log('X-keys error:', ...errs)
 	})
 
-	// Listen to pressed keys:
-	xkeysPanel.on('down', (keyIndex, metadata) => {
-		console.log('Key pressed ', keyIndex, metadata)
+	// Listen to pressed buttons:
+	xkeysPanel.on('down', (btnIndex, metadata) => {
+		console.log('Button pressed ', btnIndex, metadata)
 
 		// Light up a button when pressed:
-		xkeysPanel.setBacklight(keyIndex, 'red')
+		xkeysPanel.setBacklight(btnIndex, 'red')
 	})
-	// Listen to released keys:
-	xkeysPanel.on('up', (keyIndex, metadata) => {
-		console.log('Key released', keyIndex, metadata)
+	// Listen to released buttons:
+	xkeysPanel.on('up', (btnIndex, metadata) => {
+		console.log('Button released', btnIndex, metadata)
 
 		// Turn off button light when released:
-		xkeysPanel.setBacklight(keyIndex, false)
+		xkeysPanel.setBacklight(btnIndex, false)
 	})
 
 	// Listen to jog wheel changes:
