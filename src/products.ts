@@ -7,10 +7,13 @@ import { literal } from './lib'
 export const XKEYS_VENDOR_ID = 1523
 
 export interface Product {
-	/** Name / Identifier of the product */
+	/** Name / Identifier of the X-keys panel */
 	name: string
-	/** Product ids of the product  */
-	productId: number[]
+	/**
+	 * Identifiers for the HID device
+	 * @type {[productId: number, interface: number]}
+	 */
+	hidDevices: [number, number][]
 	/** Number of button data bytes, starting at index 2 */
 	bBytes: number
 	/** Number of bits in bByte used for buttons */
@@ -19,14 +22,14 @@ export interface Product {
 	colCount: number
 	/** The number of physical rows */
 	rowCount: number
-	/** If the product has the Program Switch button, this is a special switch not in the normal switch matrix. If exsists, only one per X-keys. */
+	/** If the X-keys panel has the Program Switch button. This is a special switch not in the normal switch matrix, if exsists, there's only ever one per panel. */
 	hasPS: boolean
 	/** Byte offset for legacy backLight, bank 2 */
 	backLight2offset: number
 
 	/**
-	 * Physical layout of the product. To be used to draw a visual representation of the X-keys,
-	 * [Region type name, index, startRow, startCol, endRow, endCol]
+	 * Physical layouts of the panel. To be used to draw a visual representation of the X-keys.
+	 * @type {[RegionTypeName: string, index: number, startRow: number, startCol: number, endRow: number, endCol: number]}
 	 */
 	layout?: [string, number, number, number, number, number][]
 
@@ -76,7 +79,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 
 	XK24: literal<Product>({
 		name: 'XK-24',
-		productId: [1029, 1027],
+		hidDevices: [
+			[1029, 0],
+			[1027, 0],
+		],
 		bBytes: 4, // number of button bytes
 		bBits: 6, // number button bits per byte
 		layout: [['Keys', 0, 1, 1, 6, 4]], // reigon type name, index, startRow, startCol, endRow, endCol
@@ -89,7 +95,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK24RGB: literal<Product>({
 		name: 'XK-24M-RGB', // prototype XK24 with RGB backLight LEDs and mechanical
-		productId: [1404],
+		hidDevices: [[1404, 0]],
 		bBytes: 4, // number of button bytes
 		bBits: 6, // number button bits per byte
 		colCount: 4, // number of physical columns
@@ -101,7 +107,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK4: literal<Product>({
 		name: 'XK-4 Stick',
-		productId: [1127, 1129],
+		hidDevices: [
+			[1127, 0],
+			[1129, 0],
+		],
 		bBytes: 4,
 		bBits: 1,
 		colCount: 4, // number of physical columns
@@ -113,7 +122,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK8: literal<Product>({
 		name: 'XK-8 Stick',
-		productId: [1130, 1132],
+		hidDevices: [
+			[1130, 0],
+			[1132, 0],
+		],
 		bBytes: 4,
 		bBits: 2, // row1	= 0,1,2,3	row2=4,5,6,7
 		colCount: 8, // number of physical columns
@@ -136,7 +148,12 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK16: literal<Product>({
 		name: 'XK-16 Stick',
-		productId: [1049, 1051, 1213, 1216],
+		hidDevices: [
+			[1049, 0],
+			[1051, 0],
+			[1213, 0],
+			[1216, 0],
+		],
 		bBytes: 4, // 4	buttton data bytes
 		bBits: 4, // not really rows, but the data comes like that (it is physically one row) row1= 0,1,2,3	row2=4,5,6,7 row3= 8,9,10,11 row4=12,13,14,15
 		colCount: 16, // number of physical columns
@@ -167,7 +184,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK12JOG: literal<Product>({
 		name: 'XK-12 Jog-Shuttle',
-		productId: [1062, 1064],
+		hidDevices: [
+			[1062, 0],
+			[1064, 0],
+		],
 		bBytes: 4,
 		bBits: 3,
 		colCount: 4, // number of physical columns
@@ -181,7 +201,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK12JOYSTICK: literal<Product>({
 		name: 'XK-12 Joystick',
-		productId: [1065, 1067],
+		hidDevices: [
+			[1065, 0],
+			[1067, 0],
+		],
 		bBytes: 4,
 		bBits: 3,
 		colCount: 4, // number of physical columns
@@ -201,7 +224,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK68JOYSTICK: literal<Product>({
 		name: 'XK-68 Joystick',
-		productId: [1117, 1119],
+		hidDevices: [
+			[1117, 0],
+			[1119, 0],
+		],
 		bBytes: 10,
 		bBits: 8,
 		layout: [
@@ -227,7 +253,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	XKR32: literal<Product>({
 		// discontinued product, XKE 40 is viable replacement
 		name: 'XKR-32',
-		productId: [1279, 1282],
+		hidDevices: [
+			[1279, 0],
+			[1282, 0],
+		],
 		bBytes: 4, // 4	buttton data bytes
 		bBits: 8,
 		colCount: 16, // number of physical columns,
@@ -239,7 +268,15 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKE40: literal<Product>({
 		name: 'XKE-40',
-		productId: [1355, 1356, 1357, 1358, 1359, 1360, 1361],
+		hidDevices: [
+			[1355, 0],
+			[1356, 0],
+			[1357, 0],
+			[1358, 0],
+			[1359, 0],
+			[1360, 0],
+			[1361, 0],
+		],
 		bBytes: 5, // 5	buttton data bytes
 		bBits: 8, // row1=0,8,16,24,32 row2=1,9,17,25,33 row3=2,10,18,26,34 row4=3,11,19,27,35 row5=4,12,20,28,36 row6=5,13,21,29,37 row7=6,14,22,30,38 row8=7,15,23,31,39
 		colCount: 20, // number of physical columns,
@@ -294,7 +331,12 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK60: literal<Product>({
 		name: 'XK-60', // the USB hardwware string will report "xkeys 80 HID" because it uses the same firmware as 80, the PID tells the difference
-		productId: [1121, 1123, 1231, 1234],
+		hidDevices: [
+			[1121, 0],
+			[1123, 0],
+			[1231, 0],
+			[1234, 0],
+		],
 		bBytes: 10,
 		bBits: 8,
 		layout: [
@@ -313,7 +355,12 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK80: literal<Product>({
 		name: 'XK-80',
-		productId: [1089, 1091, 1217, 1220],
+		hidDevices: [
+			[1089, 0],
+			[1091, 0],
+			[1217, 0],
+			[1220, 0],
+		],
 		bBytes: 10,
 		bBits: 8,
 		colCount: 10, // number of physical columns
@@ -325,7 +372,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKE124TBAR: literal<Product>({
 		name: 'XKE-124 T-bar',
-		productId: [1275, 1278],
+		hidDevices: [
+			[1275, 0],
+			[1278, 0],
+		],
 		bBytes: 16,
 		bBits: 8,
 		layout: [
@@ -349,7 +399,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKE128: literal<Product>({
 		name: 'XKE-128',
-		productId: [1227, 1230],
+		hidDevices: [
+			[1227, 0],
+			[1230, 0],
+		],
 		bBytes: 16,
 		bBits: 8,
 		colCount: 16, // number of physical columns
@@ -361,7 +414,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKMatrix: literal<Product>({
 		name: 'XK-128 Matrix', // this is a bare encoder board that can encode a 8x16 switch matrix
-		productId: [1030, 1032],
+		hidDevices: [
+			[1030, 0],
+			[1032, 0],
+		],
 		bBytes: 16,
 		bBits: 8,
 		colCount: 16, //  number of virtual columns
@@ -375,7 +431,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK68JOGSHUTTLE: literal<Product>({
 		name: 'XK-68 Jog-Shuttle',
-		productId: [1114, 1116],
+		hidDevices: [
+			[1114, 0],
+			[1116, 0],
+		],
 		bBytes: 10,
 		bBits: 8,
 		layout: [
@@ -396,7 +455,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK3FOOT: literal<Product>({
 		name: 'XK-3 Foot Pedal',
-		productId: [1080, 1082],
+		hidDevices: [
+			[1080, 0],
+			[1082, 0],
+		],
 		bBytes: 1,
 		bBits: 4, // Bit 1=0, bit 2=left pedal, bit 3=middle pedal, bit 4= right pedal, bits 5-8=0.
 		colCount: 3, //  3 pedals in a row
@@ -407,7 +469,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestamp: 18, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
-			[0, 0], // the keyIndex of 1 on this product does not exsit
+			[0, 0], // the keyIndex of 1 on this panel does not exsit
 			[1, 1],
 			[1, 2],
 			[1, 3],
@@ -416,7 +478,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK3SI: literal<Product>({
 		name: 'XK-3 Switch Interface', // one 3.5 mm port, contacts for a TRRS Plug
-		productId: [1221, 1224],
+		hidDevices: [
+			[1221, 0],
+			[1224, 0],
+		],
 		bBytes: 1,
 		bBits: 5, // Bit 1=SW2, bit 2= SW1, bits 3 is unset if nothing is plugged in and set if anything is plugged in, bit 4=undefined, bit 5=SW3  bits 6,7,8=0.
 		colCount: 3, //  3 Switches possible, the best UI is probably 3 boxes side by side
@@ -437,7 +502,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XK12SI: literal<Product>({
 		name: 'XK-12 Switch Interface', // six 3.5 mm ports, contacts for a stereo Plug
-		productId: [1192, 1195],
+		hidDevices: [
+			[1192, 0],
+			[1195, 0],
+		],
 		bBytes: 2,
 		bBits: 8, // see documentation
 		layout: [
@@ -469,7 +537,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKHD15WI: literal<Product>({
 		name: 'XK-HD15 Wire Interface', // HD15 connector for 10 inputs and two 3.5 mm ports, contacts for a stereo Plug
-		productId: [1244, 1247],
+		hidDevices: [
+			[1244, 0],
+			[1247, 0],
+		],
 		bBytes: 2,
 		bBits: 8, // see documentation
 		colCount: 1, //  difficult to describe with Rows and Columns, so just a list may be the bests
@@ -481,7 +552,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKHD15GPIO: literal<Product>({
 		name: 'XK-HD15 GPIO', // HD15 connector for 10 digital outputs or can be configured to inputs, and two 3.5 mm ports, contacts for a stereo Plug
-		productId: [1351, 1354],
+		hidDevices: [
+			[1351, 0],
+			[1354, 0],
+		],
 		bBytes: 2,
 		bBits: 8, // see documentation
 		colCount: 1, //  difficult to describe with Rows and Columns, so just a list may be the bests
@@ -496,7 +570,10 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XCRS232: literal<Product>({
 		name: 'XC-RS232-DB9', // DB9 connector for RS232 and six 3.5 mm ports, contacts for a stereo Plug
-		productId: [1257, 1260],
+		hidDevices: [
+			[1257, 0],
+			[1260, 0],
+		],
 		bBytes: 2,
 		bBits: 8, // see documentation
 		layout: [
@@ -529,7 +606,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XCDMX512TST: literal<Product>({
 		name: 'XC-DMX512-T ST', // Screw Terminal connector for DMX512 and six 3.5 mm ports, contacts for a stereo Plug
-		productId: [1324],
+		hidDevices: [[1324, 0]],
 		bBytes: 2,
 		bBits: 8, // see documentation
 		colCount: 6, //  3 ports per side of unit ,
@@ -543,7 +620,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XCDMX512TRJ45: literal<Product>({
 		name: 'XC-DMX512-T RJ45', // RJ45 connector for DMX512 and four 3.5 mm ports, contacts for a stereo Plug
-		productId: [1225],
+		hidDevices: [[1225, 0]],
 		bBytes: 1,
 		bBits: 8, // see documentation
 		colCount: 4, //  2 ports per side of unit ,
@@ -569,7 +646,15 @@ export const PRODUCTS: { [name: string]: Product } = {
 
 	XK16LCD: literal<Product>({
 		name: 'XK-16 LCD', // Has a 16x2 Alpha Numeric back lit LCD Display
-		productId: [1316, 1317, 1318, 1319, 1320, 1321, 1322],
+		hidDevices: [
+			[1316, 0],
+			[1317, 0],
+			[1318, 0],
+			[1319, 0],
+			[1320, 0],
+			[1321, 0],
+			[1322, 0],
+		],
 		bBytes: 4,
 		bBits: 4, //
 		colCount: 4, // physical columns
@@ -582,7 +667,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XKE180BROAD: literal<Product>({
 		name: 'XKE-180 Broadcast Keyboard', //
-		productId: [1443],
+		hidDevices: [[1443, 0]],
 		bBytes: 31,
 		bBits: 7, //
 		layout: [
@@ -602,7 +687,15 @@ export const PRODUCTS: { [name: string]: Product } = {
 
 	XK64JOGTBAR: literal<Product>({
 		name: 'XKE-64 Jog T-bar',
-		productId: [1325, 1326, 1327, 1328, 1329, 1330, 1331],
+		hidDevices: [
+			[1325, 0],
+			[1326, 0],
+			[1327, 0],
+			[1328, 0],
+			[1329, 0],
+			[1330, 0],
+			[1331, 0],
+		],
 		bBytes: 10,
 		bBits: 8,
 		layout: [

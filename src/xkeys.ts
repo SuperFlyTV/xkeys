@@ -35,7 +35,7 @@ export class XKeys extends EventEmitter {
 	private receivedGenerateDataResolve?: () => void
 
 	private _initialized = false
-	private _productId: number
+	private _hidDevice: { productId: number; interface: number }
 	private _unidId = 0 // is set after init()
 	private _firmwareVersion = 0 // is set after init()
 	private _disconnected = false
@@ -52,6 +52,7 @@ export class XKeys extends EventEmitter {
 			| {
 					product: string | undefined
 					productId: number
+					interface: number
 			  }
 			| undefined
 
@@ -70,6 +71,7 @@ export class XKeys extends EventEmitter {
 			deviceInfo = {
 				product: connectedXkeys[0].product,
 				productId: connectedXkeys[0].productId,
+				interface: connectedXkeys[0].interface,
 			}
 		} else if (isHID_Device(devicePathOrHIDDevice)) {
 			// is HID.Device
@@ -82,6 +84,7 @@ export class XKeys extends EventEmitter {
 			deviceInfo = {
 				product: devicePathOrHIDDevice.product,
 				productId: devicePathOrHIDDevice.productId,
+				interface: devicePathOrHIDDevice.interface,
 			}
 		} else if (isHID_HID(devicePathOrHIDDevice)) {
 			// is HID.HID
@@ -106,6 +109,7 @@ export class XKeys extends EventEmitter {
 					deviceInfo = {
 						product: hidDevice.product,
 						productId: hidDevice.productId,
+						interface: hidDevice.interface,
 					}
 					break
 				}
@@ -126,17 +130,22 @@ export class XKeys extends EventEmitter {
 	/** Returns a list of all connected X-keys-HID-devices */
 	static listAllConnectedPanels(): HID_Device[] {
 		const connectedXkeys = HID.devices().filter((device) => {
-			// Ensures device with interface 0 is selected (other interface ids do not seem to work)
+			// Filter to only return the supported devices:
 
-			// Note: device.usage has been removed in node-hid: https://github.com/SuperFlyTV/xkeys/issues/4
-			// Using interface instead:
+			if (device.vendorId !== XKeys.vendorId) return false
+			if (!device.path) return false
 
-			return device.vendorId === XKeys.vendorId && device.interface === 0 && device.path
-			// todo: change this to lookup in products.ts instead?
-
-			if (device.vendorId === XKeys.vendorId && device.path) {
-				return false
+			let found = false
+			for (const product of Object.values(PRODUCTS)) {
+				for (const hidDevice of product.hidDevices) {
+					if (hidDevice[0] === device.productId && hidDevice[1] === device.interface) {
+						found = true
+						break
+					}
+				}
+				if (found) break
 			}
+			return found
 		})
 		return connectedXkeys as HID_Device[]
 	}
@@ -152,17 +161,26 @@ export class XKeys extends EventEmitter {
 		deviceInfo: {
 			product: string | undefined
 			productId: number
+			interface: number
 		}
 	) {
 		super()
 
-		this._productId = deviceInfo.productId
+		this._hidDevice = {
+			productId: deviceInfo.productId,
+			interface: deviceInfo.interface,
+		}
 
+		let found = false
 		for (const product of Object.values(PRODUCTS)) {
-			if (product.productId.includes(this._productId)) {
-				this.product = product
-				break
+			for (const hidDevice of product.hidDevices) {
+				if (hidDevice[0] === this._hidDevice.productId && hidDevice[1] === this._hidDevice.interface) {
+					found = true
+					this.product = product
+					break
+				}
 			}
+			if (found) break
 		}
 		if (!this.product) {
 			throw new Error(
@@ -358,7 +376,10 @@ export class XKeys extends EventEmitter {
 		this.ensureInitialized()
 		return literal<XKeysInfo>({
 			name: this.product.name,
-			productId: this._productId,
+
+			productId: this._hidDevice.productId,
+			interface: this._hidDevice.interface,
+
 			unitId: this.unitId,
 			firmwareVersion: this._firmwareVersion, // added this imporant to defend against older firmware bugs
 

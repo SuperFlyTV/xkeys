@@ -62,8 +62,12 @@ export interface XKeysEvents {
 export interface XKeysInfo {
 	/** Name of the device */
 	name: string
-	/** Product id of the device */
+
+	/** Product id of the HID device */
 	productId: number
+	/** Interface number of the HID device */
+	interface: number
+
 	/** Unit id ("UID") of the device, is used to uniquely identify a certain panel, or panel type.
 	 * From factory it's set to 0, but it can be changed using xkeys.setUnitId()
 	 */
