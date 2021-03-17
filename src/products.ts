@@ -31,7 +31,7 @@ export interface Product {
 	 * Physical layouts of the panel. To be used to draw a visual representation of the X-keys.
 	 * @type {[RegionTypeName: string, index: number, startRow: number, startCol: number, endRow: number, endCol: number]}
 	 */
-	layout?: [string, number, number, number, number, number][]
+	layouts?: [string, number, number, number, number, number][]
 
 	/** Maps the (internal) btnIndex to a [Row, Column] */
 	btnLocation?: [number, number][]
@@ -85,7 +85,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 4, // number of button bytes
 		bBits: 6, // number button bits per byte
-		layout: [['Keys', 0, 1, 1, 6, 4]], // reigon type name, index, startRow, startCol, endRow, endCol
+		layouts: [['Keys', 0, 1, 1, 6, 4]], // reigon type name, index, startRow, startCol, endRow, endCol
 		colCount: 4, // number of physical columns
 		rowCount: 6, // number of physical rows
 		hasPS: true,
@@ -230,7 +230,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 10,
 		bBits: 8,
-		layout: [
+		layouts: [
 			['Keys', 0, 1, 1, 8, 10],
 			['Joystick', 0, 4, 4, 6, 7],
 		], // reigon type name, index, startRow, startCol, endRow, endCol
@@ -339,7 +339,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 10,
 		bBits: 8,
-		layout: [
+		layouts: [
 			['Keys', 0, 1, 1, 2, 10],
 			['Keys', 1, 4, 1, 8, 20],
 			['Keys', 2, 4, 4, 8, 7],
@@ -378,7 +378,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 16,
 		bBits: 8,
-		layout: [
+		layouts: [
 			['Keys', 0, 1, 1, 8, 16],
 			['Tbar', 0, 5, 14, 8, 14],
 		], // control name, control index, startRow, startCol, endRow, endCol
@@ -437,7 +437,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 10,
 		bBits: 8,
-		layout: [
+		layouts: [
 			['Keys', 0, 1, 1, 8, 10],
 			['Jog-Shuttle', 0, 6, 4, 8, 7],
 		], // control name, control index, startRow, startCol, endRow, endCol
@@ -508,7 +508,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 2,
 		bBits: 8, // see documentation
-		layout: [
+		layouts: [
 			['SwitchPorts', 0, 1, 1, 2, 3],
 			['SwitchPorts', 1, 1, 4, 2, 6],
 		], // control name, control index, startRow, startCol, endRow, endCol
@@ -576,7 +576,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 2,
 		bBits: 8, // see documentation
-		layout: [
+		layouts: [
 			['SwitchPorts', 0, 1, 1, 2, 3],
 			['SwitchPorts', 1, 1, 4, 2, 6],
 		], // control name, control index, startRow, startCol, endRow, endCol
@@ -670,7 +670,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hidDevices: [[1443, 0]],
 		bBytes: 31,
 		bBits: 7, //
-		layout: [
+		layouts: [
 			['Keys', 0, 1, 1, 2, 24],
 			['Keys', 1, 3, 1, 8, 2],
 			['QWERTY-77', 0, 3, 3, 8, 17],
@@ -698,7 +698,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 10,
 		bBits: 8,
-		layout: [
+		layouts: [
 			['Keys', 0, 1, 1, 8, 10],
 			['Jog-Shuttle', 0, 6, 1, 8, 4],
 			['Tbar', 0, 1, 10, 4, 10],

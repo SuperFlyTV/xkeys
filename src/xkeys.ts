@@ -386,7 +386,7 @@ export class XKeys extends EventEmitter {
 			colCount: this.product.colCount,
 			rowCount: this.product.rowCount,
 			layout:
-				this.product.layout?.map((region) => {
+				this.product.layouts?.map((region) => {
 					return literal<XKeysInfo['layout'][0]>({
 						name: region[0],
 						index: region[1],
