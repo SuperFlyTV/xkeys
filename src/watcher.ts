@@ -130,7 +130,7 @@ export class XKeysWatcher extends EventEmitter {
 		HID.devices()
 			.filter((device) => {
 				// Ensures device with interface 0 is selected (other interface ids do not seem to work)
-				return device.vendorId === XKeys.vendorId && device.interface === 0
+				return device.vendorId === XKeys.vendorId && (device.interface === 0 || device.interface === -1)//TODO:  had to put this back in to get single interface PIDs to work. Check if really needed now that we use the PID and Interace from the Products
 			})
 			.forEach((xkeysDevice) => {
 				if (xkeysDevice.path) {
