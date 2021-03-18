@@ -652,7 +652,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1318, 0],
 			[1319, 0],
 			[1320, 0],
-			[1321, 0],
+			[1321, -1],
 			[1322, 0],
 		],
 		bBytes: 4,
