@@ -426,8 +426,8 @@ export class XKeys extends EventEmitter {
 	setIndicatorLED(ledIndex: number, on: boolean, flashing?: boolean): void {
 		this.ensureInitialized()
 		//force to 6 or 7
-		if (ledIndex <= 1) ledIndex = 6
-		if (ledIndex >= 2) ledIndex = 7
+		if (ledIndex === 1) ledIndex = 6
+		else if (ledIndex === 2) ledIndex = 7
 
 		this._write([0, 179, ledIndex, on ? (flashing ? 2 : 1) : 0])
 	}
