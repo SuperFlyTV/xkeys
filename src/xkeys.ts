@@ -50,10 +50,10 @@ export class XKeys extends EventEmitter {
 		let device: HID.HID
 		let deviceInfo:
 			| {
-				product: string | undefined
-				productId: number
-				interface: number
-			}
+					product: string | undefined
+					productId: number
+					interface: number
+			  }
 			| undefined
 
 		// let hidDevices: HID.Device[] | undefined // set later
@@ -314,8 +314,7 @@ export class XKeys extends EventEmitter {
 				const newValue = newAnalogStates.shuttle[index]
 				if (newValue !== oldValue) this.emit('shuttle', index, newValue, eventMetadata)
 			})
-			this._analogStates.joystick.forEach((oldValue, index) => { // check for joystick
-
+			this._analogStates.joystick.forEach((oldValue, index) => {
 				const newValue = newAnalogStates.joystick[index]
 				if (oldValue.x !== newValue.x || oldValue.y !== newValue.y || oldValue.z !== newValue.z)
 					this.emit('joystick', index, newValue, eventMetadata)
