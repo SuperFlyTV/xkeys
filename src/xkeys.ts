@@ -50,10 +50,10 @@ export class XKeys extends EventEmitter {
 		let device: HID.HID
 		let deviceInfo:
 			| {
-					product: string | undefined
-					productId: number
-					interface: number
-			  }
+				product: string | undefined
+				productId: number
+				interface: number
+			}
 			| undefined
 
 		// let hidDevices: HID.Device[] | undefined // set later
@@ -204,8 +204,8 @@ export class XKeys extends EventEmitter {
 			}
 			if (data.readUInt8(1) > 3) return // Protect against all special data reports now and into the future.
 
-			const buttonStates: ButtonStates = new Map()
-			const analogStates: AnalogStates = {
+			const newButtonStates: ButtonStates = new Map()
+			const newAnalogStates: AnalogStates = {
 				jog: [],
 				joystick: [],
 				shuttle: [],
@@ -243,29 +243,29 @@ export class XKeys extends EventEmitter {
 
 					const bit = d & (1 << y) ? true : false
 
-					buttonStates.set(index, bit)
+					newButtonStates.set(index, bit)
 				}
 			}
 			if (this.product.hasPS) {
 				// program switch/button is on byte index 1 , bit 1
 				const d = data.readUInt8(1)
 				const bit = d & (1 << 0) ? true : false // get first bit only
-				buttonStates.set(0, bit) // always btnIndex of PS to 0
+				newButtonStates.set(0, bit) // always btnIndex of PS to 0
 			}
 			this.product.hasJog?.forEach((jog, index) => {
 				const d = data[jog.jogByte] // Jog
-				analogStates.jog[index] = d < 128 ? d : d - 256
+				newAnalogStates.jog[index] = d < 128 ? d : d - 256
 			})
 			this.product.hasShuttle?.forEach((shuttle, index) => {
 				const d = data[shuttle.shuttleByte] // Shuttle
-				analogStates.shuttle[index] = d < 128 ? d : d - 256
+				newAnalogStates.shuttle[index] = d < 128 ? d : d - 256
 			})
 			this.product.hasJoystick?.forEach((joystick, index) => {
 				const x = data.readUInt8(joystick.joyXbyte) // Joystick X
 				const y = data.readUInt8(joystick.joyYbyte) // Joystick Y
 				const z = data.readUInt8(joystick.joyZbyte) // Joystick Z (twist of joystick)
 
-				analogStates.joystick[index] = {
+				newAnalogStates.joystick[index] = {
 					x: x < 128 ? x : x - 256, // -127 to 127
 					y: y < 128 ? -y : -(y - 256), // -127 to 127
 					z: z, // joystick z is a continuous value that rolls over to 0 after 255
@@ -273,19 +273,19 @@ export class XKeys extends EventEmitter {
 			})
 			this.product.hasTbar?.forEach((tBar, index) => {
 				const d = data.readUInt8(tBar.tbarByte) // T-bar (calibrated)
-				analogStates.tbar[index] = d
+				newAnalogStates.tbar[index] = d
 			})
 
 			// Disabled/nonexisting buttons: important as some "buttons" in the jog & shuttle devices are used for shuttle events in hardware.
 			if (this.product.disableButtons) {
 				this.product.disableButtons.forEach((btnIndex) => {
-					buttonStates.set(btnIndex, false)
+					newButtonStates.set(btnIndex, false)
 				})
 			}
 
 			// Compare with previous button states:
-			buttonStates.forEach((buttonState: boolean, index: number) => {
-				if ((this._buttonStates.get(index) || false) !== buttonStates.get(index)) {
+			newButtonStates.forEach((buttonState: boolean, index: number) => {
+				if ((this._buttonStates.get(index) || false) !== newButtonStates.get(index)) {
 					const btnLocation = this._findBtnLocation(index)
 
 					const metadata: ButtonEventMetadata = {
@@ -306,28 +306,28 @@ export class XKeys extends EventEmitter {
 			}
 
 			// Compare with previous analogue states:
-			this._analogStates.jog.forEach((newValue, index) => {
-				const oldValue = this._analogStates.jog[index]
+			this._analogStates.jog.forEach((oldValue, index) => {
+				const newValue = newAnalogStates.jog[index]
 				if (newValue !== oldValue) this.emit('jog', index, newValue, eventMetadata)
 			})
-			this._analogStates.shuttle.forEach((newValue, index) => {
-				const oldValue = this._analogStates.shuttle[index]
+			this._analogStates.shuttle.forEach((oldValue, index) => {
+				const newValue = newAnalogStates.shuttle[index]
 				if (newValue !== oldValue) this.emit('shuttle', index, newValue, eventMetadata)
 			})
 			this._analogStates.joystick.forEach((oldValue, index) => { // check for joystick
 
-				const currentValue = analogStates.joystick[index]
-				if (oldValue.x !== currentValue.x || oldValue.y !== currentValue.y || oldValue.z !== currentValue.z)
-					this.emit('joystick', index, currentValue, eventMetadata)
+				const newValue = newAnalogStates.joystick[index]
+				if (oldValue.x !== newValue.x || oldValue.y !== newValue.y || oldValue.z !== newValue.z)
+					this.emit('joystick', index, newValue, eventMetadata)
 			})
-			this._analogStates.tbar.forEach((newValue, index) => {
-				const oldValue = this._analogStates.tbar[index]
+			this._analogStates.tbar.forEach((oldValue, index) => {
+				const newValue = newAnalogStates.tbar[index]
 				if (newValue !== oldValue) this.emit('tbar', index, newValue, eventMetadata)
 			})
 
 			// Store the new states:
-			this._buttonStates = buttonStates
-			this._analogStates = analogStates
+			this._buttonStates = newButtonStates
+			this._analogStates = newAnalogStates
 		})
 
 		this.device.on('error', (err) => {

@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "trash dist && yarn build:main"
+		},
+		{
+			"type": "npm",
+			"script": "build-examples",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build-examples",
+			"detail": "yarn build && yarn build:examples"
+		},
+		{
+			"type": "npm",
+			"script": "build:examples",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build:examples",
+			"detail": "tsc -p tsconfig-examples.json"
+		},
+		{
+			"type": "npm",
+			"script": "info",
+			"problemMatcher": [],
+			"label": "npm: info",
+			"detail": "npm-scripts-info"
+		}
+	]
+}

@@ -1,4 +1,4 @@
-const { XKeysWatcher } = require('xkeys')
+const { XKeysWatcher } = require('../')
 
 // Set up the watcher for xkeys
 const watcher = new XKeysWatcher()
@@ -39,6 +39,7 @@ watcher.on('connected', (xkeysPanel) => {
 		console.log(`Shuttle ${index} position has changed`, shuttlePos, metadata)
 	})
 	// Listen to joystick changes:
+
 	xkeysPanel.on('joystick', (index, position, metadata) => {
 		console.log(`Joystick ${index} position has changed`, position, metadata) // {x, y, z}
 	})
