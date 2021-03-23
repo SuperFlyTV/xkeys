@@ -314,7 +314,7 @@ export class XKeys extends EventEmitter {
 				const oldValue = this._analogStates.shuttle[index]
 				if (newValue !== oldValue) this.emit('shuttle', index, newValue, eventMetadata)
 			})
-			this._analogStates.joystick.forEach((oldValue, index) => {
+			this._analogStates.joystick.forEach((oldValue, index) => { // check for joystick
 
 				const currentValue = analogStates.joystick[index]
 				if (oldValue.x !== currentValue.x || oldValue.y !== currentValue.y || oldValue.z !== currentValue.z)
