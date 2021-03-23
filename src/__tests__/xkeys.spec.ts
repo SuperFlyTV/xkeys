@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as HID from 'node-hid'
 import * as HIDMock from '../__mocks__/node-hid'
-import { describeEvent } from './lib'
+import { describeEvent } from '../lib'
 import { XKeys, XKeysEvents } from '../'
 
 describe('Recorded tests', () => {
@@ -29,6 +29,7 @@ describe('Recorded tests', () => {
 	const dirPath = './src/__tests__/recordings/'
 
 	fs.readdirSync(dirPath).forEach((file) => {
+		if (!file.match(/json$/)) return // only use json files
 		test(`Recording "${file}"`, async () => {
 			const recording: any = JSON.parse(fs.readFileSync(dirPath + file, 'utf-8'))
 

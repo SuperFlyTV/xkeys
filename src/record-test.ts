@@ -37,9 +37,12 @@ if (panels.length !== 1) {
 	panels.forEach((device) => {
 		console.log(`ProductId: ${device.productId}, Product: ${device.product}`)
 	})
-	askQuestion(`(Click Enter to quit)`).then(() => {
-		process.exit(0)
-	})
+	askQuestion(`(Click Enter to quit)`)
+		.then(() => {
+			// eslint-disable-next-line no-process-exit
+			process.exit(0)
+		})
+		.catch(console.error)
 } else {
 	console.log(``)
 	console.log(`Note: To quit this program, hit CTRL+C`)
@@ -53,9 +56,12 @@ if (panels.length !== 1) {
 		console.log('err')
 		console.log(err)
 
-		askQuestion(`(Click Enter to quit)`).then(() => {
-			process.exit(1)
-		})
+		askQuestion(`(Click Enter to quit)`)
+			.then(() => {
+				// eslint-disable-next-line no-process-exit
+				process.exit(1)
+			})
+			.catch(console.error)
 	})
 }
 
@@ -108,7 +114,8 @@ async function startRecording(panel: HID_Device) {
 		console.log(`Warning: Recording file "${path}" already exists!`)
 		const answer = await askQuestion('Do you want to overwrite the file (Y/n)?')
 		if (answer === 'n') {
-			console.log(`Exiting!`)
+			console.log(`Exiting application`)
+			// eslint-disable-next-line no-process-exit
 			process.exit(0)
 		}
 	}
@@ -159,7 +166,7 @@ async function startRecording(panel: HID_Device) {
 	// catch ctrl+c:
 	process.on('SIGINT', () => {
 		console.log(`Saved file at "${path}"`)
-
+		// eslint-disable-next-line no-process-exit
 		process.exit(0)
 	})
 
@@ -175,7 +182,7 @@ async function startRecording(panel: HID_Device) {
 		return orgWrite(data)
 	}
 	const checkAction = async (xkeys: XKeys, question: string, method: string, args: any[]) => {
-		// @ts-ignore
+		// @ts-expect-error hack
 		xkeys[method](...args)
 
 		const anomaly = await askQuestion(question)
@@ -256,7 +263,7 @@ async function startRecording(panel: HID_Device) {
 
 	let bufferedData: Buffer[] = []
 
-	// @ts-ignore
+	// @ts-expect-error hack, private property
 	xkeys.device.on('data', (data) => {
 		bufferedData.push(data)
 	})
