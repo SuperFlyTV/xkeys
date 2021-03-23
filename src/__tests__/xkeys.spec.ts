@@ -4,6 +4,43 @@ import * as HIDMock from '../__mocks__/node-hid'
 import { describeEvent } from '../lib'
 import { XKeys, XKeysEvents } from '../'
 
+expect.extend({
+	toBeObject(received) {
+		return {
+			message: () => `expected ${received} to be an object`,
+			pass: typeof received == 'object',
+		}
+	},
+	toBeWithinRange(received, floor, ceiling) {
+		if (typeof received !== 'number') {
+			return {
+				message: () => `expected ${received} to be a number`,
+				pass: false,
+			}
+		}
+		const pass = received >= floor && received <= ceiling
+		if (pass) {
+			return {
+				message: () => `expected ${received} not to be within range ${floor} - ${ceiling}`,
+				pass: true,
+			}
+		} else {
+			return {
+				message: () => `expected ${received} to be within range ${floor} - ${ceiling}`,
+				pass: false,
+			}
+		}
+	},
+})
+declare global {
+	namespace jest {
+		interface Matchers<R> {
+			toBeObject(): R
+			toBeWithinRange(a: number, b: number): R
+		}
+	}
+}
+
 describe('Recorded tests', () => {
 	async function setupTestPanel(params: { productId: number }): Promise<XKeys> {
 		const hidDevice = {
@@ -37,10 +74,12 @@ describe('Recorded tests', () => {
 				productId: recording.device.productId,
 			})
 			let lastDescription: string[] = []
+			let lastData: { event: string; args: any[] }[] = []
 
 			const handleEvent = (event: keyof XKeysEvents) => {
 				xkeysDevice.on(event, (...args: any[]) => {
 					lastDescription.push(describeEvent(event, args))
+					lastData.push({ event, args })
 				})
 			}
 			handleEvent('down')
@@ -63,8 +102,33 @@ describe('Recorded tests', () => {
 					xkeysDevice.device.emit('data', Buffer.from(data, 'hex'))
 				}
 				expect(lastDescription).toEqual([event.description])
+				expect(lastData).toHaveLength(1)
+				const eventType = lastData[0].event
+				if (['down', 'up'].includes(eventType)) {
+					const index = lastData[0].args[0]
+					expect(index).toBeWithinRange(0, 999)
+
+					const metadata = lastData[0].args[1]
+					expect(metadata).toBeObject()
+					expect(metadata.row).toBeWithinRange(0, 99)
+					expect(metadata.col).toBeWithinRange(0, 99)
+					expect(metadata.timestamp).toBeWithinRange(1, Number.POSITIVE_INFINITY)
+				} else if (['jog', 'shuttle', 'joystick', 'tbar'].includes(eventType)) {
+					const index = lastData[0].args[0]
+					expect(index).toBeWithinRange(0, 999)
+
+					// const value = lastData[0].args[1]
+
+					const metadata = lastData[0].args[2]
+					expect(metadata).toBeObject()
+
+					expect(metadata.timestamp).toBeWithinRange(1, Number.POSITIVE_INFINITY)
+				} else {
+					throw new Error(`Unsupported event: "${eventType}" (update tests)`)
+				}
 
 				lastDescription = []
+				lastData = []
 			}
 
 			// Go through all recorded actions:
