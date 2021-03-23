@@ -1,12 +1,20 @@
 import * as readline from 'readline'
 import * as fs from 'fs'
 import { promisify } from 'util'
-import { HID_Device, XKeys, XKeysEvents } from '../'
-import { describeEvent } from '../src/__tests__/lib'
+import { HID_Device, XKeys, XKeysEvents } from './'
+import { describeEvent } from './lib'
 
-const fsExists = promisify(fs.exists)
+const fsAccess = promisify(fs.access)
 const fsWriteFile = promisify(fs.writeFile)
 
+async function exists(path: string) {
+	try {
+		await fsAccess(path)
+		return true
+	} catch (err) {
+		return false
+	}
+}
 /*
  * This script is intended to be used by developers in order to verify that the functionality works and generate test scripts.
  * To run this script, run `ts-node scripts/record-test.ts` in a terminal.
@@ -29,8 +37,9 @@ if (panels.length !== 1) {
 	panels.forEach((device) => {
 		console.log(`ProductId: ${device.productId}, Product: ${device.product}`)
 	})
-
-	process.exit(0)
+	askQuestion(`(Click Enter to quit)`).then(() => {
+		process.exit(0)
+	})
 } else {
 	console.log(``)
 	console.log(`Note: To quit this program, hit CTRL+C`)
@@ -41,8 +50,12 @@ if (panels.length !== 1) {
 	// console.log(``)
 
 	startRecording(panels[0]).catch((err) => {
+		console.log('err')
 		console.log(err)
-		process.exit(1)
+
+		askQuestion(`(Click Enter to quit)`).then(() => {
+			process.exit(1)
+		})
 	})
 }
 
@@ -89,9 +102,9 @@ async function startRecording(panel: HID_Device) {
 	console.log(``)
 
 	const fileName = `${xkeys.info.productId}_${xkeys.info.name}.json`
-	const path = `./src/__tests__/recordings/${fileName}`
+	const path = `${fileName}`
 
-	if (await fsExists(path)) {
+	if (await exists(path)) {
 		console.log(`Warning: Recording file "${path}" already exists!`)
 		const answer = await askQuestion('Do you want to overwrite the file (Y/n)?')
 		if (answer === 'n') {
@@ -143,6 +156,13 @@ async function startRecording(panel: HID_Device) {
 	}
 	triggerSave()
 
+	// catch ctrl+c:
+	process.on('SIGINT', () => {
+		console.log(`Saved file at "${path}"`)
+
+		process.exit(0)
+	})
+
 	// Intercept all data sent to the device:
 
 	let bufferedWrites: Buffer[] = []
@@ -178,9 +198,11 @@ async function startRecording(panel: HID_Device) {
 	console.log(``)
 	await askQuestion(`Are you ready to start? (click Enter to continue)`)
 
-	await checkAction(xkeys, `Did one of the LED indicator turn on?`, 'setIndicatorLED', [0, true])
+	await checkAction(xkeys, `Did the first of the LED indicators turn on?`, 'setIndicatorLED', [1, true])
+	await checkAction(xkeys, `Did the LED indicator turn off?`, 'setIndicatorLED', [1, false])
 
-	await checkAction(xkeys, `Did the LED indicator turn off?`, 'setIndicatorLED', [0, false])
+	await checkAction(xkeys, `Did the other LED indicator turn on?`, 'setIndicatorLED', [2, true])
+	await checkAction(xkeys, `Did the LED indicator turn off?`, 'setIndicatorLED', [2, false])
 
 	await checkAction(xkeys, `Did all button backlights turn on (all colors)?`, 'setAllBacklights', ['ffffff'])
 
@@ -189,6 +211,8 @@ async function startRecording(panel: HID_Device) {
 	await checkAction(xkeys, `Did all button backlights turn off?`, 'setAllBacklights', [false])
 
 	await checkAction(xkeys, `Did the first button light up blue?`, 'setBacklight', [1, '00f'])
+
+	await checkAction(xkeys, `Did the first button flash blue?`, 'setBacklight', [1, '00f', true])
 
 	await checkAction(xkeys, `Did the first button light turn off?`, 'setBacklight', [1, '000'])
 
@@ -226,7 +250,7 @@ async function startRecording(panel: HID_Device) {
 	console.log(`If anything looks wrong on the screen, abort the recording and report the issue.`)
 
 	console.log(``)
-	console.log(`The recordings will be stored under ./src/__tests__/recordings/`)
+	console.log(`The resulting files are created in the same folder as this executable`)
 	console.log(``)
 	console.log(`After you're done, hit CTRL+C to exit the recording.`)
 

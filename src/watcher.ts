@@ -1,4 +1,3 @@
-import * as HID from 'node-hid'
 import type * as USBDetectNS from 'usb-detection'
 import { XKeys } from './xkeys'
 import { XKEYS_VENDOR_ID } from './products'
@@ -127,18 +126,13 @@ export class XKeysWatcher extends EventEmitter {
 		// the reason for that is that I couldn't find a good way to relate the output from usb-detection to node-hid devices
 		// So we're just using the usb-detection to trigger a re-check for new devices and cache the seen devices
 
-		HID.devices()
-			.filter((device) => {
-				// Ensures device with interface 0 is selected (other interface ids do not seem to work)
-				return device.vendorId === XKeys.vendorId && (device.interface === 0 || device.interface === -1)//TODO:  had to put this back in to get single interface PIDs to work. Check if really needed now that we use the PID and Interace from the Products
-			})
-			.forEach((xkeysDevice) => {
-				if (xkeysDevice.path) {
-					pathMap[xkeysDevice.path] = true
-				} else {
-					this.emit('error', `XKeysWatcher: Device missing path.`)
-				}
-			})
+		XKeys.listAllConnectedPanels().forEach((xkeysDevice) => {
+			if (xkeysDevice.path) {
+				pathMap[xkeysDevice.path] = true
+			} else {
+				this.emit('error', `XKeysWatcher: Device missing path.`)
+			}
+		})
 
 		let removed = 0
 		let added = 0
