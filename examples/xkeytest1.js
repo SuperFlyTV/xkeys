@@ -2,7 +2,7 @@ const { XKeysWatcher } = require('../dist')
 
 // Set up the watcher for xkeys
 const watcher = new XKeysWatcher()
-
+var lastZ = 0
 watcher.on('connected', (xkeysPanel) => {
 	// show useful info about the panel
 	console.log(`X-keys panel type: ${xkeysPanel.info.name} connected`)
@@ -48,7 +48,24 @@ watcher.on('connected', (xkeysPanel) => {
 	})
 	// Listen to joystick changes:
 	xkeysPanel.on('joystick', (index, position, metadata) => {
+		/
+		var deltaZ
+		deltaZ = (position.z - lastZ) & 255  //must deal with the "bump" when we go over the 255 to 0 limit or visa versa. so & with 255 
+		var dirText = "No Rotation"
+		if (deltaZ >= 1 && deltaZ < 127) { // did not know how to make a signed byte in JS so...
+			dirText = "Clockwise Rotation"
+
+		}
+		else if (deltaZ > 127 && deltaZ <= 256) {
+
+			deltaZ = deltaZ - 256
+			dirText = "Counterclockwise Rotation"
+		}
+
+		lastZ = position.z
+
 		console.log(`Joystick ${index} position has changed`, position, metadata) // {x, y, z}
+		console.log("Delta Z: " + deltaZ + "  " + dirText)
 	})
 	// Listen to t-bar changes:
 	xkeysPanel.on('tbar', (index, position, metadata) => {
