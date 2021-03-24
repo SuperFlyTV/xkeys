@@ -1,0 +1,528 @@
+{
+  "device": {
+    "name": "XK32Rack",
+    "productId": 1279
+  },
+  "info": {
+    "name": "XKR-32",
+    "productId": 1279,
+    "interface": 0,
+    "unitId": 0,
+    "firmwareVersion": 8,
+    "colCount": 16,
+    "rowCount": 2,
+    "layout": [],
+    "hasPS": false,
+    "hasJoystick": 0,
+    "hasJog": 0,
+    "hasShuttle": 0,
+    "hasTbar": 0,
+    "hasLCD": false,
+    "hasGPIO": false,
+    "hasSerialData": false,
+    "hasDMX": false
+  },
+  "errors": [],
+  "actions": [
+    {
+      "sentData": [
+        "00b306010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b306000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601ff0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "ffffff"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "blue"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600000000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500010100000000000000000000000000000000000000000000000000000000000000",
+        "00b520000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500020100000000000000000000000000000000000000000000000000000000000000",
+        "00b520000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f",
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500000100000000000000000000000000000000000000000000000000000000000000",
+        "00b520000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "000"
+      ],
+      "anomaly": ""
+    }
+  ],
+  "events": [
+    {
+      "data": [
+        "000001000000000000000000000000000000000000000000000000000000000001019001"
+      ],
+      "description": "Button 1 pressed.  Metadata: row: 1, col: 1, timestamp: 65936"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001027201"
+      ],
+      "description": "Button 1 released. Metadata: row: 1, col: 1, timestamp: 66162"
+    },
+    {
+      "data": [
+        "00000400000000000000000000000000000000000000000000000000000000000109e001"
+      ],
+      "description": "Button 3 pressed.  Metadata: row: 3, col: 1, timestamp: 68064"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000010ad001"
+      ],
+      "description": "Button 3 released. Metadata: row: 3, col: 1, timestamp: 68304"
+    },
+    {
+      "data": [
+        "00000200000000000000000000000000000000000000000000000000000000000113be01"
+      ],
+      "description": "Button 2 pressed.  Metadata: row: 2, col: 1, timestamp: 70590"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000114ae01"
+      ],
+      "description": "Button 2 released. Metadata: row: 2, col: 1, timestamp: 70830"
+    },
+    {
+      "data": [
+        "000008000000000000000000000000000000000000000000000000000000000001416b01"
+      ],
+      "description": "Button 4 pressed.  Metadata: row: 4, col: 1, timestamp: 82283"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001424b01"
+      ],
+      "description": "Button 4 released. Metadata: row: 4, col: 1, timestamp: 82507"
+    },
+    {
+      "data": [
+        "00001000000000000000000000000000000000000000000000000000000000000145fe01"
+      ],
+      "description": "Button 5 pressed.  Metadata: row: 5, col: 1, timestamp: 83454"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000146c901"
+      ],
+      "description": "Button 5 released. Metadata: row: 5, col: 1, timestamp: 83657"
+    },
+    {
+      "data": [
+        "000020000000000000000000000000000000000000000000000000000000000001499101"
+      ],
+      "description": "Button 6 pressed.  Metadata: row: 6, col: 1, timestamp: 84369"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000014a5401"
+      ],
+      "description": "Button 6 released. Metadata: row: 6, col: 1, timestamp: 84564"
+    },
+    {
+      "data": [
+        "0000400000000000000000000000000000000000000000000000000000000000014cad01"
+      ],
+      "description": "Button 7 pressed.  Metadata: row: 7, col: 1, timestamp: 85165"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000014d6401"
+      ],
+      "description": "Button 7 released. Metadata: row: 7, col: 1, timestamp: 85348"
+    },
+    {
+      "data": [
+        "0000800000000000000000000000000000000000000000000000000000000000014fef01"
+      ],
+      "description": "Button 8 pressed.  Metadata: row: 8, col: 1, timestamp: 85999"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000150d501"
+      ],
+      "description": "Button 8 released. Metadata: row: 8, col: 1, timestamp: 86229"
+    },
+    {
+      "data": [
+        "000000010000000000000000000000000000000000000000000000000000000001533301"
+      ],
+      "description": "Button 9 pressed.  Metadata: row: 1, col: 2, timestamp: 86835"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001540301"
+      ],
+      "description": "Button 9 released. Metadata: row: 1, col: 2, timestamp: 87043"
+    },
+    {
+      "data": [
+        "000000020000000000000000000000000000000000000000000000000000000001565a01"
+      ],
+      "description": "Button 10 pressed.  Metadata: row: 2, col: 2, timestamp: 87642"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001573c01"
+      ],
+      "description": "Button 10 released. Metadata: row: 2, col: 2, timestamp: 87868"
+    },
+    {
+      "data": [
+        "000000040000000000000000000000000000000000000000000000000000000001598401"
+      ],
+      "description": "Button 11 pressed.  Metadata: row: 3, col: 2, timestamp: 88452"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000015a5301"
+      ],
+      "description": "Button 11 released. Metadata: row: 3, col: 2, timestamp: 88659"
+    },
+    {
+      "data": [
+        "0000000800000000000000000000000000000000000000000000000000000000015c9801"
+      ],
+      "description": "Button 12 pressed.  Metadata: row: 4, col: 2, timestamp: 89240"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000015d9301"
+      ],
+      "description": "Button 12 released. Metadata: row: 4, col: 2, timestamp: 89491"
+    },
+    {
+      "data": [
+        "000000100000000000000000000000000000000000000000000000000000000001607401"
+      ],
+      "description": "Button 13 pressed.  Metadata: row: 5, col: 2, timestamp: 90228"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001615601"
+      ],
+      "description": "Button 13 released. Metadata: row: 5, col: 2, timestamp: 90454"
+    },
+    {
+      "data": [
+        "000000200000000000000000000000000000000000000000000000000000000001634801"
+      ],
+      "description": "Button 14 pressed.  Metadata: row: 6, col: 2, timestamp: 90952"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001641101"
+      ],
+      "description": "Button 14 released. Metadata: row: 6, col: 2, timestamp: 91153"
+    },
+    {
+      "data": [
+        "00000040000000000000000000000000000000000000000000000000000000000165f301"
+      ],
+      "description": "Button 15 pressed.  Metadata: row: 7, col: 2, timestamp: 91635"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000166da01"
+      ],
+      "description": "Button 15 released. Metadata: row: 7, col: 2, timestamp: 91866"
+    },
+    {
+      "data": [
+        "00000080000000000000000000000000000000000000000000000000000000000168ed01"
+      ],
+      "description": "Button 16 pressed.  Metadata: row: 8, col: 2, timestamp: 92397"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000169bc01"
+      ],
+      "description": "Button 16 released. Metadata: row: 8, col: 2, timestamp: 92604"
+    },
+    {
+      "data": [
+        "0000000001000000000000000000000000000000000000000000000000000000016bd301"
+      ],
+      "description": "Button 17 pressed.  Metadata: row: 1, col: 3, timestamp: 93139"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000016cb501"
+      ],
+      "description": "Button 17 released. Metadata: row: 1, col: 3, timestamp: 93365"
+    },
+    {
+      "data": [
+        "0000000002000000000000000000000000000000000000000000000000000000016ea401"
+      ],
+      "description": "Button 18 pressed.  Metadata: row: 2, col: 3, timestamp: 93860"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000016fc601"
+      ],
+      "description": "Button 18 released. Metadata: row: 2, col: 3, timestamp: 94150"
+    },
+    {
+      "data": [
+        "000000000400000000000000000000000000000000000000000000000000000001720b01"
+      ],
+      "description": "Button 19 pressed.  Metadata: row: 3, col: 3, timestamp: 94731"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001732801"
+      ],
+      "description": "Button 19 released. Metadata: row: 3, col: 3, timestamp: 95016"
+    },
+    {
+      "data": [
+        "00000000080000000000000000000000000000000000000000000000000000000174f901"
+      ],
+      "description": "Button 20 pressed.  Metadata: row: 4, col: 3, timestamp: 95481"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000175f001"
+      ],
+      "description": "Button 20 released. Metadata: row: 4, col: 3, timestamp: 95728"
+    },
+    {
+      "data": [
+        "000000001000000000000000000000000000000000000000000000000000000001781c01"
+      ],
+      "description": "Button 21 pressed.  Metadata: row: 5, col: 3, timestamp: 96284"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001793c01"
+      ],
+      "description": "Button 21 released. Metadata: row: 5, col: 3, timestamp: 96572"
+    },
+    {
+      "data": [
+        "0000000020000000000000000000000000000000000000000000000000000000017b1c01"
+      ],
+      "description": "Button 22 pressed.  Metadata: row: 6, col: 3, timestamp: 97052"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000017c4101"
+      ],
+      "description": "Button 22 released. Metadata: row: 6, col: 3, timestamp: 97345"
+    },
+    {
+      "data": [
+        "0000000040000000000000000000000000000000000000000000000000000000017e2f01"
+      ],
+      "description": "Button 23 pressed.  Metadata: row: 7, col: 3, timestamp: 97839"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000017f6201"
+      ],
+      "description": "Button 23 released. Metadata: row: 7, col: 3, timestamp: 98146"
+    },
+    {
+      "data": [
+        "000000008000000000000000000000000000000000000000000000000000000001813e01"
+      ],
+      "description": "Button 24 pressed.  Metadata: row: 8, col: 3, timestamp: 98622"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001824f01"
+      ],
+      "description": "Button 24 released. Metadata: row: 8, col: 3, timestamp: 98895"
+    },
+    {
+      "data": [
+        "000000000001000000000000000000000000000000000000000000000000000001844f01"
+      ],
+      "description": "Button 25 pressed.  Metadata: row: 1, col: 4, timestamp: 99407"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001858c01"
+      ],
+      "description": "Button 25 released. Metadata: row: 1, col: 4, timestamp: 99724"
+    },
+    {
+      "data": [
+        "000000000002000000000000000000000000000000000000000000000000000001878801"
+      ],
+      "description": "Button 26 pressed.  Metadata: row: 2, col: 4, timestamp: 100232"
+    },
+    {
+      "data": [
+        "000000000000000000000000000000000000000000000000000000000000000001889101"
+      ],
+      "description": "Button 26 released. Metadata: row: 2, col: 4, timestamp: 100497"
+    },
+    {
+      "data": [
+        "0000000000040000000000000000000000000000000000000000000000000000018a5f01"
+      ],
+      "description": "Button 27 pressed.  Metadata: row: 3, col: 4, timestamp: 100959"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000018bb201"
+      ],
+      "description": "Button 27 released. Metadata: row: 3, col: 4, timestamp: 101298"
+    },
+    {
+      "data": [
+        "0000000000080000000000000000000000000000000000000000000000000000018d8601"
+      ],
+      "description": "Button 28 pressed.  Metadata: row: 4, col: 4, timestamp: 101766"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000018e9201"
+      ],
+      "description": "Button 28 released. Metadata: row: 4, col: 4, timestamp: 102034"
+    },
+    {
+      "data": [
+        "000000000010000000000000000000000000000000000000000000000000000001908201"
+      ],
+      "description": "Button 29 pressed.  Metadata: row: 5, col: 4, timestamp: 102530"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000191d201"
+      ],
+      "description": "Button 29 released. Metadata: row: 5, col: 4, timestamp: 102866"
+    },
+    {
+      "data": [
+        "000000000020000000000000000000000000000000000000000000000000000001937e01"
+      ],
+      "description": "Button 30 pressed.  Metadata: row: 6, col: 4, timestamp: 103294"
+    },
+    {
+      "data": [
+        "00000000000000000000000000000000000000000000000000000000000000000194d401"
+      ],
+      "description": "Button 30 released. Metadata: row: 6, col: 4, timestamp: 103636"
+    },
+    {
+      "data": [
+        "0000000000400000000000000000000000000000000000000000000000000000019b0601"
+      ],
+      "description": "Button 31 pressed.  Metadata: row: 7, col: 4, timestamp: 105222"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000019c6001"
+      ],
+      "description": "Button 31 released. Metadata: row: 7, col: 4, timestamp: 105568"
+    },
+    {
+      "data": [
+        "0000000000800000000000000000000000000000000000000000000000000000019dbe01"
+      ],
+      "description": "Button 32 pressed.  Metadata: row: 8, col: 4, timestamp: 105918"
+    },
+    {
+      "data": [
+        "0000000000000000000000000000000000000000000000000000000000000000019f4901"
+      ],
+      "description": "Button 32 released. Metadata: row: 8, col: 4, timestamp: 106313"
+    }
+  ]
+}
