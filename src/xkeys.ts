@@ -262,12 +262,14 @@ export class XKeys extends EventEmitter {
 			})
 			this.product.hasJoystick?.forEach((joystick, index) => {
 				const x = data.readUInt8(joystick.joyXbyte) // Joystick X
-				const y = data.readUInt8(joystick.joyYbyte) // Joystick Y
+				var y = data.readUInt8(joystick.joyYbyte) // Joystick Y
 				const z = data.readUInt8(joystick.joyZbyte) // Joystick Z (twist of joystick)
+				y = -y
+				if (y === 0) y = 0
 
 				newAnalogStates.joystick[index] = {
 					x: x < 128 ? x : x - 256, // -127 to 127
-					y: y < 128 ? -y : -(y - 256), // -127 to 127
+					y: y < -128 ? y + 256 : y, // -127 to 127
 					z: z, // joystick z is a continuous value that rolls over to 0 after 255
 				}
 			})
