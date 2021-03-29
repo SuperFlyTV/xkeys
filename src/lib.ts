@@ -1,4 +1,4 @@
-import * as HID from 'node-hid'
+import type * as HID from 'node-hid'
 /*
  * This file contains internal convenience functions
  */
