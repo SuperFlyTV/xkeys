@@ -38,13 +38,12 @@
     "cov": "jest --coverage; 0 coverage/lcov-report/index.html",
     "cov-open": "open-cli coverage/lcov-report/index.html",
     "send-coverage": "jest && codecov",
-    "changelog": "standard-version",
+    "standard-version": "standard-version",
     "release": "npm run reset-ci && npm run test && npm run changelog",
     "reset-ci": "git clean -dfx && git reset --hard && npm run install-ci",
     "ci": "npm run test",
     "validate:dependencies": "npm run audit --groups dependencies",
     "validate:dev-dependencies": "npm run audit --groups devDependencies",
-    "prepareChangelog": "standard-version --prerelease",
     "build-record-test": "npm run build && rimraf ./deploy/xkeys-nodejs-test-recorder.exe && nexe dist/record-test.js -t windows-x64-12.18.1 -o ./deploy/xkeys-nodejs-test-recorder.exe && node scripts/copy-natives.js win32-x64"
   },
   "scripts-info": {
