@@ -1,0 +1,43 @@
+name: Node CI
+
+# Controls when the action will run.
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v**'
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['10', '12', '14']
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    timeout-minutes: 30
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Prepare Environment
+        run: |
+          npm install
+          npm run build
+        env:
+          CI: true
+      - name: Run Tests
+        run: |
+          npm run test
+        env:
+          CI: true
