@@ -262,7 +262,7 @@ export class XKeys extends EventEmitter {
 			})
 			this.product.hasJoystick?.forEach((joystick, index) => {
 				const x = data.readUInt8(joystick.joyXbyte) // Joystick X
-				var y = data.readUInt8(joystick.joyYbyte) // Joystick Y
+				let y = data.readUInt8(joystick.joyYbyte) // Joystick Y
 				const z = data.readUInt8(joystick.joyZbyte) // Joystick Z (twist of joystick)
 				y = -y
 				if (y === 0) y = 0
