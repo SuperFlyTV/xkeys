@@ -1,6 +1,6 @@
 # xkeys
 
-[![CircleCI](https://circleci.com/gh/SuperFlyTV/xkeys.svg?style=svg)](https://circleci.com/gh/SuperFlyTV/xkeys)
+[![Node CI](https://github.com/SuperFlyTV/xkeys/actions/workflows/node.yml/badge.svg)](https://github.com/SuperFlyTV/xkeys/actions/workflows/node.yml)
 
 A Node.js module to interact with the [X-keys panels](https://xkeys.com/xkeys.html).
 
@@ -236,4 +236,4 @@ The most notable changes are:
 | `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )`                                                                                                                            |
 | `myXkeys.setBacklight(...)`                          | Arguments changed, see docs                                                                                                                                                   |
 | `myXkeys.setAllBacklights(...)`                      | Arguments changed, see docs                                                                                                                                                   |
-| `myXkeys.setLED(index, ...)`                                | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one) |
+| `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)                                                                                                  |

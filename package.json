@@ -41,7 +41,6 @@
     "standard-version": "standard-version",
     "release": "npm run reset-ci && npm run test && npm run changelog",
     "reset-ci": "git clean -dfx && git reset --hard && npm run install-ci",
-    "ci": "npm run test",
     "validate:dependencies": "npm run audit --groups dependencies",
     "validate:dev-dependencies": "npm run audit --groups devDependencies",
     "build-record-test": "npm run build && rimraf ./deploy/xkeys-nodejs-test-recorder.exe && nexe dist/record-test.js -t windows-x64-12.18.1 -o ./deploy/xkeys-nodejs-test-recorder.exe && node scripts/copy-natives.js win32-x64"
@@ -61,7 +60,6 @@
     "changelog": "Bump package.json version, update CHANGELOG.md, tag a release",
     "release": "Clean, build, test and prepare release (a one-step publish process). Updates versions and creates git commits.",
     "reset": "Delete all untracked files and reset the repo to the last commit",
-    "ci": "Test script for running by the CI (CircleCI)",
     "validate:dependencies": "Scan dependencies for vulnerabilities and check licenses"
   },
   "dependencies": {
