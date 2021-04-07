@@ -3,6 +3,7 @@ import * as HID from 'node-hid'
 import * as HIDMock from '../__mocks__/node-hid'
 import { describeEvent } from '../lib'
 import { XKeys, XKeysEvents } from '../'
+import { Product, PRODUCTS } from '../products'
 
 expect.extend({
 	toBeObject(received) {
@@ -65,11 +66,18 @@ describe('Recorded tests', () => {
 
 	const dirPath = './src/__tests__/recordings/'
 
+	const recordings: { filePath: string; recording: any }[] = []
 	fs.readdirSync(dirPath).forEach((file) => {
 		if (!file.match(/json$/)) return // only use json files
-		test(`Recording "${file}"`, async () => {
-			const recording: any = JSON.parse(fs.readFileSync(dirPath + file, 'utf-8'))
+		const recording: any = JSON.parse(fs.readFileSync(dirPath + file, 'utf-8'))
+		recordings.push({
+			filePath: file,
+			recording: recording,
+		})
+	})
 
+	recordings.forEach(({ filePath, recording }) => {
+		test(`Recording "${filePath}"`, async () => {
 			const xkeysDevice = await setupTestPanel({
 				productId: recording.device.productId,
 			})
@@ -168,6 +176,38 @@ describe('Recorded tests', () => {
 				}
 			}
 		})
+	})
+
+	test('Product coverage', () => {
+		const products: { [name: string]: Product } = {}
+		for (const [key, product] of Object.entries(PRODUCTS)) {
+			products[key] = product
+		}
+
+		recordings.forEach(({ recording }) => {
+			// Find and remove matched product:
+			for (const [key, product] of Object.entries(products)) {
+				let found = false
+				for (const hidDevice of product.hidDevices) {
+					if (hidDevice[0] === recording.info.productId && hidDevice[1] === recording.info.interface) {
+						found = true
+					}
+				}
+				if (found) {
+					delete products[key]
+					break
+				}
+			}
+		})
+
+		console.log(
+			`Note: Products not yet covered by tests: \n${Object.values(products)
+				.map((p) => `* ${p.name}`)
+				.join('\n')}`
+		)
+
+		// This number should be decreased as more recordings are added
+		expect(Object.values(products).length).toBeLessThan(11)
 	})
 })
 describe('Unit tests', () => {
