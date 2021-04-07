@@ -94,41 +94,59 @@ describe('Recorded tests', () => {
 			// (ie mock that data comes from the device, and check that the right events are emitted from the class)
 			expect(recording.events.length).toBeGreaterThanOrEqual(1)
 			for (const event of recording.events) {
-				expect(event.data).toHaveLength(1)
+				try {
+					expect(event.data).toHaveLength(1)
 
-				for (const data of event.data) {
-					// Mock the device sending data:
-					// @ts-expect-error hack
-					xkeysDevice.device.emit('data', Buffer.from(data, 'hex'))
+					for (const data of event.data) {
+						// Mock the device sending data:
+						// @ts-expect-error hack
+						xkeysDevice.device.emit('data', Buffer.from(data, 'hex'))
+					}
+					if (event.description) {
+						expect(lastDescription).toEqual([event.description])
+						expect(lastData).toHaveLength(1)
+						const eventType = lastData[0].event
+						if (['down', 'up'].includes(eventType)) {
+							const index = lastData[0].args[0]
+							expect(index).toBeWithinRange(0, 999)
+
+							const metadata = lastData[0].args[1]
+							expect(metadata).toBeObject()
+							expect(metadata.row).toBeWithinRange(0, 99)
+							expect(metadata.col).toBeWithinRange(0, 99)
+							if (xkeysDevice.info.emitsTimestamp) {
+								expect(metadata.timestamp).toBeWithinRange(1, Number.POSITIVE_INFINITY)
+							} else {
+								expect(metadata.timestamp).toBe(undefined)
+							}
+						} else if (['jog', 'shuttle', 'joystick', 'tbar'].includes(eventType)) {
+							const index = lastData[0].args[0]
+							expect(index).toBeWithinRange(0, 999)
+
+							// const value = lastData[0].args[1]
+
+							const metadata = lastData[0].args[2]
+							expect(metadata).toBeObject()
+
+							if (xkeysDevice.info.emitsTimestamp) {
+								expect(metadata.timestamp).toBeWithinRange(1, Number.POSITIVE_INFINITY)
+							} else {
+								expect(metadata.timestamp).toBe(undefined)
+							}
+						} else {
+							throw new Error(`Unsupported event: "${eventType}" (update tests)`)
+						}
+					} else {
+						expect(lastDescription).toEqual([])
+						expect(lastData).toHaveLength(0)
+					}
+
+					lastDescription = []
+					lastData = []
+				} catch (err) {
+					console.log(event.description)
+					throw err
 				}
-				expect(lastDescription).toEqual([event.description])
-				expect(lastData).toHaveLength(1)
-				const eventType = lastData[0].event
-				if (['down', 'up'].includes(eventType)) {
-					const index = lastData[0].args[0]
-					expect(index).toBeWithinRange(0, 999)
-
-					const metadata = lastData[0].args[1]
-					expect(metadata).toBeObject()
-					expect(metadata.row).toBeWithinRange(0, 99)
-					expect(metadata.col).toBeWithinRange(0, 99)
-					expect(metadata.timestamp).toBeWithinRange(1, Number.POSITIVE_INFINITY)
-				} else if (['jog', 'shuttle', 'joystick', 'tbar'].includes(eventType)) {
-					const index = lastData[0].args[0]
-					expect(index).toBeWithinRange(0, 999)
-
-					// const value = lastData[0].args[1]
-
-					const metadata = lastData[0].args[2]
-					expect(metadata).toBeObject()
-
-					expect(metadata.timestamp).toBeWithinRange(1, Number.POSITIVE_INFINITY)
-				} else {
-					throw new Error(`Unsupported event: "${eventType}" (update tests)`)
-				}
-
-				lastDescription = []
-				lastData = []
 			}
 
 			// Go through all recorded actions:
