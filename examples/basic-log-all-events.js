@@ -1,6 +1,12 @@
-const { XKeysWatcher } = require('../')
+const { XKeysWatcher } = require('../dist') // require('xkeys')
 
-// Set up the watcher for xkeys
+/*
+	This example connects to any conncted x-keys panel and logs
+	whenever a button is pressed or analog thing is moved
+*/
+
+
+// Set up the watcher for xkeys:
 const watcher = new XKeysWatcher()
 
 watcher.on('connected', (xkeysPanel) => {

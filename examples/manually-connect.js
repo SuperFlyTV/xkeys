@@ -1,6 +1,11 @@
 import { XKeys } from 'xkeys'
 
-// Connect to any xkeys-panel:
+/*
+	This example shows how to use XKeys.setupXkeysPanel()
+	directly, instead of going via XKeysWatcher()
+*/
+
+// Connect to an xkeys-panel:
 XKeys.setupXkeysPanel()
 	.then((xkeysPanel) => {
 		xkeysPanel.on('disconnected', () => {
