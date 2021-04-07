@@ -1,0 +1,177 @@
+{
+  "device": {
+    "name": "Pi3 Matrix Board",
+    "productId": 1080
+  },
+  "info": {
+    "name": "XK-3 Foot Pedal",
+    "productId": 1080,
+    "interface": 0,
+    "unitId": 0,
+    "firmwareVersion": 20,
+    "colCount": 3,
+    "rowCount": 1,
+    "layout": [],
+    "hasPS": true,
+    "hasJoystick": 0,
+    "hasJog": 0,
+    "hasShuttle": 0,
+    "hasTbar": 0,
+    "hasLCD": false,
+    "hasGPIO": false,
+    "hasSerialData": false,
+    "hasDMX": false
+  },
+  "errors": [],
+  "actions": [
+    {
+      "sentData": [
+        "00b306010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b306000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601ff0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "ffffff"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "blue"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600000000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f",
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "000"
+      ],
+      "anomaly": ""
+    }
+  ],
+  "events": [
+    {
+      "data": [
+        "0001000000000000000000000000000000000000cea400000000000000000000"
+      ],
+      "description": "Button 0 pressed.  Metadata: row: 0, col: 0, timestamp: 52900"
+    },
+    {
+      "data": [
+        "0001020000000000000000000000000000000000cea500000000000000000000"
+      ],
+      "description": "Button 2 pressed.  Metadata: row: 1, col: 1, timestamp: 52901"
+    },
+    {
+      "data": [
+        "0001000000000000000000000000000000000000d68000000000000000000000"
+      ],
+      "description": "Button 2 released. Metadata: row: 1, col: 1, timestamp: 54912"
+    },
+    {
+      "data": [
+        "0001040000000000000000000000000000000000da1300000000000000000000"
+      ],
+      "description": "Button 3 pressed.  Metadata: row: 1, col: 2, timestamp: 55827"
+    },
+    {
+      "data": [
+        "0001000000000000000000000000000000000000e4a900000000000000000000"
+      ],
+      "description": "Button 3 released. Metadata: row: 1, col: 2, timestamp: 58537"
+    },
+    {
+      "data": [
+        "0001080000000000000000000000000000000000eda100000000000000000000"
+      ],
+      "description": "Button 4 pressed.  Metadata: row: 1, col: 3, timestamp: 60833"
+    },
+    {
+      "data": [
+        "0001000000000000000000000000000000000000f2b700000000000000000000"
+      ],
+      "description": "Button 4 released. Metadata: row: 1, col: 3, timestamp: 62135"
+    }
+  ]
+}

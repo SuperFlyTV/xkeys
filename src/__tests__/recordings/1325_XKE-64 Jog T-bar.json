@@ -1,0 +1,2647 @@
+{
+  "device": {
+    "name": "XKE-64 JogT-bar",
+    "productId": 1325
+  },
+  "info": {
+    "name": "XKE-64 Jog T-bar",
+    "productId": 1325,
+    "interface": 0,
+    "unitId": 0,
+    "firmwareVersion": 11,
+    "colCount": 10,
+    "rowCount": 8,
+    "layout": [
+      {
+        "name": "Keys",
+        "index": 0,
+        "startRow": 1,
+        "startCol": 1,
+        "endRow": 8,
+        "endCol": 10
+      },
+      {
+        "name": "Jog-Shuttle",
+        "index": 0,
+        "startRow": 6,
+        "startCol": 1,
+        "endRow": 8,
+        "endCol": 4
+      },
+      {
+        "name": "Tbar",
+        "index": 0,
+        "startRow": 1,
+        "startCol": 10,
+        "endRow": 4,
+        "endCol": 10
+      }
+    ],
+    "hasPS": false,
+    "hasJoystick": 0,
+    "hasJog": 1,
+    "hasShuttle": 1,
+    "hasTbar": 1,
+    "hasLCD": false,
+    "hasGPIO": false,
+    "hasSerialData": false,
+    "hasDMX": false
+  },
+  "errors": [],
+  "actions": [
+    {
+      "sentData": [
+        "00b306010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b306000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601ff0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "ffffff"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "blue"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600000000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500010100000000000000000000000000000000000000000000000000000000000000",
+        "00b550000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500020100000000000000000000000000000000000000000000000000000000000000",
+        "00b550000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f",
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500000100000000000000000000000000000000000000000000000000000000000000",
+        "00b550000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "000"
+      ],
+      "anomaly": ""
+    }
+  ],
+  "events": [
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000129f00"
+      ],
+      "description": "T-bar ( index 0) value: 238. Metadata: timestamp: 4767"
+    },
+    {
+      "data": [
+        "0000010000000000000000002100000d24ee000000000000000000000000000000420600"
+      ],
+      "description": "Button 1 pressed.  Metadata: row: 1, col: 1, timestamp: 16902"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000429f00"
+      ],
+      "description": "Button 1 released. Metadata: row: 1, col: 1, timestamp: 17055"
+    },
+    {
+      "data": [
+        "0000020000000000000000002100000d24ee0000000000000000000000000000004a2c00"
+      ],
+      "description": "Button 2 pressed.  Metadata: row: 2, col: 1, timestamp: 18988"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000000000000000000000000004aba00"
+      ],
+      "description": "Button 2 released. Metadata: row: 2, col: 1, timestamp: 19130"
+    },
+    {
+      "data": [
+        "0000040000000000000000002100000d24ee0000000000000000000000000000004f6500"
+      ],
+      "description": "Button 3 pressed.  Metadata: row: 3, col: 1, timestamp: 20325"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000500700"
+      ],
+      "description": "Button 3 released. Metadata: row: 3, col: 1, timestamp: 20487"
+    },
+    {
+      "data": [
+        "0000080000000000000000002100000d24ee000000000000000000000000000000555100"
+      ],
+      "description": "Button 4 pressed.  Metadata: row: 4, col: 1, timestamp: 21841"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000560700"
+      ],
+      "description": "Button 4 released. Metadata: row: 4, col: 1, timestamp: 22023"
+    },
+    {
+      "data": [
+        "0000100000000000000000002100000d23ee0000000000000000000000000000005d2000"
+      ],
+      "description": "Button 5 pressed.  Metadata: row: 5, col: 1, timestamp: 23840"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee0000000000000000000000000000005db500"
+      ],
+      "description": "Button 5 released. Metadata: row: 5, col: 1, timestamp: 23989"
+    },
+    {
+      "data": [
+        "0000000100000000000000002100000d24ee000000000000000000000000000000693e00"
+      ],
+      "description": "Button 9 pressed.  Metadata: row: 1, col: 2, timestamp: 26942"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000699d00"
+      ],
+      "description": "Button 9 released. Metadata: row: 1, col: 2, timestamp: 27037"
+    },
+    {
+      "data": [
+        "0000000200000000000000002100000d24ee0000000000000000000000000000006d5b00"
+      ],
+      "description": "Button 10 pressed.  Metadata: row: 2, col: 2, timestamp: 27995"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000000000000000000000000006dff00"
+      ],
+      "description": "Button 10 released. Metadata: row: 2, col: 2, timestamp: 28159"
+    },
+    {
+      "data": [
+        "0000000400000000000000002100000d24ee0000000000000000000000000000006fc600"
+      ],
+      "description": "Button 11 pressed.  Metadata: row: 3, col: 2, timestamp: 28614"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000705c00"
+      ],
+      "description": "Button 11 released. Metadata: row: 3, col: 2, timestamp: 28764"
+    },
+    {
+      "data": [
+        "0000000800000000000000002100000d25ee000000000000000000000000000000721900"
+      ],
+      "description": "Button 12 pressed.  Metadata: row: 4, col: 2, timestamp: 29209"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee00000000000000000000000000000072c300"
+      ],
+      "description": "Button 12 released. Metadata: row: 4, col: 2, timestamp: 29379"
+    },
+    {
+      "data": [
+        "0000001000000000000000002100000d25ee000000000000000000000000000000766500"
+      ],
+      "description": "Button 13 pressed.  Metadata: row: 5, col: 2, timestamp: 30309"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee000000000000000000000000000000770600"
+      ],
+      "description": "Button 13 released. Metadata: row: 5, col: 2, timestamp: 30470"
+    },
+    {
+      "data": [
+        "0000000001000000000000002100000d24ee00000000000000000000000000000082c800"
+      ],
+      "description": "Button 17 pressed.  Metadata: row: 1, col: 3, timestamp: 33480"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000837200"
+      ],
+      "description": "Button 17 released. Metadata: row: 1, col: 3, timestamp: 33650"
+    },
+    {
+      "data": [
+        "0000000002000000000000002100000d24ee000000000000000000000000000000850f00"
+      ],
+      "description": "Button 18 pressed.  Metadata: row: 2, col: 3, timestamp: 34063"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee00000000000000000000000000000085a100"
+      ],
+      "description": "Button 18 released. Metadata: row: 2, col: 3, timestamp: 34209"
+    },
+    {
+      "data": [
+        "0000000004000000000000002100000d24ee000000000000000000000000000000871a00"
+      ],
+      "description": "Button 19 pressed.  Metadata: row: 3, col: 3, timestamp: 34586"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee00000000000000000000000000000087b800"
+      ],
+      "description": "Button 19 released. Metadata: row: 3, col: 3, timestamp: 34744"
+    },
+    {
+      "data": [
+        "0000000008000000000000002100000d24ee000000000000000000000000000000890500"
+      ],
+      "description": "Button 20 pressed.  Metadata: row: 4, col: 3, timestamp: 35077"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000898d00"
+      ],
+      "description": "Button 20 released. Metadata: row: 4, col: 3, timestamp: 35213"
+    },
+    {
+      "data": [
+        "0000000010000000000000002100000d24ee0000000000000000000000000000008ca600"
+      ],
+      "description": "Button 21 pressed.  Metadata: row: 5, col: 3, timestamp: 36006"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000000000000000000000000008d3b00"
+      ],
+      "description": "Button 21 released. Metadata: row: 5, col: 3, timestamp: 36155"
+    },
+    {
+      "data": [
+        "0000000000010000000000002100000d24ee000000000000000000000000000000928500"
+      ],
+      "description": "Button 25 pressed.  Metadata: row: 1, col: 4, timestamp: 37509"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000933200"
+      ],
+      "description": "Button 25 released. Metadata: row: 1, col: 4, timestamp: 37682"
+    },
+    {
+      "data": [
+        "0000000000020000000000002100000d23ee00000000000000000000000000000094a400"
+      ],
+      "description": "Button 26 pressed.  Metadata: row: 2, col: 4, timestamp: 38052"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000953200"
+      ],
+      "description": "Button 26 released. Metadata: row: 2, col: 4, timestamp: 38194"
+    },
+    {
+      "data": [
+        "0000000000040000000000002100000d25ee000000000000000000000000000000969700"
+      ],
+      "description": "Button 27 pressed.  Metadata: row: 3, col: 4, timestamp: 38551"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000971d00"
+      ],
+      "description": "Button 27 released. Metadata: row: 3, col: 4, timestamp: 38685"
+    },
+    {
+      "data": [
+        "0000000000080000000000002100000d25ee000000000000000000000000000000989300"
+      ],
+      "description": "Button 28 pressed.  Metadata: row: 4, col: 4, timestamp: 39059"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000991900"
+      ],
+      "description": "Button 28 released. Metadata: row: 4, col: 4, timestamp: 39193"
+    },
+    {
+      "data": [
+        "0000000000100000000000002100000d24ee0000000000000000000000000000009e1100"
+      ],
+      "description": "Button 29 pressed.  Metadata: row: 5, col: 4, timestamp: 40465"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee0000000000000000000000000000009ec300"
+      ],
+      "description": "Button 29 released. Metadata: row: 5, col: 4, timestamp: 40643"
+    },
+    {
+      "data": [
+        "0000000000000100000000002100000d25ee000000000000000000000000000000a38c00"
+      ],
+      "description": "Button 33 pressed.  Metadata: row: 1, col: 5, timestamp: 41868"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000a43b00"
+      ],
+      "description": "Button 33 released. Metadata: row: 1, col: 5, timestamp: 42043"
+    },
+    {
+      "data": [
+        "0000000000000200000000002100000d25ee000000000000000000000000000000a5ce00"
+      ],
+      "description": "Button 34 pressed.  Metadata: row: 2, col: 5, timestamp: 42446"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000a69300"
+      ],
+      "description": "Button 34 released. Metadata: row: 2, col: 5, timestamp: 42643"
+    },
+    {
+      "data": [
+        "0000000000000400000000002100000d24ee000000000000000000000000000000a7bc00"
+      ],
+      "description": "Button 35 pressed.  Metadata: row: 3, col: 5, timestamp: 42940"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000a86100"
+      ],
+      "description": "Button 35 released. Metadata: row: 3, col: 5, timestamp: 43105"
+    },
+    {
+      "data": [
+        "0000000000000800000000002100000d25ee000000000000000000000000000000a9d200"
+      ],
+      "description": "Button 36 pressed.  Metadata: row: 4, col: 5, timestamp: 43474"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000aa8400"
+      ],
+      "description": "Button 36 released. Metadata: row: 4, col: 5, timestamp: 43652"
+    },
+    {
+      "data": [
+        "0000000000001000000000002100000d24ee000000000000000000000000000000ab8900"
+      ],
+      "description": "Button 37 pressed.  Metadata: row: 5, col: 5, timestamp: 43913"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000ac3200"
+      ],
+      "description": "Button 37 released. Metadata: row: 5, col: 5, timestamp: 44082"
+    },
+    {
+      "data": [
+        "0000000000002000000000002100000d25ee000000000000000000000000000000ad4300"
+      ],
+      "description": "Button 38 pressed.  Metadata: row: 6, col: 5, timestamp: 44355"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000addd00"
+      ],
+      "description": "Button 38 released. Metadata: row: 6, col: 5, timestamp: 44509"
+    },
+    {
+      "data": [
+        "0000000000004000000000002100000d24ee000000000000000000000000000000aef300"
+      ],
+      "description": "Button 39 pressed.  Metadata: row: 7, col: 5, timestamp: 44787"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000af8400"
+      ],
+      "description": "Button 39 released. Metadata: row: 7, col: 5, timestamp: 44932"
+    },
+    {
+      "data": [
+        "0000000000008000000000002100000d24ee000000000000000000000000000000b04600"
+      ],
+      "description": "Button 40 pressed.  Metadata: row: 8, col: 5, timestamp: 45126"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000b0e100"
+      ],
+      "description": "Button 40 released. Metadata: row: 8, col: 5, timestamp: 45281"
+    },
+    {
+      "data": [
+        "0000000000000001000000002100000d24ee000000000000000000000000000000b56f00"
+      ],
+      "description": "Button 41 pressed.  Metadata: row: 1, col: 6, timestamp: 46447"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000b62c00"
+      ],
+      "description": "Button 41 released. Metadata: row: 1, col: 6, timestamp: 46636"
+    },
+    {
+      "data": [
+        "0000000000000002000000002100000d25ee000000000000000000000000000000b7ed00"
+      ],
+      "description": "Button 42 pressed.  Metadata: row: 2, col: 6, timestamp: 47085"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000b88b00"
+      ],
+      "description": "Button 42 released. Metadata: row: 2, col: 6, timestamp: 47243"
+    },
+    {
+      "data": [
+        "0000000000000004000000002100000d24ee000000000000000000000000000000bb2400"
+      ],
+      "description": "Button 43 pressed.  Metadata: row: 3, col: 6, timestamp: 47908"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000bbdc00"
+      ],
+      "description": "Button 43 released. Metadata: row: 3, col: 6, timestamp: 48092"
+    },
+    {
+      "data": [
+        "0000000000000008000000002100000d24ee000000000000000000000000000000bd4f00"
+      ],
+      "description": "Button 44 pressed.  Metadata: row: 4, col: 6, timestamp: 48463"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000bde300"
+      ],
+      "description": "Button 44 released. Metadata: row: 4, col: 6, timestamp: 48611"
+    },
+    {
+      "data": [
+        "0000000000000010000000002100000d24ee000000000000000000000000000000bf5400"
+      ],
+      "description": "Button 45 pressed.  Metadata: row: 5, col: 6, timestamp: 48980"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000bfe600"
+      ],
+      "description": "Button 45 released. Metadata: row: 5, col: 6, timestamp: 49126"
+    },
+    {
+      "data": [
+        "0000000000000020000000002100000d24ee000000000000000000000000000000c14c00"
+      ],
+      "description": "Button 46 pressed.  Metadata: row: 6, col: 6, timestamp: 49484"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000c1e600"
+      ],
+      "description": "Button 46 released. Metadata: row: 6, col: 6, timestamp: 49638"
+    },
+    {
+      "data": [
+        "0000000000000040000000002100000d25ee000000000000000000000000000000c44300"
+      ],
+      "description": "Button 47 pressed.  Metadata: row: 7, col: 6, timestamp: 50243"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000c4f400"
+      ],
+      "description": "Button 47 released. Metadata: row: 7, col: 6, timestamp: 50420"
+    },
+    {
+      "data": [
+        "0000000000000080000000002100000d24ee000000000000000000000000000000c60500"
+      ],
+      "description": "Button 48 pressed.  Metadata: row: 8, col: 6, timestamp: 50693"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000c6bb00"
+      ],
+      "description": "Button 48 released. Metadata: row: 8, col: 6, timestamp: 50875"
+    },
+    {
+      "data": [
+        "0000000000000000010000002100000d24ee000000000000000000000000000000cabd00"
+      ],
+      "description": "Button 49 pressed.  Metadata: row: 1, col: 7, timestamp: 51901"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000cb6a00"
+      ],
+      "description": "Button 49 released. Metadata: row: 1, col: 7, timestamp: 52074"
+    },
+    {
+      "data": [
+        "0000000000000000020000002100000d24ee000000000000000000000000000000ccef00"
+      ],
+      "description": "Button 50 pressed.  Metadata: row: 2, col: 7, timestamp: 52463"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000cd8f00"
+      ],
+      "description": "Button 50 released. Metadata: row: 2, col: 7, timestamp: 52623"
+    },
+    {
+      "data": [
+        "0000000000000000040000002100000d25ee000000000000000000000000000000cf8d00"
+      ],
+      "description": "Button 51 pressed.  Metadata: row: 3, col: 7, timestamp: 53133"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000d02700"
+      ],
+      "description": "Button 51 released. Metadata: row: 3, col: 7, timestamp: 53287"
+    },
+    {
+      "data": [
+        "0000000000000000080000002100000d24ee000000000000000000000000000000d13000"
+      ],
+      "description": "Button 52 pressed.  Metadata: row: 4, col: 7, timestamp: 53552"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000d1e900"
+      ],
+      "description": "Button 52 released. Metadata: row: 4, col: 7, timestamp: 53737"
+    },
+    {
+      "data": [
+        "0000000000000000100000002100000d24ee000000000000000000000000000000d34300"
+      ],
+      "description": "Button 53 pressed.  Metadata: row: 5, col: 7, timestamp: 54083"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000d40a00"
+      ],
+      "description": "Button 53 released. Metadata: row: 5, col: 7, timestamp: 54282"
+    },
+    {
+      "data": [
+        "0000000000000000200000002100000d24ee000000000000000000000000000000d50400"
+      ],
+      "description": "Button 54 pressed.  Metadata: row: 6, col: 7, timestamp: 54532"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000d5b900"
+      ],
+      "description": "Button 54 released. Metadata: row: 6, col: 7, timestamp: 54713"
+    },
+    {
+      "data": [
+        "0000000000000000400000002100000d24ee000000000000000000000000000000d6fa00"
+      ],
+      "description": "Button 55 pressed.  Metadata: row: 7, col: 7, timestamp: 55034"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000d7a800"
+      ],
+      "description": "Button 55 released. Metadata: row: 7, col: 7, timestamp: 55208"
+    },
+    {
+      "data": [
+        "0000000000000000800000002100000d23ee000000000000000000000000000000d88600"
+      ],
+      "description": "Button 56 pressed.  Metadata: row: 8, col: 7, timestamp: 55430"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000d93c00"
+      ],
+      "description": "Button 56 released. Metadata: row: 8, col: 7, timestamp: 55612"
+    },
+    {
+      "data": [
+        "0000000000000000000100002100000d24ee000000000000000000000000000000dcb500"
+      ],
+      "description": "Button 57 pressed.  Metadata: row: 1, col: 8, timestamp: 56501"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000dd8600"
+      ],
+      "description": "Button 57 released. Metadata: row: 1, col: 8, timestamp: 56710"
+    },
+    {
+      "data": [
+        "0000000000000000000200002100000d24ee000000000000000000000000000000df1300"
+      ],
+      "description": "Button 58 pressed.  Metadata: row: 2, col: 8, timestamp: 57107"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000dfd900"
+      ],
+      "description": "Button 58 released. Metadata: row: 2, col: 8, timestamp: 57305"
+    },
+    {
+      "data": [
+        "0000000000000000000400002100000d23ee000000000000000000000000000000e14700"
+      ],
+      "description": "Button 59 pressed.  Metadata: row: 3, col: 8, timestamp: 57671"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000e20100"
+      ],
+      "description": "Button 59 released. Metadata: row: 3, col: 8, timestamp: 57857"
+    },
+    {
+      "data": [
+        "0000000000000000000800002100000d24ee000000000000000000000000000000e34600"
+      ],
+      "description": "Button 60 pressed.  Metadata: row: 4, col: 8, timestamp: 58182"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000e3d900"
+      ],
+      "description": "Button 60 released. Metadata: row: 4, col: 8, timestamp: 58329"
+    },
+    {
+      "data": [
+        "0000000000000000001000002100000d24ee000000000000000000000000000000e56b00"
+      ],
+      "description": "Button 61 pressed.  Metadata: row: 5, col: 8, timestamp: 58731"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000e61b00"
+      ],
+      "description": "Button 61 released. Metadata: row: 5, col: 8, timestamp: 58907"
+    },
+    {
+      "data": [
+        "0000000000000000002000002100000d24ee000000000000000000000000000000e80200"
+      ],
+      "description": "Button 62 pressed.  Metadata: row: 6, col: 8, timestamp: 59394"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000e8ac00"
+      ],
+      "description": "Button 62 released. Metadata: row: 6, col: 8, timestamp: 59564"
+    },
+    {
+      "data": [
+        "0000000000000000004000002100000d24ee000000000000000000000000000000e99500"
+      ],
+      "description": "Button 63 pressed.  Metadata: row: 7, col: 8, timestamp: 59797"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000ea2c00"
+      ],
+      "description": "Button 63 released. Metadata: row: 7, col: 8, timestamp: 59948"
+    },
+    {
+      "data": [
+        "0000000000000000008000002100000d24ee000000000000000000000000000000eb0100"
+      ],
+      "description": "Button 64 pressed.  Metadata: row: 8, col: 8, timestamp: 60161"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000000eba100"
+      ],
+      "description": "Button 64 released. Metadata: row: 8, col: 8, timestamp: 60321"
+    },
+    {
+      "data": [
+        "0000000000000000000001002100000d21ee000000000000000000000000000000eedc00"
+      ],
+      "description": "Button 65 pressed.  Metadata: row: 1, col: 9, timestamp: 61148"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d21ee000000000000000000000000000000efa200"
+      ],
+      "description": "Button 65 released. Metadata: row: 1, col: 9, timestamp: 61346"
+    },
+    {
+      "data": [
+        "0000000000000000000002002100000d22ee000000000000000000000000000000f0ec00"
+      ],
+      "description": "Button 66 pressed.  Metadata: row: 2, col: 9, timestamp: 61676"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d21ee000000000000000000000000000000f1af00"
+      ],
+      "description": "Button 66 released. Metadata: row: 2, col: 9, timestamp: 61871"
+    },
+    {
+      "data": [
+        "0000000000000000000004002100000d21ee000000000000000000000000000000f2e400"
+      ],
+      "description": "Button 67 pressed.  Metadata: row: 3, col: 9, timestamp: 62180"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d21ee000000000000000000000000000000f3a800"
+      ],
+      "description": "Button 67 released. Metadata: row: 3, col: 9, timestamp: 62376"
+    },
+    {
+      "data": [
+        "0000000000000000000008002100000d23ee000000000000000000000000000000f4c900"
+      ],
+      "description": "Button 68 pressed.  Metadata: row: 4, col: 9, timestamp: 62665"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d22ee000000000000000000000000000000f57600"
+      ],
+      "description": "Button 68 released. Metadata: row: 4, col: 9, timestamp: 62838"
+    },
+    {
+      "data": [
+        "0000000000000000000010002100000d24ee000000000000000000000000000000f6b800"
+      ],
+      "description": "Button 69 pressed.  Metadata: row: 5, col: 9, timestamp: 63160"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee000000000000000000000000000000f77a00"
+      ],
+      "description": "Button 69 released. Metadata: row: 5, col: 9, timestamp: 63354"
+    },
+    {
+      "data": [
+        "0000000000000000000020002100000d22ee000000000000000000000000000000f8d400"
+      ],
+      "description": "Button 70 pressed.  Metadata: row: 6, col: 9, timestamp: 63700"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee000000000000000000000000000000f99600"
+      ],
+      "description": "Button 70 released. Metadata: row: 6, col: 9, timestamp: 63894"
+    },
+    {
+      "data": [
+        "0000000000000000000040002100000d20ee000000000000000000000000000000faa000"
+      ],
+      "description": "Button 71 pressed.  Metadata: row: 7, col: 9, timestamp: 64160"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee000000000000000000000000000000fb6e00"
+      ],
+      "description": "Button 71 released. Metadata: row: 7, col: 9, timestamp: 64366"
+    },
+    {
+      "data": [
+        "0000000000000000000080002100000d23ee000000000000000000000000000000fc7400"
+      ],
+      "description": "Button 72 pressed.  Metadata: row: 8, col: 9, timestamp: 64628"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000000000000000000000000000fd4300"
+      ],
+      "description": "Button 72 released. Metadata: row: 8, col: 9, timestamp: 64835"
+    },
+    {
+      "data": [
+        "0000000000000000000000102100000d23ee000000000000000000000000000001032f00"
+      ],
+      "description": "Button 77 pressed.  Metadata: row: 5, col: 10, timestamp: 66351"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d20ee000000000000000000000000000001040800"
+      ],
+      "description": "Button 77 released. Metadata: row: 5, col: 10, timestamp: 66568"
+    },
+    {
+      "data": [
+        "0000000000000000000000202100000d24ee0000000000000000000000000000010f7a00"
+      ],
+      "description": "Button 78 pressed.  Metadata: row: 6, col: 10, timestamp: 69498"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d21ee000000000000000000000000000001103f00"
+      ],
+      "description": "Button 78 released. Metadata: row: 6, col: 10, timestamp: 69695"
+    },
+    {
+      "data": [
+        "0000000000000000000000402100000d25ee000000000000000000000000000001123000"
+      ],
+      "description": "Button 79 pressed.  Metadata: row: 7, col: 10, timestamp: 70192"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d22ee00000000000000000000000000000112ee00"
+      ],
+      "description": "Button 79 released. Metadata: row: 7, col: 10, timestamp: 70382"
+    },
+    {
+      "data": [
+        "0000000000000000000000802100000d26ee00000000000000000000000000000114c300"
+      ],
+      "description": "Button 80 pressed.  Metadata: row: 8, col: 10, timestamp: 70851"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000000000000000000000000001159600"
+      ],
+      "description": "Button 80 released. Metadata: row: 8, col: 10, timestamp: 71062"
+    },
+    {
+      "data": [
+        "0000000000000000000000000101000d28ee0001000000000000000000000000011fc800"
+      ],
+      "description": "Shuttle ( index 0) value: 1. Metadata: timestamp: 73672"
+    },
+    {
+      "data": [
+        "0000000000000000000000000102000d25ee00020000000000000000000000000120f900"
+      ],
+      "description": "Shuttle ( index 0) value: 2. Metadata: timestamp: 73977"
+    },
+    {
+      "data": [
+        "0000000000000000000000000104000d22ee000300000000000000000000000001224200"
+      ],
+      "description": "Shuttle ( index 0) value: 3. Metadata: timestamp: 74306"
+    },
+    {
+      "data": [
+        "0000000000000000000000000108000d27ee00040000000000000000000000000123df00"
+      ],
+      "description": "Shuttle ( index 0) value: 4. Metadata: timestamp: 74719"
+    },
+    {
+      "data": [
+        "0000000000000000000000000110000d26ee000500000000000000000000000001260800"
+      ],
+      "description": "Shuttle ( index 0) value: 5. Metadata: timestamp: 75272"
+    },
+    {
+      "data": [
+        "0000000000000000000000000120000d22ee00060000000000000000000000000127cd00"
+      ],
+      "description": "Shuttle ( index 0) value: 6. Metadata: timestamp: 75725"
+    },
+    {
+      "data": [
+        "0000000000000000000000000140000d22ee00070000000000000000000000000128f600"
+      ],
+      "description": "Shuttle ( index 0) value: 7. Metadata: timestamp: 76022"
+    },
+    {
+      "data": [
+        "0000000000000000000000004140000d23ee010700010000000000000000000001298300"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 76163"
+    },
+    {
+      "data": [
+        "0000000000000000000000000140000d24ee000700010000000000000000000001299d00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000008140000d27eeff07000000000000000000000000012dbf00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 77247"
+    },
+    {
+      "data": [
+        "0000000000000000000000004140000d20ee0107000100000000000000000000012dd800"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 77272"
+    },
+    {
+      "data": [
+        "0000000000000000000000008140000d23eeff07000000000000000000000000012df200"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 77298"
+    },
+    {
+      "data": [
+        "0000000000000000000000000120000d23ee0006000000000000000000000000012e0b00"
+      ],
+      "description": "Shuttle ( index 0) value: 6. Metadata: timestamp: 77323"
+    },
+    {
+      "data": [
+        "0000000000000000000000000110000d27ee0005000000000000000000000000012e6400"
+      ],
+      "description": "Shuttle ( index 0) value: 5. Metadata: timestamp: 77412"
+    },
+    {
+      "data": [
+        "0000000000000000000000000108000d21ee0004000000000000000000000000012f0500"
+      ],
+      "description": "Shuttle ( index 0) value: 4. Metadata: timestamp: 77573"
+    },
+    {
+      "data": [
+        "0000000000000000000000000104000d22ee0003000000000000000000000000012fde00"
+      ],
+      "description": "Shuttle ( index 0) value: 3. Metadata: timestamp: 77790"
+    },
+    {
+      "data": [
+        "0000000000000000000000000102000d25ee000200000000000000000000000001308f00"
+      ],
+      "description": "Shuttle ( index 0) value: 2. Metadata: timestamp: 77967"
+    },
+    {
+      "data": [
+        "0000000000000000000000008102000d25eeff02ffff0000000000000000000001318000"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 78208"
+    },
+    {
+      "data": [
+        "0000000000000000000000000101000d22ee0001ffff0000000000000000000001319a00"
+      ],
+      "description": "Shuttle ( index 0) value: 1. Metadata: timestamp: 78234"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d21ee0000ffff0000000000000000000001325300"
+      ],
+      "description": "Shuttle ( index 0) value: 0. Metadata: timestamp: 78419"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100010d27ee00ffffff0000000000000000000001386d00"
+      ],
+      "description": "Shuttle ( index 0) value: -1. Metadata: timestamp: 79981"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100020d25ee00feffff0000000000000000000001393e00"
+      ],
+      "description": "Shuttle ( index 0) value: -2. Metadata: timestamp: 80190"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100040d22ee00fdffff00000000000000000000013a0f00"
+      ],
+      "description": "Shuttle ( index 0) value: -3. Metadata: timestamp: 80399"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100080d24ee00fcffff00000000000000000000013b0000"
+      ],
+      "description": "Shuttle ( index 0) value: -4. Metadata: timestamp: 80640"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100100d26ee00fbffff00000000000000000000013be500"
+      ],
+      "description": "Shuttle ( index 0) value: -5. Metadata: timestamp: 80869"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100200d22ee00faffff00000000000000000000013ce600"
+      ],
+      "description": "Shuttle ( index 0) value: -6. Metadata: timestamp: 81126"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100400d21ee00f9ffff00000000000000000000013e2e00"
+      ],
+      "description": "Shuttle ( index 0) value: -7. Metadata: timestamp: 81454"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100200d26ee00faffff000000000000000000000141b000"
+      ],
+      "description": "Shuttle ( index 0) value: -6. Metadata: timestamp: 82352"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100100d25ee00fbffff0000000000000000000001428d00"
+      ],
+      "description": "Shuttle ( index 0) value: -5. Metadata: timestamp: 82573"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100080d22ee00fcffff0000000000000000000001436a00"
+      ],
+      "description": "Shuttle ( index 0) value: -4. Metadata: timestamp: 82794"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100040d25ee00fdffff0000000000000000000001443b00"
+      ],
+      "description": "Shuttle ( index 0) value: -3. Metadata: timestamp: 83003"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100020d26ee00feffff000000000000000000000144d900"
+      ],
+      "description": "Shuttle ( index 0) value: -2. Metadata: timestamp: 83161"
+    },
+    {
+      "data": [
+        "0000000000000000000000000100010d22ee00ffffff0000000000000000000001459600"
+      ],
+      "description": "Shuttle ( index 0) value: -1. Metadata: timestamp: 83350"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee0000ffff0000000000000000000001464f00"
+      ],
+      "description": "Shuttle ( index 0) value: 0. Metadata: timestamp: 83535"
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d22ee0100000000000000000000000000014bc400"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 84932"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d22ee0000000000000000000000000000014bdd00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d21ee0100000100000000000000000000014d0e00"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 85262"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d22ee0000000100000000000000000000014d2700"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d22ee0100000200000000000000000000014e1c00"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 85532"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000200000000000000000000014e3500"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d22ee0100000300000000000000000000014ef300"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 85747"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee0000000300000000000000000000014f0c00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d22ee0100000400000000000000000000014fb500"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 85941"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000400000000000000000000014fce00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d23ee010000050000000000000000000001508b00"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 86155"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee00000005000000000000000000000150a500"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d23ee01000006000000000000000000000151b200"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 86450"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d22ee00000006000000000000000000000151cb00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d22ee01000007000000000000000000000152b800"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 86712"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d21ee00000007000000000000000000000152d200"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d23ee01000008000000000000000000000153d300"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 86995"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee00000008000000000000000000000153ed00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000006100000d23ee010000090000000000000000000001550900"
+      ],
+      "description": "Jog ( index 0) value: 1. Metadata: timestamp: 87305"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d22ee000000090000000000000000000001552300"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d27eeff0000080000000000000000000001570b00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 87819"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee000000080000000000000000000001572400"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d26eeff0000070000000000000000000001580e00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 88078"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee000000070000000000000000000001582800"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d27eeff000006000000000000000000000158f500"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 88309"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee000000060000000000000000000001590f00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d26eeff000005000000000000000000000159b300"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 88499"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee00000005000000000000000000000159cd00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d26eeff00000400000000000000000000015ade00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 88798"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000400000000000000000000015af700"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d26eeff00000300000000000000000000015b9400"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 88980"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee0000000300000000000000000000015bae00"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d27eeff00000200000000000000000000015c9a00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 89242"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000200000000000000000000015cb300"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d27eeff00000100000000000000000000015dcc00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 89548"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d24ee0000000100000000000000000000015de600"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d27eeff00000000000000000000000000015eae00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 89774"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee0000000000000000000000000000015ec800"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d26eeff00ffff0000000000000000000001602c00"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 90156"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ee0000ffff0000000000000000000001604600"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "000000000000000000000000a100000d27eeff00fffe0000000000000000000001620700"
+      ],
+      "description": "Jog ( index 0) value: -1. Metadata: timestamp: 90631"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d25ee0000fffe0000000000000000000001622100"
+      ],
+      "description": ""
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d14ed0000fffe0000000000000000000001675300"
+      ],
+      "description": "T-bar ( index 0) value: 237. Metadata: timestamp: 91987"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cfceb0000fffe0000000000000000000001676d00"
+      ],
+      "description": "T-bar ( index 0) value: 235. Metadata: timestamp: 92013"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cd4e80000fffe0000000000000000000001678600"
+      ],
+      "description": "T-bar ( index 0) value: 232. Metadata: timestamp: 92038"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000ca3e40000fffe000000000000000000000167a000"
+      ],
+      "description": "T-bar ( index 0) value: 228. Metadata: timestamp: 92064"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c76e10000fffe000000000000000000000167b900"
+      ],
+      "description": "T-bar ( index 0) value: 225. Metadata: timestamp: 92089"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c3edc0000fffe000000000000000000000167d300"
+      ],
+      "description": "T-bar ( index 0) value: 220. Metadata: timestamp: 92115"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c04d80000fffe000000000000000000000167ec00"
+      ],
+      "description": "T-bar ( index 0) value: 216. Metadata: timestamp: 92140"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000bc4d20000fffe0000000000000000000001680600"
+      ],
+      "description": "T-bar ( index 0) value: 210. Metadata: timestamp: 92166"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b84cd0000fffe0000000000000000000001681f00"
+      ],
+      "description": "T-bar ( index 0) value: 205. Metadata: timestamp: 92191"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b42c80000fffe0000000000000000000001683900"
+      ],
+      "description": "T-bar ( index 0) value: 200. Metadata: timestamp: 92217"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b00c30000fffe0000000000000000000001685200"
+      ],
+      "description": "T-bar ( index 0) value: 195. Metadata: timestamp: 92242"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000abbbd0000fffe0000000000000000000001686c00"
+      ],
+      "description": "T-bar ( index 0) value: 189. Metadata: timestamp: 92268"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a7bb80000fffe0000000000000000000001688500"
+      ],
+      "description": "T-bar ( index 0) value: 184. Metadata: timestamp: 92293"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a37b30000fffe0000000000000000000001689e00"
+      ],
+      "description": "T-bar ( index 0) value: 179. Metadata: timestamp: 92318"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000009f2ad0000fffe000000000000000000000168b800"
+      ],
+      "description": "T-bar ( index 0) value: 173. Metadata: timestamp: 92344"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000009aba70000fffe000000000000000000000168d200"
+      ],
+      "description": "T-bar ( index 0) value: 167. Metadata: timestamp: 92370"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000096ca20000fffe000000000000000000000168eb00"
+      ],
+      "description": "T-bar ( index 0) value: 162. Metadata: timestamp: 92395"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000009329e0000fffe0000000000000000000001690400"
+      ],
+      "description": "T-bar ( index 0) value: 158. Metadata: timestamp: 92420"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008fe990000fffe0000000000000000000001691e00"
+      ],
+      "description": "T-bar ( index 0) value: 153. Metadata: timestamp: 92446"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008cc950000fffe0000000000000000000001693800"
+      ],
+      "description": "T-bar ( index 0) value: 149. Metadata: timestamp: 92472"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008a2920000fffe0000000000000000000001695100"
+      ],
+      "description": "T-bar ( index 0) value: 146. Metadata: timestamp: 92497"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008798f0000fffe0000000000000000000001696a00"
+      ],
+      "description": "T-bar ( index 0) value: 143. Metadata: timestamp: 92522"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008548c0000fffe0000000000000000000001698400"
+      ],
+      "description": "T-bar ( index 0) value: 140. Metadata: timestamp: 92548"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000831890000fffe0000000000000000000001699e00"
+      ],
+      "description": "T-bar ( index 0) value: 137. Metadata: timestamp: 92574"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000810860000fffe000000000000000000000169b700"
+      ],
+      "description": "T-bar ( index 0) value: 134. Metadata: timestamp: 92599"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000007ed830000fffe000000000000000000000169d000"
+      ],
+      "description": "T-bar ( index 0) value: 131. Metadata: timestamp: 92624"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000007c8810000fffe000000000000000000000169ea00"
+      ],
+      "description": "T-bar ( index 0) value: 129. Metadata: timestamp: 92650"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000079f7d0000fffe00000000000000000000016a0300"
+      ],
+      "description": "T-bar ( index 0) value: 125. Metadata: timestamp: 92675"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000077a7a0000fffe00000000000000000000016a1d00"
+      ],
+      "description": "T-bar ( index 0) value: 122. Metadata: timestamp: 92701"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000756770000fffe00000000000000000000016a3600"
+      ],
+      "description": "T-bar ( index 0) value: 119. Metadata: timestamp: 92726"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000730740000fffe00000000000000000000016a5000"
+      ],
+      "description": "T-bar ( index 0) value: 116. Metadata: timestamp: 92752"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000070b710000fffe00000000000000000000016a6900"
+      ],
+      "description": "T-bar ( index 0) value: 113. Metadata: timestamp: 92777"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000006ea6f0000fffe00000000000000000000016a8300"
+      ],
+      "description": "T-bar ( index 0) value: 111. Metadata: timestamp: 92803"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000006c96c0000fffe00000000000000000000016a9c00"
+      ],
+      "description": "T-bar ( index 0) value: 108. Metadata: timestamp: 92828"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000006a8690000fffe00000000000000000000016ab600"
+      ],
+      "description": "T-bar ( index 0) value: 105. Metadata: timestamp: 92854"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000689670000fffe00000000000000000000016acf00"
+      ],
+      "description": "T-bar ( index 0) value: 103. Metadata: timestamp: 92879"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000066b640000fffe00000000000000000000016ae900"
+      ],
+      "description": "T-bar ( index 0) value: 100. Metadata: timestamp: 92905"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000064d620000fffe00000000000000000000016b0200"
+      ],
+      "description": "T-bar ( index 0) value: 98. Metadata: timestamp: 92930"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000062f600000fffe00000000000000000000016b1c00"
+      ],
+      "description": "T-bar ( index 0) value: 96. Metadata: timestamp: 92956"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000060f5d0000fffe00000000000000000000016b3500"
+      ],
+      "description": "T-bar ( index 0) value: 93. Metadata: timestamp: 92981"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005f05b0000fffe00000000000000000000016b4f00"
+      ],
+      "description": "T-bar ( index 0) value: 91. Metadata: timestamp: 93007"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005cb580000fffe00000000000000000000016b6800"
+      ],
+      "description": "T-bar ( index 0) value: 88. Metadata: timestamp: 93032"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005a9550000fffe00000000000000000000016b8200"
+      ],
+      "description": "T-bar ( index 0) value: 85. Metadata: timestamp: 93058"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000587520000fffe00000000000000000000016b9b00"
+      ],
+      "description": "T-bar ( index 0) value: 82. Metadata: timestamp: 93083"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000567500000fffe00000000000000000000016bb500"
+      ],
+      "description": "T-bar ( index 0) value: 80. Metadata: timestamp: 93109"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005474d0000fffe00000000000000000000016bce00"
+      ],
+      "description": "T-bar ( index 0) value: 77. Metadata: timestamp: 93134"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005254a0000fffe00000000000000000000016be800"
+      ],
+      "description": "T-bar ( index 0) value: 74. Metadata: timestamp: 93160"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000507480000fffe00000000000000000000016c0100"
+      ],
+      "description": "T-bar ( index 0) value: 72. Metadata: timestamp: 93185"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000004ec460000fffe00000000000000000000016c1b00"
+      ],
+      "description": "T-bar ( index 0) value: 70. Metadata: timestamp: 93211"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000004d4440000fffe00000000000000000000016c3400"
+      ],
+      "description": "T-bar ( index 0) value: 68. Metadata: timestamp: 93236"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000004b8420000fffe00000000000000000000016c4e00"
+      ],
+      "description": "T-bar ( index 0) value: 66. Metadata: timestamp: 93262"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000049e3f0000fffe00000000000000000000016c6700"
+      ],
+      "description": "T-bar ( index 0) value: 63. Metadata: timestamp: 93287"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000004863e0000fffe00000000000000000000016c8100"
+      ],
+      "description": "T-bar ( index 0) value: 62. Metadata: timestamp: 93313"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000046b3b0000fffe00000000000000000000016c9a00"
+      ],
+      "description": "T-bar ( index 0) value: 59. Metadata: timestamp: 93338"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000044e390000fffe00000000000000000000016cb400"
+      ],
+      "description": "T-bar ( index 0) value: 57. Metadata: timestamp: 93364"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000042d360000fffe00000000000000000000016ccd00"
+      ],
+      "description": "T-bar ( index 0) value: 54. Metadata: timestamp: 93389"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000040f340000fffe00000000000000000000016ce700"
+      ],
+      "description": "T-bar ( index 0) value: 52. Metadata: timestamp: 93415"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000003f3320000fffe00000000000000000000016d0000"
+      ],
+      "description": "T-bar ( index 0) value: 50. Metadata: timestamp: 93440"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000003da300000fffe00000000000000000000016d1a00"
+      ],
+      "description": "T-bar ( index 0) value: 48. Metadata: timestamp: 93466"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000003bf2e0000fffe00000000000000000000016d3300"
+      ],
+      "description": "T-bar ( index 0) value: 46. Metadata: timestamp: 93491"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000003a12b0000fffe00000000000000000000016d4d00"
+      ],
+      "description": "T-bar ( index 0) value: 43. Metadata: timestamp: 93517"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000382290000fffe00000000000000000000016d6600"
+      ],
+      "description": "T-bar ( index 0) value: 41. Metadata: timestamp: 93542"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000361260000fffe00000000000000000000016d7f00"
+      ],
+      "description": "T-bar ( index 0) value: 38. Metadata: timestamp: 93567"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000343240000fffe00000000000000000000016d9900"
+      ],
+      "description": "T-bar ( index 0) value: 36. Metadata: timestamp: 93593"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000326210000fffe00000000000000000000016db300"
+      ],
+      "description": "T-bar ( index 0) value: 33. Metadata: timestamp: 93619"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000030e1f0000fffe00000000000000000000016dcc00"
+      ],
+      "description": "T-bar ( index 0) value: 31. Metadata: timestamp: 93644"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002f61d0000fffe00000000000000000000016de500"
+      ],
+      "description": "T-bar ( index 0) value: 29. Metadata: timestamp: 93669"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002db1b0000fffe00000000000000000000016dff00"
+      ],
+      "description": "T-bar ( index 0) value: 27. Metadata: timestamp: 93695"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002b8180000fffe00000000000000000000016e1900"
+      ],
+      "description": "T-bar ( index 0) value: 24. Metadata: timestamp: 93721"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000297160000fffe00000000000000000000016e3200"
+      ],
+      "description": "T-bar ( index 0) value: 22. Metadata: timestamp: 93746"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000027b140000fffe00000000000000000000016e4b00"
+      ],
+      "description": "T-bar ( index 0) value: 20. Metadata: timestamp: 93771"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000261110000fffe00000000000000000000016e6500"
+      ],
+      "description": "T-bar ( index 0) value: 17. Metadata: timestamp: 93797"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002450f0000fffe00000000000000000000016e7f00"
+      ],
+      "description": "T-bar ( index 0) value: 15. Metadata: timestamp: 93823"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002290d0000fffe00000000000000000000016e9800"
+      ],
+      "description": "T-bar ( index 0) value: 13. Metadata: timestamp: 93848"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002120b0000fffe00000000000000000000016eb100"
+      ],
+      "description": "T-bar ( index 0) value: 11. Metadata: timestamp: 93873"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000001fd090000fffe00000000000000000000016ecb00"
+      ],
+      "description": "T-bar ( index 0) value: 9. Metadata: timestamp: 93899"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000001e7080000fffe00000000000000000000016ee500"
+      ],
+      "description": "T-bar ( index 0) value: 8. Metadata: timestamp: 93925"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000001cf060000fffe00000000000000000000016efe00"
+      ],
+      "description": "T-bar ( index 0) value: 6. Metadata: timestamp: 93950"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000001b6040000fffe00000000000000000000016f1700"
+      ],
+      "description": "T-bar ( index 0) value: 4. Metadata: timestamp: 93975"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000019d020000fffe00000000000000000000016f3100"
+      ],
+      "description": "T-bar ( index 0) value: 2. Metadata: timestamp: 94001"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000186000000fffe00000000000000000000016f4b00"
+      ],
+      "description": "T-bar ( index 0) value: 0. Metadata: timestamp: 94027"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000001b1010000fffe000000000000000000000175ec00"
+      ],
+      "description": "T-bar ( index 0) value: 1. Metadata: timestamp: 95724"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000001d1030000fffe0000000000000000000001760500"
+      ],
+      "description": "T-bar ( index 0) value: 3. Metadata: timestamp: 95749"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000001ef060000fffe0000000000000000000001761f00"
+      ],
+      "description": "T-bar ( index 0) value: 6. Metadata: timestamp: 95775"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000215090000fffe0000000000000000000001763800"
+      ],
+      "description": "T-bar ( index 0) value: 9. Metadata: timestamp: 95800"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002450d0000fffe0000000000000000000001765100"
+      ],
+      "description": "T-bar ( index 0) value: 13. Metadata: timestamp: 95825"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000027a110000fffe0000000000000000000001766b00"
+      ],
+      "description": "T-bar ( index 0) value: 17. Metadata: timestamp: 95851"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002b2150000fffe0000000000000000000001768500"
+      ],
+      "description": "T-bar ( index 0) value: 21. Metadata: timestamp: 95877"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000002eb1a0000fffe0000000000000000000001769e00"
+      ],
+      "description": "T-bar ( index 0) value: 26. Metadata: timestamp: 95902"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000003261f0000fffe000000000000000000000176b700"
+      ],
+      "description": "T-bar ( index 0) value: 31. Metadata: timestamp: 95927"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000366240000fffe000000000000000000000176d100"
+      ],
+      "description": "T-bar ( index 0) value: 36. Metadata: timestamp: 95953"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000003a6290000fffe000000000000000000000176eb00"
+      ],
+      "description": "T-bar ( index 0) value: 41. Metadata: timestamp: 95979"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000003e62e0000fffe0000000000000000000001770400"
+      ],
+      "description": "T-bar ( index 0) value: 46. Metadata: timestamp: 96004"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000042e340000fffe0000000000000000000001771d00"
+      ],
+      "description": "T-bar ( index 0) value: 52. Metadata: timestamp: 96029"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000047e3a0000fffe0000000000000000000001773700"
+      ],
+      "description": "T-bar ( index 0) value: 58. Metadata: timestamp: 96055"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000004d1410000fffe0000000000000000000001775100"
+      ],
+      "description": "T-bar ( index 0) value: 65. Metadata: timestamp: 96081"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000051f470000fffe0000000000000000000001776a00"
+      ],
+      "description": "T-bar ( index 0) value: 71. Metadata: timestamp: 96106"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005684d0000fffe0000000000000000000001778300"
+      ],
+      "description": "T-bar ( index 0) value: 77. Metadata: timestamp: 96131"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005a8520000fffe0000000000000000000001779d00"
+      ],
+      "description": "T-bar ( index 0) value: 82. Metadata: timestamp: 96157"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000005e1570000fffe000000000000000000000177b700"
+      ],
+      "description": "T-bar ( index 0) value: 87. Metadata: timestamp: 96183"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000006155b0000fffe000000000000000000000177d000"
+      ],
+      "description": "T-bar ( index 0) value: 91. Metadata: timestamp: 96208"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000006475f0000fffe000000000000000000000177e900"
+      ],
+      "description": "T-bar ( index 0) value: 95. Metadata: timestamp: 96233"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000675630000fffe0000000000000000000001780300"
+      ],
+      "description": "T-bar ( index 0) value: 99. Metadata: timestamp: 96259"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000069f660000fffe0000000000000000000001781c00"
+      ],
+      "description": "T-bar ( index 0) value: 102. Metadata: timestamp: 96284"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000006c6690000fffe0000000000000000000001783600"
+      ],
+      "description": "T-bar ( index 0) value: 105. Metadata: timestamp: 96310"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000006ed6c0000fffe0000000000000000000001784f00"
+      ],
+      "description": "T-bar ( index 0) value: 108. Metadata: timestamp: 96335"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000007126f0000fffe0000000000000000000001786900"
+      ],
+      "description": "T-bar ( index 0) value: 111. Metadata: timestamp: 96361"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000736720000fffe0000000000000000000001788200"
+      ],
+      "description": "T-bar ( index 0) value: 114. Metadata: timestamp: 96386"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000075d750000fffe0000000000000000000001789c00"
+      ],
+      "description": "T-bar ( index 0) value: 117. Metadata: timestamp: 96412"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000785790000fffe000000000000000000000178b500"
+      ],
+      "description": "T-bar ( index 0) value: 121. Metadata: timestamp: 96437"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000007ab7c0000fffe000000000000000000000178cf00"
+      ],
+      "description": "T-bar ( index 0) value: 124. Metadata: timestamp: 96463"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000007d47f0000fffe000000000000000000000178e800"
+      ],
+      "description": "T-bar ( index 0) value: 127. Metadata: timestamp: 96488"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000007fe820000fffe0000000000000000000001790200"
+      ],
+      "description": "T-bar ( index 0) value: 130. Metadata: timestamp: 96514"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000827860000fffe0000000000000000000001791b00"
+      ],
+      "description": "T-bar ( index 0) value: 134. Metadata: timestamp: 96539"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000084d890000fffe0000000000000000000001793500"
+      ],
+      "description": "T-bar ( index 0) value: 137. Metadata: timestamp: 96565"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008708b0000fffe0000000000000000000001794e00"
+      ],
+      "description": "T-bar ( index 0) value: 139. Metadata: timestamp: 96590"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008928e0000fffe0000000000000000000001796800"
+      ],
+      "description": "T-bar ( index 0) value: 142. Metadata: timestamp: 96616"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008af900000fffe0000000000000000000001798100"
+      ],
+      "description": "T-bar ( index 0) value: 144. Metadata: timestamp: 96641"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008ca930000fffe0000000000000000000001799b00"
+      ],
+      "description": "T-bar ( index 0) value: 147. Metadata: timestamp: 96667"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008de940000fffe000000000000000000000179b400"
+      ],
+      "description": "T-bar ( index 0) value: 148. Metadata: timestamp: 96692"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000008f4960000fffe000000000000000000000179ce00"
+      ],
+      "description": "T-bar ( index 0) value: 150. Metadata: timestamp: 96718"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000909980000fffe000000000000000000000179e700"
+      ],
+      "description": "T-bar ( index 0) value: 152. Metadata: timestamp: 96743"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000091a990000fffe00000000000000000000017a0100"
+      ],
+      "description": "T-bar ( index 0) value: 153. Metadata: timestamp: 96769"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000092a9a0000fffe00000000000000000000017a1a00"
+      ],
+      "description": "T-bar ( index 0) value: 154. Metadata: timestamp: 96794"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000093c9c0000fffe00000000000000000000017a3400"
+      ],
+      "description": "T-bar ( index 0) value: 156. Metadata: timestamp: 96820"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000094f9d0000fffe00000000000000000000017a4d00"
+      ],
+      "description": "T-bar ( index 0) value: 157. Metadata: timestamp: 96845"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000095f9f0000fffe00000000000000000000017a6700"
+      ],
+      "description": "T-bar ( index 0) value: 159. Metadata: timestamp: 96871"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000971a00000fffe00000000000000000000017a8000"
+      ],
+      "description": "T-bar ( index 0) value: 160. Metadata: timestamp: 96896"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000988a20000fffe00000000000000000000017a9a00"
+      ],
+      "description": "T-bar ( index 0) value: 162. Metadata: timestamp: 96922"
+    },
+    {
+      "data": [
+        "000000000000000000000000210000099fa40000fffe00000000000000000000017ab300"
+      ],
+      "description": "T-bar ( index 0) value: 164. Metadata: timestamp: 96947"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000009b5a60000fffe00000000000000000000017acd00"
+      ],
+      "description": "T-bar ( index 0) value: 166. Metadata: timestamp: 96973"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000009cba70000fffe00000000000000000000017ae600"
+      ],
+      "description": "T-bar ( index 0) value: 167. Metadata: timestamp: 96998"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000009e3a90000fffe00000000000000000000017b0000"
+      ],
+      "description": "T-bar ( index 0) value: 169. Metadata: timestamp: 97024"
+    },
+    {
+      "data": [
+        "00000000000000000000000021000009faab0000fffe00000000000000000000017b1900"
+      ],
+      "description": "T-bar ( index 0) value: 171. Metadata: timestamp: 97049"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a10ad0000fffe00000000000000000000017b3200"
+      ],
+      "description": "T-bar ( index 0) value: 173. Metadata: timestamp: 97074"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a25af0000fffe00000000000000000000017b4c00"
+      ],
+      "description": "T-bar ( index 0) value: 175. Metadata: timestamp: 97100"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a3bb00000fffe00000000000000000000017b6600"
+      ],
+      "description": "T-bar ( index 0) value: 176. Metadata: timestamp: 97126"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a4fb20000fffe00000000000000000000017b7f00"
+      ],
+      "description": "T-bar ( index 0) value: 178. Metadata: timestamp: 97151"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a61b30000fffe00000000000000000000017b9800"
+      ],
+      "description": "T-bar ( index 0) value: 179. Metadata: timestamp: 97176"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a73b50000fffe00000000000000000000017bb200"
+      ],
+      "description": "T-bar ( index 0) value: 181. Metadata: timestamp: 97202"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a84b60000fffe00000000000000000000017bcc00"
+      ],
+      "description": "T-bar ( index 0) value: 182. Metadata: timestamp: 97228"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000a94b70000fffe00000000000000000000017be500"
+      ],
+      "description": "T-bar ( index 0) value: 183. Metadata: timestamp: 97253"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000aa4b90000fffe00000000000000000000017bfe00"
+      ],
+      "description": "T-bar ( index 0) value: 185. Metadata: timestamp: 97278"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000ab3ba0000fffe00000000000000000000017c1800"
+      ],
+      "description": "T-bar ( index 0) value: 186. Metadata: timestamp: 97304"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000ac5bb0000fffe00000000000000000000017c3200"
+      ],
+      "description": "T-bar ( index 0) value: 187. Metadata: timestamp: 97330"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000ad2bc0000fffe00000000000000000000017c4b00"
+      ],
+      "description": "T-bar ( index 0) value: 188. Metadata: timestamp: 97355"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000adfbd0000fffe00000000000000000000017c6400"
+      ],
+      "description": "T-bar ( index 0) value: 189. Metadata: timestamp: 97380"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000aecbf0000fffe00000000000000000000017c7e00"
+      ],
+      "description": "T-bar ( index 0) value: 191. Metadata: timestamp: 97406"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000afac00000fffe00000000000000000000017c9700"
+      ],
+      "description": "T-bar ( index 0) value: 192. Metadata: timestamp: 97431"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b08c10000fffe00000000000000000000017cb100"
+      ],
+      "description": "T-bar ( index 0) value: 193. Metadata: timestamp: 97457"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b19c20000fffe00000000000000000000017cca00"
+      ],
+      "description": "T-bar ( index 0) value: 194. Metadata: timestamp: 97482"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b27c30000fffe00000000000000000000017ce400"
+      ],
+      "description": "T-bar ( index 0) value: 195. Metadata: timestamp: 97508"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b3bc50000fffe00000000000000000000017cfd00"
+      ],
+      "description": "T-bar ( index 0) value: 197. Metadata: timestamp: 97533"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b4ec60000fffe00000000000000000000017d1700"
+      ],
+      "description": "T-bar ( index 0) value: 198. Metadata: timestamp: 97559"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b5dc80000fffe00000000000000000000017d3000"
+      ],
+      "description": "T-bar ( index 0) value: 200. Metadata: timestamp: 97584"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b6cc90000fffe00000000000000000000017d4a00"
+      ],
+      "description": "T-bar ( index 0) value: 201. Metadata: timestamp: 97610"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b7bca0000fffe00000000000000000000017d6300"
+      ],
+      "description": "T-bar ( index 0) value: 202. Metadata: timestamp: 97635"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b89cb0000fffe00000000000000000000017d7d00"
+      ],
+      "description": "T-bar ( index 0) value: 203. Metadata: timestamp: 97661"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b96cc0000fffe00000000000000000000017d9600"
+      ],
+      "description": "T-bar ( index 0) value: 204. Metadata: timestamp: 97686"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000b9ecd0000fffe00000000000000000000017db000"
+      ],
+      "description": "T-bar ( index 0) value: 205. Metadata: timestamp: 97712"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000badce0000fffe00000000000000000000017dc900"
+      ],
+      "description": "T-bar ( index 0) value: 206. Metadata: timestamp: 97737"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000bb9cf0000fffe00000000000000000000017de300"
+      ],
+      "description": "T-bar ( index 0) value: 207. Metadata: timestamp: 97763"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000bc4d00000fffe00000000000000000000017dfc00"
+      ],
+      "description": "T-bar ( index 0) value: 208. Metadata: timestamp: 97788"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000bcdd10000fffe00000000000000000000017e1600"
+      ],
+      "description": "T-bar ( index 0) value: 209. Metadata: timestamp: 97814"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000bdbd20000fffe00000000000000000000017e2f00"
+      ],
+      "description": "T-bar ( index 0) value: 210. Metadata: timestamp: 97839"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000be5d30000fffe00000000000000000000017e4900"
+      ],
+      "description": "T-bar ( index 0) value: 211. Metadata: timestamp: 97865"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000bf3d40000fffe00000000000000000000017e6a00"
+      ],
+      "description": "T-bar ( index 0) value: 212. Metadata: timestamp: 97898"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000bffd50000fffe00000000000000000000017e8400"
+      ],
+      "description": "T-bar ( index 0) value: 213. Metadata: timestamp: 97924"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c0bd60000fffe00000000000000000000017ea500"
+      ],
+      "description": "T-bar ( index 0) value: 214. Metadata: timestamp: 97957"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c17d70000fffe00000000000000000000017ec200"
+      ],
+      "description": "T-bar ( index 0) value: 215. Metadata: timestamp: 97986"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c25d80000fffe00000000000000000000017edf00"
+      ],
+      "description": "T-bar ( index 0) value: 216. Metadata: timestamp: 98015"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c30d90000fffe00000000000000000000017efb00"
+      ],
+      "description": "T-bar ( index 0) value: 217. Metadata: timestamp: 98043"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c3dda0000fffe00000000000000000000017f1800"
+      ],
+      "description": "T-bar ( index 0) value: 218. Metadata: timestamp: 98072"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c4adb0000fffe00000000000000000000017f3200"
+      ],
+      "description": "T-bar ( index 0) value: 219. Metadata: timestamp: 98098"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c55dc0000fffe00000000000000000000017f4f00"
+      ],
+      "description": "T-bar ( index 0) value: 220. Metadata: timestamp: 98127"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c64dd0000fffe00000000000000000000017f6d00"
+      ],
+      "description": "T-bar ( index 0) value: 221. Metadata: timestamp: 98157"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c70de0000fffe00000000000000000000017f8600"
+      ],
+      "description": "T-bar ( index 0) value: 222. Metadata: timestamp: 98182"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c80df0000fffe00000000000000000000017f9f00"
+      ],
+      "description": "T-bar ( index 0) value: 223. Metadata: timestamp: 98207"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c8ee00000fffe00000000000000000000017fb900"
+      ],
+      "description": "T-bar ( index 0) value: 224. Metadata: timestamp: 98233"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000c9ee10000fffe00000000000000000000017fd200"
+      ],
+      "description": "T-bar ( index 0) value: 225. Metadata: timestamp: 98258"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cace30000fffe00000000000000000000017fec00"
+      ],
+      "description": "T-bar ( index 0) value: 227. Metadata: timestamp: 98284"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cb9e40000fffe0000000000000000000001800d00"
+      ],
+      "description": "T-bar ( index 0) value: 228. Metadata: timestamp: 98317"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cc6e50000fffe0000000000000000000001802a00"
+      ],
+      "description": "T-bar ( index 0) value: 229. Metadata: timestamp: 98346"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cd2e60000fffe0000000000000000000001805300"
+      ],
+      "description": "T-bar ( index 0) value: 230. Metadata: timestamp: 98387"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cdee70000fffe0000000000000000000001807c00"
+      ],
+      "description": "T-bar ( index 0) value: 231. Metadata: timestamp: 98428"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cebe80000fffe000000000000000000000180ad00"
+      ],
+      "description": "T-bar ( index 0) value: 232. Metadata: timestamp: 98477"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000cf9e90000fffe000000000000000000000180ca00"
+      ],
+      "description": "T-bar ( index 0) value: 233. Metadata: timestamp: 98506"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d06ea0000fffe000000000000000000000180e300"
+      ],
+      "description": "T-bar ( index 0) value: 234. Metadata: timestamp: 98531"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d14eb0000fffe000000000000000000000180fd00"
+      ],
+      "description": "T-bar ( index 0) value: 235. Metadata: timestamp: 98557"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d23ec0000fffe0000000000000000000001811600"
+      ],
+      "description": "T-bar ( index 0) value: 236. Metadata: timestamp: 98582"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d35ee0000fffe0000000000000000000001813000"
+      ],
+      "description": "T-bar ( index 0) value: 238. Metadata: timestamp: 98608"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d44ef0000fffe0000000000000000000001814900"
+      ],
+      "description": "T-bar ( index 0) value: 239. Metadata: timestamp: 98633"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d52f00000fffe0000000000000000000001816300"
+      ],
+      "description": "T-bar ( index 0) value: 240. Metadata: timestamp: 98659"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d5cf10000fffe0000000000000000000001817c00"
+      ],
+      "description": "T-bar ( index 0) value: 241. Metadata: timestamp: 98684"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d68f20000fffe0000000000000000000001819600"
+      ],
+      "description": "T-bar ( index 0) value: 242. Metadata: timestamp: 98710"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d75f30000fffe000000000000000000000181b300"
+      ],
+      "description": "T-bar ( index 0) value: 243. Metadata: timestamp: 98739"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d80f40000fffe000000000000000000000181e100"
+      ],
+      "description": "T-bar ( index 0) value: 244. Metadata: timestamp: 98785"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d8df50000fffe0000000000000000000001820a00"
+      ],
+      "description": "T-bar ( index 0) value: 245. Metadata: timestamp: 98826"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000d99f60000fffe0000000000000000000001822b00"
+      ],
+      "description": "T-bar ( index 0) value: 246. Metadata: timestamp: 98859"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000da6f70000fffe0000000000000000000001824800"
+      ],
+      "description": "T-bar ( index 0) value: 247. Metadata: timestamp: 98888"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000db3f80000fffe0000000000000000000001826500"
+      ],
+      "description": "T-bar ( index 0) value: 248. Metadata: timestamp: 98917"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000dc1f90000fffe0000000000000000000001828200"
+      ],
+      "description": "T-bar ( index 0) value: 249. Metadata: timestamp: 98946"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000dccfa0000fffe0000000000000000000001829b00"
+      ],
+      "description": "T-bar ( index 0) value: 250. Metadata: timestamp: 98971"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000dd9fb0000fffe000000000000000000000182b500"
+      ],
+      "description": "T-bar ( index 0) value: 251. Metadata: timestamp: 98997"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000de4fc0000fffe000000000000000000000182ce00"
+      ],
+      "description": "T-bar ( index 0) value: 252. Metadata: timestamp: 99022"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000df4fd0000fffe000000000000000000000182e800"
+      ],
+      "description": "T-bar ( index 0) value: 253. Metadata: timestamp: 99048"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000e02fe0000fffe0000000000000000000001830100"
+      ],
+      "description": "T-bar ( index 0) value: 254. Metadata: timestamp: 99073"
+    },
+    {
+      "data": [
+        "0000000000000000000000002100000e0dff0000fffe0000000000000000000001831b00"
+      ],
+      "description": "T-bar ( index 0) value: 255. Metadata: timestamp: 99099"
+    }
+  ]
+}
