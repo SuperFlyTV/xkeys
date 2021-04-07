@@ -323,7 +323,14 @@ export class XKeys extends EventEmitter {
 			})
 			newAnalogStates.joystick.forEach((newValue, index) => {
 				const oldValue = this._analogStates.joystick[index]
-				if (oldValue.x !== newValue.x || oldValue.y !== newValue.y || oldValue.z !== newValue.z) {
+				if (!oldValue) {
+					const emitValue: JoystickValueEmit = {
+						...newValue,
+						// Calculate deltaZ, since that is not trivial to do:
+						deltaZ: 0,
+					}
+					this.emit('joystick', index, emitValue, eventMetadata)
+				} else if (oldValue.x !== newValue.x || oldValue.y !== newValue.y || oldValue.z !== newValue.z) {
 					const emitValue: JoystickValueEmit = {
 						...newValue,
 						// Calculate deltaZ, since that is not trivial to do:
