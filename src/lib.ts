@@ -55,7 +55,7 @@ export function describeEvent(event: string, args: any[]): string {
 		return `Shuttle ( index ${index}) value: ${value}. Metadata: ${metadataStr(metadata)}`
 	} else if (event === 'joystick') {
 		const index = args[0]
-		const value = args[1]
+		const value = JSON.stringify(args[1])
 		const metadata = args[2]
 		return `Joystick ( index ${index}) value: ${value}. Metadata: ${metadataStr(metadata)}`
 	} else if (event === 'tbar') {
