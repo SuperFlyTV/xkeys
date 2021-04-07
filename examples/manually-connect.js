@@ -1,4 +1,4 @@
-import { XKeys } from 'xkeys'
+const { XKeys } = require('xkeys')
 
 /*
 	This example shows how to use XKeys.setupXkeysPanel()
