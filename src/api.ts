@@ -23,12 +23,19 @@ export interface AnalogStates {
 	// trackpad?: {x: number, y: number, z: number}[] // z: proximity/force
 }
 export interface JoystickValue {
-	/** -127 to 127 */
+	/** Joystick X (horisontal movement). -127 to 127 */
 	x: number
-	/** -127 to 127 */
+	/** Joystick Y (vertical movement), positive value is "up". -127 to 127 */
 	y: number
-	/** Joystick Z (twist of joystick) is a continuous value that rolls over to 0 after 255 */
+	/**
+	 * Joystick Z (twist of joystick) is a continuous value that rolls over to 0 after 255.
+	 * Note: Use .deltaZ instead
+	 */
 	z: number
+}
+export interface JoystickValueEmit extends JoystickValue {
+	/** Joystick delta Z, a delta value that behaves properly when Z rolls over 255 to 0 */
+	deltaZ: number
 }
 export type Color = { r: number; g: number; b: number }
 
@@ -51,10 +58,10 @@ export interface XKeysEvents {
 	down: (btnIndex: number, metadata: ButtonEventMetadata) => void
 	up: (btnIndex: number, metadata: ButtonEventMetadata) => void
 
-	jog: (index: number, newValue: number, eventMetadata: EventMetadata) => void
-	shuttle: (index: number, newValue: number, eventMetadata: EventMetadata) => void
-	joystick: (index: number, newValue: { x: number; y: number; z: number }, eventMetadata: EventMetadata) => void
-	tbar: (index: number, newValue: number, eventMetadata: EventMetadata) => void
+	jog: (index: number, value: number, eventMetadata: EventMetadata) => void
+	shuttle: (index: number, value: number, eventMetadata: EventMetadata) => void
+	joystick: (index: number, value: JoystickValueEmit, eventMetadata: EventMetadata) => void
+	tbar: (index: number, value: number, eventMetadata: EventMetadata) => void
 
 	disconnected: () => void
 	error: (err: any) => void
@@ -81,6 +88,7 @@ export interface XKeysInfo {
 	rowCount: number
 	/**
 	 * Physical layout of the product. To be used to draw a visual representation of the X-keys
+	 * Note: Layout is a work-in-progress and it might/will change in the future.
 	 */
 	layout: {
 		/** Name of the region */

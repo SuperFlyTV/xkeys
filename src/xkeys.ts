@@ -10,6 +10,7 @@ import {
 	ButtonEventMetadata,
 	XKeysEvents,
 	XKeysInfo,
+	JoystickValueEmit,
 } from './api'
 import { isHID_Device, isHID_HID, literal } from './lib'
 
@@ -323,7 +324,12 @@ export class XKeys extends EventEmitter {
 			newAnalogStates.joystick.forEach((newValue, index) => {
 				const oldValue = this._analogStates.joystick[index]
 				if (oldValue.x !== newValue.x || oldValue.y !== newValue.y || oldValue.z !== newValue.z) {
-					this.emit('joystick', index, newValue, eventMetadata)
+					const emitValue: JoystickValueEmit = {
+						...newValue,
+						// Calculate deltaZ, since that is not trivial to do:
+						deltaZ: XKeys.calculateDelta(newValue.z, oldValue.z, 255),
+					}
+					this.emit('joystick', index, emitValue, eventMetadata)
 				}
 			})
 			newAnalogStates.tbar.forEach((newValue, index) => {
@@ -737,6 +743,13 @@ export class XKeys extends EventEmitter {
 	/** Check that the .init() function has run, throw otherwise */
 	private ensureInitialized() {
 		if (!this._initialized) throw new Error('XKeys.init() must be run first!')
+	}
+	/** Calcuate delta value */
+	static calculateDelta(newValue: number, oldValue: number, overflow: number = 256): number {
+		let delta = newValue - oldValue
+		if (delta < -overflow * 0.5) delta += overflow // Deal with when the new value overflows
+		if (delta > overflow * 0.5) delta -= overflow // Deal with when the new value underflows
+		return delta
 	}
 }
 type HIDMessage = (string | number)[]
