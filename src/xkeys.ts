@@ -638,7 +638,7 @@ export class XKeys extends EventEmitter {
 		message = this._padMessage(message)
 
 		const intArray: number[] = []
-		for (const index in message) {
+		for (let index = 0; index < message.length; index++) {
 			const value = message[index]
 			intArray[index] = typeof value === 'string' ? parseInt(value, 10) : value
 		}
