@@ -217,9 +217,9 @@ export class XKeys extends EventEmitter {
 			const UID = data.readUInt8(0) // the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
 			// const PID = deviceInfo.productId // from USB hardware ID
 
-			let timestamp = 0
-			if (this.product.timestamp !== undefined) {
-				timestamp = data.readUInt32BE(this.product.timestamp) // Time stamp is 4 bytes, use UInt32BE
+			let timestamp: number | undefined = undefined
+			if (this.product.timestampByte !== undefined) {
+				timestamp = data.readUInt32BE(this.product.timestampByte) // Time stamp is 4 bytes, use UInt32BE
 			}
 
 			const dd = data.readUInt8(1)
@@ -417,6 +417,7 @@ export class XKeys extends EventEmitter {
 					})
 				}) || [],
 
+			emitsTimestamp: this.product.timestampByte !== undefined,
 			hasPS: this.product.hasPS,
 			hasJoystick: this.product.hasJoystick?.length || 0,
 			hasJog: this.product.hasJog?.length || 0,

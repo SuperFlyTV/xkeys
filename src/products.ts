@@ -36,7 +36,8 @@ export interface Product {
 	/** Maps the (internal) btnIndex to a [Row, Column] */
 	btnLocation?: [number, number][]
 
-	timestamp?: number // the index of the start to the 4 byte time stamp
+	/** The index of the start to the 4 byte time stamp. */
+	timestampByte?: number
 
 	hasJoystick?: {
 		joyXbyte: number
@@ -91,7 +92,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true,
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 32,
-		timestamp: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+		timestampByte: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XK24RGB: literal<Product>({
 		name: 'XK-24M-RGB', // prototype XK24 with RGB backLight LEDs and mechanical
@@ -103,7 +104,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true,
 		backLightType: BackLightType.REMAP_24, //RGB Standard Index
 		backLight2offset: 0, // RGBs have no offset.
-		timestamp: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+		timestampByte: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XK4: literal<Product>({
 		name: 'XK-4 Stick',
@@ -118,7 +119,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true, // slide switch on end
 		backLightType: BackLightType.STICK_BUTTONS, // only has blue light
 		backLight2offset: 0, //
-		timestamp: 6, // ms time since device boot 4 byte BE
+		timestampByte: 6, // ms time since device boot 4 byte BE
 	}),
 	XK8: literal<Product>({
 		name: 'XK-8 Stick',
@@ -133,7 +134,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true, // slide switch on end
 		backLightType: BackLightType.STICK_BUTTONS, // only has blue light
 		backLight2offset: 0, //
-		timestamp: 6, // ms time since device boot 4 byte BE
+		timestampByte: 6, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
 			[1, 1],
@@ -161,7 +162,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true, // slide switch on end
 		backLightType: BackLightType.STICK_BUTTONS, // only has blue backlight
 		backLight2offset: 0, // only one set of LEDs under the buttons
-		timestamp: 6, // ms time since device boot 4 byte BE
+		timestampByte: 6, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
 			[1, 1],
@@ -197,7 +198,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasShuttle: [{ shuttleByte: 7 }],
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 32,
-		timestamp: 8, // ms time since device boot 4 byte BE
+		timestampByte: 8, // ms time since device boot 4 byte BE
 	}),
 	XK12JOYSTICK: literal<Product>({
 		name: 'XK-12 Joystick',
@@ -220,7 +221,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 32, // offset used to access second bank of LEDs, usually the red is on bank 2
-		timestamp: 12,
+		timestampByte: 12,
 	}),
 	XK68JOYSTICK: literal<Product>({
 		name: 'XK-68 Joystick',
@@ -247,7 +248,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80, // offset used to access second bank of LEDs, usually the red is on bank 2
-		timestamp: 18, // ms time since device boot 4 byte BE
+		timestampByte: 18, // ms time since device boot 4 byte BE
 		disableButtons: [28, 29, 30, 36, 37, 38, 44, 45, 46, 52, 53, 54], // these are the index of the "hole" created by the joystick in the center, they will always be 0
 	}),
 	XKR32: literal<Product>({
@@ -264,7 +265,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: false, // unknown
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 32,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 	}),
 	XKE40: literal<Product>({
 		name: 'XKE-40',
@@ -284,7 +285,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true, // behind small hole on right side.
 		backLightType: BackLightType.LINEAR, // map btnIndex-1  to ledIndex
 		backLight2offset: 40, // off set to control second led bank.
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
 			[1, 1],
@@ -350,7 +351,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true,
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80,
-		timestamp: 12, // ms time since device boot 4 byte BE
+		timestampByte: 12, // ms time since device boot 4 byte BE
 		//disableButtons: 	[2,10,18,26,34,42,50,58,66,74,19,20,21,22,23,59,60,61,] // these buttons are not installed on the 60 button unit, these bytes will always be 0.
 	}),
 	XK80: literal<Product>({
@@ -368,7 +369,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true,
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80,
-		timestamp: 12, // ms time since device boot 4 byte BE
+		timestampByte: 12, // ms time since device boot 4 byte BE
 	}),
 	XKE124TBAR: literal<Product>({
 		name: 'XKE-124 T-bar',
@@ -410,7 +411,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: false,
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 128,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 	}),
 	XKMatrix: literal<Product>({
 		name: 'XK-128 Matrix', // this is a bare encoder board that can encode a 8x16 switch matrix
@@ -425,7 +426,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true, // slide switch on board
 		backLightType: BackLightType.NONE, // no back light, only the 2 standard indicator LEDs, also availe on header, see documentation
 		backLight2offset: 0,
-		timestamp: 18, // ms time since device boot 4 byte BE
+		timestampByte: 18, // ms time since device boot 4 byte BE
 		// many buttons may be disabled or not as the custom wiring determines this.
 		// to prevent phantom buttons, external diodes may be required, if diodes not used the board may be set by write command 215, see documentation
 	}),
@@ -450,7 +451,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80,
-		timestamp: 18, // ms time since device boot 4 byte BE
+		timestampByte: 18, // ms time since device boot 4 byte BE
 		disableButtons: [30, 31, 32, 38, 39, 40, 46, 47, 48, 54, 55, 56],
 	}),
 	XK3FOOT: literal<Product>({
@@ -466,7 +467,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true, // inside unit and not very accessible
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
-		timestamp: 18, // ms time since device boot 4 byte BE
+		timestampByte: 18, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
 			[0, 0], // the keyIndex of 1 on this panel does not exsit
@@ -489,7 +490,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: false, // none
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
 			[1, 1],
@@ -517,7 +518,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: false, // none
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
 			[2, 1],
@@ -548,7 +549,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: false, // none
 		backLightType: BackLightType.NONE, // no back light LEDs but has 2 digital outputs on the HD 15 wire. See documentation
 		backLight2offset: 0,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 	}),
 	XKHD15GPIO: literal<Product>({
 		name: 'XK-HD15 GPIO', // HD15 connector for 10 digital outputs or can be configured to inputs, and two 3.5 mm ports, contacts for a stereo Plug
@@ -564,7 +565,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLightType: BackLightType.NONE, // no back light LEDs but has 2 or more digital outputs on the HD 15 wire. See documentation
 		backLight2offset: 0,
 		hasGPIO: true,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 		//The input data will always be in the 2 data bytes described, but this device may be configured in several ways
 		// it is best to Qwery the device and get its current setup data, using GetIoConfiguration function
 	}),
@@ -663,7 +664,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasLCD: true,
 		backLightType: BackLightType.LEGACY, // back light LEDs
 		backLight2offset: 32,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 	}),
 	XKE180BROAD: literal<Product>({
 		name: 'XKE-180 Broadcast Keyboard', //
@@ -682,7 +683,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: true, // at top right behind hole in end
 		backLightType: BackLightType.NONE, // back light LEDs
 		backLight2offset: 0,
-		timestamp: 36, // ms time since device boot 4 byte BE
+		timestampByte: 36, // ms time since device boot 4 byte BE
 	}),
 
 	XK64JOGTBAR: literal<Product>({
@@ -718,7 +719,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		backLightType: BackLightType.LEGACY,
 		backLight2offset: 80,
-		timestamp: 31, // ms time since device boot 4 byte BE
+		timestampByte: 31, // ms time since device boot 4 byte BE
 		disableButtons: [6, 7, 8, 14, 15, 16, 22, 23, 24, 30, 31, 32, 73, 74, 75, 73], // These bits are messy, better to ignore them
 	}),
 }

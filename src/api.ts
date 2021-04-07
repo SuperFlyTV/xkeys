@@ -44,7 +44,7 @@ export interface EventMetadata {
 	 * Timestamp of the event. Measured in milliseconds from when the device was last powered on.
 	 * The timestamp can be used as a more trustworthy source of time than the computer clock, as it's not affected by delays in the USB data handling.
 	 */
-	timestamp: number
+	timestamp: number | undefined
 }
 export interface ButtonEventMetadata extends EventMetadata {
 	/** Row of the button location*/
@@ -105,9 +105,11 @@ export interface XKeysInfo {
 		endCol: number
 	}[]
 
+	/** If the X-keys panel emits timestamps (if not, timestamp will be undefined) */
+	emitsTimestamp: boolean
+
 	/** If the product has the Program Switch button, this is a special switch not in the normal switch matrix. If exsists, only one per X-keys. */
 	hasPS: boolean
-
 	/** The number of joysticks available on the device */
 	hasJoystick: number
 	/** The number of jog wheels available on the device */
