@@ -334,7 +334,7 @@ export class XKeys extends EventEmitter {
 					const emitValue: JoystickValueEmit = {
 						...newValue,
 						// Calculate deltaZ, since that is not trivial to do:
-						deltaZ: XKeys.calculateDelta(newValue.z, oldValue.z, 255),
+						deltaZ: XKeys.calculateDelta(newValue.z, oldValue.z),
 					}
 					this.emit('joystick', index, emitValue, eventMetadata)
 				}
@@ -753,7 +753,7 @@ export class XKeys extends EventEmitter {
 		if (!this._initialized) throw new Error('XKeys.init() must be run first!')
 	}
 	/** Calcuate delta value */
-	static calculateDelta(newValue: number, oldValue: number, overflow: number = 256): number {
+	static calculateDelta(newValue: number, oldValue: number, overflow = 256): number {
 		let delta = newValue - oldValue
 		if (delta < -overflow * 0.5) delta += overflow // Deal with when the new value overflows
 		if (delta > overflow * 0.5) delta -= overflow // Deal with when the new value underflows
