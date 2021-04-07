@@ -1,4 +1,4 @@
-import { PRODUCTS } from '../products'
+import { BackLightType, PRODUCTS } from '../products'
 
 describe('products.ts', () => {
 	test('productIds should be unique', async () => {
@@ -15,6 +15,20 @@ describe('products.ts', () => {
 					throw err
 				}
 				productIds.add(productId)
+			}
+		}
+	})
+	test('verify integrity', async () => {
+		for (const product of Object.values(PRODUCTS)) {
+			try {
+				expect(product.hidDevices.length).toBeGreaterThanOrEqual(1)
+
+				if (product.backLightType === BackLightType.LEGACY) {
+					expect(product.backLight2offset).toBeTruthy()
+				}
+			} catch (err) {
+				console.log(`Error in product "${product.name}"`)
+				throw err
 			}
 		}
 	})
