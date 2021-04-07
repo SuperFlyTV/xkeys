@@ -14,6 +14,16 @@ The project is based on the documentation available here: http://xkeys.com/PISup
 $ npm install --save xkeys
 ```
 
+### Linux
+
+On linux, the udev subsystem blocks access for non-root users to the X-keys without some special configuration. Save the following to `/etc/udev/rules.d/50-xkeys.rules` and reload the rules with `sudo udevadm control --reload-rules`
+
+```
+SUBSYSTEM=="input", GROUP="input", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05f3", MODE:="666", GROUP="plugdev"
+KERNEL=="hidraw*", ATTRS{idVendor}=="05f3", MODE="0666", GROUP="plugdev"
+```
+
 ## BREAKING CHANGES
 
 Please note that version `2.0.0` is a _BREAKING CHANGE_, as most of the API have changed.
