@@ -264,8 +264,8 @@ export class XKeys extends EventEmitter {
 				const x = data.readUInt8(joystick.joyXbyte) // Joystick X
 				let y = data.readUInt8(joystick.joyYbyte) // Joystick Y
 				const z = data.readUInt8(joystick.joyZbyte) // Joystick Z (twist of joystick)
-				y = -y
-				if (y === 0) y = 0
+				y = -y // "Up" on the joystick should be positive
+				if (y === 0) y = 0 // To deal with negative signed zero
 
 				newAnalogStates.joystick[index] = {
 					x: x < 128 ? x : x - 256, // -127 to 127
@@ -308,21 +308,26 @@ export class XKeys extends EventEmitter {
 			}
 
 			// Compare with previous analogue states:
-			this._analogStates.jog.forEach((oldValue, index) => {
-				const newValue = newAnalogStates.jog[index]
+			newAnalogStates.jog.forEach((newValue, index) => {
+				const oldValue = this._analogStates.jog[index]
+				// Special case for jog:
+				// The jog emits the delta value followed by it being reset to 0
+				// Ignore the 0, since that won't be useful
+				if (newValue === 0) return
 				if (newValue !== oldValue) this.emit('jog', index, newValue, eventMetadata)
 			})
-			this._analogStates.shuttle.forEach((oldValue, index) => {
-				const newValue = newAnalogStates.shuttle[index]
+			newAnalogStates.shuttle.forEach((newValue, index) => {
+				const oldValue = this._analogStates.shuttle[index]
 				if (newValue !== oldValue) this.emit('shuttle', index, newValue, eventMetadata)
 			})
-			this._analogStates.joystick.forEach((oldValue, index) => {
-				const newValue = newAnalogStates.joystick[index]
-				if (oldValue.x !== newValue.x || oldValue.y !== newValue.y || oldValue.z !== newValue.z)
+			newAnalogStates.joystick.forEach((newValue, index) => {
+				const oldValue = this._analogStates.joystick[index]
+				if (oldValue.x !== newValue.x || oldValue.y !== newValue.y || oldValue.z !== newValue.z) {
 					this.emit('joystick', index, newValue, eventMetadata)
+				}
 			})
-			this._analogStates.tbar.forEach((oldValue, index) => {
-				const newValue = newAnalogStates.tbar[index]
+			newAnalogStates.tbar.forEach((newValue, index) => {
+				const oldValue = this._analogStates.tbar[index]
 				if (newValue !== oldValue) this.emit('tbar', index, newValue, eventMetadata)
 			})
 
