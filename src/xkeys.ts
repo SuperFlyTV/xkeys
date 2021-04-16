@@ -360,7 +360,7 @@ export class XKeys extends EventEmitter {
 	}
 
 	/** Initialize the device. This ensures that the essential information from the device about its state has been received. */
-	async init(): Promise<void> {
+	public async init(): Promise<void> {
 		const pReceivedVersion = new Promise<void>((resolve) => {
 			this.receivedVersionResolve = resolve
 		})
@@ -377,7 +377,7 @@ export class XKeys extends EventEmitter {
 		this._initialized = true
 	}
 	/** Closes the device. Subsequent commands will raise errors. */
-	close(): void {
+	public close(): void {
 		this.handleDeviceDisconnected()
 	}
 
@@ -433,7 +433,7 @@ export class XKeys extends EventEmitter {
 	/**
 	 * Returns an object with current Button states
 	 */
-	getButtons(): ButtonStates {
+	public getButtons(): ButtonStates {
 		return Object.assign({}, this._buttonStates) // Return copy
 	}
 
@@ -444,7 +444,7 @@ export class XKeys extends EventEmitter {
 	 * @param flashing boolean: flashing or not (if on)
 	 * @returns undefined
 	 */
-	setIndicatorLED(ledIndex: number, on: boolean, flashing?: boolean): void {
+	public setIndicatorLED(ledIndex: number, on: boolean, flashing?: boolean): void {
 		this.ensureInitialized()
 		//force to 6 or 7
 		if (ledIndex === 1) ledIndex = 6
@@ -459,7 +459,7 @@ export class XKeys extends EventEmitter {
 	 * @param flashing boolean: flashing or not (if on)
 	 * @returns undefined
 	 */
-	setBacklight(
+	public setBacklight(
 		btnIndex: number,
 		/** RGB, RRGGBB, #RRGGBB */
 		color: Color | string | boolean | null,
@@ -514,7 +514,7 @@ export class XKeys extends EventEmitter {
 	 * Sets the backlight of all buttons
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
 	 */
-	setAllBacklights(color: Color | string | boolean | null): void {
+	public setAllBacklights(color: Color | string | boolean | null): void {
 		this.ensureInitialized()
 		color = this._interpretColor(color, this.product.backLightType)
 
@@ -533,7 +533,7 @@ export class XKeys extends EventEmitter {
 	 * On first call: Turn all backlights off
 	 * On second call: Return all backlights to their previous states
 	 */
-	toggleAllBacklights(): void {
+	public toggleAllBacklights(): void {
 		this.ensureInitialized()
 		this._write([0, 184])
 	}
@@ -541,7 +541,7 @@ export class XKeys extends EventEmitter {
 	 * Sets the backlightintensity of the device
 	 * @param intensity 0-255
 	 */
-	setBacklightIntensity(blueIntensity: number, redIntensity?: number): void {
+	public setBacklightIntensity(blueIntensity: number, redIntensity?: number): void {
 		this.ensureInitialized()
 		if (redIntensity === undefined) redIntensity = blueIntensity
 
@@ -559,7 +559,7 @@ export class XKeys extends EventEmitter {
 	 * Note: EEPROM command, don't call this function too often, or you'll kill the EEPROM!
 	 * (An EEPROM only support a few thousands of write operations.)
 	 */
-	saveBackLights(): void {
+	public saveBackLights(): void {
 		this.ensureInitialized()
 		this._write([0, 199])
 	}
@@ -568,7 +568,7 @@ export class XKeys extends EventEmitter {
 	 * @param frequency 1-255, where 1 is fastest and 255 is the slowest. 255 is approximately 4 seconds between flashes.
 	 * @returns undefined
 	 */
-	setFrequency(frequency: number): void {
+	public setFrequency(frequency: number): void {
 		this.ensureInitialized()
 		if (!(frequency >= 1 && frequency <= 255)) {
 			throw new Error(`Invalid frequency: ${frequency}`)
@@ -583,7 +583,7 @@ export class XKeys extends EventEmitter {
 	 * @param unitId Unit id ("UID"). Allowed values: 0-255. 0 is factory default
 	 * @returns undefined
 	 */
-	setUnitId(unitId: number): void {
+	public setUnitId(unitId: number): void {
 		this.ensureInitialized()
 		if (!(unitId >= 0 && unitId <= 255)) {
 			throw new Error(`Invalid UID: ${unitId} (needs to be between 0 - 255)`)
@@ -600,7 +600,7 @@ export class XKeys extends EventEmitter {
 	 * @param backlight  0 for off, 1 for on.
 	 * @returns undefined
 	 */
-	writeLcdDisplay(line: number, displayChar: string, backlight: boolean): void {
+	public writeLcdDisplay(line: number, displayChar: string, backlight: boolean): void {
 		this.ensureInitialized()
 		if (!this.product.hasLCD) return // only used for LCD display devices.
 		const byteVals = [0, 206, 0, 1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] // load the array with 206 op code and spaces
@@ -627,7 +627,7 @@ export class XKeys extends EventEmitter {
 		this._write(byteVals)
 	}
 
-	/** Called when it has been detected that the device has been disconnected */
+	/** (Internal function) Called when there has been detected that the device has been disconnected */
 	public handleDeviceDisconnected(): void {
 		if (!this._disconnected) {
 			this._disconnected = true
