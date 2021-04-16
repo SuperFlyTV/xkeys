@@ -1,0 +1,156 @@
+name: Node CI
+
+# Controls when the action will run.
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v**'
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Prepare Environment
+        run: |
+          npm install
+        env:
+          CI: true
+      - name: Run Linting
+        run: |
+          npm run lint
+        env:
+          CI: true
+
+  test:
+    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    needs:
+      - lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['10', '12', '14']
+        os: [ubuntu-latest] # [windows-latest, macOS-latest]
+    timeout-minutes: 10
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Prepare Environment
+        run: |
+          npm install
+          npm run build
+        env:
+          CI: true
+      - name: Run unit tests
+        run: |
+          npm run unit
+        env:
+          CI: true
+
+  prerelease:
+    name: Publish prerelease
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 15
+
+    # only run for branches
+    if: contains(github.ref, 'refs/heads/')
+
+    needs:
+      - lint
+      - test
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Check if prerelease is desired
+        # TODO - or if something changed? perhaps always on the releaseX branches?
+        id: do-publish
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "env NPM_TOKEN not set!"
+          elif ! git log --format=oneline -n 1 | grep -q "\[publish\]"; then
+            echo "Skip"
+          else
+            echo "Publish prerelease"
+            echo ::set-output name=publish::"1"
+          fi
+      - name: Prepare Environment
+        if: ${{ steps.do-publish.outputs.publish }}
+        run: |
+          npm install
+        env:
+          CI: true
+      - name: Get the Prerelease tag
+        id: prerelease-tag
+        uses: yuya-takeyama/docker-tag-from-github-ref-action@2b0614b1338c8f19dd9d3ea433ca9bc0cc7057ba
+        with:
+          remove-version-tag-prefix: false
+      - name: Bump prerelease version
+        if: ${{ steps.do-publish.outputs.publish }}
+        run: |
+          COMMIT_TIMESTAMP=$(git log -1 --pretty=format:%ct HEAD)
+          COMMIT_DATE=$(date -d @$COMMIT_TIMESTAMP +%Y%m%d-%H%M%S)
+          GIT_HASH=$(git rev-parse --short HEAD)
+          PRERELEASE_TAG=nightly-$(echo "${{ steps.prerelease-tag.outputs.tag }}" | sed -r 's/[^a-z0-9]+/-/gi')
+          npm run standard-version -- --prerelease $PRERELEASE_TAG-$COMMIT_DATE-$GIT_HASH --skip.changelog --skip.commit --skip.tag
+        env:
+          CI: true
+      - name: Build
+        if: ${{ steps.do-publish.outputs.publish }}
+        run: |
+          npm run build
+        env:
+          CI: true
+      - name: Publish to NPM
+        if: ${{ steps.do-publish.outputs.publish }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+          npm publish --access=public --tag nightly
+        env:
+          CI: true

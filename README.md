@@ -1,8 +1,8 @@
 # xkeys
 
-[![CircleCI](https://circleci.com/gh/SuperFlyTV/xkeys.svg?style=svg)](https://circleci.com/gh/SuperFlyTV/xkeys)
+[![Node CI](https://github.com/SuperFlyTV/xkeys/actions/workflows/node.yml/badge.svg)](https://github.com/SuperFlyTV/xkeys/actions/workflows/node.yml)
 
-A NodeJS module to interact with the [X-keys panels](https://xkeys.com/xkeys.html).
+A Node.js module to interact with the [X-keys panels](https://xkeys.com/xkeys.html).
 
 Licence: MIT
 
@@ -12,179 +12,273 @@ The project is based on the documentation available here: http://xkeys.com/PISup
 
 ```
 $ npm install --save xkeys
-or
-$ yarn add xkeys
 ```
 
+### Linux
 
+On linux, the udev subsystem blocks access for non-root users to the X-keys without some special configuration. Save the following to `/etc/udev/rules.d/50-xkeys.rules` and reload the rules with `sudo udevadm control --reload-rules`
+
+```
+SUBSYSTEM=="input", GROUP="input", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05f3", MODE:="666", GROUP="plugdev"
+KERNEL=="hidraw*", ATTRS{idVendor}=="05f3", MODE="0666", GROUP="plugdev"
+```
+
+## BREAKING CHANGES
+
+Please note that version `2.0.0` is a _BREAKING CHANGE_, as most of the API have changed.
+If you're upgrading from `<2.0.0`, please read the [_Migrations_](#Migrations) section below.
 
 ## Getting started
 
-### JavaScript
+### Watch for connected X-keys (recommended)
+
+This is the recommended way to use this library, to automatically be connected or reconnected to the panel.
+
+_Note: The watcher depends on the [node-usb-detection](https://github.com/MadLittleMods/node-usb-detection) library, which might be unsupported on some platforms._
+
+```javascript
+const { XKeysWatcher } = require('xkeys')
+
+const watcher = new XKeysWatcher()
+
+watcher.on('connected', (xkeysPanel) => {
+	console.log(`X-keys panel of type ${xkeysPanel.info.name} connected`)
+
+	xkeysPanel.on('disconnected', () => {
+		console.log(`X-keys panel of type ${xkeysPanel.info.name} was disconnected`)
+		// Clean up stuff
+		xkeysPanel.removeAllListeners()
+	})
+	xkeysPanel.on('error', (...errs) => {
+		console.log('X-keys error:', ...errs)
+	})
+
+	// Listen to pressed buttons:
+	xkeysPanel.on('down', (btnIndex, metadata) => {
+		console.log('Button pressed ', btnIndex, metadata)
+
+		// Light up a button when pressed:
+		xkeysPanel.setBacklight(btnIndex, 'red')
+	})
+	// Listen to released buttons:
+	xkeysPanel.on('up', (btnIndex, metadata) => {
+		console.log('Button released', btnIndex, metadata)
+
+		// Turn off button light when released:
+		xkeysPanel.setBacklight(btnIndex, false)
+	})
+
+	// Listen to jog wheel changes:
+	xkeysPanel.on('jog', (index, deltaPos, metadata) => {
+		console.log(`Jog ${index} position has changed`, deltaPos, metadata)
+	})
+	// Listen to shuttle changes:
+	xkeysPanel.on('shuttle', (index, shuttlePos, metadata) => {
+		console.log(`Shuttle ${index} position has changed`, shuttlePos, metadata)
+	})
+	// Listen to joystick changes:
+	xkeysPanel.on('joystick', (index, position, metadata) => {
+		console.log(`Joystick ${index} position has changed`, position, metadata) // {x, y, z}
+	})
+	// Listen to t-bar changes:
+	xkeysPanel.on('tbar', (index, position, metadata) => {
+		console.log(`T-bar ${index} position has changed`, position, metadata)
+	})
+})
+
+// To stop watching, call
+// watcher.stop()
+```
+
+### Connect to a devices manually
 
 ```javascript
 const { XKeys } = require('xkeys')
 
-// Connect to an x-keys panel:
-var myXkeysPanel = new XKeys()
+// Connect to any xkeys-panel:
+XKeys.setupXkeysPanel()
+	.then((xkeysPanel) => {
+		xkeysPanel.on('disconnected', () => {
+			console.log(`X-keys panel of type ${xkeysPanel.info.name} was disconnected`)
+			// Clean up stuff
+			xkeysPanel.removeAllListeners()
+		})
+		xkeysPanel.on('error', (...errs) => {
+			console.log('X-keys error:', ...errs)
+		})
 
-// Listen to pressed keys:
-myXkeysPanel.on('down', keyIndex => {
-	console.log('Key pressed: ' + keyIndex)
+		xkeysPanel.on('down', (btnIndex, metadata) => {
+			console.log('Button pressed', btnIndex, metadata)
+		})
 
-	// Light up a button when pressed:
-	myXkeysPanel.setBacklight(keyIndex, true)
-})
-// Listen to released keys:
-myXkeysPanel.on('up', keyIndex => {
-	console.log('Key released: ' + keyIndex)
-
-	// Turn off button light when released:
-	myXkeysPanel.setBacklight(keyIndex, false)
-})
-
-// Listen to jog wheel changes:
-myXkeysPanel.on('jog', deltaPos => {
-	console.log('Jog position has changed: ' + deltaPos)
-})
-// Listen to shuttle changes:
-myXkeysPanel.on('shuttle', shuttlePos => {
-	console.log('Shuttle position has changed: ' + shuttlePos)
-})
-// Listen to joystick changes:
-myXkeysPanel.on('joystick', position => {
-	console.log('Joystick has changed:' + position) // {x, y, z}
-})
-// Listen to t-bar changes:
-myXkeysPanel.on('tbar', (position, rawPosition) => {
-    console.log('T-bar position has changed: ' + position + ' (uncalibrated: ' + rawPosition + ')')
-})
+		// ...
+	})
+	.catch(console.log) // Handle error
 ```
 
-## Documentation
+or
 
-### Initalize
-#### Connect to any connected X-keys panel
 ```javascript
-const XKeys = require('xkeys')
+const { XKeys } = require('xkeys')
 
-var myXkeysPanel = new XKeys()
-```
-#### Connect to a specific X-keys panel
-```javascript
-const HID = require('node-hid')
-const XKeys = require('xkeys')
-
-const devices = HID.devices()
-const connectedXKeys = devices.filter(device => {
-	return (device.vendorId === XKeys.vendorId && device.interface === 0) // Make sure that the interface-property is set to 0
+// List and connect to xkeys-panel:
+XKeys.listAllConnectedPanels().forEach(() => {
+	XKeys.setupXkeysPanel()
+		.then((xkeysPanel) => {
+			// ...
+		})
+		.catch(console.log) // Handle error
 })
-
-if (connectedXKeys.length) {
-	var myXkeysPanel = new XKeys(connectedXKeys[0].path)
-} else {
-	console.log("Could not find any connected X-keys panels.")
-}
 ```
+
+## API documentation
 
 ### Events
 
-| Event | Description |
-|---|---|
-| `"down"`, `"up"` | Triggered when ANY button is pressed/released. Emitted with `(keyIndex)`. |
-| `"downKey"`, `"upKey"` | Triggered when a regular button is pressed/released. Emitted with `(keyIndex)`. |
-| `"downAlt"`, `"upAlt"` | Triggered when an alternative button is pressed/released, such as the "program switch" (keyIndex "PS"). Emitted with `(keyIndex)`. |
-| `"jog"` | Triggered when the jog wheel is moved. Emitted with `(jogValue)` |
-| `"shuttle"` | Triggered when the shuttle is moved. Emitted with `(shuttleValue)` |
-| `"joystick"` | Triggered when the joystick is moved. Emitted with `({x, y, z})` |
-| `"tbar"` | Triggered when the T-bar is moved. Emitted with `(tbarPosition, rawPosition)` |
-| `"error"` | Triggered on error. Emitted with `(error)`. |
-
-
-### Setting things
-#### Set backlight of a button
 ```javascript
-myXkeysPanel.setBacklight(keyIndex, on, redLight, flashing);
-
-// Examples:
-// Light up the backlight of bank 1 (blue light)
-myXkeysPanel.setBacklight(keyIndex, true);
-// Flash the backlight of bank 2 (red light)
-myXkeysPanel.setBacklight(keyIndex, true, true, true);
+// Example:
+xkeysPanel.on('down', (btnIndex, metadata) => {
+	console.log('Button pressed', btnIndex, metadata)
+})
 ```
 
-#### Set the LEDs (the red/green status LED's)
+| Event | Description |
+| -- | -- |
+| `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(btnIndex, metadata)`. |     |
+| `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(jogValue)`                  |
+| `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(shuttleValue)`                |
+| `"joystick"`     | Triggered when the joystick is moved. Emitted with `({x, y, z})`                  |
+| `"tbar"`         | Triggered when the T-bar is moved. Emitted with `(tbarPosition, rawPosition)`     |
+| `"error"`        | Triggered on error. Emitted with `(error)`.                                       |
+
+### Methods
+
+**Setting the backlight of a button**
+
 ```javascript
-myXkeysPanel.setLED(keyIndex, on, flashing)
+xkeysPanel.setBacklight(btnIndex, color)
+
+// Examples:
+// Set blue light
+xkeysPanel.setBacklight(btnIndex, '0000ff')
+// Set any available default light
+xkeysPanel.setBacklight(btnIndex, true)
+// Turn off light
+xkeysPanel.setBacklight(btnIndex, false)
+// Set flashing light
+xkeysPanel.setBacklight(btnIndex, 'red', true)
+
+// Set color (for RGB-supported devices)
+xkeysPanel.setBacklight(btnIndex, 'ff3300')
+```
+
+**Set the indicator LEDs (the red/green status LED's)**
+
+```javascript
+xkeysPanel.setIndicatorLED(ledIndex, on, flashing)
 
 // Examples:
 // Light up the green LED
-myXkeysPanel.setBacklight(0, true);
-// Light up the red LED
-myXkeysPanel.setBacklight(1, true);
+xkeysPanel.setIndicatorLED(1, true)
+// Flash the red LED
+xkeysPanel.setIndicatorLED(2, true, true)
 ```
 
-#### Set backlight intensity
+**Set backlight intensity**
+
 ```javascript
-myXkeysPanel.setBacklightIntensity(intensity)
+xkeysPanel.setBacklightIntensity(intensity)
 
 // Example:
 // Set max intensity
-myXkeysPanel.setBacklightIntensity(255)
+xkeysPanel.setBacklightIntensity(255)
 ```
 
-#### Set all backlights on or off
+**Set all backlights on or off**
+
 ```javascript
-myXkeysPanel.setAllBacklights(on, redLight)
+xkeysPanel.setAllBacklights(color)
 
 // Example:
 // Light up all buttons
-myXkeysPanel.setAllBacklights(true, false)
-myXkeysPanel.setAllBacklights(true, true)
+xkeysPanel.setAllBacklights(true)
+// Light up all buttons in a nice color
+xkeysPanel.setAllBacklights('ff33ff')
+// Turn of all buttons
+xkeysPanel.setAllBacklights(false)
 ```
 
-#### Set flashing frequency
+**Set flashing frequency**
+
 ```javascript
 // The frequency can be set to 1-255, where 1 is fastest and 255 is the slowest.
 // 255 is approximately 4 seconds between flashes.
-myXkeysPanel.setFrequency(frequency)
+xkeysPanel.setFrequency(frequency)
 
 // Example:
 // Set the frequency to a pretty fast flash
-myXkeysPanel.setFrequency(8)
+xkeysPanel.setFrequency(8)
 ```
 
+** Set unit ID **
+```javascript
+// Sets the UID (unit Id) value in the X-keys hardware
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+xkeysPanel.setUnitId(unitId)
+```
+** Save backlights **
+```javascript
+// Save the backlights (so they are restored to this after a power cycle).
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+xkeysPanel.saveBackLights()
+```
 
-## Device support
+#### Other functionality
 
-Testing and contributions are much appreciated!
-If you have one of the untested devices below, please test it and tell us how it works in an Issue!
+See [src/xkeys.ts](src/xkeys.ts) for more functionality.
 
 ### Supported devices
-These devices have been tested to work:
 
-* XK-24
-* XK-60
-* XK-80
-* XK-68 Jog + Shuttle
-* XK-12 Jog
-* XKE-124 T-bar
+Thanks to official support from [P.I Enginneering, the X-keys manufacturer](https://xkeys.com/), there is support for all official (and some experimental) devices.
 
-### Not tested devices (yet)
+See the full list in [src/products.ts](src/products.ts)
 
-Support for these devices is implemented, but not tested:
+## Migrations
 
-* XK-4: Not tested
-* XK-8: Not tested
-* XK-16: Not tested
-* XK-12 Joystick: Not tested
-* XR-32: Not tested
-* XKE-128: Not tested
+### 2.0.0
 
-If you have access to any of the untested devices listed above, it would be very nice if you could provide some data to add to the tests!
-Just do
-```
-npm install
-npm run logHMI
-```
-and [post an issue](https://github.com/SuperFlyTV/xkeys/issues) with the results in the generated file **log.txt**.
+Version `2.0.0` is a breaking changes, which requires several changes in how to use the library.
+
+The most notable changes are:
+
+| Before, `<2.0.0`                                     | Changes in `>=2.0.0`                                                                                                                                                          |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `let myXkeys = new XKeys()`                          | `let myXkeys = await XKeys.setupXkeysPanel()`                                                                                                                                 |
+| `myXkeys.on('down', (btnIndex) => {} )`              | The numbering of `btnIndexes` has changed:<br/>_ The PS-button is on index 0.<br/>_ Other buttons start on index 1.<br/>\* Numbering of buttons have changed for some models. |
+| `myXkeys.on('downKey', (btnIndex) => {} )`           | Use `.on('down')` instead                                                                                                                                                     |
+| `myXkeys.on('upKey', (btnIndex) => {} )`             | Use `.on('up')` instead                                                                                                                                                       |
+| `myXkeys.on('downAlt', (btnIndex) => {} )`           | Use `.on('down')` instead (PS-button is on index 0)                                                                                                                           |
+| `myXkeys.on('upAlt', (btnIndex) => {} )`             | Use `.on('up')` instead (PS-button is on index 0)                                                                                                                             |
+| `myXkeys.on('jog', (position) => {} )`               | `myXkeys.on('jog', (index, position) => {} )`                                                                                                                                 |
+| `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )`                                                                                                                             |
+| `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )`                                                                                                                                |
+| `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )`                                                                                                                            |
+| `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs                                                                                                                                                   |
+| `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs                                                                                                                                                   |
+| `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)                                                                                                  |
+
+## Contribution guidelines
+
+If you have any questions or want to report a bug, [please open an issue at Githib](https://github.com/SuperFlyTV/xkeys/issues/new).
+
+If you want to contribute a bug fix or improvement, we'd happily accept Pull-requests.
+(If you're planning something big, [please open an issue](https://github.com/SuperFlyTV/xkeys/issues/new) to announce it first, and spark discussions.
+
+### Coding style and tests
+Please follow the same coding style as the rest of the repository when you type.
+
+Before committing, be sure to run `npm run test` to ensure your code passes the linting and unit tests.
+
+### License
+By contributing, you agree that your contributions will be licensed under its MIT License.

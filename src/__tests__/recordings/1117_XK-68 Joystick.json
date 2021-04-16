@@ -1,0 +1,3978 @@
+{
+  "device": {
+    "name": "XK-68 Joystick",
+    "productId": 1117
+  },
+  "info": {
+    "name": "XK-68 Joystick",
+    "productId": 1117,
+    "interface": 0,
+    "unitId": 5,
+    "firmwareVersion": 9,
+    "colCount": 10,
+    "rowCount": 8,
+    "layout": [
+      {
+        "name": "Keys",
+        "index": 0,
+        "startRow": 1,
+        "startCol": 1,
+        "endRow": 8,
+        "endCol": 10
+      },
+      {
+        "name": "Joystick",
+        "index": 0,
+        "startRow": 4,
+        "startCol": 4,
+        "endRow": 6,
+        "endCol": 7
+      }
+    ],
+    "emitsTimestamp": true,
+    "hasPS": true,
+    "hasJoystick": 1,
+    "hasJog": 0,
+    "hasShuttle": 0,
+    "hasTbar": 0,
+    "hasLCD": false,
+    "hasGPIO": false,
+    "hasSerialData": false,
+    "hasDMX": false
+  },
+  "errors": [],
+  "actions": [
+    {
+      "sentData": [
+        "00b306010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b306000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601ff0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "ffffff"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "blue"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600000000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500010100000000000000000000000000000000000000000000000000000000000000",
+        "00b550000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500020100000000000000000000000000000000000000000000000000000000000000",
+        "00b550000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f",
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500000100000000000000000000000000000000000000000000000000000000000000",
+        "00b550000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "000"
+      ],
+      "anomaly": ""
+    }
+  ],
+  "events": [
+    {
+      "data": [
+        "05000000000000000000000000000000b300000011d700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":179,\"deltaZ\":-77}. Metadata: timestamp: 4567"
+    },
+    {
+      "data": [
+        "05000100000000000000000000000000b3000000dda900000000000000000000"
+      ],
+      "description": "Button 1 pressed.  Metadata: row: 1, col: 1, timestamp: 56745"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000000e3d700000000000000000000"
+      ],
+      "description": "Button 1 released. Metadata: row: 1, col: 1, timestamp: 58327"
+    },
+    {
+      "data": [
+        "05000200000000000000000000000000b3000000e5d800000000000000000000"
+      ],
+      "description": "Button 2 pressed.  Metadata: row: 2, col: 1, timestamp: 58840"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000000ea6a00000000000000000000"
+      ],
+      "description": "Button 2 released. Metadata: row: 2, col: 1, timestamp: 60010"
+    },
+    {
+      "data": [
+        "05000400000000000000000000000000b3000000ec2300000000000000000000"
+      ],
+      "description": "Button 3 pressed.  Metadata: row: 3, col: 1, timestamp: 60451"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000000f27000000000000000000000"
+      ],
+      "description": "Button 3 released. Metadata: row: 3, col: 1, timestamp: 62064"
+    },
+    {
+      "data": [
+        "05000800000000000000000000000000b3000000f43300000000000000000000"
+      ],
+      "description": "Button 4 pressed.  Metadata: row: 4, col: 1, timestamp: 62515"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000000f94800000000000000000000"
+      ],
+      "description": "Button 4 released. Metadata: row: 4, col: 1, timestamp: 63816"
+    },
+    {
+      "data": [
+        "05001000000000000000000000000000b3000000fae100000000000000000000"
+      ],
+      "description": "Button 5 pressed.  Metadata: row: 5, col: 1, timestamp: 64225"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001004d00000000000000000000"
+      ],
+      "description": "Button 5 released. Metadata: row: 5, col: 1, timestamp: 65613"
+    },
+    {
+      "data": [
+        "05002000000000000000000000000000b300000101b900000000000000000000"
+      ],
+      "description": "Button 6 pressed.  Metadata: row: 6, col: 1, timestamp: 65977"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001073900000000000000000000"
+      ],
+      "description": "Button 6 released. Metadata: row: 6, col: 1, timestamp: 67385"
+    },
+    {
+      "data": [
+        "05004000000000000000000000000000b3000001089a00000000000000000000"
+      ],
+      "description": "Button 7 pressed.  Metadata: row: 7, col: 1, timestamp: 67738"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000010ee500000000000000000000"
+      ],
+      "description": "Button 7 released. Metadata: row: 7, col: 1, timestamp: 69349"
+    },
+    {
+      "data": [
+        "05008000000000000000000000000000b30000010fe400000000000000000000"
+      ],
+      "description": "Button 8 pressed.  Metadata: row: 8, col: 1, timestamp: 69604"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000116eb00000000000000000000"
+      ],
+      "description": "Button 8 released. Metadata: row: 8, col: 1, timestamp: 71403"
+    },
+    {
+      "data": [
+        "05000001000000000000000000000000b30000011b8d00000000000000000000"
+      ],
+      "description": "Button 9 pressed.  Metadata: row: 1, col: 2, timestamp: 72589"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001212500000000000000000000"
+      ],
+      "description": "Button 9 released. Metadata: row: 1, col: 2, timestamp: 74021"
+    },
+    {
+      "data": [
+        "05000002000000000000000000000000b300000121ee00000000000000000000"
+      ],
+      "description": "Button 10 pressed.  Metadata: row: 2, col: 2, timestamp: 74222"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001283c00000000000000000000"
+      ],
+      "description": "Button 10 released. Metadata: row: 2, col: 2, timestamp: 75836"
+    },
+    {
+      "data": [
+        "05000004000000000000000000000000b3000001291e00000000000000000000"
+      ],
+      "description": "Button 11 pressed.  Metadata: row: 3, col: 2, timestamp: 76062"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001307700000000000000000000"
+      ],
+      "description": "Button 11 released. Metadata: row: 3, col: 2, timestamp: 77943"
+    },
+    {
+      "data": [
+        "05000008000000000000000000000000b3000001313800000000000000000000"
+      ],
+      "description": "Button 12 pressed.  Metadata: row: 4, col: 2, timestamp: 78136"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000139b300000000000000000000"
+      ],
+      "description": "Button 12 released. Metadata: row: 4, col: 2, timestamp: 80307"
+    },
+    {
+      "data": [
+        "05000010000000000000000000000000b30000013a8700000000000000000000"
+      ],
+      "description": "Button 13 pressed.  Metadata: row: 5, col: 2, timestamp: 80519"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001427400000000000000000000"
+      ],
+      "description": "Button 13 released. Metadata: row: 5, col: 2, timestamp: 82548"
+    },
+    {
+      "data": [
+        "05000020000000000000000000000000b300000143e300000000000000000000"
+      ],
+      "description": "Button 14 pressed.  Metadata: row: 6, col: 2, timestamp: 82915"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000014d4f00000000000000000000"
+      ],
+      "description": "Button 14 released. Metadata: row: 6, col: 2, timestamp: 85327"
+    },
+    {
+      "data": [
+        "05000040000000000000000000000000b30000014e6f00000000000000000000"
+      ],
+      "description": "Button 15 pressed.  Metadata: row: 7, col: 2, timestamp: 85615"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001559300000000000000000000"
+      ],
+      "description": "Button 15 released. Metadata: row: 7, col: 2, timestamp: 87443"
+    },
+    {
+      "data": [
+        "05000080000000000000000000000000b300000156e100000000000000000000"
+      ],
+      "description": "Button 16 pressed.  Metadata: row: 8, col: 2, timestamp: 87777"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000015e2e00000000000000000000"
+      ],
+      "description": "Button 16 released. Metadata: row: 8, col: 2, timestamp: 89646"
+    },
+    {
+      "data": [
+        "05000000010000000000000000000000b3000001606c00000000000000000000"
+      ],
+      "description": "Button 17 pressed.  Metadata: row: 1, col: 3, timestamp: 90220"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001695200000000000000000000"
+      ],
+      "description": "Button 17 released. Metadata: row: 1, col: 3, timestamp: 92498"
+    },
+    {
+      "data": [
+        "05000000020000000000000000000000b30000016a7100000000000000000000"
+      ],
+      "description": "Button 18 pressed.  Metadata: row: 2, col: 3, timestamp: 92785"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000171c800000000000000000000"
+      ],
+      "description": "Button 18 released. Metadata: row: 2, col: 3, timestamp: 94664"
+    },
+    {
+      "data": [
+        "05000000040000000000000000000000b300000172ba00000000000000000000"
+      ],
+      "description": "Button 19 pressed.  Metadata: row: 3, col: 3, timestamp: 94906"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000017afc00000000000000000000"
+      ],
+      "description": "Button 19 released. Metadata: row: 3, col: 3, timestamp: 97020"
+    },
+    {
+      "data": [
+        "05000000080000000000000000000000b30000017c1000000000000000000000"
+      ],
+      "description": "Button 20 pressed.  Metadata: row: 4, col: 3, timestamp: 97296"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001856600000000000000000000"
+      ],
+      "description": "Button 20 released. Metadata: row: 4, col: 3, timestamp: 99686"
+    },
+    {
+      "data": [
+        "05000000100000000000000000000000b3000001864800000000000000000000"
+      ],
+      "description": "Button 21 pressed.  Metadata: row: 5, col: 3, timestamp: 99912"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000018fe600000000000000000000"
+      ],
+      "description": "Button 21 released. Metadata: row: 5, col: 3, timestamp: 102374"
+    },
+    {
+      "data": [
+        "05000000200000000000000000000000b3000001910800000000000000000000"
+      ],
+      "description": "Button 22 pressed.  Metadata: row: 6, col: 3, timestamp: 102664"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001991e00000000000000000000"
+      ],
+      "description": "Button 22 released. Metadata: row: 6, col: 3, timestamp: 104734"
+    },
+    {
+      "data": [
+        "05000000400000000000000000000000b30000019a1900000000000000000000"
+      ],
+      "description": "Button 23 pressed.  Metadata: row: 7, col: 3, timestamp: 104985"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001a12200000000000000000000"
+      ],
+      "description": "Button 23 released. Metadata: row: 7, col: 3, timestamp: 106786"
+    },
+    {
+      "data": [
+        "05000000800000000000000000000000b3000001a27100000000000000000000"
+      ],
+      "description": "Button 24 pressed.  Metadata: row: 8, col: 3, timestamp: 107121"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001aa0f00000000000000000000"
+      ],
+      "description": "Button 24 released. Metadata: row: 8, col: 3, timestamp: 109071"
+    },
+    {
+      "data": [
+        "05000000000100000000000000000000b3000001acc900000000000000000000"
+      ],
+      "description": "Button 25 pressed.  Metadata: row: 1, col: 4, timestamp: 109769"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001b42400000000000000000000"
+      ],
+      "description": "Button 25 released. Metadata: row: 1, col: 4, timestamp: 111652"
+    },
+    {
+      "data": [
+        "05000000000200000000000000000000b3000001b54000000000000000000000"
+      ],
+      "description": "Button 26 pressed.  Metadata: row: 2, col: 4, timestamp: 111936"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001bd5600000000000000000000"
+      ],
+      "description": "Button 26 released. Metadata: row: 2, col: 4, timestamp: 114006"
+    },
+    {
+      "data": [
+        "05000000000400000000000000000000b3000001be3f00000000000000000000"
+      ],
+      "description": "Button 27 pressed.  Metadata: row: 3, col: 4, timestamp: 114239"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001c66a00000000000000000000"
+      ],
+      "description": "Button 27 released. Metadata: row: 3, col: 4, timestamp: 116330"
+    },
+    {
+      "data": [
+        "05000000004000000000000000000000b3000001c87000000000000000000000"
+      ],
+      "description": "Button 31 pressed.  Metadata: row: 7, col: 4, timestamp: 116848"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001d00900000000000000000000"
+      ],
+      "description": "Button 31 released. Metadata: row: 7, col: 4, timestamp: 118793"
+    },
+    {
+      "data": [
+        "05000000008000000000000000000000b3000001d11c00000000000000000000"
+      ],
+      "description": "Button 32 pressed.  Metadata: row: 8, col: 4, timestamp: 119068"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001d9c000000000000000000000"
+      ],
+      "description": "Button 32 released. Metadata: row: 8, col: 4, timestamp: 121280"
+    },
+    {
+      "data": [
+        "05000000000001000000000000000000b3000001dbe400000000000000000000"
+      ],
+      "description": "Button 33 pressed.  Metadata: row: 1, col: 5, timestamp: 121828"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001e40f00000000000000000000"
+      ],
+      "description": "Button 33 released. Metadata: row: 1, col: 5, timestamp: 123919"
+    },
+    {
+      "data": [
+        "05000000000002000000000000000000b3000001e4c200000000000000000000"
+      ],
+      "description": "Button 34 pressed.  Metadata: row: 2, col: 5, timestamp: 124098"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001ecb500000000000000000000"
+      ],
+      "description": "Button 34 released. Metadata: row: 2, col: 5, timestamp: 126133"
+    },
+    {
+      "data": [
+        "05000000000004000000000000000000b3000001ed5100000000000000000000"
+      ],
+      "description": "Button 35 pressed.  Metadata: row: 3, col: 5, timestamp: 126289"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000001f4d100000000000000000000"
+      ],
+      "description": "Button 35 released. Metadata: row: 3, col: 5, timestamp: 128209"
+    },
+    {
+      "data": [
+        "05000000000040000000000000000000b3000001f71500000000000000000000"
+      ],
+      "description": "Button 39 pressed.  Metadata: row: 7, col: 5, timestamp: 128789"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000200be00000000000000000000"
+      ],
+      "description": "Button 39 released. Metadata: row: 7, col: 5, timestamp: 131262"
+    },
+    {
+      "data": [
+        "05000000000080000000000000000000b3000002016500000000000000000000"
+      ],
+      "description": "Button 40 pressed.  Metadata: row: 8, col: 5, timestamp: 131429"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000020b0100000000000000000000"
+      ],
+      "description": "Button 40 released. Metadata: row: 8, col: 5, timestamp: 133889"
+    },
+    {
+      "data": [
+        "05000000000000010000000000000000b30000020eca00000000000000000000"
+      ],
+      "description": "Button 41 pressed.  Metadata: row: 1, col: 6, timestamp: 134858"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000002178900000000000000000000"
+      ],
+      "description": "Button 41 released. Metadata: row: 1, col: 6, timestamp: 137097"
+    },
+    {
+      "data": [
+        "05000000000000020000000000000000b300000218d300000000000000000000"
+      ],
+      "description": "Button 42 pressed.  Metadata: row: 2, col: 6, timestamp: 137427"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000002255a00000000000000000000"
+      ],
+      "description": "Button 42 released. Metadata: row: 2, col: 6, timestamp: 140634"
+    },
+    {
+      "data": [
+        "05000000000000040000000000000000b3000002277a00000000000000000000"
+      ],
+      "description": "Button 43 pressed.  Metadata: row: 3, col: 6, timestamp: 141178"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000002321000000000000000000000"
+      ],
+      "description": "Button 43 released. Metadata: row: 3, col: 6, timestamp: 143888"
+    },
+    {
+      "data": [
+        "05000000000000400000000000000000b3000002350600000000000000000000"
+      ],
+      "description": "Button 47 pressed.  Metadata: row: 7, col: 6, timestamp: 144646"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000023e6000000000000000000000"
+      ],
+      "description": "Button 47 released. Metadata: row: 7, col: 6, timestamp: 147040"
+    },
+    {
+      "data": [
+        "05000000000000800000000000000000b30000023f3b00000000000000000000"
+      ],
+      "description": "Button 48 pressed.  Metadata: row: 8, col: 6, timestamp: 147259"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000002482e00000000000000000000"
+      ],
+      "description": "Button 48 released. Metadata: row: 8, col: 6, timestamp: 149550"
+    },
+    {
+      "data": [
+        "05000000000000000100000000000000b30000024ab200000000000000000000"
+      ],
+      "description": "Button 49 pressed.  Metadata: row: 1, col: 7, timestamp: 150194"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000252d000000000000000000000"
+      ],
+      "description": "Button 49 released. Metadata: row: 1, col: 7, timestamp: 152272"
+    },
+    {
+      "data": [
+        "05000000000000000200000000000000b3000002548400000000000000000000"
+      ],
+      "description": "Button 50 pressed.  Metadata: row: 2, col: 7, timestamp: 152708"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000025e2300000000000000000000"
+      ],
+      "description": "Button 50 released. Metadata: row: 2, col: 7, timestamp: 155171"
+    },
+    {
+      "data": [
+        "05000000000000000400000000000000b30000025f7f00000000000000000000"
+      ],
+      "description": "Button 51 pressed.  Metadata: row: 3, col: 7, timestamp: 155519"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000267d800000000000000000000"
+      ],
+      "description": "Button 51 released. Metadata: row: 3, col: 7, timestamp: 157656"
+    },
+    {
+      "data": [
+        "05000000000000004000000000000000b300000269c100000000000000000000"
+      ],
+      "description": "Button 55 pressed.  Metadata: row: 7, col: 7, timestamp: 158145"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000273ab00000000000000000000"
+      ],
+      "description": "Button 55 released. Metadata: row: 7, col: 7, timestamp: 160683"
+    },
+    {
+      "data": [
+        "05000000000000008000000000000000b300000274d300000000000000000000"
+      ],
+      "description": "Button 56 pressed.  Metadata: row: 8, col: 7, timestamp: 160979"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b30000027cd900000000000000000000"
+      ],
+      "description": "Button 56 released. Metadata: row: 8, col: 7, timestamp: 163033"
+    },
+    {
+      "data": [
+        "05000000000000000001000000000000b3000002806800000000000000000000"
+      ],
+      "description": "Button 57 pressed.  Metadata: row: 1, col: 8, timestamp: 163944"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b3000002892800000000000000000000"
+      ],
+      "description": "Button 57 released. Metadata: row: 1, col: 8, timestamp: 166184"
+    },
+    {
+      "data": [
+        "05000000000000000002000000000000b30000028a9100000000000000000000"
+      ],
+      "description": "Button 58 pressed.  Metadata: row: 2, col: 8, timestamp: 166545"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b300000294ce00000000000000000000"
+      ],
+      "description": "Button 58 released. Metadata: row: 2, col: 8, timestamp: 169166"
+    },
+    {
+      "data": [
+        "05000000000000000004000000000000b3000002961400000000000000000000"
+      ],
+      "description": "Button 59 pressed.  Metadata: row: 3, col: 8, timestamp: 169492"
+    },
+    {
+      "data": [
+        "05000000000000000004000000000000b40000029a8200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":180,\"deltaZ\":1}. Metadata: timestamp: 170626"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000002a02200000000000000000000"
+      ],
+      "description": "Button 59 released. Metadata: row: 3, col: 8, timestamp: 172066"
+    },
+    {
+      "data": [
+        "05000000000000000008000000000000b4000002a14c00000000000000000000"
+      ],
+      "description": "Button 60 pressed.  Metadata: row: 4, col: 8, timestamp: 172364"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000002ab5900000000000000000000"
+      ],
+      "description": "Button 60 released. Metadata: row: 4, col: 8, timestamp: 174937"
+    },
+    {
+      "data": [
+        "05000000000000000010000000000000b4000002ac8700000000000000000000"
+      ],
+      "description": "Button 61 pressed.  Metadata: row: 5, col: 8, timestamp: 175239"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000002b5b100000000000000000000"
+      ],
+      "description": "Button 61 released. Metadata: row: 5, col: 8, timestamp: 177585"
+    },
+    {
+      "data": [
+        "05000000000000000020000000000000b4000002b76f00000000000000000000"
+      ],
+      "description": "Button 62 pressed.  Metadata: row: 6, col: 8, timestamp: 178031"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000002c5ca00000000000000000000"
+      ],
+      "description": "Button 62 released. Metadata: row: 6, col: 8, timestamp: 181706"
+    },
+    {
+      "data": [
+        "05000000000000000040000000000000b4000002d3d700000000000000000000"
+      ],
+      "description": "Button 63 pressed.  Metadata: row: 7, col: 8, timestamp: 185303"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000002e0dd00000000000000000000"
+      ],
+      "description": "Button 63 released. Metadata: row: 7, col: 8, timestamp: 188637"
+    },
+    {
+      "data": [
+        "05000000000000000080000000000000b4000002e25a00000000000000000000"
+      ],
+      "description": "Button 64 pressed.  Metadata: row: 8, col: 8, timestamp: 189018"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000002eecc00000000000000000000"
+      ],
+      "description": "Button 64 released. Metadata: row: 8, col: 8, timestamp: 192204"
+    },
+    {
+      "data": [
+        "05000000000000000000010000000000b4000002f16400000000000000000000"
+      ],
+      "description": "Button 65 pressed.  Metadata: row: 1, col: 9, timestamp: 192868"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000002f98900000000000000000000"
+      ],
+      "description": "Button 65 released. Metadata: row: 1, col: 9, timestamp: 194953"
+    },
+    {
+      "data": [
+        "05000000000000000000020000000000b4000002fb8400000000000000000000"
+      ],
+      "description": "Button 66 pressed.  Metadata: row: 2, col: 9, timestamp: 195460"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000003039600000000000000000000"
+      ],
+      "description": "Button 66 released. Metadata: row: 2, col: 9, timestamp: 197526"
+    },
+    {
+      "data": [
+        "05000000000000000000040000000000b4000003055200000000000000000000"
+      ],
+      "description": "Button 67 pressed.  Metadata: row: 3, col: 9, timestamp: 197970"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b40000030e4f00000000000000000000"
+      ],
+      "description": "Button 67 released. Metadata: row: 3, col: 9, timestamp: 200271"
+    },
+    {
+      "data": [
+        "05000000000000000000080000000000b40000030fcd00000000000000000000"
+      ],
+      "description": "Button 68 pressed.  Metadata: row: 4, col: 9, timestamp: 200653"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b400000318ff00000000000000000000"
+      ],
+      "description": "Button 68 released. Metadata: row: 4, col: 9, timestamp: 203007"
+    },
+    {
+      "data": [
+        "05000000000000000000100000000000b40000031b1400000000000000000000"
+      ],
+      "description": "Button 69 pressed.  Metadata: row: 5, col: 9, timestamp: 203540"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000003237800000000000000000000"
+      ],
+      "description": "Button 69 released. Metadata: row: 5, col: 9, timestamp: 205688"
+    },
+    {
+      "data": [
+        "05000000000000000000200000000000b4000003246900000000000000000000"
+      ],
+      "description": "Button 70 pressed.  Metadata: row: 6, col: 9, timestamp: 205929"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b40000032be200000000000000000000"
+      ],
+      "description": "Button 70 released. Metadata: row: 6, col: 9, timestamp: 207842"
+    },
+    {
+      "data": [
+        "05000000000000000000400000000000b40000032cd900000000000000000000"
+      ],
+      "description": "Button 71 pressed.  Metadata: row: 7, col: 9, timestamp: 208089"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000003350c00000000000000000000"
+      ],
+      "description": "Button 71 released. Metadata: row: 7, col: 9, timestamp: 210188"
+    },
+    {
+      "data": [
+        "05000000000000000000800000000000b4000003361c00000000000000000000"
+      ],
+      "description": "Button 72 pressed.  Metadata: row: 8, col: 9, timestamp: 210460"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b40000033d8200000000000000000000"
+      ],
+      "description": "Button 72 released. Metadata: row: 8, col: 9, timestamp: 212354"
+    },
+    {
+      "data": [
+        "05000000000000000000000100000000b40000033fe700000000000000000000"
+      ],
+      "description": "Button 73 pressed.  Metadata: row: 1, col: 10, timestamp: 212967"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b400000347f500000000000000000000"
+      ],
+      "description": "Button 73 released. Metadata: row: 1, col: 10, timestamp: 215029"
+    },
+    {
+      "data": [
+        "05000000000000000000000200000000b4000003494500000000000000000000"
+      ],
+      "description": "Button 74 pressed.  Metadata: row: 2, col: 10, timestamp: 215365"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b400000352e900000000000000000000"
+      ],
+      "description": "Button 74 released. Metadata: row: 2, col: 10, timestamp: 217833"
+    },
+    {
+      "data": [
+        "05000000000000000000000400000000b4000003547e00000000000000000000"
+      ],
+      "description": "Button 75 pressed.  Metadata: row: 3, col: 10, timestamp: 218238"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000003608b00000000000000000000"
+      ],
+      "description": "Button 75 released. Metadata: row: 3, col: 10, timestamp: 221323"
+    },
+    {
+      "data": [
+        "05000000000000000000000800000000b4000003622600000000000000000000"
+      ],
+      "description": "Button 76 pressed.  Metadata: row: 4, col: 10, timestamp: 221734"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b40000036c2400000000000000000000"
+      ],
+      "description": "Button 76 released. Metadata: row: 4, col: 10, timestamp: 224292"
+    },
+    {
+      "data": [
+        "05000000000000000000001000000000b40000036ee400000000000000000000"
+      ],
+      "description": "Button 77 pressed.  Metadata: row: 5, col: 10, timestamp: 224996"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b400000378ec00000000000000000000"
+      ],
+      "description": "Button 77 released. Metadata: row: 5, col: 10, timestamp: 227564"
+    },
+    {
+      "data": [
+        "05000000000000000000002000000000b40000037a4100000000000000000000"
+      ],
+      "description": "Button 78 pressed.  Metadata: row: 6, col: 10, timestamp: 227905"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000003845a00000000000000000000"
+      ],
+      "description": "Button 78 released. Metadata: row: 6, col: 10, timestamp: 230490"
+    },
+    {
+      "data": [
+        "05000000000000000000004000000000b4000003856200000000000000000000"
+      ],
+      "description": "Button 79 pressed.  Metadata: row: 7, col: 10, timestamp: 230754"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b40000038e6000000000000000000000"
+      ],
+      "description": "Button 79 released. Metadata: row: 7, col: 10, timestamp: 233056"
+    },
+    {
+      "data": [
+        "05000000000000000000008000000000b40000038f8200000000000000000000"
+      ],
+      "description": "Button 80 pressed.  Metadata: row: 8, col: 10, timestamp: 233346"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b400000396eb00000000000000000000"
+      ],
+      "description": "Button 80 released. Metadata: row: 8, col: 10, timestamp: 235243"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000500b40000039ff500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":5,\"y\":0,\"z\":180,\"deltaZ\":0}. Metadata: timestamp: 237557"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002900b4000003a01f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":41,\"y\":0,\"z\":180,\"deltaZ\":0}. Metadata: timestamp: 237599"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004c00b5000003a04800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":76,\"y\":0,\"z\":181,\"deltaZ\":1}. Metadata: timestamp: 237640"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007900b6000003a07000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":121,\"y\":0,\"z\":182,\"deltaZ\":1}. Metadata: timestamp: 237680"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f00b7000003a09900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":0,\"z\":183,\"deltaZ\":1}. Metadata: timestamp: 237721"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007ffbb7000003a42400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":5,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238628"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007ff3b7000003a44f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":13,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238671"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fe8b7000003a47900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":24,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238713"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fe2b7000003a4a400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":30,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238756"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fdcb7000003a4ce00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":36,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238798"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007cd4b7000003a4f800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":124,\"y\":44,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238840"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007bd1b7000003a52200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":123,\"y\":47,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238882"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007acbb7000003a54c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":122,\"y\":53,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238924"
+    },
+    {
+      "data": [
+        "050000000000000000000000000078c9b7000003a57600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":120,\"y\":55,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 238966"
+    },
+    {
+      "data": [
+        "050000000000000000000000000073c5b7000003a5a000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":115,\"y\":59,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239008"
+    },
+    {
+      "data": [
+        "050000000000000000000000000073c2b7000003a5ca00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":115,\"y\":62,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239050"
+    },
+    {
+      "data": [
+        "05000000000000000000000000006fc0b7000003a5f400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":111,\"y\":64,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239092"
+    },
+    {
+      "data": [
+        "05000000000000000000000000006ebcb7000003a61e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":110,\"y\":68,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239134"
+    },
+    {
+      "data": [
+        "05000000000000000000000000006ab7b7000003a64800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":106,\"y\":73,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239176"
+    },
+    {
+      "data": [
+        "050000000000000000000000000069b6b7000003a67200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":105,\"y\":74,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239218"
+    },
+    {
+      "data": [
+        "050000000000000000000000000067b2b7000003a69c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":103,\"y\":78,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239260"
+    },
+    {
+      "data": [
+        "050000000000000000000000000065b0b7000003a6c500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":101,\"y\":80,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239301"
+    },
+    {
+      "data": [
+        "050000000000000000000000000061adb7000003a6ef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":97,\"y\":83,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239343"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005faab7000003a71900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":95,\"y\":86,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239385"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005ba8b7000003a74200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":91,\"y\":88,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239426"
+    },
+    {
+      "data": [
+        "050000000000000000000000000056a3b7000003a76d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":86,\"y\":93,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239469"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000519fb7000003a79600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":81,\"y\":97,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239510"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004f9cb7000003a7c100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":79,\"y\":100,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239553"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004b9ab7000003a7ea00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":75,\"y\":102,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239594"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004897b7000003a81400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":72,\"y\":105,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239636"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004595b7000003a83d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":69,\"y\":107,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239677"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004193b7000003a86800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":65,\"y\":109,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239720"
+    },
+    {
+      "data": [
+        "05000000000000000000000000003e91b7000003a89100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":62,\"y\":111,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239761"
+    },
+    {
+      "data": [
+        "05000000000000000000000000003c90b7000003a8bc00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":60,\"y\":112,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239804"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000388eb7000003a8e500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":56,\"y\":114,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239845"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000328bb7000003a91000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":50,\"y\":117,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239888"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002e87b7000003a93900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":46,\"y\":121,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239929"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002886b7000003a96400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":40,\"y\":122,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 239972"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002382b7000003a98d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":35,\"y\":126,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240013"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001d81b7000003a9b800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":29,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240056"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001681b7000003a9e200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":22,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240098"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001581b7000003aa0c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":21,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240140"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001481b7000003aa3600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":20,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240182"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001281b7000003aad800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":18,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240344"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001081b7000003ab0300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":16,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240387"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000d81b7000003ab5500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":13,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240469"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000881b7000003ab7f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":8,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240511"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000381b7000003aba900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":3,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240553"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000181b7000003abd200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":1,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240594"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000081b7000003abfb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":127,\"z\":183,\"deltaZ\":0}. Metadata: timestamp: 240635"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000081b8000003ae2b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":127,\"z\":184,\"deltaZ\":1}. Metadata: timestamp: 241195"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000fc81b9000003aef900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-4,\"y\":127,\"z\":185,\"deltaZ\":1}. Metadata: timestamp: 241401"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f881b9000003af2300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-8,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241443"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f681b9000003af4d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-10,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241485"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f281b9000003afa000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-14,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241568"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ef81b9000003afca00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-17,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241610"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ea81b9000003aff500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-22,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241653"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e581b9000003b01f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-27,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241695"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e181b9000003b04a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-31,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241738"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e081b9000003b07400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-32,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241780"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000df81b9000003b09f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-33,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241823"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d981b9000003b0c900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-39,\"y\":127,\"z\":185,\"deltaZ\":0}. Metadata: timestamp: 241865"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d681ba000003b0f400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-42,\"y\":127,\"z\":186,\"deltaZ\":1}. Metadata: timestamp: 241908"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d381ba000003b11e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-45,\"y\":127,\"z\":186,\"deltaZ\":0}. Metadata: timestamp: 241950"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000cc81ba000003b14900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-52,\"y\":127,\"z\":186,\"deltaZ\":0}. Metadata: timestamp: 241993"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000c981ba000003b17400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-55,\"y\":127,\"z\":186,\"deltaZ\":0}. Metadata: timestamp: 242036"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000c781ba000003b19e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-57,\"y\":127,\"z\":186,\"deltaZ\":0}. Metadata: timestamp: 242078"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000c081ba000003b1c900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-64,\"y\":127,\"z\":186,\"deltaZ\":0}. Metadata: timestamp: 242121"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000bc83ba000003b1f300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-68,\"y\":125,\"z\":186,\"deltaZ\":0}. Metadata: timestamp: 242163"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b985ba000003b21e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-71,\"y\":123,\"z\":186,\"deltaZ\":0}. Metadata: timestamp: 242206"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b685bb000003b24900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-74,\"y\":123,\"z\":187,\"deltaZ\":1}. Metadata: timestamp: 242249"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b189bb000003b27300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-79,\"y\":119,\"z\":187,\"deltaZ\":0}. Metadata: timestamp: 242291"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ab8fbb000003b29e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-85,\"y\":113,\"z\":187,\"deltaZ\":0}. Metadata: timestamp: 242334"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a892bb000003b2c700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-88,\"y\":110,\"z\":187,\"deltaZ\":0}. Metadata: timestamp: 242375"
+    },
+    {
+      "data": [
+        "05000000000000000000000000009f95bc000003b2f200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-97,\"y\":107,\"z\":188,\"deltaZ\":1}. Metadata: timestamp: 242418"
+    },
+    {
+      "data": [
+        "05000000000000000000000000009c9abc000003b31c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-100,\"y\":102,\"z\":188,\"deltaZ\":0}. Metadata: timestamp: 242460"
+    },
+    {
+      "data": [
+        "050000000000000000000000000098a0bc000003b34700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-104,\"y\":96,\"z\":188,\"deltaZ\":0}. Metadata: timestamp: 242503"
+    },
+    {
+      "data": [
+        "050000000000000000000000000095a0bc000003b37100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-107,\"y\":96,\"z\":188,\"deltaZ\":0}. Metadata: timestamp: 242545"
+    },
+    {
+      "data": [
+        "050000000000000000000000000095a6bc000003b39c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-107,\"y\":90,\"z\":188,\"deltaZ\":0}. Metadata: timestamp: 242588"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008fa6bc000003b3c600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-113,\"y\":90,\"z\":188,\"deltaZ\":0}. Metadata: timestamp: 242630"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008faabc000003b3f100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-113,\"y\":86,\"z\":188,\"deltaZ\":0}. Metadata: timestamp: 242673"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008dadbd000003b41b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-115,\"y\":83,\"z\":189,\"deltaZ\":1}. Metadata: timestamp: 242715"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008cb0bd000003b44600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-116,\"y\":80,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 242758"
+    },
+    {
+      "data": [
+        "050000000000000000000000000087b3bd000003b47100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-121,\"y\":77,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 242801"
+    },
+    {
+      "data": [
+        "050000000000000000000000000086bbbd000003b49b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-122,\"y\":69,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 242843"
+    },
+    {
+      "data": [
+        "050000000000000000000000000082bbbd000003b4c600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-126,\"y\":69,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 242886"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081c0bd000003b4f000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":64,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 242928"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081c6bd000003b51b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":58,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 242971"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081ccbd000003b54600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":52,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243014"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081cfbd000003b57000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":49,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243056"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081d4bd000003b59b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":44,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243099"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081d7bd000003b5c400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":41,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243140"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081ddbd000003b5ef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":35,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243183"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081e2bd000003b61900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":30,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243225"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081eabd000003b64300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":22,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243267"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081eebd000003b66d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":18,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243309"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081f3bd000003b69700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":13,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243351"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081f8bd000003b6c100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":8,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243393"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081ffbd000003b6ec00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":1,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243436"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008100bd000003b71600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":0,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 243478"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008104bd000003b94a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-4,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244042"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008107bd000003b97300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-7,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244083"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008109bd000003b99e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-9,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244126"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008110bd000003b9c700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-16,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244167"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008112bd000003b9f200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-18,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244210"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000811abd000003ba1b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-26,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244251"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000811ebd000003ba4600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-30,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244294"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008122bd000003ba6f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-34,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244335"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008128bd000003ba9a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-40,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244378"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000812bbd000003bac300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-43,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244419"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008130bd000003baee00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-48,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244462"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008138bd000003bb1700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-56,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244503"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000813bbd000003bb4200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-59,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244546"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000813ebd000003bb6d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-62,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244589"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008142bd000003bb9700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-66,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244631"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008146bd000003bbc100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":-70,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244673"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000824abd000003bbeb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-126,\"y\":-74,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244715"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000864dbd000003bc1500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-122,\"y\":-77,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244757"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008850bd000003bc3f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-120,\"y\":-80,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244799"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008b56bd000003bc6a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-117,\"y\":-86,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244842"
+    },
+    {
+      "data": [
+        "05000000000000000000000000009059bd000003bc9400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-112,\"y\":-89,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244884"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000945bbd000003bcbe00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-108,\"y\":-91,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244926"
+    },
+    {
+      "data": [
+        "05000000000000000000000000009a61bd000003bce800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-102,\"y\":-97,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 244968"
+    },
+    {
+      "data": [
+        "05000000000000000000000000009e62bd000003bd1300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-98,\"y\":-98,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245011"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a367bd000003bd3d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-93,\"y\":-103,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245053"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a569bd000003bd6700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-91,\"y\":-105,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245095"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a66bbd000003bd9100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-90,\"y\":-107,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245137"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a76bbd000003bdbb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-89,\"y\":-107,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245179"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000aa6dbd000003bde500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-86,\"y\":-109,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245221"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ab6dbd000003be0e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-85,\"y\":-109,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245262"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ac6ebd000003be3800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-84,\"y\":-110,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245304"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b071bd000003be6100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-80,\"y\":-113,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245345"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b272bd000003be8c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-78,\"y\":-114,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245388"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b575bd000003beb600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-75,\"y\":-117,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245430"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b775bd000003bee100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-73,\"y\":-117,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245473"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000bb76bd000003bf0a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-69,\"y\":-118,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245514"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000bf79bd000003bf3400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-65,\"y\":-121,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245556"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000c479bd000003bf5e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-60,\"y\":-121,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245598"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000c67bbd000003bf8800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-58,\"y\":-123,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245640"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000c77dbd000003bfb200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-57,\"y\":-125,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245682"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000cb7dbd000003bfdc00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-53,\"y\":-125,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245724"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d17fbd000003c00600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-47,\"y\":-127,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245766"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d37fbd000003c03000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-45,\"y\":-127,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245808"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d97fbd000003c05800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-39,\"y\":-127,\"z\":189,\"deltaZ\":0}. Metadata: timestamp: 245848"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000dc7fbe000003c08200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-36,\"y\":-127,\"z\":190,\"deltaZ\":1}. Metadata: timestamp: 245890"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000df7fbe000003c0ac00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-33,\"y\":-127,\"z\":190,\"deltaZ\":0}. Metadata: timestamp: 245932"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e37fbe000003c0d600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-29,\"y\":-127,\"z\":190,\"deltaZ\":0}. Metadata: timestamp: 245974"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e67fbe000003c10000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-26,\"y\":-127,\"z\":190,\"deltaZ\":0}. Metadata: timestamp: 246016"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e77fbf000003c12a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-25,\"y\":-127,\"z\":191,\"deltaZ\":1}. Metadata: timestamp: 246058"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e87fbf000003c15400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-24,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246100"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ea7fbf000003c21b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-22,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246299"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000eb7fbf000003c24500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-21,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246341"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ec7fbf000003c26f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-20,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246383"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ef7fbf000003c29a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-17,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246426"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f17fbf000003c2c500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-15,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246469"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f37fbf000003c2ef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-13,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246511"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f57fbf000003c31900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-11,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246553"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f87fbf000003c34200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-8,\"y\":-127,\"z\":191,\"deltaZ\":0}. Metadata: timestamp: 246594"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f97fc0000003c36d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-7,\"y\":-127,\"z\":192,\"deltaZ\":1}. Metadata: timestamp: 246637"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000fb7fc0000003c39600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-5,\"y\":-127,\"z\":192,\"deltaZ\":0}. Metadata: timestamp: 246678"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000fd7fc1000003c3c100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-3,\"y\":-127,\"z\":193,\"deltaZ\":1}. Metadata: timestamp: 246721"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000007fc1000003c3eb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":-127,\"z\":193,\"deltaZ\":0}. Metadata: timestamp: 246763"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000007fc2000003c48c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":-127,\"z\":194,\"deltaZ\":1}. Metadata: timestamp: 246924"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000007fc3000003c61c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":-127,\"z\":195,\"deltaZ\":1}. Metadata: timestamp: 247324"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000027fc3000003c70d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":2,\"y\":-127,\"z\":195,\"deltaZ\":0}. Metadata: timestamp: 247565"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000077fc3000003c73600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":7,\"y\":-127,\"z\":195,\"deltaZ\":0}. Metadata: timestamp: 247606"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000097fc3000003c78700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":9,\"y\":-127,\"z\":195,\"deltaZ\":0}. Metadata: timestamp: 247687"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000f7fc3000003c7b000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":15,\"y\":-127,\"z\":195,\"deltaZ\":0}. Metadata: timestamp: 247728"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000167fc3000003c7da00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":22,\"y\":-127,\"z\":195,\"deltaZ\":0}. Metadata: timestamp: 247770"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001c7fc4000003c80300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":28,\"y\":-127,\"z\":196,\"deltaZ\":1}. Metadata: timestamp: 247811"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000217fc4000003c82d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":33,\"y\":-127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 247853"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000237fc4000003c85600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":35,\"y\":-127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 247894"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002b7fc5000003c88000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":43,\"y\":-127,\"z\":197,\"deltaZ\":1}. Metadata: timestamp: 247936"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000307dc5000003c8a900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":48,\"y\":-125,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 247977"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000347bc5000003c8d300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":52,\"y\":-123,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248019"
+    },
+    {
+      "data": [
+        "05000000000000000000000000003779c5000003c8fc00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":55,\"y\":-121,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248060"
+    },
+    {
+      "data": [
+        "05000000000000000000000000003979c5000003c92600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":57,\"y\":-121,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248102"
+    },
+    {
+      "data": [
+        "05000000000000000000000000003a76c5000003c94f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":58,\"y\":-118,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248143"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004270c5000003c97900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":66,\"y\":-112,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248185"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000476dc5000003c9a200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":71,\"y\":-109,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248226"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005065c5000003c9cc00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":80,\"y\":-101,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248268"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005265c5000003c9f500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":82,\"y\":-101,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248309"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000565fc5000003ca4600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":86,\"y\":-95,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248390"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000565ec5000003ca6e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":86,\"y\":-94,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248430"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005a5dc5000003ca9700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":90,\"y\":-93,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248471"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005a5bc5000003cac100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":90,\"y\":-91,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248513"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005c59c5000003caea00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":92,\"y\":-89,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248554"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005d56c5000003cb1400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":93,\"y\":-86,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248596"
+    },
+    {
+      "data": [
+        "05000000000000000000000000006450c5000003cb3d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":100,\"y\":-80,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248637"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000684ec5000003cb6600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":104,\"y\":-78,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248678"
+    },
+    {
+      "data": [
+        "05000000000000000000000000006b49c5000003cb8f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":107,\"y\":-73,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248719"
+    },
+    {
+      "data": [
+        "05000000000000000000000000006f45c5000003cbb900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":111,\"y\":-69,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248761"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000723cc5000003cbe200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":114,\"y\":-60,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248802"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007336c5000003cc0c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":115,\"y\":-54,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248844"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007833c5000003cc3500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":120,\"y\":-51,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248885"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007a2bc5000003cc5e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":122,\"y\":-43,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248926"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007c29c5000003cc8700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":124,\"y\":-41,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 248967"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f23c5000003ccb100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-35,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249009"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f1ec5000003cd0200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-30,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249090"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f1cc5000003cd2c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-28,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249132"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f1ac5000003cd5500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-26,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249173"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f16c5000003cd7f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-22,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249215"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f13c5000003cda800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-19,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249256"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f12c5000003cdd200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-18,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249298"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f0fc5000003cdfb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-15,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249339"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f0bc5000003ce2500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-11,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249381"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f09c5000003ce4e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-9,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249422"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f01c5000003ce7700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":-1,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249463"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007f00c5000003cea100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":0,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249505"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007ffbc5000003d05500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":5,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249941"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007ff7c5000003d08000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":9,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 249984"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007ff1c5000003d0a900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":15,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250025"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007febc5000003d0d400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":21,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250068"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fe6c5000003d0ff00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":26,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250111"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fe4c5000003d12900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":28,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250153"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fe1c5000003d15200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":31,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250194"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fdfc5000003d17c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":33,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250236"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fdac5000003d1a600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":38,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250278"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fd7c5000003d1d000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":41,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250320"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007fd5c5000003d1fb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":127,\"y\":43,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250363"
+    },
+    {
+      "data": [
+        "05000000000000000000000000007dd1c5000003d22500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":125,\"y\":47,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250405"
+    },
+    {
+      "data": [
+        "050000000000000000000000000079cfc5000003d24f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":121,\"y\":49,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250447"
+    },
+    {
+      "data": [
+        "050000000000000000000000000079cbc5000003d27900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":121,\"y\":53,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250489"
+    },
+    {
+      "data": [
+        "050000000000000000000000000078c8c5000003d2a400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":120,\"y\":56,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250532"
+    },
+    {
+      "data": [
+        "050000000000000000000000000075c5c5000003d2ce00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":117,\"y\":59,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250574"
+    },
+    {
+      "data": [
+        "050000000000000000000000000073c1c5000003d2f800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":115,\"y\":63,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250616"
+    },
+    {
+      "data": [
+        "050000000000000000000000000070bcc5000003d32200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":112,\"y\":68,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250658"
+    },
+    {
+      "data": [
+        "050000000000000000000000000069b3c5000003d34b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":105,\"y\":77,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250699"
+    },
+    {
+      "data": [
+        "050000000000000000000000000062adc5000003d37500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":98,\"y\":83,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250741"
+    },
+    {
+      "data": [
+        "05000000000000000000000000005aa6c5000003d3a000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":90,\"y\":90,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250784"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000559fc5000003d3cb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":85,\"y\":97,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250827"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000509cc5000003d3f500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":80,\"y\":100,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250869"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004c98c5000003d42000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":76,\"y\":104,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 250912"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004797c6000003d44900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":71,\"y\":105,\"z\":198,\"deltaZ\":1}. Metadata: timestamp: 250953"
+    },
+    {
+      "data": [
+        "05000000000000000000000000004194c6000003d47400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":65,\"y\":108,\"z\":198,\"deltaZ\":0}. Metadata: timestamp: 250996"
+    },
+    {
+      "data": [
+        "05000000000000000000000000003d91c6000003d49d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":61,\"y\":111,\"z\":198,\"deltaZ\":0}. Metadata: timestamp: 251037"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000358dc7000003d4c800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":53,\"y\":115,\"z\":199,\"deltaZ\":1}. Metadata: timestamp: 251080"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002f8bc7000003d4f300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":47,\"y\":117,\"z\":199,\"deltaZ\":0}. Metadata: timestamp: 251123"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002a88c7000003d51d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":42,\"y\":120,\"z\":199,\"deltaZ\":0}. Metadata: timestamp: 251165"
+    },
+    {
+      "data": [
+        "05000000000000000000000000002586c7000003d54800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":37,\"y\":122,\"z\":199,\"deltaZ\":0}. Metadata: timestamp: 251208"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001e83c7000003d57100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":30,\"y\":125,\"z\":199,\"deltaZ\":0}. Metadata: timestamp: 251249"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001983c8000003d59b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":25,\"y\":125,\"z\":200,\"deltaZ\":1}. Metadata: timestamp: 251291"
+    },
+    {
+      "data": [
+        "05000000000000000000000000001181c8000003d5c500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":17,\"y\":127,\"z\":200,\"deltaZ\":0}. Metadata: timestamp: 251333"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000981c8000003d5ef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":9,\"y\":127,\"z\":200,\"deltaZ\":0}. Metadata: timestamp: 251375"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000081c8000003d61900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":127,\"z\":200,\"deltaZ\":0}. Metadata: timestamp: 251417"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f688c8000003da3b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-10,\"y\":120,\"z\":200,\"deltaZ\":0}. Metadata: timestamp: 252475"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000eeaac7000003da6600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-18,\"y\":86,\"z\":199,\"deltaZ\":-1}. Metadata: timestamp: 252518"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000eedcc6000003da9000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-18,\"y\":36,\"z\":198,\"deltaZ\":-1}. Metadata: timestamp: 252560"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000c6000003dabb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":198,\"deltaZ\":0}. Metadata: timestamp: 252603"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000c5000003e55d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":197,\"deltaZ\":-1}. Metadata: timestamp: 255325"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000f1c5000003e70d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":15,\"z\":197,\"deltaZ\":0}. Metadata: timestamp: 255757"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000d1c4000003e73800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":47,\"z\":196,\"deltaZ\":-1}. Metadata: timestamp: 255800"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000a8c4000003e76200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":88,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 255842"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000081c4000003e78d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 255885"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000fc81c4000003e97300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-4,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256371"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000f381c4000003e99d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-13,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256413"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ef81c4000003e9c800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-17,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256456"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ea81c4000003e9f200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-22,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256498"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e781c4000003ea1d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-25,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256541"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e581c4000003ea4800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-27,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256584"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000e081c4000003ea7200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-32,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256626"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d981c4000003ea9d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-39,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256669"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000d281c4000003eac700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-46,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256711"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ce81c4000003eaf200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-50,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256754"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000c681c4000003eb1d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-58,\"y\":127,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256797"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000bf85c4000003eb4700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-65,\"y\":123,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256839"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b689c4000003eb7200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-74,\"y\":119,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256882"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000b38cc4000003eb9c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-77,\"y\":116,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256924"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000ae8ec4000003ebc700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-82,\"y\":114,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 256967"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a993c4000003ebf100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-87,\"y\":109,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257009"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a596c4000003ec1c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-91,\"y\":106,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257052"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000a09bc4000003ec4500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-96,\"y\":101,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257093"
+    },
+    {
+      "data": [
+        "05000000000000000000000000009a9fc4000003ec7000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-102,\"y\":97,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257136"
+    },
+    {
+      "data": [
+        "050000000000000000000000000095a4c4000003ec9a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-107,\"y\":92,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257178"
+    },
+    {
+      "data": [
+        "050000000000000000000000000093aac4000003ecc500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-109,\"y\":86,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257221"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008faec4000003ecef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-113,\"y\":82,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257263"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008cb3c4000003ed1a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-116,\"y\":77,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257306"
+    },
+    {
+      "data": [
+        "050000000000000000000000000089b4c4000003ed4500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-119,\"y\":76,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257349"
+    },
+    {
+      "data": [
+        "050000000000000000000000000087b8c4000003ed6f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-121,\"y\":72,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257391"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081bec4000003ed9a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":66,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257434"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081c3c4000003edc400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":61,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257476"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081c8c4000003edef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":56,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257519"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081d0c4000003ee1a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":48,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257562"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081d8c4000003ee4300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":40,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257603"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081e0c4000003ee6e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":32,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257646"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081e7c4000003ee9800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":25,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257688"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081eec4000003eec300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":18,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257731"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081f3c4000003eeec00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":13,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257772"
+    },
+    {
+      "data": [
+        "050000000000000000000000000081fdc4000003ef1700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":3,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257815"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008100c4000003ef4100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-127,\"y\":0,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 257857"
+    },
+    {
+      "data": [
+        "05000000000000000000000000008e00c4000003f29600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-114,\"y\":0,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 258710"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000bdffc4000003f2c000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-67,\"y\":1,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 258752"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000dcfbc4000003f2eb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-36,\"y\":5,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 258795"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000fc00c4000003f31400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":-4,\"y\":0,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 258836"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000c4000003f33e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":196,\"deltaZ\":0}. Metadata: timestamp: 258878"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000c2000003f53f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":194,\"deltaZ\":-2}. Metadata: timestamp: 259391"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000bd000003f56900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":189,\"deltaZ\":-5}. Metadata: timestamp: 259433"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000bb000003f59300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":187,\"deltaZ\":-2}. Metadata: timestamp: 259475"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b8000003f5bc00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":184,\"deltaZ\":-3}. Metadata: timestamp: 259516"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b6000003f5e600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":182,\"deltaZ\":-2}. Metadata: timestamp: 259558"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000003f61000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":180,\"deltaZ\":-2}. Metadata: timestamp: 259600"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b2000003f63900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":178,\"deltaZ\":-2}. Metadata: timestamp: 259641"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b0000003f66100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":176,\"deltaZ\":-2}. Metadata: timestamp: 259681"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ae000003f68900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":174,\"deltaZ\":-2}. Metadata: timestamp: 259721"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ac000003f6b200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":172,\"deltaZ\":-2}. Metadata: timestamp: 259762"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ab000003f6db00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":171,\"deltaZ\":-1}. Metadata: timestamp: 259803"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000a8000003f70300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":168,\"deltaZ\":-3}. Metadata: timestamp: 259843"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000a5000003f72c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":165,\"deltaZ\":-3}. Metadata: timestamp: 259884"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000a3000003f75400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":163,\"deltaZ\":-2}. Metadata: timestamp: 259924"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000a1000003f77c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":161,\"deltaZ\":-2}. Metadata: timestamp: 259964"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000009f000003f7a500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":159,\"deltaZ\":-2}. Metadata: timestamp: 260005"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000009c000003f7cd00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":156,\"deltaZ\":-3}. Metadata: timestamp: 260045"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000009b000003f7f500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":155,\"deltaZ\":-1}. Metadata: timestamp: 260085"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000009a000003f81d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":154,\"deltaZ\":-1}. Metadata: timestamp: 260125"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000098000003f84600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":152,\"deltaZ\":-2}. Metadata: timestamp: 260166"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000097000003f86e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":151,\"deltaZ\":-1}. Metadata: timestamp: 260206"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000095000003f89500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":149,\"deltaZ\":-2}. Metadata: timestamp: 260245"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000093000003f8bd00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":147,\"deltaZ\":-2}. Metadata: timestamp: 260285"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000091000003f8e500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":145,\"deltaZ\":-2}. Metadata: timestamp: 260325"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000008d000003f90e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":141,\"deltaZ\":-4}. Metadata: timestamp: 260366"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000088000003f93600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":136,\"deltaZ\":-5}. Metadata: timestamp: 260406"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000081000003f95e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":129,\"deltaZ\":-7}. Metadata: timestamp: 260446"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000007b000003f98700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":123,\"deltaZ\":-6}. Metadata: timestamp: 260487"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000078000003f9b000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":120,\"deltaZ\":-3}. Metadata: timestamp: 260528"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000075000003f9d900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":117,\"deltaZ\":-3}. Metadata: timestamp: 260569"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000072000003fa0100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":114,\"deltaZ\":-3}. Metadata: timestamp: 260609"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000071000003fa2a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":113,\"deltaZ\":-1}. Metadata: timestamp: 260650"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006e000003fa5300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":110,\"deltaZ\":-3}. Metadata: timestamp: 260691"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006a000003fa7c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":106,\"deltaZ\":-4}. Metadata: timestamp: 260732"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000068000003faa400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":104,\"deltaZ\":-2}. Metadata: timestamp: 260772"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000063000003facd00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":99,\"deltaZ\":-5}. Metadata: timestamp: 260813"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000005f000003faf500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":95,\"deltaZ\":-4}. Metadata: timestamp: 260853"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000005c000003fb1d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":92,\"deltaZ\":-3}. Metadata: timestamp: 260893"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000059000003fb4700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":89,\"deltaZ\":-3}. Metadata: timestamp: 260935"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000057000003fb6f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":87,\"deltaZ\":-2}. Metadata: timestamp: 260975"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000054000003fb9800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":84,\"deltaZ\":-3}. Metadata: timestamp: 261016"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000051000003fbc000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":81,\"deltaZ\":-3}. Metadata: timestamp: 261056"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000004f000003fbe800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":79,\"deltaZ\":-2}. Metadata: timestamp: 261096"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000004e000003fc1100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":78,\"deltaZ\":-1}. Metadata: timestamp: 261137"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000004b000003fc3900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":75,\"deltaZ\":-3}. Metadata: timestamp: 261177"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000048000003fc6200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":72,\"deltaZ\":-3}. Metadata: timestamp: 261218"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000045000003fc8a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":69,\"deltaZ\":-3}. Metadata: timestamp: 261258"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000041000003fcb300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":65,\"deltaZ\":-4}. Metadata: timestamp: 261299"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000003c000003fcdb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":60,\"deltaZ\":-5}. Metadata: timestamp: 261339"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000038000003fd0400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":56,\"deltaZ\":-4}. Metadata: timestamp: 261380"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000037000003fd2c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":55,\"deltaZ\":-1}. Metadata: timestamp: 261420"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000035000003fd5400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":53,\"deltaZ\":-2}. Metadata: timestamp: 261460"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000034000003fd7d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":52,\"deltaZ\":-1}. Metadata: timestamp: 261501"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000032000003fda500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":50,\"deltaZ\":-2}. Metadata: timestamp: 261541"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000031000003fdcd00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":49,\"deltaZ\":-1}. Metadata: timestamp: 261581"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002f000003fdf600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":47,\"deltaZ\":-2}. Metadata: timestamp: 261622"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002d000003fe1f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":45,\"deltaZ\":-2}. Metadata: timestamp: 261663"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002b000003fe4700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":43,\"deltaZ\":-2}. Metadata: timestamp: 261703"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000027000003fe6f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":39,\"deltaZ\":-4}. Metadata: timestamp: 261743"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000025000003fe9800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":37,\"deltaZ\":-2}. Metadata: timestamp: 261784"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000023000003fec000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":35,\"deltaZ\":-2}. Metadata: timestamp: 261824"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000022000004001800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":34,\"deltaZ\":-1}. Metadata: timestamp: 262168"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002100000401e300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":33,\"deltaZ\":-1}. Metadata: timestamp: 262627"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001d000004020b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":29,\"deltaZ\":-4}. Metadata: timestamp: 262667"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000019000004023200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":25,\"deltaZ\":-4}. Metadata: timestamp: 262706"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000015000004025b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":21,\"deltaZ\":-4}. Metadata: timestamp: 262747"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000013000004028300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":19,\"deltaZ\":-2}. Metadata: timestamp: 262787"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001000000402ac00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":16,\"deltaZ\":-3}. Metadata: timestamp: 262828"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000000e00000402d500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":14,\"deltaZ\":-2}. Metadata: timestamp: 262869"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000000d00000402fd00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":13,\"deltaZ\":-1}. Metadata: timestamp: 262909"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000009000004032600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":9,\"deltaZ\":-4}. Metadata: timestamp: 262950"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000005000004034d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":5,\"deltaZ\":-4}. Metadata: timestamp: 262989"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000003000004037600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":3,\"deltaZ\":-2}. Metadata: timestamp: 263030"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000000000004039f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":0,\"deltaZ\":-3}. Metadata: timestamp: 263071"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000fe00000403c800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":254,\"deltaZ\":-2}. Metadata: timestamp: 263112"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000fc00000403ef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":252,\"deltaZ\":-2}. Metadata: timestamp: 263151"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000fa000004041700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":250,\"deltaZ\":-2}. Metadata: timestamp: 263191"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f8000004046600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":248,\"deltaZ\":-2}. Metadata: timestamp: 263270"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f6000004048e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":246,\"deltaZ\":-2}. Metadata: timestamp: 263310"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f300000404b600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":243,\"deltaZ\":-3}. Metadata: timestamp: 263350"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f000000404df00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":240,\"deltaZ\":-3}. Metadata: timestamp: 263391"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ef000004050700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":239,\"deltaZ\":-1}. Metadata: timestamp: 263431"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000eb000004052f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":235,\"deltaZ\":-4}. Metadata: timestamp: 263471"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000e8000004055800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":232,\"deltaZ\":-3}. Metadata: timestamp: 263512"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000e5000004058000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":229,\"deltaZ\":-3}. Metadata: timestamp: 263552"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000e200000405a900000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":226,\"deltaZ\":-3}. Metadata: timestamp: 263593"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000e100000405d100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":225,\"deltaZ\":-1}. Metadata: timestamp: 263633"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000e000000405fa00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":224,\"deltaZ\":-1}. Metadata: timestamp: 263674"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000de000004062200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":222,\"deltaZ\":-2}. Metadata: timestamp: 263714"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000db000004064b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":219,\"deltaZ\":-3}. Metadata: timestamp: 263755"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000d7000004067400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":215,\"deltaZ\":-4}. Metadata: timestamp: 263796"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000d5000004069c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":213,\"deltaZ\":-2}. Metadata: timestamp: 263836"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000d200000406c600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":210,\"deltaZ\":-3}. Metadata: timestamp: 263878"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ce00000406ee00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":206,\"deltaZ\":-4}. Metadata: timestamp: 263918"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000cb000004071800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":203,\"deltaZ\":-3}. Metadata: timestamp: 263960"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000c5000004074000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":197,\"deltaZ\":-6}. Metadata: timestamp: 264000"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000c2000004076a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":194,\"deltaZ\":-3}. Metadata: timestamp: 264042"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000c0000004079200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":192,\"deltaZ\":-2}. Metadata: timestamp: 264082"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000bd00000407ba00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":189,\"deltaZ\":-3}. Metadata: timestamp: 264122"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ba00000407e300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":186,\"deltaZ\":-3}. Metadata: timestamp: 264163"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b8000004080c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":184,\"deltaZ\":-2}. Metadata: timestamp: 264204"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b6000004083500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":182,\"deltaZ\":-2}. Metadata: timestamp: 264245"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b5000004085c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":181,\"deltaZ\":-1}. Metadata: timestamp: 264284"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b4000004088500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":180,\"deltaZ\":-1}. Metadata: timestamp: 264325"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b200000408ad00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":178,\"deltaZ\":-2}. Metadata: timestamp: 264365"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b100000408d600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":177,\"deltaZ\":-1}. Metadata: timestamp: 264406"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000b000000408ff00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":176,\"deltaZ\":-1}. Metadata: timestamp: 264447"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000af000004092700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":175,\"deltaZ\":-1}. Metadata: timestamp: 264487"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ad000004097700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":173,\"deltaZ\":-2}. Metadata: timestamp: 264567"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000ab000004099f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":171,\"deltaZ\":-2}. Metadata: timestamp: 264607"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000a900000409c700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":169,\"deltaZ\":-2}. Metadata: timestamp: 264647"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000a500000409ef00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":165,\"deltaZ\":-4}. Metadata: timestamp: 264687"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000a30000040a1600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":163,\"deltaZ\":-2}. Metadata: timestamp: 264726"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000009f0000040a3e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":159,\"deltaZ\":-4}. Metadata: timestamp: 264766"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000009e0000040a6700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":158,\"deltaZ\":-1}. Metadata: timestamp: 264807"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000009b0000040a8f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":155,\"deltaZ\":-3}. Metadata: timestamp: 264847"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000990000040ab700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":153,\"deltaZ\":-2}. Metadata: timestamp: 264887"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000980000040adf00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":152,\"deltaZ\":-1}. Metadata: timestamp: 264927"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000960000040b0700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":150,\"deltaZ\":-2}. Metadata: timestamp: 264967"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000940000040b2f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":148,\"deltaZ\":-2}. Metadata: timestamp: 265007"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000930000040b5600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":147,\"deltaZ\":-1}. Metadata: timestamp: 265046"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000920000040b7e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":146,\"deltaZ\":-1}. Metadata: timestamp: 265086"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000910000040ba600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":145,\"deltaZ\":-1}. Metadata: timestamp: 265126"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000900000040bce00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":144,\"deltaZ\":-1}. Metadata: timestamp: 265166"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000008f0000040c1b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":143,\"deltaZ\":-1}. Metadata: timestamp: 265243"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000008e0000040c4400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":142,\"deltaZ\":-1}. Metadata: timestamp: 265284"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000008c0000040c6d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":140,\"deltaZ\":-2}. Metadata: timestamp: 265325"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000008b0000040cbd00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":139,\"deltaZ\":-1}. Metadata: timestamp: 265405"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000087000004108a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":135,\"deltaZ\":-4}. Metadata: timestamp: 266378"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000008400000410b200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":132,\"deltaZ\":-3}. Metadata: timestamp: 266418"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000008300000410db00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":131,\"deltaZ\":-1}. Metadata: timestamp: 266459"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000082000004112800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":130,\"deltaZ\":-1}. Metadata: timestamp: 266536"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000081000004115000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":129,\"deltaZ\":-1}. Metadata: timestamp: 266576"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000080000004117a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":128,\"deltaZ\":-1}. Metadata: timestamp: 266618"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000007e00000411ca00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":126,\"deltaZ\":-2}. Metadata: timestamp: 266698"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000007d000004121800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":125,\"deltaZ\":-1}. Metadata: timestamp: 266776"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000007a000004126700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":122,\"deltaZ\":-3}. Metadata: timestamp: 266855"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000079000004129000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":121,\"deltaZ\":-1}. Metadata: timestamp: 266896"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000007500000412b800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":117,\"deltaZ\":-4}. Metadata: timestamp: 266936"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000007200000412e100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":114,\"deltaZ\":-3}. Metadata: timestamp: 266977"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006f000004130800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":111,\"deltaZ\":-3}. Metadata: timestamp: 267016"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006e000004133000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":110,\"deltaZ\":-1}. Metadata: timestamp: 267056"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006b000004135a00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":107,\"deltaZ\":-3}. Metadata: timestamp: 267098"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000068000004138200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":104,\"deltaZ\":-3}. Metadata: timestamp: 267138"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006500000413ac00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":101,\"deltaZ\":-3}. Metadata: timestamp: 267180"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006300000413d400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":99,\"deltaZ\":-2}. Metadata: timestamp: 267220"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000006000000413fd00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":96,\"deltaZ\":-3}. Metadata: timestamp: 267261"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000005e000004142600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":94,\"deltaZ\":-2}. Metadata: timestamp: 267302"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000005c000004144f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":92,\"deltaZ\":-2}. Metadata: timestamp: 267343"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000059000004147800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":89,\"deltaZ\":-3}. Metadata: timestamp: 267384"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000005800000414a100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":88,\"deltaZ\":-1}. Metadata: timestamp: 267425"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000005600000414ca00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":86,\"deltaZ\":-2}. Metadata: timestamp: 267466"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000005300000414f300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":83,\"deltaZ\":-3}. Metadata: timestamp: 267507"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000051000004151c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":81,\"deltaZ\":-2}. Metadata: timestamp: 267548"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000004f000004154500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":79,\"deltaZ\":-2}. Metadata: timestamp: 267589"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000004d000004156e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":77,\"deltaZ\":-2}. Metadata: timestamp: 267630"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000048000004159600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":72,\"deltaZ\":-5}. Metadata: timestamp: 267670"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000004300000415bf00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":67,\"deltaZ\":-5}. Metadata: timestamp: 267711"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000004000000415e700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":64,\"deltaZ\":-3}. Metadata: timestamp: 267751"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000003e000004160f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":62,\"deltaZ\":-2}. Metadata: timestamp: 267791"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000003b000004163800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":59,\"deltaZ\":-3}. Metadata: timestamp: 267832"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000039000004166000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":57,\"deltaZ\":-2}. Metadata: timestamp: 267872"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000038000004168800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":56,\"deltaZ\":-1}. Metadata: timestamp: 267912"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000003600000416b100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":54,\"deltaZ\":-2}. Metadata: timestamp: 267953"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000003500000416da00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":53,\"deltaZ\":-1}. Metadata: timestamp: 267994"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000034000004170300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":52,\"deltaZ\":-1}. Metadata: timestamp: 268035"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000032000004172c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":50,\"deltaZ\":-2}. Metadata: timestamp: 268076"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000030000004175500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":48,\"deltaZ\":-2}. Metadata: timestamp: 268117"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002d000004177d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":45,\"deltaZ\":-3}. Metadata: timestamp: 268157"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002c00000417a600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":44,\"deltaZ\":-1}. Metadata: timestamp: 268198"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002800000417ce00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":40,\"deltaZ\":-4}. Metadata: timestamp: 268238"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000002400000417f700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":36,\"deltaZ\":-4}. Metadata: timestamp: 268279"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000022000004181e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":34,\"deltaZ\":-2}. Metadata: timestamp: 268318"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000020000004184600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":32,\"deltaZ\":-2}. Metadata: timestamp: 268358"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001e000004186f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":30,\"deltaZ\":-2}. Metadata: timestamp: 268399"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001b000004189700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":27,\"deltaZ\":-3}. Metadata: timestamp: 268439"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001900000418bf00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":25,\"deltaZ\":-2}. Metadata: timestamp: 268479"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001800000418e800000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":24,\"deltaZ\":-1}. Metadata: timestamp: 268520"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000017000004191000000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":23,\"deltaZ\":-1}. Metadata: timestamp: 268560"
+    },
+    {
+      "data": [
+        "0500000000000000000000000000000016000004195f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":22,\"deltaZ\":-1}. Metadata: timestamp: 268639"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001500000419ae00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":21,\"deltaZ\":-1}. Metadata: timestamp: 268718"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000001300000419fb00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":19,\"deltaZ\":-2}. Metadata: timestamp: 268795"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000110000041a4b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":17,\"deltaZ\":-2}. Metadata: timestamp: 268875"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000100000041ae700000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":16,\"deltaZ\":-1}. Metadata: timestamp: 269031"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000000e0000041b1100000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":14,\"deltaZ\":-2}. Metadata: timestamp: 269073"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000000d0000041b6200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":13,\"deltaZ\":-1}. Metadata: timestamp: 269154"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000000c0000041bb200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":12,\"deltaZ\":-1}. Metadata: timestamp: 269234"
+    },
+    {
+      "data": [
+        "050000000000000000000000000000000b0000041bda00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":11,\"deltaZ\":-1}. Metadata: timestamp: 269274"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000090000041c0300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":9,\"deltaZ\":-2}. Metadata: timestamp: 269315"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000080000041c2b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":8,\"deltaZ\":-1}. Metadata: timestamp: 269355"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000060000041c5300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":6,\"deltaZ\":-2}. Metadata: timestamp: 269395"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000040000041c7b00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":4,\"deltaZ\":-2}. Metadata: timestamp: 269435"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000030000041ca300000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":3,\"deltaZ\":-1}. Metadata: timestamp: 269475"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000020000041d3d00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":2,\"deltaZ\":-1}. Metadata: timestamp: 269629"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000000000041e7400000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":0,\"deltaZ\":-2}. Metadata: timestamp: 269940"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000fe0000041e9c00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":254,\"deltaZ\":-2}. Metadata: timestamp: 269980"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000fb0000041ec500000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":251,\"deltaZ\":-3}. Metadata: timestamp: 270021"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000fa0000041eee00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":250,\"deltaZ\":-1}. Metadata: timestamp: 270062"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f90000041f1600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":249,\"deltaZ\":-1}. Metadata: timestamp: 270102"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f80000041f3e00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":248,\"deltaZ\":-1}. Metadata: timestamp: 270142"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f70000041f6600000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":247,\"deltaZ\":-1}. Metadata: timestamp: 270182"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f60000041f8f00000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":246,\"deltaZ\":-1}. Metadata: timestamp: 270223"
+    },
+    {
+      "data": [
+        "05000000000000000000000000000000f5000004257200000000000000000000"
+      ],
+      "description": "Joystick ( index 0) value: {\"x\":0,\"y\":0,\"z\":245,\"deltaZ\":-1}. Metadata: timestamp: 271730"
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "device": {
+    "name": "XK-16 HID",
+    "productId": 1127
+  },
+  "info": {
+    "name": "XK-4 Stick",
+    "productId": 1127,
+    "interface": 0,
+    "unitId": 0,
+    "firmwareVersion": 14,
+    "colCount": 4,
+    "rowCount": 1,
+    "layout": [],
+    "hasPS": true,
+    "hasJoystick": 0,
+    "hasJog": 0,
+    "hasShuttle": 0,
+    "hasTbar": 0,
+    "hasLCD": false,
+    "hasGPIO": false,
+    "hasSerialData": false,
+    "hasDMX": false
+  },
+  "errors": [],
+  "actions": [
+    {
+      "sentData": [
+        "00b306010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b306000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601ff0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "ffffff"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "blue"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600000000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500010100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500020100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f",
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "000"
+      ],
+      "anomaly": ""
+    }
+  ],
+  "events": [
+    {
+      "data": [
+        "0001000000000000cd1c00000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 0 pressed.  Metadata: row: 0, col: 0, timestamp: 52508"
+    },
+    {
+      "data": [
+        "0001010000000000cd1c00000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 1 pressed.  Metadata: row: 1, col: 1, timestamp: 52508"
+    },
+    {
+      "data": [
+        "0001000000000000ceb500000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 1 released. Metadata: row: 1, col: 1, timestamp: 52917"
+    },
+    {
+      "data": [
+        "0001000100000000d3b200000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 2 pressed.  Metadata: row: 1, col: 2, timestamp: 54194"
+    },
+    {
+      "data": [
+        "0001000000000000d4c800000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 2 released. Metadata: row: 1, col: 2, timestamp: 54472"
+    },
+    {
+      "data": [
+        "0001000001000000d87b00000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 3 pressed.  Metadata: row: 1, col: 3, timestamp: 55419"
+    },
+    {
+      "data": [
+        "0001000000000000d99a00000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 3 released. Metadata: row: 1, col: 3, timestamp: 55706"
+    },
+    {
+      "data": [
+        "0001000000010000de6c00000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 4 pressed.  Metadata: row: 1, col: 4, timestamp: 56940"
+    },
+    {
+      "data": [
+        "0001000000000000df8b00000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 4 released. Metadata: row: 1, col: 4, timestamp: 57227"
+    }
+  ]
+}

@@ -1,0 +1,456 @@
+{
+  "device": {
+    "name": "XK-12 Jog & Shuttle",
+    "productId": 1062
+  },
+  "info": {
+    "name": "XK-12 Jog-Shuttle",
+    "productId": 1062,
+    "interface": 0,
+    "unitId": 1,
+    "firmwareVersion": 12,
+    "colCount": 4,
+    "rowCount": 3,
+    "layout": [],
+    "hasPS": true,
+    "hasJoystick": 0,
+    "hasJog": 1,
+    "hasShuttle": 1,
+    "hasTbar": 0,
+    "hasLCD": false,
+    "hasGPIO": false,
+    "hasSerialData": false,
+    "hasDMX": false
+  },
+  "errors": [],
+  "actions": [
+    {
+      "sentData": [
+        "00b306010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b306000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        1,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307010000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b307000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setIndicatorLED",
+      "arguments": [
+        2,
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601ff0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "ffffff"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600ff0000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        "blue"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b600000000000000000000000000000000000000000000000000000000000000000000",
+        "00b601000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setAllBacklights",
+      "arguments": [
+        false
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500010100000000000000000000000000000000000000000000000000000000000000",
+        "00b520000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f"
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500020100000000000000000000000000000000000000000000000000000000000000",
+        "00b520000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "00f",
+        true
+      ],
+      "anomaly": ""
+    },
+    {
+      "sentData": [
+        "00b500000100000000000000000000000000000000000000000000000000000000000000",
+        "00b520000100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "method": "setBacklight",
+      "arguments": [
+        1,
+        "000"
+      ],
+      "anomaly": ""
+    }
+  ],
+  "events": [
+    {
+      "data": [
+        "0100010080000000000088d90000000000000000000000000000000000000000"
+      ],
+      "description": "Button 1 pressed.  Metadata: row: 1, col: 1, timestamp: 35033"
+    },
+    {
+      "data": [
+        "0100000080000000000089920000000000000000000000000000000000000000"
+      ],
+      "description": "Button 1 released. Metadata: row: 1, col: 1, timestamp: 35218"
+    },
+    {
+      "data": [
+        "01000200800000000000966b0000000000000000000000000000000000000000"
+      ],
+      "description": "Button 2 pressed.  Metadata: row: 2, col: 1, timestamp: 38507"
+    },
+    {
+      "data": [
+        "0100000080000000000097300000000000000000000000000000000000000000"
+      ],
+      "description": "Button 2 released. Metadata: row: 2, col: 1, timestamp: 38704"
+    },
+    {
+      "data": [
+        "010004008000000000009da10000000000000000000000000000000000000000"
+      ],
+      "description": "Button 3 pressed.  Metadata: row: 3, col: 1, timestamp: 40353"
+    },
+    {
+      "data": [
+        "010000008000000000009e690000000000000000000000000000000000000000"
+      ],
+      "description": "Button 3 released. Metadata: row: 3, col: 1, timestamp: 40553"
+    },
+    {
+      "data": [
+        "01000001800000000000a2d10000000000000000000000000000000000000000"
+      ],
+      "description": "Button 4 pressed.  Metadata: row: 1, col: 2, timestamp: 41681"
+    },
+    {
+      "data": [
+        "01000000800000000000a3790000000000000000000000000000000000000000"
+      ],
+      "description": "Button 4 released. Metadata: row: 1, col: 2, timestamp: 41849"
+    },
+    {
+      "data": [
+        "01000002800000000000a5300000000000000000000000000000000000000000"
+      ],
+      "description": "Button 5 pressed.  Metadata: row: 2, col: 2, timestamp: 42288"
+    },
+    {
+      "data": [
+        "01000000800000000000a5c30000000000000000000000000000000000000000"
+      ],
+      "description": "Button 5 released. Metadata: row: 2, col: 2, timestamp: 42435"
+    },
+    {
+      "data": [
+        "01000004800000000000a84f0000000000000000000000000000000000000000"
+      ],
+      "description": "Button 6 pressed.  Metadata: row: 3, col: 2, timestamp: 43087"
+    },
+    {
+      "data": [
+        "01000000800000000000a8cb0000000000000000000000000000000000000000"
+      ],
+      "description": "Button 6 released. Metadata: row: 3, col: 2, timestamp: 43211"
+    },
+    {
+      "data": [
+        "01000000810000000000ac620000000000000000000000000000000000000000"
+      ],
+      "description": "Button 7 pressed.  Metadata: row: 1, col: 3, timestamp: 44130"
+    },
+    {
+      "data": [
+        "01000000800000000000ace20000000000000000000000000000000000000000"
+      ],
+      "description": "Button 7 released. Metadata: row: 1, col: 3, timestamp: 44258"
+    },
+    {
+      "data": [
+        "01000000820000000000ae9d0000000000000000000000000000000000000000"
+      ],
+      "description": "Button 8 pressed.  Metadata: row: 2, col: 3, timestamp: 44701"
+    },
+    {
+      "data": [
+        "01000000800000000000af120000000000000000000000000000000000000000"
+      ],
+      "description": "Button 8 released. Metadata: row: 2, col: 3, timestamp: 44818"
+    },
+    {
+      "data": [
+        "01000000840000000000b0bd0000000000000000000000000000000000000000"
+      ],
+      "description": "Button 9 pressed.  Metadata: row: 3, col: 3, timestamp: 45245"
+    },
+    {
+      "data": [
+        "01000000800000000000b1320000000000000000000000000000000000000000"
+      ],
+      "description": "Button 9 released. Metadata: row: 3, col: 3, timestamp: 45362"
+    },
+    {
+      "data": [
+        "01000000800100000000b3eb0000000000000000000000000000000000000000"
+      ],
+      "description": "Button 10 pressed.  Metadata: row: 1, col: 4, timestamp: 46059"
+    },
+    {
+      "data": [
+        "01000000800000000000b4640000000000000000000000000000000000000000"
+      ],
+      "description": "Button 10 released. Metadata: row: 1, col: 4, timestamp: 46180"
+    },
+    {
+      "data": [
+        "01000000800200000000b6000000000000000000000000000000000000000000"
+      ],
+      "description": "Button 11 pressed.  Metadata: row: 2, col: 4, timestamp: 46592"
+    },
+    {
+      "data": [
+        "01000000800000000000b67d0000000000000000000000000000000000000000"
+      ],
+      "description": "Button 11 released. Metadata: row: 2, col: 4, timestamp: 46717"
+    },
+    {
+      "data": [
+        "01000000800400000000b8160000000000000000000000000000000000000000"
+      ],
+      "description": "Button 12 pressed.  Metadata: row: 3, col: 4, timestamp: 47126"
+    },
+    {
+      "data": [
+        "01000000800000000000b8860000000000000000000000000000000000000000"
+      ],
+      "description": "Button 12 released. Metadata: row: 3, col: 4, timestamp: 47238"
+    },
+    {
+      "data": [
+        "01000800000000010000bd0b0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 1. Metadata: timestamp: 48395"
+    },
+    {
+      "data": [
+        "01000008000000020000bd620000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 2. Metadata: timestamp: 48482"
+    },
+    {
+      "data": [
+        "01000000080000030000bdb10000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 3. Metadata: timestamp: 48561"
+    },
+    {
+      "data": [
+        "01000000000800040000bead0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 4. Metadata: timestamp: 48813"
+    },
+    {
+      "data": [
+        "01001000000000050000bf570000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 5. Metadata: timestamp: 48983"
+    },
+    {
+      "data": [
+        "01000010000000060000bfd60000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 6. Metadata: timestamp: 49110"
+    },
+    {
+      "data": [
+        "01000000100000070000c03a0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 7. Metadata: timestamp: 49210"
+    },
+    {
+      "data": [
+        "01000010000000060000c1790000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 6. Metadata: timestamp: 49529"
+    },
+    {
+      "data": [
+        "01001000000000050000c1b10000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 5. Metadata: timestamp: 49585"
+    },
+    {
+      "data": [
+        "01000000000800040000c1de0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 4. Metadata: timestamp: 49630"
+    },
+    {
+      "data": [
+        "01000000080000030000c20e0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 3. Metadata: timestamp: 49678"
+    },
+    {
+      "data": [
+        "01000008000000020000c2330000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 2. Metadata: timestamp: 49715"
+    },
+    {
+      "data": [
+        "01000800000000010000c26b0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 1. Metadata: timestamp: 49771"
+    },
+    {
+      "data": [
+        "01000000800000000000c2b20000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 0. Metadata: timestamp: 49842"
+    },
+    {
+      "data": [
+        "01002000000000ff0000c4c90000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -1. Metadata: timestamp: 50377"
+    },
+    {
+      "data": [
+        "01000020000000fe0000c51d0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -2. Metadata: timestamp: 50461"
+    },
+    {
+      "data": [
+        "01000000200000fd0000c5590000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -3. Metadata: timestamp: 50521"
+    },
+    {
+      "data": [
+        "01000000002000fc0000c5930000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -4. Metadata: timestamp: 50579"
+    },
+    {
+      "data": [
+        "01004000000000fb0000c5db0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -5. Metadata: timestamp: 50651"
+    },
+    {
+      "data": [
+        "01000040000000fa0000c62a0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -6. Metadata: timestamp: 50730"
+    },
+    {
+      "data": [
+        "01000000400000f90000c6810000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -7. Metadata: timestamp: 50817"
+    },
+    {
+      "data": [
+        "01000040000000fa0000c86b0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -6. Metadata: timestamp: 51307"
+    },
+    {
+      "data": [
+        "01004000000000fb0000c8b30000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -5. Metadata: timestamp: 51379"
+    },
+    {
+      "data": [
+        "01000000002000fc0000c8e30000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -4. Metadata: timestamp: 51427"
+    },
+    {
+      "data": [
+        "01000000200000fd0000c9240000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -3. Metadata: timestamp: 51492"
+    },
+    {
+      "data": [
+        "01000020000000fe0000c94c0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -2. Metadata: timestamp: 51532"
+    },
+    {
+      "data": [
+        "01002000000000ff0000c97d0000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: -1. Metadata: timestamp: 51581"
+    },
+    {
+      "data": [
+        "01000000800000000000c9a90000000000000000000000000000000000000000"
+      ],
+      "description": "Shuttle ( index 0) value: 0. Metadata: timestamp: 51625"
+    }
+  ]
+}
