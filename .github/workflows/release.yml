@@ -101,30 +101,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Check if release is desired
-        # TODO - or if something changed? perhaps always on the releaseX branches?
-        id: do-publish
-        run: |
-          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
-            echo "env NPM_TOKEN not set!"
-          else
-            echo "Publish release"
-            echo ::set-output name=publish::"1"
-          fi
       - name: Prepare Environment
-        if: ${{ steps.do-publish.outputs.publish }}
         run: |
           npm install
         env:
           CI: true
       - name: Build
-        if: ${{ steps.do-publish.outputs.publish }}
         run: |
           npm run build
         env:
           CI: true
       - name: Publish to NPM
-        if: ${{ steps.do-publish.outputs.publish }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
           npm publish --access=public --tag latest
