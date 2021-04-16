@@ -132,12 +132,19 @@ XKeys.listAllConnectedPanels().forEach(() => {
 })
 ```
 
-## Documentation
+## API documentation
 
 ### Events
 
-| Event            | Description                                                                       |
-| ---------------- | --------------------------------------------------------------------------------- | --- |
+```javascript
+// Example:
+xkeysPanel.on('down', (btnIndex, metadata) => {
+	console.log('Button pressed', btnIndex, metadata)
+})
+```
+
+| Event | Description |
+| -- | -- |
 | `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(btnIndex, metadata)`. |     |
 | `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(jogValue)`                  |
 | `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(shuttleValue)`                |
@@ -145,9 +152,9 @@ XKeys.listAllConnectedPanels().forEach(() => {
 | `"tbar"`         | Triggered when the T-bar is moved. Emitted with `(tbarPosition, rawPosition)`     |
 | `"error"`        | Triggered on error. Emitted with `(error)`.                                       |
 
-### Setting things
+### Methods
 
-#### Set backlight of a button
+**Setting the backlight of a button**
 
 ```javascript
 xkeysPanel.setBacklight(btnIndex, color)
@@ -166,7 +173,7 @@ xkeysPanel.setBacklight(btnIndex, 'red', true)
 xkeysPanel.setBacklight(btnIndex, 'ff3300')
 ```
 
-#### Set the LEDs (the red/green status LED's)
+**Set the indicator LEDs (the red/green status LED's)**
 
 ```javascript
 xkeysPanel.setIndicatorLED(ledIndex, on, flashing)
@@ -178,7 +185,7 @@ xkeysPanel.setIndicatorLED(1, true)
 xkeysPanel.setIndicatorLED(2, true, true)
 ```
 
-#### Set backlight intensity
+**Set backlight intensity**
 
 ```javascript
 xkeysPanel.setBacklightIntensity(intensity)
@@ -188,7 +195,7 @@ xkeysPanel.setBacklightIntensity(intensity)
 xkeysPanel.setBacklightIntensity(255)
 ```
 
-#### Set all backlights on or off
+**Set all backlights on or off**
 
 ```javascript
 xkeysPanel.setAllBacklights(color)
@@ -202,7 +209,7 @@ xkeysPanel.setAllBacklights('ff33ff')
 xkeysPanel.setAllBacklights(false)
 ```
 
-#### Set flashing frequency
+**Set flashing frequency**
 
 ```javascript
 // The frequency can be set to 1-255, where 1 is fastest and 255 is the slowest.
@@ -212,6 +219,19 @@ xkeysPanel.setFrequency(frequency)
 // Example:
 // Set the frequency to a pretty fast flash
 xkeysPanel.setFrequency(8)
+```
+
+** Set unit ID **
+```javascript
+// Sets the UID (unit Id) value in the X-keys hardware
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+xkeysPanel.setUnitId(unitId)
+```
+** Save backlights **
+```javascript
+// Save the backlights (so they are restored to this after a power cycle).
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+xkeysPanel.saveBackLights()
 ```
 
 #### Other functionality
@@ -244,6 +264,21 @@ The most notable changes are:
 | `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )`                                                                                                                             |
 | `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )`                                                                                                                                |
 | `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )`                                                                                                                            |
-| `myXkeys.setBacklight(...)`                          | Arguments changed, see docs                                                                                                                                                   |
-| `myXkeys.setAllBacklights(...)`                      | Arguments changed, see docs                                                                                                                                                   |
+| `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs                                                                                                                                                   |
+| `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs                                                                                                                                                   |
 | `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)                                                                                                  |
+
+## Contribution guidelines
+
+If you have any questions or want to report a bug, [please open an issue at Githib](https://github.com/SuperFlyTV/xkeys/issues/new).
+
+If you want to contribute a bug fix or improvement, we'd happily accept Pull-requests.
+(If you're planning something big, [please open an issue](https://github.com/SuperFlyTV/xkeys/issues/new) to announce it first, and spark discussions.
+
+### Coding style and tests
+Please follow the same coding style as the rest of the repository when you type.
+
+Before committing, be sure to run `npm run test` to ensure your code passes the linting and unit tests.
+
+### License
+By contributing, you agree that your contributions will be licensed under its MIT License.

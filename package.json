@@ -10,9 +10,14 @@
   },
   "author": {
     "name": "Johan Nyman",
-    "email": "johan@superfly.tv"
+    "email": "johan@superfly.tv",
+    "url": "https://github.com/nytamin"
   },
   "contributors": [
+    {
+      "name": "Michael Hetherington",
+      "url": "https://xkeys.com"
+    }
     {
       "name": "Andreas Reich",
       "url": "https://github.com/cyraxx"
