@@ -1,0 +1,31 @@
+{
+  "name": "@xkeys/webhid-demo",
+  "version": "5.0.0-alpha.0",
+  "private": true,
+  "license": "MIT",
+  "homepage": "https://github.com/SuperFlyTV/xkeys#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperFlyTV/xkeys.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SuperFlyTV/xkeys/issues"
+  },
+  "author": {
+    "name": "Johan Nyman",
+    "email": "johan@superfly.tv",
+    "url": "https://github.com/nytamin"
+  },
+  "scripts": {
+    "start": "webpack serve --mode development --color",
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress"
+  },
+  "dependencies": {
+    "@xkeys/webhid": "*",
+    "buffer": "^6.0.3"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^7.0.0",
+    "ts-loader": "^8.0.17"
+  }
+}
