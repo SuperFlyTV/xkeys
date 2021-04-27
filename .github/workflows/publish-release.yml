@@ -1,14 +1,7 @@
-name: Node CI
+name: Publish Release-version to NPM
 
 # Controls when the action will run.
 on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - 'v**'
-  pull_request:
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -89,14 +82,11 @@ jobs:
         env:
           CI: true
 
-  prerelease:
-    name: Publish prerelease
+  publish:
+    name: Publish to NPM
     runs-on: ubuntu-latest
     continue-on-error: true
     timeout-minutes: 15
-
-    # only run for branches
-    if: contains(github.ref, 'refs/heads/')
 
     needs:
       - lint
@@ -108,49 +98,30 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Check if prerelease is desired
-        # TODO - or if something changed? perhaps always on the releaseX branches?
-        id: do-publish
+      - name: Check if token is set
+        id: check-npm-token
         run: |
           if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
             echo "env NPM_TOKEN not set!"
-          elif ! git log --format=oneline -n 1 | grep -q "\[publish\]"; then
-            echo "Skip"
           else
-            echo "Publish prerelease"
-            echo ::set-output name=publish::"1"
+            echo ::set-output name=is-ok::"1"
           fi
       - name: Prepare Environment
-        if: ${{ steps.do-publish.outputs.publish }}
+        if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: |
           npm install
         env:
           CI: true
-      - name: Get the Prerelease tag
-        id: prerelease-tag
-        uses: yuya-takeyama/docker-tag-from-github-ref-action@2b0614b1338c8f19dd9d3ea433ca9bc0cc7057ba
-        with:
-          remove-version-tag-prefix: false
-      - name: Bump prerelease version
-        if: ${{ steps.do-publish.outputs.publish }}
-        run: |
-          COMMIT_TIMESTAMP=$(git log -1 --pretty=format:%ct HEAD)
-          COMMIT_DATE=$(date -d @$COMMIT_TIMESTAMP +%Y%m%d-%H%M%S)
-          GIT_HASH=$(git rev-parse --short HEAD)
-          PRERELEASE_TAG=nightly-$(echo "${{ steps.prerelease-tag.outputs.tag }}" | sed -r 's/[^a-z0-9]+/-/gi')
-          yarn standard-version -- --prerelease $PRERELEASE_TAG-$COMMIT_DATE-$GIT_HASH --skip.changelog --skip.commit --skip.tag
-        env:
-          CI: true
       - name: Build
-        if: ${{ steps.do-publish.outputs.publish }}
+        if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: |
           yarn build
         env:
           CI: true
       - name: Publish to NPM
-        if: ${{ steps.do-publish.outputs.publish }}
+        if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-          npm publish --access=public --tag nightly
+          yarn publish:latest --yes
         env:
           CI: true
