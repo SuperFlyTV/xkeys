@@ -1,6 +1,7 @@
 {
   "name": "@xkeys/record-test",
   "version": "2.0.0",
+  "private": true,
   "description": "A script for recording tests",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -46,7 +47,9 @@
     "tslib": "^2.1.0"
   },
   "optionalDependencies": {
-    "usb-detection": "^4.10.0"
+    "usb-detection": "^4.10.0",
+    "nexe": "^3.3.7",
+    "find": "^0.3.0"
   },
   "keywords": [
     "xkeys",
