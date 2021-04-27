@@ -1,0 +1,66 @@
+{
+  "name": "@xkeys/api",
+  "version": "2.0.0",
+  "private": true,
+  "description": "API to interact with the X-keys panels",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperFlyTV/xkeys.git"
+  },
+  "author": {
+    "name": "Johan Nyman",
+    "email": "johan@superfly.tv",
+    "url": "https://github.com/nytamin"
+  },
+  "contributors": [
+    {
+      "name": "Michael Hetherington",
+      "url": "https://xkeys.com"
+    },
+    {
+      "name": "Andreas Reich",
+      "url": "https://github.com/cyraxx"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SuperFlyTV/xkeys/issues"
+  },
+  "homepage": "https://github.com/SuperFlyTV/xkeys#readme",
+  "scripts": {
+    "build": "rimraf dist && yarn build:main",
+    "build:main": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "tslib": "^2.1.0"
+  },
+  "optionalDependencies": {
+    "usb-detection": "^4.10.0"
+  },
+  "devDependencies": {
+    "lint-staged": "^7.2.0"
+  },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
+  "engines": {
+    "node": ">=10"
+  },
+  "lint-staged": {
+    "*.{js,css,json,md,scss}": [
+      "prettier"
+    ],
+    "*.{ts,tsx}": [
+      "eslint"
+    ]
+  },
+  "keywords": [
+    "xkeys",
+    "x-keys",
+    "hid",
+    "usb",
+    "hardware",
+    "interface",
+    "controller"
+  ]
+}

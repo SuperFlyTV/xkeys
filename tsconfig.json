@@ -1,8 +1,7 @@
 {
-  "extends": "./config/tsconfig.base",
-  "exclude": [
-    "node_modules/**",
-    "src/**/__tests__/**",
-    "src/**/__mocks__/**"
-  ]
+	"extends": "./tsconfig.build.json",
+	"exclude": ["node_modules/**"],
+	"compilerOptions": {
+		"types": ["jest", "node"]
+	}
 }

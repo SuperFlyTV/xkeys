@@ -1,113 +1,69 @@
 {
-  "name": "xkeys",
-  "version": "2.0.0",
-  "description": "NodeJs package to interact with the X-keys panels",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SuperFlyTV/xkeys.git"
-  },
-  "author": {
-    "name": "Johan Nyman",
-    "email": "johan@superfly.tv",
-    "url": "https://github.com/nytamin"
-  },
-  "contributors": [
-    {
-      "name": "Michael Hetherington",
-      "url": "https://xkeys.com"
-    },
-    {
-      "name": "Andreas Reich",
-      "url": "https://github.com/cyraxx"
-    }
+  "name": "xkeys-monorepo",
+  "version": "0.0.0",
+  "repository": "https://github.com/SuperFlyTV/xkeys",
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SuperFlyTV/xkeys/issues"
-  },
-  "homepage": "https://github.com/SuperFlyTV/xkeys#readme",
   "scripts": {
-    "info": "npm-scripts-info",
-    "build": "trash dist && npm run build:main",
-    "build:main": "tsc -p tsconfig.json",
-    "lint": "eslint . --ext .ts,.js",
-    "unit": "jest --forceExit --detectOpenHandles",
-    "unit:watch": "jest --watch",
-    "test": "npm run lint && npm run unit",
+    "build": "lerna run build --stream",
+    "lint": "lerna exec --stream -- eslint . --ext .ts,.tsx",
+    "lint0000": "lerna exec --stream -- prettier --check ./src/**/*.ts",
+    "lintfix": "yarn lint --fix",
+    "test": "lerna run test --stream",
+    "typecheck": "lerna exec -- tsc --noEmit",
     "cov": "jest --coverage; 0 coverage/lcov-report/index.html",
     "cov-open": "open-cli coverage/lcov-report/index.html",
     "send-coverage": "jest && codecov",
     "standard-version": "standard-version",
-    "release:bump-release": "npm run standard-version",
-    "release:bump-prerelease": "npm run standard-version --prerelease",
-    "build-record-test": "npm run build && rimraf ./deploy/xkeys-nodejs-test-recorder.exe && nexe dist/record-test.js -t windows-x64-12.18.1 -o ./deploy/xkeys-nodejs-test-recorder.exe && node scripts/copy-natives.js win32-x64"
-  },
-  "scripts-info": {
-    "info": "Display information about the scripts",
-    "build": "(Trash and re)build the library",
-    "build:main": "Builds main build command without trash.",
-    "lint": "Lint all typescript source files",
-    "unit": "Build the library and run unit tests",
-    "test": "Lint, build, and test the library",
-    "watch": "Watch source files, rebuild library on changes, rerun relevant tests",
-    "cov": "Run tests, generate the HTML coverage report, and open it in a browser",
-    "cov-open": "Open current test coverage",
-    "send-coverage": "send coverage to codecov",
-    "release": "Clean, build, test and prepare release (a one-step publish process). Updates versions and creates git commits.",
-    "reset": "Delete all untracked files and reset the repo to the last commit"
-  },
-  "dependencies": {
-    "@types/node-hid": "^1.3.0",
-    "node-hid": "^2.1.1",
-    "tslib": "^2.1.0",
-    "readline": "^1.3.0"
-  },
-  "optionalDependencies": {
-    "usb-detection": "^4.10.0"
+    "release:bump-release": "yarn standard-version",
+    "release:bump-prerelease": "yarn standard-version --prerelease",
+    "build-record-test": "lerna exec build-record-test",
+    "publish:nightly": "lerna publish from-package --dist-tag nightly",
+    "publish:latest": "lerna publish from-package"
   },
   "devDependencies": {
-    "@sofie-automation/code-standard-preset": "^0.2.2",
-    "@types/jest": "^26.0.19",
-    "@types/node": "^12.12.2",
-    "codecov": "^3.8.1",
-    "eslint-plugin-prettier": "^3.3.1",
+    "@sofie-automation/code-standard-preset": "0.2.2",
+    "@types/jest": "^26.0.20",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "cross-env": "^7.0.3",
+    "deep-extend": "^0.6.0",
+    "eslint": "7.19.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint": "^7.19.0",
-    "find": "^0.3.0",
-    "gh-pages": "^3.1.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "glob": "^7.1.6",
+    "husky": "^4.3.8",
     "jest": "^26.6.3",
-    "mkdirp": "^1.0.4",
-    "nexe": "^3.3.7",
-    "npm-scripts-info": "^0.3.9",
-    "nyc": "^15.1.0",
-    "open-cli": "^6.0.1",
+    "lerna": "^3.22.1",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "sleep-ms": "^2.0.1",
-    "standard-version": "^9.1.0",
-    "trash-cli": "^4.0.0",
-    "ts-jest": "^26.4.4",
-    "typescript": "4.0.5"
-  },
-  "keywords": [
-    "xkeys",
-    "x-keys",
-    "hid",
-    "usb",
-    "hardware",
-    "interface",
-    "controller"
-  ],
-  "engines": {
-    "node": ">=10"
+    "ts-jest": "^26.5.0",
+    "typescript": "^4.0.0",
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
-  "readmeFilename": "README.md",
-  "files": [
-    "/dist",
-    "/CHANGELOG.md",
-    "/README.md",
-    "/LICENSE"
-  ]
+  "husky": {
+    "hooks": {
+      "pre-commit": [
+        "lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
+      ]
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md,scss}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "yarn lint --fix"
+    ]
+  },
+  "main": "dist/index.js",
+  "author": "Johan Nyman <johan@nytamin.se>",
+  "license": "MIT"
 }
