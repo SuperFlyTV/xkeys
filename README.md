@@ -12,6 +12,8 @@ The project is based on the documentation available here: http://xkeys.com/PISup
 
 ```
 $ npm install --save xkeys
+or
+$ yarn add xkeys
 ```
 
 ### Linux
@@ -268,9 +270,18 @@ The most notable changes are:
 | `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs                                                                                                                                                   |
 | `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)                                                                                                  |
 
-## Contribution guidelines
+## For developers
 
-If you have any questions or want to report a bug, [please open an issue at Githib](https://github.com/SuperFlyTV/xkeys/issues/new).
+This is a mono-repo, using [Lerna](https://github.com/lerna/lerna) and [Yarn](https://yarnpkg.com).
+
+To set up you local system for developing this repo:
+
+* Install Yarn: `npm install -g yarn`
+* Install all dependencies: `yarn`
+
+### Contribution guidelines
+
+If you have any questions or want to report a bug, [please open an issue at Github](https://github.com/SuperFlyTV/xkeys/issues/new).
 
 If you want to contribute a bug fix or improvement, we'd happily accept Pull-requests.
 (If you're planning something big, [please open an issue](https://github.com/SuperFlyTV/xkeys/issues/new) to announce it first, and spark discussions.
@@ -278,7 +289,7 @@ If you want to contribute a bug fix or improvement, we'd happily accept Pull-req
 ### Coding style and tests
 Please follow the same coding style as the rest of the repository when you type.
 
-Before committing, be sure to run `npm run test` to ensure your code passes the linting and unit tests.
+Before committing, be sure to run `yarn test` to ensure your code passes the linting and unit tests.
 
 ### License
 By contributing, you agree that your contributions will be licensed under its MIT License.

@@ -1,0 +1,17 @@
+{
+	"extends": "../../tsconfig.json",
+	"include": [
+		"./src/**/*"
+	],
+	"compilerOptions": {
+		"outDir": "./dist",
+		"lib": [
+			"es6",
+			"dom"
+		],
+		"types": [
+			"jest",
+			"w3c-web-hid"
+		]
+	}
+}

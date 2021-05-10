@@ -1,0 +1,29 @@
+{
+	"extends": "@sofie-automation/code-standard-preset/ts/tsconfig.lib",
+	"exclude": [
+		"node_modules/**",
+		"src/**/*spec.ts",
+		"src/**/__tests__/*",
+		"src/**/__mocks__/*"
+	],
+	"include": [
+		"<rootDir>/src/**/*"
+	],
+	"compilerOptions": {
+		"outDir": "./dist",
+		"baseUrl": "./",
+		"paths": {
+			"*": [
+				"./node_modules/*"
+			],
+			"@xkeys/api": [
+				"./src/index.ts"
+			]
+		},
+		"types": [
+			"node"
+		],
+		"importHelpers": false,
+		"declarationMap": true
+	}
+}
