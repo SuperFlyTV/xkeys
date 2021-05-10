@@ -1,6 +1,6 @@
 {
   "name": "@xkeys/api",
-  "version": "2.1.0-alpha.0",
+  "version": "2.1.0-alpha.1",
   "description": "API to interact with the X-keys panels",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

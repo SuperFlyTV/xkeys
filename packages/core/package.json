@@ -1,6 +1,6 @@
 {
   "name": "@xkeys/core",
-  "version": "2.1.0-alpha.0",
+  "version": "2.1.0-alpha.1",
   "description": "NPM package to interact with the X-keys panels",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -33,7 +33,7 @@
     "build:main": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@xkeys/api": "^2.1.0-alpha.0",
+    "@xkeys/api": "^2.1.0-alpha.1",
     "tslib": "^2.1.0"
   },
   "optionalDependencies": {

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-alpha.1](https://github.com/SuperFlyTV/xkeys/compare/v2.1.0-alpha.0...v2.1.0-alpha.1) (2021-05-10)
+
+**Note:** Version bump only for package xkeys-webhid
+
+
+
+
+
 # [2.1.0-alpha.0](https://github.com/SuperFlyTV/xkeys/compare/v2.0.0...v2.1.0-alpha.0) (2021-05-10)
 
 
