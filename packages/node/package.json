@@ -1,5 +1,5 @@
 {
-  "name": "@xkeys/node",
+  "name": "xkeys",
   "version": "2.0.0",
   "description": "An npm module for interfacing with the X-keys panel in Node.js",
   "main": "dist/index.js",
