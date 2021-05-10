@@ -32,6 +32,7 @@ jobs:
       - name: Prepare Environment
         run: |
           yarn
+          yarn build
         env:
           CI: true
       - name: Run Linting
