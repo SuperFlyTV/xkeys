@@ -1,5 +1,5 @@
 import * as readline from 'readline'
-import { HID_Device, listAllConnectedPanels, setupXkeysPanel, XKeys, XKeysEvents, describeEvent } from '@xkeys/node'
+import { HID_Device, listAllConnectedPanels, setupXkeysPanel, XKeys, XKeysEvents, describeEvent } from 'xkeys'
 import { exists, fsWriteFile } from './lib'
 import { HIDDevice } from '@xkeys/core'
 

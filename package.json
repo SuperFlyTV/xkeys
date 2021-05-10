@@ -9,7 +9,6 @@
   "scripts": {
     "build": "lerna run build --stream",
     "lint": "lerna exec --stream -- eslint . --ext .ts,.tsx",
-    "lint0000": "lerna exec --stream -- prettier --check ./src/**/*.ts",
     "lintfix": "yarn lint --fix",
     "test": "lerna run test --stream",
     "typecheck": "lerna exec -- tsc --noEmit",

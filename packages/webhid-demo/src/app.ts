@@ -1,4 +1,4 @@
-import { getOpenedXKeysPanels, requestXkeysPanels, setupXkeysPanel, XKeys } from '@xkeys/webhid'
+import { getOpenedXKeysPanels, requestXkeysPanels, setupXkeysPanel, XKeys } from 'xkeys-webhid'
 
 function appendLog(str: string) {
 	const logElm = document.getElementById('log')
