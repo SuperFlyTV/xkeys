@@ -15,8 +15,8 @@
     "cov": "jest --coverage; 0 coverage/lcov-report/index.html",
     "cov-open": "open-cli coverage/lcov-report/index.html",
     "send-coverage": "jest && codecov",
-    "release:bump-release": "lerna version --conventional-commits --conventional-graduate",
-    "release:bump-prerelease": "lerna version --conventional-commits --conventional-prerelease",
+    "release:bump-release": "lerna version --conventional-commits --conventional-graduate --no-push",
+    "release:bump-prerelease": "lerna version --conventional-commits --conventional-prerelease --no-push",
     "build-record-test": "lerna exec build-record-test",
     "publish:nightly": "lerna publish from-package --dist-tag nightly",
     "publish:latest": "lerna publish from-package"
