@@ -114,4 +114,6 @@ jobs:
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: yarn publish:latest --yes
         env:
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           CI: true
