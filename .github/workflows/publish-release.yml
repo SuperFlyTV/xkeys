@@ -109,6 +109,7 @@ jobs:
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          npm whoami
       - name: Publish nightly to NPM
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: yarn publish:latest --yes
