@@ -25,7 +25,8 @@
     "usb",
     "hardware",
     "interface",
-    "controller"
+    "controller",
+    "webhid"
   ],
   "scripts": {
     "build": "rimraf dist && yarn build:main",

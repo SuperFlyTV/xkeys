@@ -9,12 +9,7 @@ import {
 	XKeysEvents,
 	XKeysInfo,
 } from './api'
-import {
-	BackLightType,
-	Product,
-	PRODUCTS,
-	XKEYS_VENDOR_ID,
-} from './products'
+import { BackLightType, Product, PRODUCTS, XKEYS_VENDOR_ID } from './products'
 import { literal } from './lib'
 import { HIDDevice } from './genericHIDDevice'
 
