@@ -83,9 +83,13 @@ export class XKeysWatcher extends EventEmitter {
 		this.updateConnectedDevices()
 	}
 	public stop(): void {
-		// Note: This is really the wrong way to do it, since it leaves open the listener (this is a memory leak).
-		// We can't do anything else right now, because usb-detection currently doesn't expose a way to remove listeners from events.
 		this.isMonitoring = false
+
+		// Remove the listeners:
+		// @ts-expect-error usb-detection exposes wrong types:
+		USBDetect().removeListener(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
+		// @ts-expect-error usb-detection exposes wrong types:
+		USBDetect().removeListener(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
 
 		watcherCount--
 		if (watcherCount === 0) {
