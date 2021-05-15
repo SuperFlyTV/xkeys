@@ -8,6 +8,10 @@ Licence: MIT
 
 The project is based on the documentation available here: http://xkeys.com/PISupport/DeveloperHIDDataReports.php
 
+## Demo
+
+If you are using a Chromium v89+ based browser, you can try out the library right away, in the browser: [Demo](https://SuperFlyTV.github.io/xkeys/).
+
 ## Installation
 
 ```
@@ -31,7 +35,7 @@ KERNEL=="hidraw*", ATTRS{idVendor}=="05f3", MODE="0666", GROUP="plugdev"
 Please note that version `2.0.0` is a _BREAKING CHANGE_, as most of the API have changed.
 If you're upgrading from `<2.0.0`, please read the [_Migrations_](#Migrations) section below.
 
-## Getting started
+## Getting started - Node.js
 
 ### Watch for connected X-keys (recommended)
 
@@ -134,6 +138,14 @@ XKeys.listAllConnectedPanels().forEach(() => {
 })
 ```
 
+## Getting started - Browser (WebHID)
+
+See the example implementation at [packages/webhid-demo](packages/webhid-demo).
+
+### Demo
+
+If you are using a Chromium v89+ based browser, you can try out the [webhid demo](https://SuperFlyTV.github.io/xkeys/).
+
 ## API documentation
 
 ### Events
@@ -145,8 +157,8 @@ xkeysPanel.on('down', (btnIndex, metadata) => {
 })
 ```
 
-| Event | Description |
-| -- | -- |
+| Event            | Description                                                                       |
+| ---------------- | --------------------------------------------------------------------------------- | --- |
 | `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(btnIndex, metadata)`. |     |
 | `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(jogValue)`                  |
 | `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(shuttleValue)`                |
@@ -224,12 +236,15 @@ xkeysPanel.setFrequency(8)
 ```
 
 ** Set unit ID **
+
 ```javascript
 // Sets the UID (unit Id) value in the X-keys hardware
 // Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
 xkeysPanel.setUnitId(unitId)
 ```
+
 ** Save backlights **
+
 ```javascript
 // Save the backlights (so they are restored to this after a power cycle).
 // Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
@@ -266,8 +281,8 @@ The most notable changes are:
 | `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )`                                                                                                                             |
 | `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )`                                                                                                                                |
 | `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )`                                                                                                                            |
-| `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs                                                                                                                                                   |
-| `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs                                                                                                                                                   |
+| `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs                                                                                                                                              |
+| `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs                                                                                                                                              |
 | `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)                                                                                                  |
 
 ## For developers
@@ -276,8 +291,8 @@ This is a mono-repo, using [Lerna](https://github.com/lerna/lerna) and [Yarn](ht
 
 To set up you local system for developing this repo:
 
-* Install Yarn: `npm install -g yarn`
-* Install all dependencies: `yarn`
+- Install Yarn: `npm install -g yarn`
+- Install all dependencies: `yarn`
 
 ### Contribution guidelines
 
@@ -287,9 +302,11 @@ If you want to contribute a bug fix or improvement, we'd happily accept Pull-req
 (If you're planning something big, [please open an issue](https://github.com/SuperFlyTV/xkeys/issues/new) to announce it first, and spark discussions.
 
 ### Coding style and tests
+
 Please follow the same coding style as the rest of the repository when you type.
 
-Before committing, be sure to run `yarn test` to ensure your code passes the linting and unit tests.
+Before committing, be sure to run `yarn lint` and `yarn test` to ensure your code passes the linting and unit tests.
 
 ### License
+
 By contributing, you agree that your contributions will be licensed under its MIT License.
