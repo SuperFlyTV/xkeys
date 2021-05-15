@@ -36,8 +36,6 @@ jobs:
 
   test:
     name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    needs:
-      - lint
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
