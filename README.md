@@ -14,10 +14,20 @@ If you are using a Chromium v89+ based browser, you can try out the library righ
 
 ## Installation
 
+### To use in Node.js
+
 ```
 $ npm install --save xkeys
 or
 $ yarn add xkeys
+```
+
+### To use in browser
+
+```
+$ npm install --save xkeys-webhid
+or
+$ yarn add xkeys-webhid
 ```
 
 ### Linux

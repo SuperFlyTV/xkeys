@@ -1,7 +1,7 @@
 {
   "name": "xkeys",
   "version": "2.1.0",
-  "description": "An npm module for interfacing with the X-keys panel in Node.js",
+  "description": "An npm module for interfacing with the X-keys panels in Node.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
