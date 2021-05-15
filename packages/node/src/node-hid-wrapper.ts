@@ -1,10 +1,10 @@
-import { HIDDevice } from '@xkeys/core'
+import { HIDDevice } from '@xkeys-lib/core'
 import { EventEmitter } from 'events'
 import * as HID from 'node-hid'
 
 /**
  * This class wraps the node-hid.HID Device.
- * This translates it into the common format (@see HIDDevice) defined by @xkeys/core
+ * This translates it into the common format (@see HIDDevice) defined by @xkeys-lib/core
  */
 export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 	constructor(private device: HID.HID) {

@@ -1,5 +1,5 @@
 {
-  "name": "@xkeys/core",
+  "name": "@xkeys-lib/core",
   "version": "2.1.0-alpha.1",
   "description": "NPM package to interact with the X-keys panels",
   "main": "dist/index.js",

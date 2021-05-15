@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.1.0-alpha.1](https://github.com/SuperFlyTV/xkeys/compare/v2.1.0-alpha.0...v2.1.0-alpha.1) (2021-05-10)
 
-**Note:** Version bump only for package @xkeys/webhid-demo
+**Note:** Version bump only for package @xkeys-lib/webhid-demo
 
 
 

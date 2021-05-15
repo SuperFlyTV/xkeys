@@ -1,5 +1,5 @@
 {
-  "name": "@xkeys/webhid-demo",
+  "name": "@xkeys-lib/webhid-demo",
   "version": "2.1.0-alpha.1",
   "private": true,
   "license": "MIT",

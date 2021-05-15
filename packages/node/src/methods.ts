@@ -1,5 +1,5 @@
-import { XKeys } from '@xkeys/core'
-import { PRODUCTS } from '@xkeys/core'
+import { XKeys } from '@xkeys-lib/core'
+import { PRODUCTS } from '@xkeys-lib/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice } from './node-hid-wrapper'
 

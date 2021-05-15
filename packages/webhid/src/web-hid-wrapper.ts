@@ -1,11 +1,11 @@
-import { HIDDevice as CoreHIDDevice } from '@xkeys/core'
+import { HIDDevice as CoreHIDDevice } from '@xkeys-lib/core'
 import { EventEmitter } from 'events'
 import Queue from 'p-queue'
 import { Buffer as WebBuffer } from 'buffer'
 
 /**
  * The wrapped browser HIDDevice.
- * This translates it into the common format (@see CoreHIDDevice) defined by @xkeys/core
+ * This translates it into the common format (@see CoreHIDDevice) defined by @xkeys-lib/core
  */
 export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 	private readonly device: HIDDevice

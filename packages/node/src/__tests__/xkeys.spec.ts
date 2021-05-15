@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as HID from 'node-hid'
-import { Product, PRODUCTS, describeEvent } from '@xkeys/core'
+import { Product, PRODUCTS, describeEvent } from '@xkeys-lib/core'
 import * as HIDMock from '../__mocks__/node-hid'
 import { setupXkeysPanel, XKeys, XKeysEvents } from '../'
 

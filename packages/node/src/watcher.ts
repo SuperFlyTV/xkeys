@@ -1,6 +1,6 @@
 import type * as USBDetectNS from 'usb-detection'
 import { EventEmitter } from 'events'
-import { XKeys, XKEYS_VENDOR_ID } from '@xkeys/core'
+import { XKeys, XKEYS_VENDOR_ID } from '@xkeys-lib/core'
 import { listAllConnectedPanels, setupXkeysPanel } from '.'
 
 interface USBDetectType {

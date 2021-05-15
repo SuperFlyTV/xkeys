@@ -1,7 +1,7 @@
 import * as readline from 'readline'
 import { HID_Device, listAllConnectedPanels, setupXkeysPanel, XKeys, XKeysEvents, describeEvent } from 'xkeys'
 import { exists, fsWriteFile } from './lib'
-import { HIDDevice } from '@xkeys/core'
+import { HIDDevice } from '@xkeys-lib/core'
 
 /*
  * This script is intended to be used by developers in order to verify that the functionality works and generate test scripts.

@@ -1,4 +1,4 @@
-export * from '@xkeys/core'
+export * from '@xkeys-lib/core'
 
 export * from './api'
 export * from './node-hid-wrapper'
