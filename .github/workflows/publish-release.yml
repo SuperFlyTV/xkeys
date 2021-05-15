@@ -75,6 +75,9 @@ jobs:
     continue-on-error: false
     timeout-minutes: 15
 
+    # only run on master
+    if: github.ref == 'refs/heads/master'
+
     needs:
       - lint
       - test
@@ -114,6 +117,4 @@ jobs:
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: yarn publish:latest --yes
         env:
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           CI: true
