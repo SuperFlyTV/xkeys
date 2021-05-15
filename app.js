@@ -5256,6 +5256,18 @@ async function openDevice(device) {
         appendLog(`Button ${btnIndex} up`);
         xkeys.setBacklight(btnIndex, null);
     });
+    xkeys.on('jog', (index, value) => {
+        appendLog(`Jog #${index}: ${value}`);
+    });
+    xkeys.on('joystick', (index, value) => {
+        appendLog(`Joystick #${index}: ${JSON.stringify(value)}`);
+    });
+    xkeys.on('shuttle', (index, value) => {
+        appendLog(`Shuttle #${index}: ${value}`);
+    });
+    xkeys.on('tbar', (index, value) => {
+        appendLog(`T-bar #${index}: ${value}`);
+    });
 }
 window.addEventListener('load', async () => {
     appendLog('Page loaded');
