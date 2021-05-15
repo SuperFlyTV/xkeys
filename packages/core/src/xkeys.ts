@@ -1,18 +1,20 @@
 import { EventEmitter } from 'events'
 import {
 	AnalogStates,
-	BackLightType,
 	ButtonEventMetadata,
 	ButtonStates,
 	Color,
 	EventMetadata,
 	JoystickValueEmit,
+	XKeysEvents,
+	XKeysInfo,
+} from './api'
+import {
+	BackLightType,
 	Product,
 	PRODUCTS,
 	XKEYS_VENDOR_ID,
-	XKeysEvents,
-	XKeysInfo,
-} from '@xkeys/api'
+} from './products'
 import { literal } from './lib'
 import { HIDDevice } from './genericHIDDevice'
 

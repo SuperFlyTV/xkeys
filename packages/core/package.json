@@ -33,7 +33,6 @@
     "build:main": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@xkeys/api": "^2.1.0-alpha.1",
     "tslib": "^2.1.0"
   },
   "optionalDependencies": {
@@ -62,5 +61,8 @@
     "hardware",
     "interface",
     "controller"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

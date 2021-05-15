@@ -15,9 +15,6 @@
 		"paths": {
 			"*": [
 				"./node_modules/*"
-			],
-			"@xkeys/api": [
-				"./src/index.ts"
 			]
 		},
 		"types": [

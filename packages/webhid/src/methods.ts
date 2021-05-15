@@ -1,5 +1,4 @@
-import { XKeys } from '@xkeys/core'
-import { XKEYS_VENDOR_ID } from '@xkeys/api'
+import { XKeys, XKEYS_VENDOR_ID } from '@xkeys/core'
 import { WebHIDDevice } from './web-hid-wrapper'
 
 /** Prompts the user for which X-keys panel to select */

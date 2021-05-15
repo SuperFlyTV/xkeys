@@ -1,4 +1,4 @@
-import { BackLightType, PRODUCTS } from '@xkeys/api'
+import { BackLightType, PRODUCTS } from '@xkeys/core'
 
 describe('products.ts', () => {
 	test('productIds should be unique', async () => {
