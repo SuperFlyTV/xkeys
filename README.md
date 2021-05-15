@@ -1,6 +1,6 @@
 # xkeys
 
-[![Node CI](https://github.com/SuperFlyTV/xkeys/actions/workflows/node.yml/badge.svg)](https://github.com/SuperFlyTV/xkeys/actions/workflows/node.yml)
+[![Node CI](https://github.com/SuperFlyTV/xkeys/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/SuperFlyTV/xkeys/actions/workflows/lint-and-test.yml)
 
 A Node.js module to interact with the [X-keys panels](https://xkeys.com/xkeys.html).
 
