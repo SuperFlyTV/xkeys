@@ -288,8 +288,7 @@ The most notable changes are:
 | `myXkeys.on('downAlt', (btnIndex) => {} )`           | Use `.on('down')` instead (PS-button is on index 0) |
 | `myXkeys.on('upAlt', (btnIndex) => {} )`             | Use `.on('up')` instead (PS-button is on index 0)   |
 | `myXkeys.on('jog', (position) => {} )`               | `myXkeys.on('jog', (index, position) => {} )`  |
-| `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )`
- |
+| `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )` |
 | `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )` |
 | `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )` |
 | `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs  |
