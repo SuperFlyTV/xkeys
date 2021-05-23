@@ -113,6 +113,6 @@ jobs:
           npm whoami
       - name: Publish nightly to NPM
         if: ${{ steps.check-npm-token.outputs.is-ok }}
-        run: yarn publish:latest --yes
+        run: yarn lerna:publish from-package --no-verify-access --yes
         env:
           CI: true
