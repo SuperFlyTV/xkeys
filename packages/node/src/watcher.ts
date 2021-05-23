@@ -65,6 +65,8 @@ export class XKeysWatcher extends EventEmitter {
 	private shouldFindChangedReTries = 0
 
 	public debug = false
+	/** A list of the devices we've called setupXkeysPanels for */
+	private setupXkeysPanels: XKeys[] = []
 
 	constructor() {
 		super()
@@ -82,7 +84,11 @@ export class XKeysWatcher extends EventEmitter {
 		// Also do a sweep for all currently connected X-keys panels:
 		this.updateConnectedDevices()
 	}
-	public stop(): void {
+	/**
+	 * Stop the watcher
+	 * @param closeAllDevices Set to false in order to NOT close all devices. Use this if you only want to stop the watching. Defaults to true
+	 */
+	public async stop(closeAllDevices: boolean = true): Promise<void> {
 		this.isMonitoring = false
 
 		// Remove the listeners:
@@ -94,6 +100,14 @@ export class XKeysWatcher extends EventEmitter {
 		watcherCount--
 		if (watcherCount === 0) {
 			USBDetect().stopMonitoring()
+		}
+
+		if (closeAllDevices) {
+			// In order for an application to close gracefully,
+			// we need to close all devices that we've called setupXkeysPanel() on:
+			for (const xKeysPanel of this.setupXkeysPanels) {
+				await xKeysPanel.close()
+			}
 		}
 	}
 	private onAddedUSBDevice = (_device: USBDetectNS.Device) => {
@@ -175,6 +189,7 @@ export class XKeysWatcher extends EventEmitter {
 
 		setupXkeysPanel(devicePath)
 			.then((xkeysPanel) => {
+				this.setupXkeysPanels.push(xkeysPanel)
 				// Since this is async, check if the panel is still connected
 				if (this.seenDevicePaths[devicePath]) {
 					// yes, it is still connected
