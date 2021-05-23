@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1-alpha.0](https://github.com/SuperFlyTV/xkeys/compare/v2.1.0...v2.1.1-alpha.0) (2021-05-23)
+
+
+### Bug Fixes
+
+* remove listeners on watcher.stop() ([c8d36a3](https://github.com/SuperFlyTV/xkeys/commit/c8d36a3602b8c460233b82a48f6c28a04f52c9de))
+
+
+
+
+
 # [2.1.0](https://github.com/SuperFlyTV/xkeys/compare/v2.1.0-alpha.0...v2.1.0) (2021-05-15)
 
 **Note:** Version bump only for package xkeys
