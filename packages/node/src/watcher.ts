@@ -88,7 +88,7 @@ export class XKeysWatcher extends EventEmitter {
 	 * Stop the watcher
 	 * @param closeAllDevices Set to false in order to NOT close all devices. Use this if you only want to stop the watching. Defaults to true
 	 */
-	public async stop(closeAllDevices: boolean = true): Promise<void> {
+	public async stop(closeAllDevices = true): Promise<void> {
 		this.isMonitoring = false
 
 		// Remove the listeners:
@@ -105,9 +105,11 @@ export class XKeysWatcher extends EventEmitter {
 		if (closeAllDevices) {
 			// In order for an application to close gracefully,
 			// we need to close all devices that we've called setupXkeysPanel() on:
+			const ps: Promise<void>[] = []
 			for (const xKeysPanel of this.setupXkeysPanels) {
-				await xKeysPanel.close()
+				ps.push(xKeysPanel.close())
 			}
+			await Promise.all(ps)
 		}
 	}
 	private onAddedUSBDevice = (_device: USBDetectNS.Device) => {
