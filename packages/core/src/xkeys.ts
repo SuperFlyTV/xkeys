@@ -19,7 +19,7 @@ export declare interface XKeys {
 }
 
 export class XKeys extends EventEmitter {
-	private product: Product
+	private product: Product & { productId: number; interface: number }
 
 	/** All button states */
 	private _buttonStates: ButtonStates = new Map()
@@ -35,7 +35,6 @@ export class XKeys extends EventEmitter {
 	private receivedGenerateDataResolve?: () => void
 
 	private _initialized = false
-	private _hidDevice: { productId: number; interface: number }
 	private _unidId = 0 // is set after init()
 	private _firmwareVersion = 0 // is set after init()
 	private _disconnected = false
@@ -48,14 +47,13 @@ export class XKeys extends EventEmitter {
 	constructor(
 		// public readonly devicePath: string,
 		private device: HIDDevice,
-		deviceInfo: {
-			product: string | undefined
-			productId: number
-			interface: number | null // null means "anything goes", used when interface isn't available
-		}
+		private deviceInfo: DeviceInfo
 	) {
 		super()
 
+		this.product = this._setupDevice(deviceInfo)
+	}
+	private _setupDevice(deviceInfo: DeviceInfo) {
 		const findProdct = (): { product: Product; productId: number; interface: number } => {
 			for (const product of Object.values(PRODUCTS)) {
 				for (const hidDevice of product.hidDevices) {
@@ -77,12 +75,6 @@ export class XKeys extends EventEmitter {
 			)
 		}
 		const found = findProdct()
-		this.product = found.product
-
-		this._hidDevice = {
-			productId: found.productId,
-			interface: found.interface,
-		}
 
 		this.device.on('data', (data: Buffer) => {
 			if (data.readUInt8(1) === 214) {
@@ -247,13 +239,19 @@ export class XKeys extends EventEmitter {
 		this.device.on('error', (err) => {
 			if ((err + '').match(/could not read from/)) {
 				// The device has been disconnected
-				this.handleDeviceDisconnected().catch((error) => {
+				this._handleDeviceDisconnected().catch((error) => {
 					this.emit('error', error)
 				})
 			} else {
 				this.emit('error', err)
 			}
 		})
+
+		return {
+			...found.product,
+			productId: found.productId,
+			interface: found.interface,
+		}
 	}
 
 	/** Initialize the device. This ensures that the essential information from the device about its state has been received. */
@@ -275,7 +273,7 @@ export class XKeys extends EventEmitter {
 	}
 	/** Closes the device. Subsequent commands will raise errors. */
 	public async close(): Promise<void> {
-		await this.handleDeviceDisconnected()
+		await this._handleDeviceDisconnected()
 	}
 
 	/** Firmware version of the device */
@@ -294,8 +292,8 @@ export class XKeys extends EventEmitter {
 		return literal<XKeysInfo>({
 			name: this.product.name,
 
-			productId: this._hidDevice.productId,
-			interface: this._hidDevice.interface,
+			productId: this.product.productId,
+			interface: this.product.interface,
 
 			unitId: this.unitId,
 			firmwareVersion: this._firmwareVersion, // added this imporant to defend against older firmware bugs
@@ -525,12 +523,31 @@ export class XKeys extends EventEmitter {
 	}
 
 	/** (Internal function) Called when there has been detected that the device has been disconnected */
-	public async handleDeviceDisconnected(): Promise<void> {
+	public async _handleDeviceDisconnected(): Promise<void> {
 		if (!this._disconnected) {
 			this._disconnected = true
 			await this.device.close()
 			this.emit('disconnected')
 		}
+	}
+	/** (Internal function) Called when there has been detected that a device has been reconnected */
+	public async _handleDeviceReconnected(device: HIDDevice, deviceInfo: DeviceInfo): Promise<void> {
+		if (this._disconnected) {
+			this._disconnected = false
+
+			// Re-vitalize:
+			this.device = device
+			this.product = this._setupDevice(deviceInfo)
+			await this.init()
+
+			this.emit('reconnected')
+		}
+	}
+	public _getHIDDevice(): HIDDevice {
+		return this.device
+	}
+	public _getDeviceInfo(): DeviceInfo {
+		return this.deviceInfo
 	}
 	/**
 	 * Writes a Buffer to the X-keys device
@@ -658,3 +675,8 @@ export class XKeys extends EventEmitter {
 	}
 }
 type HIDMessage = (string | number)[]
+interface DeviceInfo {
+	product: string | undefined
+	productId: number
+	interface: number | null // null means "anything goes", used when interface isn't available
+}

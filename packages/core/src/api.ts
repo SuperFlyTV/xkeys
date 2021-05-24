@@ -62,6 +62,7 @@ export interface XKeysEvents {
 	tbar: (index: number, value: number, eventMetadata: EventMetadata) => void
 
 	disconnected: () => void
+	reconnected: () => void
 	error: (err: any) => void
 }
 export interface XKeysInfo {
