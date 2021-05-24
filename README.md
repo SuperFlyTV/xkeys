@@ -104,7 +104,8 @@ watcher.on('connected', (xkeysPanel) => {
 })
 
 // To stop watching, call
-// watcher.stop()
+// watcher.stop() // Returns a promise
+// .catch(console.error)
 ```
 
 ### Connect to a devices manually
@@ -294,6 +295,14 @@ The most notable changes are:
 | `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs  |
 | `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs  |
 | `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)  |
+
+### 2.1.1
+
+Version `2.1.1` has a minor change for when stopping the XKeysWatcher instance:
+```
+const watcher = new XKeysWatcher()
+await watcher.stop() // Now returns a promise
+```
 
 ## For developers
 

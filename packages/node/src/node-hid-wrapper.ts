@@ -23,6 +23,11 @@ export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 	public async close(): Promise<void> {
 		this.device.close()
 
+		// For some unknown reason, we need to wait a bit before returning because it
+		// appears that the HID-device isn't actually closed properly until after a short while.
+		// (This issue has been observed in Electron, where a app.quit() causes the application to crash with "Exit status 3221226505".)
+		await new Promise((resolve) => setTimeout(resolve, 300))
+
 		this.device.removeListener('error', this._handleError)
 		this.device.removeListener('data', this._handleData)
 	}

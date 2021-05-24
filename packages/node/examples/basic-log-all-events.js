@@ -56,4 +56,4 @@ watcher.on('connected', (xkeysPanel) => {
 })
 
 // To stop watching, call
-// watcher.stop()
+// watcher.stop().catch(console.error)
