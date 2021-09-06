@@ -111,7 +111,7 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           npm whoami
-      - name: Publish nightly to NPM
+      - name: Publish to NPM
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: yarn lerna:publish from-package --no-verify-access --yes
         env:
