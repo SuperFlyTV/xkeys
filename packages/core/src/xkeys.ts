@@ -44,10 +44,7 @@ export class XKeys extends EventEmitter {
 		return XKEYS_VENDOR_ID
 	}
 
-	constructor(
-		private device: HIDDevice,
-		private deviceInfo: DeviceInfo
-	) {
+	constructor(private device: HIDDevice, private deviceInfo: DeviceInfo, private _devicePath: string | undefined) {
 		super()
 
 		this.product = this._setupDevice(deviceInfo)
@@ -546,6 +543,9 @@ export class XKeys extends EventEmitter {
 	}
 	public _getDeviceInfo(): DeviceInfo {
 		return this.deviceInfo
+	}
+	public get devicePath(): string | undefined {
+		return this._devicePath
 	}
 	/** The unique id of the xkeys-panel. Note: This is only available if options.automaticUnitIdMode is set for the Watcher */
 	public get uniqueId(): string {

@@ -87,7 +87,7 @@ export async function setupXkeysPanel(devicePathOrHIDDevice?: HID.Device | HID.H
 
 	const deviceWrap = new NodeHIDDevice(device)
 
-	const xkeys = new XKeys(deviceWrap, deviceInfo)
+	const xkeys = new XKeys(deviceWrap, deviceInfo, devicePath)
 
 	// Wait for the device to initialize:
 	await xkeys.init()
