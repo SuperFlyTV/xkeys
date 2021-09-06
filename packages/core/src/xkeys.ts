@@ -45,7 +45,6 @@ export class XKeys extends EventEmitter {
 	}
 
 	constructor(
-		// public readonly devicePath: string,
 		private device: HIDDevice,
 		private deviceInfo: DeviceInfo
 	) {
@@ -81,8 +80,8 @@ export class XKeys extends EventEmitter {
 				// this is a special report that does not correlate to the regular data report, it is created by sending getVersion()
 
 				const firmVersion = data.readUInt8(10)
-				// const dUID = data.readUInt8(0) // the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
-				// const dPID = data.readUInt16LE(11) // PID is also in this report as a double check.
+				// data.readUInt8(0) the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
+				// data.readUInt16LE(11) // PID is also in this report as a double check.
 
 				this._firmwareVersion = firmVersion // Firmware version
 
@@ -114,7 +113,6 @@ export class XKeys extends EventEmitter {
 			const genData = dd & (1 << 1) ? true : false
 			if (genData) {
 				// Note, the generateData is used to get the full state
-				// this.emit('unitID', UID, PID, productName)
 
 				this._unidId = UID
 

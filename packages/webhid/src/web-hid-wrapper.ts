@@ -24,8 +24,6 @@ export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 		this.device.addEventListener('error', this._handleError)
 	}
 	public write(data: number[]): void {
-		// this.device.write(data)
-
 		this.reportQueue
 			.add(async () => {
 				await this.device.sendReport(data[0], new Uint8Array(data.slice(1)))

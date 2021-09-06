@@ -3,16 +3,13 @@ import { WebHIDDevice } from './web-hid-wrapper'
 
 /** Prompts the user for which X-keys panel to select */
 export async function requestXkeysPanels(): Promise<HIDDevice[]> {
-	const browserDevices = await navigator.hid.requestDevice({
+	return navigator.hid.requestDevice({
 		filters: [
 			{
 				vendorId: XKEYS_VENDOR_ID,
 			},
 		],
 	})
-	// if (!browserDevices.length) throw new Error('No device was selected by user')
-
-	return browserDevices
 }
 /**
  * Reopen previously selected devices.
@@ -24,22 +21,10 @@ export async function getOpenedXKeysPanels(): Promise<HIDDevice[]> {
 
 /** Sets up a connection to a HID device (the X-keys panel) */
 export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> {
-	// const browserDevices = await navigator.hid.requestDevice({
-	// 	filters: [
-	// 		{
-	// 			vendorId: XKEYS_VENDOR_ID,
-	// 		},
-	// 	],
-	// })
-
-	// if (!browserDevices.length) throw new Error('No device was selected by user')
-
-	// const browserDevice = browserDevices[0]
 	if (!browserDevice?.collections?.length) throw Error(`device collections is empty`)
 	if (!browserDevice.productId) throw Error(`Device has no productId!`)
 
 	const productId = browserDevice.productId
-	// const collection = browserDevice.collections[0]
 
 	if (!browserDevice.opened) {
 		await browserDevice.open()
