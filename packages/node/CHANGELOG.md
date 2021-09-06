@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-alpha.0](https://github.com/SuperFlyTV/xkeys/compare/v2.1.1...v2.2.0-alpha.0) (2021-09-06)
+
+
+### Features
+
+* add feature: "Automatic UnitId mode" ([f7c3a86](https://github.com/SuperFlyTV/xkeys/commit/f7c3a869e8820f856831aad576ce7978dfb9d75c))
+* add XKeys.uniqueId property, to be used with automaticUnitIdMode ([a2e6d7a](https://github.com/SuperFlyTV/xkeys/commit/a2e6d7a6ec917d82bc2a71c1922c22c061232908))
+
+
+
+
+
 ## [2.1.1](https://github.com/SuperFlyTV/xkeys/compare/v2.1.1-alpha.1...v2.1.1) (2021-05-24)
 
 **Note:** Version bump only for package xkeys

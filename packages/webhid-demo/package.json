@@ -1,6 +1,6 @@
 {
   "name": "@xkeys-lib/webhid-demo",
-  "version": "2.1.1",
+  "version": "2.2.0-alpha.0",
   "private": true,
   "license": "MIT",
   "homepage": "https://github.com/SuperFlyTV/xkeys#readme",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "xkeys-webhid": "^2.1.1"
+    "xkeys-webhid": "^2.2.0-alpha.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^7.0.0",
