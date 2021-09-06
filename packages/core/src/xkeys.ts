@@ -549,6 +549,10 @@ export class XKeys extends EventEmitter {
 	public _getDeviceInfo(): DeviceInfo {
 		return this.deviceInfo
 	}
+	/** The unique id of the xkeys-panel. Note: This is only available if options.automaticUnitIdMode is set for the Watcher */
+	public get uniqueId(): string {
+		return `${this.info.productId}_${this.unitId}`
+	}
 	/**
 	 * Writes a Buffer to the X-keys device
 	 *

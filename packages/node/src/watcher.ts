@@ -193,7 +193,7 @@ export class XKeysWatcher extends EventEmitter {
 		this.debugLog('handleNewDevice', devicePath)
 
 		setupXkeysPanel(devicePath)
-			.then((xkeysPanel) => {
+			.then((xkeysPanel: XKeys) => {
 				this.setupXkeysPanels.push(xkeysPanel)
 				// Since this is async, check if the panel is still connected
 				if (this.seenDevicePaths[devicePath]) {
@@ -215,7 +215,7 @@ export class XKeysWatcher extends EventEmitter {
 							xkeysPanel.setUnitId(this._getNextUniqueId(xkeysPanel)) // the lookup-cache is stored either in memory, or preferrably on disk
 						}
 						// the PID+UID pair is enough to uniquely identify a panel.
-						const uniqueIdentifier = `${xkeysPanel.info.productId}_${xkeysPanel.unitId}`
+						const uniqueIdentifier: string = xkeysPanel.uniqueId
 						const previousXKeysPanel = this.prevConnectedIdentifiers[uniqueIdentifier]
 						if (previousXKeysPanel) {
 							// This panel has been connected before.
