@@ -23,8 +23,6 @@ export async function setupXkeysPanel(devicePathOrHIDDevice?: HID.Device | HID.H
 		  }
 		| undefined
 
-	// let hidDevices: HID.Device[] | undefined // set later
-
 	if (!devicePathOrHIDDevice) {
 		// Device not provided, will then select any connected device:
 		const connectedXkeys = listAllConnectedPanels()
