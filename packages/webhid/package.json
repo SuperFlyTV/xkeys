@@ -1,6 +1,6 @@
 {
   "name": "xkeys-webhid",
-  "version": "2.2.0-alpha.1",
+  "version": "2.2.0",
   "description": "An npm module for interfacing with the X-keys panels in a browser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@types/w3c-web-hid": "^1.0.0",
-    "@xkeys-lib/core": "^2.2.0-alpha.1",
+    "@xkeys-lib/core": "^2.2.0",
     "buffer": "^6.0.3",
     "detect-browser": "^5.2.0",
     "p-queue": "^6.6.2"
