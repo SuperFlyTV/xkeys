@@ -1,6 +1,6 @@
 {
   "name": "xkeys",
-  "version": "2.1.1",
+  "version": "2.2.0-alpha.1",
   "description": "An npm module for interfacing with the X-keys panels in Node.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@types/node-hid": "^1.3.0",
-    "@xkeys-lib/core": "^2.1.1",
+    "@xkeys-lib/core": "^2.2.0-alpha.1",
     "node-hid": "^2.1.1",
     "tslib": "^2.1.0"
   },

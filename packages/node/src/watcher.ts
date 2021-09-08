@@ -67,8 +67,11 @@ export class XKeysWatcher extends EventEmitter {
 	public debug = false
 	/** A list of the devices we've called setupXkeysPanels for */
 	private setupXkeysPanels: XKeys[] = []
+	private prevConnectedIdentifiers: { [key: string]: XKeys } = {}
+	/** Unique unitIds grouped into productId groups. */
+	private uniqueIds = new Map<number, number>()
 
-	constructor() {
+	constructor(private options?: XKeysWatcherOptions) {
 		super()
 
 		watcherCount++
@@ -190,7 +193,7 @@ export class XKeysWatcher extends EventEmitter {
 		this.debugLog('handleNewDevice', devicePath)
 
 		setupXkeysPanel(devicePath)
-			.then((xkeysPanel) => {
+			.then((xkeysPanel: XKeys) => {
 				this.setupXkeysPanels.push(xkeysPanel)
 				// Since this is async, check if the panel is still connected
 				if (this.seenDevicePaths[devicePath]) {
@@ -206,8 +209,33 @@ export class XKeysWatcher extends EventEmitter {
 					// Store for future reference:
 					this.seenDevicePaths[devicePath].xkeys = xkeysPanel
 
-					// Emit to the consumer:
-					this.emit('connected', xkeysPanel)
+					if (this.options?.automaticUnitIdMode) {
+						if (xkeysPanel.unitId === 0) {
+							// if it is 0, we assume that it's new from the factory and can be safely changed
+							xkeysPanel.setUnitId(this._getNextUniqueId(xkeysPanel)) // the lookup-cache is stored either in memory, or preferrably on disk
+						}
+						// the PID+UID pair is enough to uniquely identify a panel.
+						const uniqueIdentifier: string = xkeysPanel.uniqueId
+						const previousXKeysPanel = this.prevConnectedIdentifiers[uniqueIdentifier]
+						if (previousXKeysPanel) {
+							// This panel has been connected before.
+
+							// We want the XKeys-instance to emit a 'reconnected' event.
+							// This means that we kill off the newly created xkeysPanel, and
+
+							previousXKeysPanel._handleDeviceReconnected(
+								xkeysPanel._getHIDDevice(),
+								xkeysPanel._getDeviceInfo()
+							)
+						} else {
+							// It seems that this panel hasn't been connected before
+							this.emit('connected', xkeysPanel)
+							this.prevConnectedIdentifiers[uniqueIdentifier] = xkeysPanel
+						}
+					} else {
+						// Default behaviour:
+						this.emit('connected', xkeysPanel)
+					}
 				} else {
 					this.handleRemovedDevice(xkeysPanel)
 				}
@@ -216,10 +244,31 @@ export class XKeysWatcher extends EventEmitter {
 				this.emit('error', err)
 			})
 	}
+	private _getNextUniqueId(xkeysPanel: XKeys): number {
+		let nextId = this.uniqueIds.get(xkeysPanel.info.productId)
+		if (!nextId) {
+			nextId = 32 // Starting at 32
+		} else {
+			nextId++
+		}
+		if (nextId > 255) throw new Error('No more unique ids available!')
+
+		this.uniqueIds.set(xkeysPanel.info.productId, nextId)
+
+		return nextId
+	}
 	private handleRemovedDevice(xkeysPanel: XKeys) {
-		xkeysPanel.handleDeviceDisconnected()
+		xkeysPanel._handleDeviceDisconnected()
 	}
 	private debugLog(...args: any[]) {
 		if (this.debug) console.log(...args)
 	}
+}
+export interface XKeysWatcherOptions {
+	/**
+	 * This activates the "Automatic UnitId mode", which enables several features:
+	 * First, any x-keys panel with unitId===0 will be issued a (pseudo unique) unitId upon connection, in order for it to be uniquely identified.
+	 * This allows for the connection-events to work a bit differently, mainly enabling the "reconnected"-event for when a panel has been disconnected, then reconnected again.
+	 */
+	automaticUnitIdMode: true
 }
