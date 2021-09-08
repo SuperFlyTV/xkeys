@@ -2339,11 +2339,11 @@ const events_1 = __webpack_require__(531);
 const products_1 = __webpack_require__(313);
 const lib_1 = __webpack_require__(441);
 class XKeys extends events_1.EventEmitter {
-    constructor(
-    // public readonly devicePath: string,
-    device, deviceInfo) {
+    constructor(device, deviceInfo, _devicePath) {
         super();
         this.device = device;
+        this.deviceInfo = deviceInfo;
+        this._devicePath = _devicePath;
         /** All button states */
         this._buttonStates = new Map();
         /** Analogue states, such as jog-wheels, shuttle etc */
@@ -2357,6 +2357,13 @@ class XKeys extends events_1.EventEmitter {
         this._unidId = 0; // is set after init()
         this._firmwareVersion = 0; // is set after init()
         this._disconnected = false;
+        this.product = this._setupDevice(deviceInfo);
+    }
+    /** Vendor id for the X-keys panels */
+    static get vendorId() {
+        return products_1.XKEYS_VENDOR_ID;
+    }
+    _setupDevice(deviceInfo) {
         const findProdct = () => {
             for (const product of Object.values(products_1.PRODUCTS)) {
                 for (const hidDevice of product.hidDevices) {
@@ -2374,18 +2381,13 @@ class XKeys extends events_1.EventEmitter {
             throw new Error(`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}", interface: "${deviceInfo.interface}").\nPlease report this as an issue on our github page!`);
         };
         const found = findProdct();
-        this.product = found.product;
-        this._hidDevice = {
-            productId: found.productId,
-            interface: found.interface,
-        };
         this.device.on('data', (data) => {
             var _a, _b, _c, _d, _e, _f;
             if (data.readUInt8(1) === 214) {
                 // this is a special report that does not correlate to the regular data report, it is created by sending getVersion()
                 const firmVersion = data.readUInt8(10);
-                // const dUID = data.readUInt8(0) // the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
-                // const dPID = data.readUInt16LE(11) // PID is also in this report as a double check.
+                // data.readUInt8(0) the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
+                // data.readUInt16LE(11) // PID is also in this report as a double check.
                 this._firmwareVersion = firmVersion; // Firmware version
                 (_a = this.receivedVersionResolve) === null || _a === void 0 ? void 0 : _a.call(// Firmware version
                 this);
@@ -2412,7 +2414,6 @@ class XKeys extends events_1.EventEmitter {
             const genData = dd & (1 << 1) ? true : false;
             if (genData) {
                 // Note, the generateData is used to get the full state
-                // this.emit('unitID', UID, PID, productName)
                 this._unidId = UID;
                 (_b = this.receivedGenerateDataResolve) === null || _b === void 0 ? void 0 : _b.call(this);
             }
@@ -2530,7 +2531,7 @@ class XKeys extends events_1.EventEmitter {
         this.device.on('error', (err) => {
             if ((err + '').match(/could not read from/)) {
                 // The device has been disconnected
-                this.handleDeviceDisconnected().catch((error) => {
+                this._handleDeviceDisconnected().catch((error) => {
                     this.emit('error', error);
                 });
             }
@@ -2538,10 +2539,11 @@ class XKeys extends events_1.EventEmitter {
                 this.emit('error', err);
             }
         });
-    }
-    /** Vendor id for the X-keys panels */
-    static get vendorId() {
-        return products_1.XKEYS_VENDOR_ID;
+        return {
+            ...found.product,
+            productId: found.productId,
+            interface: found.interface,
+        };
     }
     /** Initialize the device. This ensures that the essential information from the device about its state has been received. */
     async init() {
@@ -2559,7 +2561,7 @@ class XKeys extends events_1.EventEmitter {
     }
     /** Closes the device. Subsequent commands will raise errors. */
     async close() {
-        await this.handleDeviceDisconnected();
+        await this._handleDeviceDisconnected();
     }
     /** Firmware version of the device */
     get firmwareVersion() {
@@ -2577,8 +2579,8 @@ class XKeys extends events_1.EventEmitter {
         this.ensureInitialized();
         return lib_1.literal({
             name: this.product.name,
-            productId: this._hidDevice.productId,
-            interface: this._hidDevice.interface,
+            productId: this.product.productId,
+            interface: this.product.interface,
             unitId: this.unitId,
             firmwareVersion: this._firmwareVersion,
             colCount: this.product.colCount,
@@ -2793,12 +2795,36 @@ class XKeys extends events_1.EventEmitter {
         this._write(byteVals);
     }
     /** (Internal function) Called when there has been detected that the device has been disconnected */
-    async handleDeviceDisconnected() {
+    async _handleDeviceDisconnected() {
         if (!this._disconnected) {
             this._disconnected = true;
             await this.device.close();
             this.emit('disconnected');
         }
+    }
+    /** (Internal function) Called when there has been detected that a device has been reconnected */
+    async _handleDeviceReconnected(device, deviceInfo) {
+        if (this._disconnected) {
+            this._disconnected = false;
+            // Re-vitalize:
+            this.device = device;
+            this.product = this._setupDevice(deviceInfo);
+            await this.init();
+            this.emit('reconnected');
+        }
+    }
+    _getHIDDevice() {
+        return this.device;
+    }
+    _getDeviceInfo() {
+        return this.deviceInfo;
+    }
+    get devicePath() {
+        return this._devicePath;
+    }
+    /** The unique id of the xkeys-panel. Note: This is only available if options.automaticUnitIdMode is set for the Watcher */
+    get uniqueId() {
+        return `${this.info.productId}_${this.unitId}`;
     }
     /**
      * Writes a Buffer to the X-keys device
@@ -2981,15 +3007,13 @@ const core_1 = __webpack_require__(613);
 const web_hid_wrapper_1 = __webpack_require__(901);
 /** Prompts the user for which X-keys panel to select */
 async function requestXkeysPanels() {
-    const browserDevices = await navigator.hid.requestDevice({
+    return navigator.hid.requestDevice({
         filters: [
             {
                 vendorId: core_1.XKEYS_VENDOR_ID,
             },
         ],
     });
-    // if (!browserDevices.length) throw new Error('No device was selected by user')
-    return browserDevices;
 }
 exports.requestXkeysPanels = requestXkeysPanels;
 /**
@@ -3002,22 +3026,12 @@ async function getOpenedXKeysPanels() {
 exports.getOpenedXKeysPanels = getOpenedXKeysPanels;
 /** Sets up a connection to a HID device (the X-keys panel) */
 async function setupXkeysPanel(browserDevice) {
-    // const browserDevices = await navigator.hid.requestDevice({
-    // 	filters: [
-    // 		{
-    // 			vendorId: XKEYS_VENDOR_ID,
-    // 		},
-    // 	],
-    // })
     var _a;
-    // if (!browserDevices.length) throw new Error('No device was selected by user')
-    // const browserDevice = browserDevices[0]
     if (!((_a = browserDevice === null || browserDevice === void 0 ? void 0 : browserDevice.collections) === null || _a === void 0 ? void 0 : _a.length))
         throw Error(`device collections is empty`);
     if (!browserDevice.productId)
         throw Error(`Device has no productId!`);
     const productId = browserDevice.productId;
-    // const collection = browserDevice.collections[0]
     if (!browserDevice.opened) {
         await browserDevice.open();
     }
@@ -3026,7 +3040,7 @@ async function setupXkeysPanel(browserDevice) {
         product: browserDevice.productName,
         productId: productId,
         interface: null, // todo: Check what to use here (collection.usage?)
-    });
+    }, undefined);
     // Wait for the device to initialize:
     await xkeys.init();
     return xkeys;
@@ -3061,7 +3075,6 @@ class WebHIDDevice extends events_1.EventEmitter {
         this.device.addEventListener('error', this._handleError);
     }
     write(data) {
-        // this.device.write(data)
         this.reportQueue
             .add(async () => {
             await this.device.sendReport(data[0], new Uint8Array(data.slice(1)));
