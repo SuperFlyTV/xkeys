@@ -482,7 +482,14 @@ export class XKeys extends EventEmitter {
 		this._write([0, 189, unitId])
 		this._unidId = unitId
 	}
-
+	/**
+	 * Reboots the device
+	 * @returns undefined
+	 */
+	public rebootDevice(): void {
+		this.ensureInitialized()
+		this._write([0, 238])
+	}
 	/**
 	 * Sets the 2x16 LCD display
 	 * @param line  1 for top line, 2 for bottom line.
