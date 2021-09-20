@@ -19,7 +19,8 @@
     "release:bump-prerelease": "lerna version --conventional-commits --conventional-prerelease --no-push",
     "build-record-test": "lerna exec build-record-test",
     "lerna:version": "lerna version",
-    "lerna:publish": "lerna publish"
+    "lerna:publish": "lerna publish",
+    "lerna": "lerna"
   },
   "devDependencies": {
     "@sofie-automation/code-standard-preset": "0.2.2",
