@@ -304,14 +304,48 @@ const watcher = new XKeysWatcher()
 await watcher.stop() // Now returns a promise
 ```
 
-## For developers
+# For developers
 
 This is a mono-repo, using [Lerna](https://github.com/lerna/lerna) and [Yarn](https://yarnpkg.com).
 
-To set up you local system for developing this repo:
+### Setting up your local environment
 
-- Install Yarn: `npm install -g yarn`
-- Install all dependencies: `yarn`
+This repo is using [Yarn](https://yarnpkg.com). If you don't want to use it, replace `yarn xyz` with `npm run xyz` below.
+
+To install Yarn, just run `npm install -g yarn`.
+
+### Setting up the repo
+
+- Clone the repo and `cd` into it.
+- Install all dependencies: `yarn`.
+- Do an initial build: `yarn build`
+
+### Running and testing local changes
+
+If you'd like to run and test your local changes, `yarn link` is a useful tool to symlink your local `xkeys` dependency into your test repo.
+
+``` bash
+# To set up the xkeys-repo for linking:
+cd your/xkeys/repo
+yarn lerna exec yarn link # This runs "yarn link" in all of the mono-repo packages
+yarn build
+
+# Every time after you've made any changes to the xkeys-repo you need to rebuild
+cd your/xkeys/repo
+yarn build
+
+# Set up your local test repo to used the linked xkeys libraries:
+cd your/test/repo
+yarn add xkeys
+yarn link xkeys
+yarn link @xkeys-lib/core
+
+# To unlink the xkeys-lib from your local test repo:
+cd your/test/repo
+yarn unlink xkeys
+yarn unlink @xkeys-lib/core
+yarn --force # So that it reinstalls the ordinary dependencies
+```
 
 ### Contribution guidelines
 
@@ -324,8 +358,16 @@ If you want to contribute a bug fix or improvement, we'd happily accept Pull-req
 
 Please follow the same coding style as the rest of the repository when you type.
 
-Before committing, be sure to run `yarn lint` and `yarn test` to ensure your code passes the linting and unit tests.
+Before committing your code to git, be sure to run these commands:
+
+```bash
+yarn # To ensure the right dependencies are installed
+yarn build # To ensure that there are no syntax or build errors
+yarn lint # To ensure that the formatting follows the right rules
+yarn test # To ensure that ensure your code passes the unit tests.
+```
+If you're adding a new functionality, adding unit tests for it is much appreciated.
 
 ### License
 
-By contributing, you agree that your contributions will be licensed under its MIT License.
+By contributing, you agree that your contributions will be licensed under the MIT License.
