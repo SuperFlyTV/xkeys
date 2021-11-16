@@ -1,4 +1,4 @@
-const { XKeys } = require('xkeys')
+const { setupXkeysPanel, listAllConnectedPanels } = require('..')
 
 /*
 	This example shows how to use XKeys.setupXkeysPanel()
@@ -6,7 +6,7 @@ const { XKeys } = require('xkeys')
 */
 
 // Connect to an xkeys-panel:
-XKeys.setupXkeysPanel()
+setupXkeysPanel()
 	.then((xkeysPanel) => {
 		xkeysPanel.on('disconnected', () => {
 			console.log(`X-keys panel of type ${xkeysPanel.info.name} was disconnected`)
@@ -25,11 +25,18 @@ XKeys.setupXkeysPanel()
 	})
 	.catch(console.log) // Handle error
 
-// List and connect to xkeys-panel:
-XKeys.listAllConnectedPanels().forEach(() => {
-	XKeys.setupXkeysPanel()
+// List and connect to all xkeys-panels:
+listAllConnectedPanels().forEach((connectedPanel) => {
+	setupXkeysPanel(connectedPanel)
 		.then((xkeysPanel) => {
-			// ...
+			console.log(`Connected to ${xkeysPanel.info.name}`)
+
+			xkeysPanel.on('down', (keyIndex, metadata) => {
+				console.log('Button pressed ', keyIndex, metadata)
+
+				// Light up a button when pressed:
+				xkeysPanel.setBacklight(keyIndex, 'red')
+			})
 		})
 		.catch(console.log) // Handle error
 })
