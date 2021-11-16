@@ -1,4 +1,4 @@
-const { XKeysWatcher } = require('../dist')
+const { XKeysWatcher } = require('xkeys')
 
 /*
 	This example looks up all connected X-keys panels

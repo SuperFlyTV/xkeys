@@ -1,4 +1,4 @@
-const { setupXkeysPanel, listAllConnectedPanels } = require('..')
+const { setupXkeysPanel, listAllConnectedPanels } = require('xkeys')
 
 /*
 	This example shows how to use XKeys.setupXkeysPanel()

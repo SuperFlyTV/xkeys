@@ -1,4 +1,4 @@
-const { XKeysWatcher } = require('../dist')
+const { XKeysWatcher } = require('xkeys')
 
 /*
 	This example shows how multiple devices should be handled, using automaticUnitIdMode.
