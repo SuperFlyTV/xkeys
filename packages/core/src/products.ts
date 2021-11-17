@@ -33,7 +33,7 @@ export interface Product {
 	 */
 	layouts?: [string, number, number, number, number, number][]
 
-	/** Maps the (internal) btnIndex to a [Row, Column] */
+	/** Maps the (internal) keyIndex to a [Row, Column] */
 	btnLocation?: [number, number][]
 
 	/** The index of the start to the 4 byte time stamp. */
@@ -45,9 +45,9 @@ export interface Product {
 		joyZbyte: number
 	}[]
 
-	/** used to determine what btnIndex to back light mapping should be used. */
+	/** used to determine what keyIndex to back light mapping should be used. */
 	backLightType: BackLightType
-	/** blocks certain btnIndex from calling button events. */
+	/** blocks certain keyIndex from calling button events. */
 	disableButtons?: number[]
 
 	hasJog?: { jogByte: number }[]
@@ -68,7 +68,7 @@ export enum BackLightType {
 	LEGACY = 2,
 	/** Only blue light. Is the stick buttons, that requires special mapping. */
 	STICK_BUTTONS = 3,
-	/** Backlight LED type 4, is the 40 buttons, map btnIndex-1 to ledIndex */
+	/** Backlight LED type 4, is the 40 buttons, map keyIndex-1 to ledIndex */
 	LINEAR = 4,
 	/** Backlight LED type 5 is the RGB 24 buttons */
 	REMAP_24 = 5,
@@ -283,7 +283,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 20, // number of physical columns,
 		rowCount: 2, //  number of physical rows
 		hasPS: true, // behind small hole on right side.
-		backLightType: BackLightType.LINEAR, // map btnIndex-1  to ledIndex
+		backLightType: BackLightType.LINEAR, // map keyIndex-1  to ledIndex
 		backLight2offset: 40, // off set to control second led bank.
 		timestampByte: 31, // ms time since device boot 4 byte BE
 		btnLocation: [

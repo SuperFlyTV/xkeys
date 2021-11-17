@@ -53,8 +53,8 @@ export interface ButtonEventMetadata extends EventMetadata {
 export interface XKeysEvents {
 	// Note: This interface defines strong typings for any events that are emitted by the XKeys class.
 
-	down: (btnIndex: number, metadata: ButtonEventMetadata) => void
-	up: (btnIndex: number, metadata: ButtonEventMetadata) => void
+	down: (keyIndex: number, metadata: ButtonEventMetadata) => void
+	up: (keyIndex: number, metadata: ButtonEventMetadata) => void
 
 	jog: (index: number, value: number, eventMetadata: EventMetadata) => void
 	shuttle: (index: number, value: number, eventMetadata: EventMetadata) => void

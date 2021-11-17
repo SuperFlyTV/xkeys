@@ -278,8 +278,8 @@ async function startRecording(panel: HID_Device) {
 				console.log(description)
 
 				if (event === 'down') {
-					const btnIndex = args[0]
-					colorLoop = doColorLoop(xkeys, btnIndex)
+					const keyIndex = args[0]
+					colorLoop = doColorLoop(xkeys, keyIndex)
 				} else if (event === 'up') {
 					if (colorLoop) {
 						colorLoop.stop()
@@ -312,43 +312,43 @@ function askQuestion(query: string): Promise<string | number> {
 		})
 	)
 }
-function doColorLoop(xkeys: XKeys, btnIndex: number) {
+function doColorLoop(xkeys: XKeys, keyIndex: number) {
 	let active = true
 
 	const doLoop = async () => {
 		while (active) {
-			xkeys.setBacklight(btnIndex, '0000ff')
+			xkeys.setBacklight(keyIndex, '0000ff')
 			await waitTime(300)
-			xkeys.setBacklight(btnIndex, '000000')
+			xkeys.setBacklight(keyIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(btnIndex, 'ff0000')
+			xkeys.setBacklight(keyIndex, 'ff0000')
 			await waitTime(300)
-			xkeys.setBacklight(btnIndex, '000000')
+			xkeys.setBacklight(keyIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(btnIndex, '00ff00')
+			xkeys.setBacklight(keyIndex, '00ff00')
 			await waitTime(300)
-			xkeys.setBacklight(btnIndex, '000000')
+			xkeys.setBacklight(keyIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(btnIndex, 'ffffff')
+			xkeys.setBacklight(keyIndex, 'ffffff')
 			await waitTime(300)
-			xkeys.setBacklight(btnIndex, '000000')
+			xkeys.setBacklight(keyIndex, '000000')
 			await waitTime(200)
 			if (!active) break
 
-			xkeys.setBacklight(btnIndex, '000000')
+			xkeys.setBacklight(keyIndex, '000000')
 			await waitTime(300)
-			xkeys.setBacklight(btnIndex, '000000')
+			xkeys.setBacklight(keyIndex, '000000')
 			await waitTime(200)
 
 			await waitTime(1000)
 		}
-		xkeys.setBacklight(btnIndex, '000000')
+		xkeys.setBacklight(keyIndex, '000000')
 	}
 
 	doLoop().catch(console.log)

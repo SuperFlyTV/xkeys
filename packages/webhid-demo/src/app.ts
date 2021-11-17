@@ -16,13 +16,13 @@ async function openDevice(device: HIDDevice): Promise<void> {
 
 	appendLog(`Connected to "${xkeys.info.name}"`)
 
-	xkeys.on('down', (btnIndex: number) => {
-		appendLog(`Button ${btnIndex} down`)
-		xkeys.setBacklight(btnIndex, 'blue')
+	xkeys.on('down', (keyIndex: number) => {
+		appendLog(`Button ${keyIndex} down`)
+		xkeys.setBacklight(keyIndex, 'blue')
 	})
-	xkeys.on('up', (btnIndex: number) => {
-		appendLog(`Button ${btnIndex} up`)
-		xkeys.setBacklight(btnIndex, null)
+	xkeys.on('up', (keyIndex: number) => {
+		appendLog(`Button ${keyIndex} up`)
+		xkeys.setBacklight(keyIndex, null)
 	})
 	xkeys.on('jog', (index, value) => {
 		appendLog(`Jog #${index}: ${value}`)

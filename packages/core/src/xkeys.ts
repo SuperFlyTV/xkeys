@@ -133,7 +133,7 @@ export class XKeys extends EventEmitter {
 				// program switch/button is on byte index 1 , bit 1
 				const d = data.readUInt8(1)
 				const bit = d & (1 << 0) ? true : false // get first bit only
-				newButtonStates.set(0, bit) // always btnIndex of PS to 0
+				newButtonStates.set(0, bit) // always keyIndex of PS to 0
 			}
 			this.product.hasJog?.forEach((jog, index) => {
 				const d = data[jog.jogByte] // Jog
@@ -163,8 +163,8 @@ export class XKeys extends EventEmitter {
 
 			// Disabled/nonexisting buttons: important as some "buttons" in the jog & shuttle devices are used for shuttle events in hardware.
 			if (this.product.disableButtons) {
-				this.product.disableButtons.forEach((btnIndex) => {
-					newButtonStates.set(btnIndex, false)
+				this.product.disableButtons.forEach((keyIndex) => {
+					newButtonStates.set(keyIndex, false)
 				})
 			}
 
@@ -344,24 +344,24 @@ export class XKeys extends EventEmitter {
 	}
 	/**
 	 * Sets the backlight of a button
-	 * @param btnIndex The button of which to set the backlight color
+	 * @param keyIndex The button of which to set the backlight color
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
 	 * @param flashing boolean: flashing or not (if on)
 	 * @returns undefined
 	 */
 	public setBacklight(
-		btnIndex: number,
+		keyIndex: number,
 		/** RGB, RRGGBB, #RRGGBB */
 		color: Color | string | boolean | null,
 		flashing?: boolean
 	): void {
 		this.ensureInitialized()
-		if (btnIndex === 0) return // PS-button has no backlight
+		if (keyIndex === 0) return // PS-button has no backlight
 
-		this._verifyButtonIndex(btnIndex)
+		this._verifyButtonIndex(keyIndex)
 		color = this._interpretColor(color, this.product.backLightType)
 
-		const location = this._findBtnLocation(btnIndex)
+		const location = this._findBtnLocation(keyIndex)
 
 		if (this.product.backLightType === BackLightType.REMAP_24) {
 			const ledIndex = (location.col - 1) * 8 + location.row - 1
@@ -382,7 +382,7 @@ export class XKeys extends EventEmitter {
 		} else if (this.product.backLightType === BackLightType.LINEAR) {
 			// The 40 buttons, that requires special mapping.
 
-			const ledIndex = btnIndex - 1 // 0 based linear numbering sort of...
+			const ledIndex = keyIndex - 1 // 0 based linear numbering sort of...
 
 			const on: boolean = color.r > 0 || color.g > 0 || color.b > 0
 
@@ -587,24 +587,24 @@ export class XKeys extends EventEmitter {
 		return message
 	}
 
-	private _verifyButtonIndex(btnIndex: number): void {
-		if (!(btnIndex >= 0 && btnIndex < 8 * this.product.bBytes + 1)) {
-			throw new Error(`Invalid btnIndex: ${btnIndex}`)
+	private _verifyButtonIndex(keyIndex: number): void {
+		if (!(keyIndex >= 0 && keyIndex < 8 * this.product.bBytes + 1)) {
+			throw new Error(`Invalid keyIndex: ${keyIndex}`)
 		}
 	}
-	private _findBtnLocation(btnIndex: number): { row: number; col: number } {
+	private _findBtnLocation(keyIndex: number): { row: number; col: number } {
 		let location: { row: number; col: number } = { row: 0, col: 0 }
 		// derive the Row and Column from the button index for many products
-		if (btnIndex !== 0) {
+		if (keyIndex !== 0) {
 			// program switch is always on index 0 and always R:0, C:0 unless remapped by btnLocaion array
-			location.row = btnIndex - this.product.bBits * (Math.ceil(btnIndex / this.product.bBits) - 1)
-			location.col = Math.ceil(btnIndex / this.product.bBits)
+			location.row = keyIndex - this.product.bBits * (Math.ceil(keyIndex / this.product.bBits) - 1)
+			location.col = Math.ceil(keyIndex / this.product.bBits)
 		}
 		// if the product has a btnLocaion array, then look up the Row and Column
 		if (this.product.btnLocation !== undefined) {
 			location = {
-				row: this.product.btnLocation[btnIndex][0],
-				col: this.product.btnLocation[btnIndex][1],
+				row: this.product.btnLocation[keyIndex][0],
+				col: this.product.btnLocation[keyIndex][1],
 			}
 		}
 		return location
