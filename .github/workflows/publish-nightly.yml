@@ -40,7 +40,7 @@ jobs:
         with:
           remove-version-tag-prefix: false
       - name: Bump version to nightly
-        if: ${{ steps.do-publish.outputs.publish }}
+        if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: |
           COMMIT_TIMESTAMP=$(git log -1 --pretty=format:%ct HEAD)
           COMMIT_DATE=$(date -d @$COMMIT_TIMESTAMP +%Y%m%d-%H%M%S)
