@@ -27,14 +27,12 @@ function USBDetect(): USBDetectType {
 			// It's not installed
 		}
 	}
-
 	// else emit error:
-
 	throw `XKeysWatcher requires the dependency "usb-detection" to be installed, It might have been skipped due to your platform being unsupported (this is an issue with "usb-detection", not the X-keys library).
-
-You can try to install the depencency manually, by running "npm install usb-detection".
-
-If you're unable to install the "usb-detection" library, you can still connect to X-keys panels manually by using XKeys.setupXkeysPanel() instead.
+Possible solutions are:
+* You can try to install the depencency manually, by running "npm install usb-detection".
+* Use the fallback "usePolling" functionality instead: new XKeysWatcher({ usePolling: true})
+* Otherwise you can still connect to X-keys panels manually by using XKeys.setupXkeysPanel().
 `
 }
 
@@ -70,19 +68,26 @@ export class XKeysWatcher extends EventEmitter {
 	private prevConnectedIdentifiers: { [key: string]: XKeys } = {}
 	/** Unique unitIds grouped into productId groups. */
 	private uniqueIds = new Map<number, number>()
+	private pollingInterval: NodeJS.Timeout | undefined = undefined
 
 	constructor(private options?: XKeysWatcherOptions) {
 		super()
 
-		watcherCount++
-		if (watcherCount === 1) {
-			// We've just started watching
-			USBDetect().startMonitoring()
-		}
+		if (!this.options?.usePolling) {
+			watcherCount++
+			if (watcherCount === 1) {
+				// We've just started watching
+				USBDetect().startMonitoring()
+			}
 
-		// Watch for added devices:
-		USBDetect().on(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
-		USBDetect().on(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
+			// Watch for added devices:
+			USBDetect().on(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
+			USBDetect().on(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
+		} else {
+			this.pollingInterval = setInterval(() => {
+				this.updateConnectedDevices()
+			}, this.options?.pollingInterval ?? 1000)
+		}
 
 		// Also do a sweep for all currently connected X-keys panels:
 		this.updateConnectedDevices()
@@ -94,15 +99,22 @@ export class XKeysWatcher extends EventEmitter {
 	public async stop(closeAllDevices = true): Promise<void> {
 		this.isMonitoring = false
 
-		// Remove the listeners:
-		// @ts-expect-error usb-detection exposes wrong types:
-		USBDetect().removeListener(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
-		// @ts-expect-error usb-detection exposes wrong types:
-		USBDetect().removeListener(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
+		if (!this.options?.usePolling) {
+			// Remove the listeners:
+			// @ts-expect-error usb-detection exposes wrong types:
+			USBDetect().removeListener(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
+			// @ts-expect-error usb-detection exposes wrong types:
+			USBDetect().removeListener(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
 
-		watcherCount--
-		if (watcherCount === 0) {
-			USBDetect().stopMonitoring()
+			watcherCount--
+			if (watcherCount === 0) {
+				USBDetect().stopMonitoring()
+			}
+		}
+
+		if (this.pollingInterval) {
+			clearInterval(this.pollingInterval)
+			this.pollingInterval = undefined
 		}
 
 		if (closeAllDevices) {
@@ -270,5 +282,10 @@ export interface XKeysWatcherOptions {
 	 * First, any x-keys panel with unitId===0 will be issued a (pseudo unique) unitId upon connection, in order for it to be uniquely identified.
 	 * This allows for the connection-events to work a bit differently, mainly enabling the "reconnected"-event for when a panel has been disconnected, then reconnected again.
 	 */
-	automaticUnitIdMode: true
+	automaticUnitIdMode?: boolean
+
+	/** If set, will use polling for devices instead of watching for them directly. Might be a bit slower, but is more compatible. */
+	usePolling?: boolean
+	/** If usePolling is set, the interval to use for checking for new devices. */
+	pollingInterval?: number
 }
