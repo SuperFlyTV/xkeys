@@ -1619,14 +1619,14 @@ function describeEvent(event, args) {
         return strs.join(', ');
     };
     if (event === 'down') {
-        const btnIndex = args[0];
+        const keyIndex = args[0];
         const metadata = args[1];
-        return `Button ${btnIndex} pressed.  Metadata: ${metadataStr(metadata)}`;
+        return `Button ${keyIndex} pressed.  Metadata: ${metadataStr(metadata)}`;
     }
     else if (event === 'up') {
-        const btnIndex = args[0];
+        const keyIndex = args[0];
         const metadata = args[1];
-        return `Button ${btnIndex} released. Metadata: ${metadataStr(metadata)}`;
+        return `Button ${keyIndex} released. Metadata: ${metadataStr(metadata)}`;
     }
     else if (event === 'jog') {
         const index = args[0];
@@ -1682,7 +1682,7 @@ var BackLightType;
     BackLightType[BackLightType["LEGACY"] = 2] = "LEGACY";
     /** Only blue light. Is the stick buttons, that requires special mapping. */
     BackLightType[BackLightType["STICK_BUTTONS"] = 3] = "STICK_BUTTONS";
-    /** Backlight LED type 4, is the 40 buttons, map btnIndex-1 to ledIndex */
+    /** Backlight LED type 4, is the 40 buttons, map keyIndex-1 to ledIndex */
     BackLightType[BackLightType["LINEAR"] = 4] = "LINEAR";
     /** Backlight LED type 5 is the RGB 24 buttons */
     BackLightType[BackLightType["REMAP_24"] = 5] = "REMAP_24";
@@ -2430,7 +2430,7 @@ class XKeys extends events_1.EventEmitter {
                 // program switch/button is on byte index 1 , bit 1
                 const d = data.readUInt8(1);
                 const bit = d & (1 << 0) ? true : false; // get first bit only
-                newButtonStates.set(0, bit); // always btnIndex of PS to 0
+                newButtonStates.set(0, bit); // always keyIndex of PS to 0
             }
             (_c = this.product.hasJog) === null || _c === void 0 ? void 0 : _c.forEach((jog, index) => {
                 const d = data[jog.jogByte]; // Jog
@@ -2459,8 +2459,8 @@ class XKeys extends events_1.EventEmitter {
             });
             // Disabled/nonexisting buttons: important as some "buttons" in the jog & shuttle devices are used for shuttle events in hardware.
             if (this.product.disableButtons) {
-                this.product.disableButtons.forEach((btnIndex) => {
-                    newButtonStates.set(btnIndex, false);
+                this.product.disableButtons.forEach((keyIndex) => {
+                    newButtonStates.set(keyIndex, false);
                 });
             }
             // Compare with previous button states:
@@ -2631,20 +2631,20 @@ class XKeys extends events_1.EventEmitter {
     }
     /**
      * Sets the backlight of a button
-     * @param btnIndex The button of which to set the backlight color
+     * @param keyIndex The button of which to set the backlight color
      * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
      * @param flashing boolean: flashing or not (if on)
      * @returns undefined
      */
-    setBacklight(btnIndex, 
+    setBacklight(keyIndex, 
     /** RGB, RRGGBB, #RRGGBB */
     color, flashing) {
         this.ensureInitialized();
-        if (btnIndex === 0)
+        if (keyIndex === 0)
             return; // PS-button has no backlight
-        this._verifyButtonIndex(btnIndex);
+        this._verifyButtonIndex(keyIndex);
         color = this._interpretColor(color, this.product.backLightType);
-        const location = this._findBtnLocation(btnIndex);
+        const location = this._findBtnLocation(keyIndex);
         if (this.product.backLightType === products_1.BackLightType.REMAP_24) {
             const ledIndex = (location.col - 1) * 8 + location.row - 1;
             // backlight LED type 5 is the RGB 24 buttons
@@ -2663,7 +2663,7 @@ class XKeys extends events_1.EventEmitter {
         }
         else if (this.product.backLightType === products_1.BackLightType.LINEAR) {
             // The 40 buttons, that requires special mapping.
-            const ledIndex = btnIndex - 1; // 0 based linear numbering sort of...
+            const ledIndex = keyIndex - 1; // 0 based linear numbering sort of...
             const on = color.r > 0 || color.g > 0 || color.b > 0;
             this._write([0, 181, ledIndex, on ? (flashing ? 2 : 1) : 0, 1]);
         }
@@ -2757,6 +2757,14 @@ class XKeys extends events_1.EventEmitter {
         }
         this._write([0, 189, unitId]);
         this._unidId = unitId;
+    }
+    /**
+     * Reboots the device
+     * @returns undefined
+     */
+    rebootDevice() {
+        this.ensureInitialized();
+        this._write([0, 238]);
     }
     /**
      * Sets the 2x16 LCD display
@@ -2855,24 +2863,24 @@ class XKeys extends events_1.EventEmitter {
         }
         return message;
     }
-    _verifyButtonIndex(btnIndex) {
-        if (!(btnIndex >= 0 && btnIndex < 8 * this.product.bBytes + 1)) {
-            throw new Error(`Invalid btnIndex: ${btnIndex}`);
+    _verifyButtonIndex(keyIndex) {
+        if (!(keyIndex >= 0 && keyIndex < 8 * this.product.bBytes + 1)) {
+            throw new Error(`Invalid keyIndex: ${keyIndex}`);
         }
     }
-    _findBtnLocation(btnIndex) {
+    _findBtnLocation(keyIndex) {
         let location = { row: 0, col: 0 };
         // derive the Row and Column from the button index for many products
-        if (btnIndex !== 0) {
+        if (keyIndex !== 0) {
             // program switch is always on index 0 and always R:0, C:0 unless remapped by btnLocaion array
-            location.row = btnIndex - this.product.bBits * (Math.ceil(btnIndex / this.product.bBits) - 1);
-            location.col = Math.ceil(btnIndex / this.product.bBits);
+            location.row = keyIndex - this.product.bBits * (Math.ceil(keyIndex / this.product.bBits) - 1);
+            location.col = Math.ceil(keyIndex / this.product.bBits);
         }
         // if the product has a btnLocaion array, then look up the Row and Column
         if (this.product.btnLocation !== undefined) {
             location = {
-                row: this.product.btnLocation[btnIndex][0],
-                col: this.product.btnLocation[btnIndex][1],
+                row: this.product.btnLocation[keyIndex][0],
+                col: this.product.btnLocation[keyIndex][1],
             };
         }
         return location;
@@ -5261,13 +5269,13 @@ async function openDevice(device) {
     const xkeys = await xkeys_webhid_1.setupXkeysPanel(device);
     currentXkeys = xkeys;
     appendLog(`Connected to "${xkeys.info.name}"`);
-    xkeys.on('down', (btnIndex) => {
-        appendLog(`Button ${btnIndex} down`);
-        xkeys.setBacklight(btnIndex, 'blue');
+    xkeys.on('down', (keyIndex) => {
+        appendLog(`Button ${keyIndex} down`);
+        xkeys.setBacklight(keyIndex, 'blue');
     });
-    xkeys.on('up', (btnIndex) => {
-        appendLog(`Button ${btnIndex} up`);
-        xkeys.setBacklight(btnIndex, null);
+    xkeys.on('up', (keyIndex) => {
+        appendLog(`Button ${keyIndex} up`);
+        xkeys.setBacklight(keyIndex, null);
     });
     xkeys.on('jog', (index, value) => {
         appendLog(`Jog #${index}: ${value}`);
