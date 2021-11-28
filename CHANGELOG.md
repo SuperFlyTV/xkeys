@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/SuperFlyTV/xkeys/compare/v2.2.1...v2.3.0) (2021-11-28)
+
+
+### Features
+
+* add usePolling option to the XKeysWatcher to fall back to polling, since "usb-detection" might not work on all OS:es ([ab31223](https://github.com/SuperFlyTV/xkeys/commit/ab312236b14cb8f961d0b0bf878c611487a5983f))
+
+
+
+
+
 ## [2.2.1](https://github.com/SuperFlyTV/xkeys/compare/v2.2.0...v2.2.1) (2021-09-22)
 
 **Note:** Version bump only for package xkeys-monorepo
