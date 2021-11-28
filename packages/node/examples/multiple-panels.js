@@ -18,6 +18,10 @@ const memory = {}
 // Set up the watcher for xkeys:
 const watcher = new XKeysWatcher({
 	automaticUnitIdMode: true,
+
+	// If running on a system (such as some linux flavors) where the 'usb-detection' library doesn't work, enable usePolling instead:
+	// usePolling: true,
+	// pollingInterval: 1000,
 })
 
 watcher.on('connected', (xkeysPanel) => {
