@@ -28,7 +28,7 @@ function USBDetect(): USBDetectType {
 		}
 	}
 	// else emit error:
-	throw `XKeysWatcher requires the dependency "usb-detection" to be installed, It might have been skipped due to your platform being unsupported (this is an issue with "usb-detection", not the X-keys library).
+	throw `XKeysWatcher requires the dependency "usb-detection" to be installed, it might have been skipped due to your platform being unsupported (this is an issue with "usb-detection", not the X-keys library).
 Possible solutions are:
 * You can try to install the depencency manually, by running "npm install usb-detection".
 * Use the fallback "usePolling" functionality instead: new XKeysWatcher({ usePolling: true})

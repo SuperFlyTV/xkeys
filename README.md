@@ -16,7 +16,7 @@ If you are using a Chromium v89+ based browser, you can try out the library righ
 
 ### To use in Node.js
 
-```
+```bash
 $ npm install --save xkeys
 or
 $ yarn add xkeys
@@ -24,7 +24,7 @@ $ yarn add xkeys
 
 ### To use in browser
 
-```
+```bash
 $ npm install --save xkeys-webhid
 or
 $ yarn add xkeys-webhid
@@ -32,12 +32,19 @@ $ yarn add xkeys-webhid
 
 ### Linux
 
-On linux, the udev subsystem blocks access for non-root users to the X-keys without some special configuration. Save the following to `/etc/udev/rules.d/50-xkeys.rules` and reload the rules with `sudo udevadm control --reload-rules`
+On linux, the `udev` subsystem blocks access for non-root users to the X-keys without some special configuration. Save the following to `/etc/udev/rules.d/50-xkeys.rules` and reload the rules with `sudo udevadm control --reload-rules`
 
-```
+```bash
 SUBSYSTEM=="input", GROUP="input", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="05f3", MODE:="666", GROUP="plugdev"
 KERNEL=="hidraw*", ATTRS{idVendor}=="05f3", MODE="0666", GROUP="plugdev"
+```
+
+Note: If you need more than 4 panels connected simultaneously, you might also have to set your env-var [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html):
+
+```javascript
+var { env } = require('process')
+env.UV_THREADPOOL_SIZE = 8 // Allow up to 8 panels
 ```
 
 ## BREAKING CHANGES
@@ -62,7 +69,11 @@ const { XKeysWatcher } = require('xkeys')
 */
 
 // Set up the watcher for xkeys:
-const watcher = new XKeysWatcher()
+const watcher = new XKeysWatcher({
+	// automaticUnitIdMode: false
+	// usePolling: false
+	// pollingInterval= 1000
+})
 
 watcher.on('connected', (xkeysPanel) => {
 	console.log(`X-keys panel of type ${xkeysPanel.info.name} connected`)
@@ -171,7 +182,37 @@ If you are using a Chromium v89+ based browser, you can try out the [webhid demo
 
 ## API documentation
 
-### Events
+### XKeysWatcher (Node.js only)
+
+The XKeysWatcher has a few different options that can be set upon initialization:
+
+```javascript
+const { XKeysWatcher } = require('xkeys')
+const watcher = new XKeysWatcher({
+	// automaticUnitIdMode: false
+	// usePolling: false
+	// pollingInterval= 1000
+})
+watcher.on('connected', (xkeysPanel) => {
+	// xkeysPanel connected...
+})
+```
+
+#### automaticUnitIdMode
+When this is set to `true`, the XKeysWatcher will enable the `"reconnected"` event for the xkeysPanels.
+
+By default, there is no unique identifier stored on the X-keys panel that can be used to differ between
+"reconnecting a previously known panel" or "connecting a new panel".
+The `automaticUnitIdMode` fixes this by writing a pseudo-unique id to the `unitId` of the panel,
+if none has been set previously.
+
+#### usePolling
+
+When this is set, the XKeysWatcher will not use the `usb-detection` library for detecting connected panels,
+but instead resort to polling at an interval (`pollingInterval`).
+This is compatible with more systems and OS:es, but might result in slower detection of new panels.
+
+### xkeysPanel Events
 
 ```javascript
 // Example:
@@ -182,14 +223,16 @@ xkeysPanel.on('down', (keyIndex, metadata) => {
 
 | Event | Description |
 | -- | --- |
-| `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(keyIndex, metadata)`. |
-| `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(jogValue) |
-| `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(shuttleValue)` |
-| `"joystick"`     | Triggered when the joystick is moved. Emitted with `({x, y, z})` |
-| `"tbar"`         | Triggered when the T-bar is moved. Emitted with `(tbarPosition, rawPosition)` |
 | `"error"`        | Triggered on error. Emitted with `(error)`. |
+| `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(keyIndex, metadata)`. |
+| `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(index, jogValue, metadata)` |
+| `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(index, shuttleValue, metadata)` |
+| `"joystick"`     | Triggered when the joystick is moved. Emitted with `(index, {x, y, z, deltaZ})` |
+| `"tbar"`         | Triggered when the T-bar is moved. Emitted with `(index, tbarPosition, metadata)` |
+| `"disconnected"` | Triggered when panel is disconnected. |
+| `"reconnected"`  | Triggered when panel is reconnection. Only emitted when [automaticUnitIdMode](#automaticUnitIdMode) is enabled.  |
 
-### Methods
+### xkeysPanel Methods
 
 **Setting the backlight of a button**
 
@@ -311,7 +354,7 @@ The most notable changes are:
 ### 2.1.1
 
 Version `2.1.1` has a minor change for when stopping the XKeysWatcher instance:
-```
+```javascript
 const watcher = new XKeysWatcher()
 await watcher.stop() // Now returns a promise
 ```
@@ -363,12 +406,12 @@ yarn --force # So that it reinstalls the ordinary dependencies
 
 If you have any questions or want to report a bug, [please open an issue at Github](https://github.com/SuperFlyTV/xkeys/issues/new).
 
-If you want to contribute a bug fix or improvement, we'd happily accept Pull-requests.
+If you want to contribute a bug fix or improvement, we'd happily accept Pull Requests.
 (If you're planning something big, [please open an issue](https://github.com/SuperFlyTV/xkeys/issues/new) to announce it first, and spark discussions.
 
 ### Coding style and tests
 
-Please follow the same coding style as the rest of the repository when you type.
+Please follow the same coding style as the rest of the repository as you type. :)
 
 Before committing your code to git, be sure to run these commands:
 
@@ -376,10 +419,10 @@ Before committing your code to git, be sure to run these commands:
 yarn # To ensure the right dependencies are installed
 yarn build # To ensure that there are no syntax or build errors
 yarn lint # To ensure that the formatting follows the right rules
-yarn test # To ensure that ensure your code passes the unit tests.
+yarn test # To ensure that your code passes the unit tests.
 ```
 If you're adding a new functionality, adding unit tests for it is much appreciated.
 
 ### License
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE).

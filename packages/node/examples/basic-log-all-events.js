@@ -5,9 +5,12 @@ const { XKeysWatcher } = require('xkeys')
 	whenever a button is pressed or analog thing is moved
 */
 
-
 // Set up the watcher for xkeys:
-const watcher = new XKeysWatcher()
+const watcher = new XKeysWatcher({
+	// automaticUnitIdMode: false
+	// usePolling: false
+	// pollingInterval= 1000
+})
 
 watcher.on('connected', (xkeysPanel) => {
 	console.log(`X-keys panel of type ${xkeysPanel.info.name} connected`)
