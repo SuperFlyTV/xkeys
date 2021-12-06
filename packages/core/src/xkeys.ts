@@ -451,7 +451,7 @@ export class XKeys extends EventEmitter {
 	 */
 	public saveBackLights(): void {
 		this.ensureInitialized()
-		this._write([0, 199])
+		this._write([0, 199, 1])
 	}
 	/**
 	 * Sets the flash frequency of LEDs for the entire X-keys. Flashing will always be synchronized
