@@ -429,7 +429,8 @@ export class XKeys extends EventEmitter {
 	}
 	/**
 	 * Sets the backlightintensity of the device
-	 * @param intensity 0-255
+	 * @param blueIntensity 0-255
+	 * @param redIntensity 0-255
 	 */
 	public setBacklightIntensity(blueIntensity: number, redIntensity?: number): void {
 		this.ensureInitialized()
@@ -522,6 +523,16 @@ export class XKeys extends EventEmitter {
 		}
 
 		this._write(byteVals)
+	}
+
+	/**
+	 * Writes a Buffer of data bytes to the X-keys device
+	 * Used to send custom messages to X-keys for testing and development
+	 * @param buffer The buffer written to the device
+	 * @returns undefined
+	 */
+	public writeData(message: HIDMessage): void {
+		this._write(message)
 	}
 
 	/** (Internal function) Called when there has been detected that the device has been disconnected */
