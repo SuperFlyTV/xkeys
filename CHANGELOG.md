@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/SuperFlyTV/xkeys/compare/v2.3.0...v2.3.2) (2021-12-12)
+
+
+### Bug Fixes
+
+* add XKeys.writeData() method, used for testing and development ([fba879c](https://github.com/SuperFlyTV/xkeys/commit/fba879c0f93ee64fbcdbd7faf5863998300c2016))
+
+
+
+
+
 # [2.3.0](https://github.com/SuperFlyTV/xkeys/compare/v2.2.1...v2.3.0) (2021-11-28)
 
 
