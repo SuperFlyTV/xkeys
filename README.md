@@ -10,7 +10,7 @@ The project is based on the documentation available here: http://xkeys.com/PISup
 
 ## Demo
 
-If you are using a Chromium v89+ based browser, you can try out the library right away, in the browser: [Demo](https://SuperFlyTV.github.io/xkeys/).
+If you are using a [browser that supports WebHID](https://caniuse.com/webhid), you can try out the library right away, in the browser: [Demo](https://SuperFlyTV.github.io/xkeys/).
 
 ## Installation
 
