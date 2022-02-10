@@ -324,7 +324,7 @@ export class XKeys extends EventEmitter {
 	 * Returns an object with current Button states
 	 */
 	public getButtons(): ButtonStates {
-        return new Map(this._buttonStates) // Make a copy
+		return new Map(this._buttonStates) // Make a copy
 	}
 
 	/**
