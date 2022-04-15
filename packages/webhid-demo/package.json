@@ -26,6 +26,6 @@
   },
   "devDependencies": {
     "copy-webpack-plugin": "^7.0.0",
-    "ts-loader": "^8.0.17"
+    "ts-loader": "^8.3.0"
   }
 }

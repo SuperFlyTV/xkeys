@@ -36,7 +36,7 @@
     "dist"
   ],
   "dependencies": {
-    "@types/w3c-web-hid": "^1.0.0",
+    "@types/w3c-web-hid": "^1.0.3",
     "@xkeys-lib/core": "^2.3.3",
     "buffer": "^6.0.3",
     "p-queue": "^6.6.2"
