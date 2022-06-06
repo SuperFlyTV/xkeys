@@ -1,4 +1,4 @@
-/* eslint-disable node/no-extraneous-require */
+/* eslint-disable node/no-extraneous-require, node/no-unpublished-require */
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { ProvidePlugin } = require('webpack')
