@@ -7,7 +7,6 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "husky install",
     "build": "lerna run build --stream",
     "lint:raw": "lerna exec --stream -- eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
     "lint": "yarn lint:raw .",
