@@ -287,6 +287,7 @@ export class XKeys extends EventEmitter {
 		return literal<XKeysInfo>({
 			name: this.product.name,
 
+			vendorId: XKEYS_VENDOR_ID,
 			productId: this.product.productId,
 			interface: this.product.interface,
 
