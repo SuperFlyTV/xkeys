@@ -68,7 +68,7 @@ jobs:
           yarn build
         env:
           CI: true
-      - name: Prepare Environment
+      - name: Prepare Environment (Node 10)
         if: matrix.node_version == 10
         run: |
           sudo apt-get update
