@@ -423,6 +423,24 @@ yarn test # To ensure that your code passes the unit tests.
 ```
 If you're adding a new functionality, adding unit tests for it is much appreciated.
 
+
+### Notes to maintainers
+
+#### Making a nightly build
+* Push your changes to any branch
+* Trigger a run of [CI: publish-nightly](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-nightly.yml)
+
+#### Making a Pre-release
+* Update the branch (preferrably the master branch)
+* `yarn release:bump-prerelease` and push the changes (including the tag)
+* Trigger a run of [CI: publish-prerelease](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-prerelease.yml)
+
+#### Making a Release
+* Update the the master branch
+* `yarn release:bump-release` and push the changes (including the tag)
+* Trigger a run of [CI: publish-release](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-release.yml) to publish to NPM.
+* Trigger a run of [CI: publish-demo](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-demo.yml) to update the docs.
+
 ### License
 
 By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE).
