@@ -1405,7 +1405,7 @@ class PQueue extends EventEmitter {
         this._timeout = milliseconds;
     }
 }
-exports.default = PQueue;
+exports["default"] = PQueue;
 
 
 /***/ }),
@@ -1434,7 +1434,7 @@ function lowerBound(array, value, comparator) {
     }
     return first;
 }
-exports.default = lowerBound;
+exports["default"] = lowerBound;
 
 
 /***/ }),
@@ -1474,7 +1474,7 @@ class PriorityQueue {
         return this._queue.length;
     }
 }
-exports.default = PriorityQueue;
+exports["default"] = PriorityQueue;
 
 
 /***/ }),
@@ -1537,7 +1537,7 @@ const pTimeout = (promise, milliseconds, fallback) => new Promise((resolve, reje
 
 module.exports = pTimeout;
 // TODO: Remove this for the next major release
-module.exports.default = pTimeout;
+module.exports["default"] = pTimeout;
 
 module.exports.TimeoutError = TimeoutError;
 
@@ -1690,7 +1690,7 @@ var BackLightType;
 exports.PRODUCTS = {
     // Note: The byte numbers are byte index (starts with 0) and will be offset from PIE SDK documentation by -2
     // the byte index is used to access the exact byte in the data report.
-    XK24: lib_1.literal({
+    XK24: (0, lib_1.literal)({
         name: 'XK-24',
         hidDevices: [
             [1029, 0],
@@ -1706,7 +1706,7 @@ exports.PRODUCTS = {
         backLight2offset: 32,
         timestampByte: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
     }),
-    XK24RGB: lib_1.literal({
+    XK24RGB: (0, lib_1.literal)({
         name: 'XK-24M-RGB',
         hidDevices: [[1404, 0]],
         bBytes: 4,
@@ -1718,7 +1718,7 @@ exports.PRODUCTS = {
         backLight2offset: 0,
         timestampByte: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
     }),
-    XK4: lib_1.literal({
+    XK4: (0, lib_1.literal)({
         name: 'XK-4 Stick',
         hidDevices: [
             [1127, 0],
@@ -1733,7 +1733,7 @@ exports.PRODUCTS = {
         backLight2offset: 0,
         timestampByte: 6, // ms time since device boot 4 byte BE
     }),
-    XK8: lib_1.literal({
+    XK8: (0, lib_1.literal)({
         name: 'XK-8 Stick',
         hidDevices: [
             [1130, 0],
@@ -1759,7 +1759,7 @@ exports.PRODUCTS = {
             [1, 8],
         ], // map button index to [Row,Column] 0,0 is program switch
     }),
-    XK16: lib_1.literal({
+    XK16: (0, lib_1.literal)({
         name: 'XK-16 Stick',
         hidDevices: [
             [1049, 0],
@@ -1795,7 +1795,7 @@ exports.PRODUCTS = {
             [1, 16],
         ],
     }),
-    XK12JOG: lib_1.literal({
+    XK12JOG: (0, lib_1.literal)({
         name: 'XK-12 Jog-Shuttle',
         hidDevices: [
             [1062, 0],
@@ -1812,7 +1812,7 @@ exports.PRODUCTS = {
         backLight2offset: 32,
         timestampByte: 8, // ms time since device boot 4 byte BE
     }),
-    XK12JOYSTICK: lib_1.literal({
+    XK12JOYSTICK: (0, lib_1.literal)({
         name: 'XK-12 Joystick',
         hidDevices: [
             [1065, 0],
@@ -1834,7 +1834,7 @@ exports.PRODUCTS = {
         backLight2offset: 32,
         timestampByte: 12,
     }),
-    XK68JOYSTICK: lib_1.literal({
+    XK68JOYSTICK: (0, lib_1.literal)({
         name: 'XK-68 Joystick',
         hidDevices: [
             [1117, 0],
@@ -1861,7 +1861,7 @@ exports.PRODUCTS = {
         timestampByte: 18,
         disableButtons: [28, 29, 30, 36, 37, 38, 44, 45, 46, 52, 53, 54], // these are the index of the "hole" created by the joystick in the center, they will always be 0
     }),
-    XKR32: lib_1.literal({
+    XKR32: (0, lib_1.literal)({
         // discontinued product, XKE 40 is viable replacement
         name: 'XKR-32',
         hidDevices: [
@@ -1877,7 +1877,7 @@ exports.PRODUCTS = {
         backLight2offset: 32,
         timestampByte: 31, // ms time since device boot 4 byte BE
     }),
-    XKE40: lib_1.literal({
+    XKE40: (0, lib_1.literal)({
         name: 'XKE-40',
         hidDevices: [
             [1355, 0],
@@ -1940,7 +1940,7 @@ exports.PRODUCTS = {
             [2, 20],
         ],
     }),
-    XK60: lib_1.literal({
+    XK60: (0, lib_1.literal)({
         name: 'XK-60',
         hidDevices: [
             [1121, 0],
@@ -1964,7 +1964,7 @@ exports.PRODUCTS = {
         timestampByte: 12, // ms time since device boot 4 byte BE
         //disableButtons: 	[2,10,18,26,34,42,50,58,66,74,19,20,21,22,23,59,60,61,] // these buttons are not installed on the 60 button unit, these bytes will always be 0.
     }),
-    XK80: lib_1.literal({
+    XK80: (0, lib_1.literal)({
         name: 'XK-80',
         hidDevices: [
             [1089, 0],
@@ -1981,7 +1981,7 @@ exports.PRODUCTS = {
         backLight2offset: 80,
         timestampByte: 12, // ms time since device boot 4 byte BE
     }),
-    XKE124TBAR: lib_1.literal({
+    XKE124TBAR: (0, lib_1.literal)({
         name: 'XKE-124 T-bar',
         hidDevices: [
             [1275, 0],
@@ -2007,7 +2007,7 @@ exports.PRODUCTS = {
         //timeStamp:	31, // the XKE-124 T-bar has no time stamp for technical reasons
         disableButtons: [109, 110, 111, 112],
     }),
-    XKE128: lib_1.literal({
+    XKE128: (0, lib_1.literal)({
         name: 'XKE-128',
         hidDevices: [
             [1227, 0],
@@ -2022,7 +2022,7 @@ exports.PRODUCTS = {
         backLight2offset: 128,
         timestampByte: 31, // ms time since device boot 4 byte BE
     }),
-    XKMatrix: lib_1.literal({
+    XKMatrix: (0, lib_1.literal)({
         name: 'XK-128 Matrix',
         hidDevices: [
             [1030, 0],
@@ -2039,7 +2039,7 @@ exports.PRODUCTS = {
         // many buttons may be disabled or not as the custom wiring determines this.
         // to prevent phantom buttons, external diodes may be required, if diodes not used the board may be set by write command 215, see documentation
     }),
-    XK68JOGSHUTTLE: lib_1.literal({
+    XK68JOGSHUTTLE: (0, lib_1.literal)({
         name: 'XK-68 Jog-Shuttle',
         hidDevices: [
             [1114, 0],
@@ -2061,7 +2061,7 @@ exports.PRODUCTS = {
         timestampByte: 18,
         disableButtons: [30, 31, 32, 38, 39, 40, 46, 47, 48, 54, 55, 56],
     }),
-    XK3FOOT: lib_1.literal({
+    XK3FOOT: (0, lib_1.literal)({
         name: 'XK-3 Foot Pedal',
         hidDevices: [
             [1080, 0],
@@ -2084,7 +2084,7 @@ exports.PRODUCTS = {
         ],
         disableButtons: [1],
     }),
-    XK3SI: lib_1.literal({
+    XK3SI: (0, lib_1.literal)({
         name: 'XK-3 Switch Interface',
         hidDevices: [
             [1221, 0],
@@ -2108,7 +2108,7 @@ exports.PRODUCTS = {
         ],
         disableButtons: [4], // Exclude index 4, redundent on index 3, note some or all of the buttons may be triggered when plugging switch into 3.5 mm socket
     }),
-    XK12SI: lib_1.literal({
+    XK12SI: (0, lib_1.literal)({
         name: 'XK-12 Switch Interface',
         hidDevices: [
             [1192, 0],
@@ -2143,7 +2143,7 @@ exports.PRODUCTS = {
         ], // column indicates port #, mono plugs map to row 1, stereo plugs to row 1 and 2
         // due to the stereo jack some buttons may always be down when a single pole (mono) plug is plugged in.
     }),
-    XKHD15WI: lib_1.literal({
+    XKHD15WI: (0, lib_1.literal)({
         name: 'XK-HD15 Wire Interface',
         hidDevices: [
             [1244, 0],
@@ -2158,7 +2158,7 @@ exports.PRODUCTS = {
         backLight2offset: 0,
         timestampByte: 31, // ms time since device boot 4 byte BE
     }),
-    XKHD15GPIO: lib_1.literal({
+    XKHD15GPIO: (0, lib_1.literal)({
         name: 'XK-HD15 GPIO',
         hidDevices: [
             [1351, 0],
@@ -2176,7 +2176,7 @@ exports.PRODUCTS = {
         //The input data will always be in the 2 data bytes described, but this device may be configured in several ways
         // it is best to Qwery the device and get its current setup data, using GetIoConfiguration function
     }),
-    XCRS232: lib_1.literal({
+    XCRS232: (0, lib_1.literal)({
         name: 'XC-RS232-DB9',
         hidDevices: [
             [1257, 0],
@@ -2211,7 +2211,7 @@ exports.PRODUCTS = {
         ], // column indicates port #, mono plugs map to row 1, stereo plugs to row 1 and 2
         //The Serial data will come on a special message with byte 1 id of 216, see documentation
     }),
-    XCDMX512TST: lib_1.literal({
+    XCDMX512TST: (0, lib_1.literal)({
         name: 'XC-DMX512-T ST',
         hidDevices: [[1324, 0]],
         bBytes: 2,
@@ -2224,7 +2224,7 @@ exports.PRODUCTS = {
         hasDMX: true,
         //Sends DMX512 Data, see documentation
     }),
-    XCDMX512TRJ45: lib_1.literal({
+    XCDMX512TRJ45: (0, lib_1.literal)({
         name: 'XC-DMX512-T RJ45',
         hidDevices: [[1225, 0]],
         bBytes: 1,
@@ -2249,7 +2249,7 @@ exports.PRODUCTS = {
         ],
         //Sends DMX512 Data to DMX512 devivces on the , see documentation
     }),
-    XK16LCD: lib_1.literal({
+    XK16LCD: (0, lib_1.literal)({
         name: 'XK-16 LCD',
         hidDevices: [
             [1316, 0],
@@ -2270,7 +2270,7 @@ exports.PRODUCTS = {
         backLight2offset: 32,
         timestampByte: 31, // ms time since device boot 4 byte BE
     }),
-    XKE180BROAD: lib_1.literal({
+    XKE180BROAD: (0, lib_1.literal)({
         name: 'XKE-180 Broadcast Keyboard',
         hidDevices: [[1443, 0]],
         bBytes: 31,
@@ -2289,7 +2289,7 @@ exports.PRODUCTS = {
         backLight2offset: 0,
         timestampByte: 36, // ms time since device boot 4 byte BE
     }),
-    XK64JOGTBAR: lib_1.literal({
+    XK64JOGTBAR: (0, lib_1.literal)({
         name: 'XKE-64 Jog T-bar',
         hidDevices: [
             [1325, 0],
@@ -2577,8 +2577,9 @@ class XKeys extends events_1.EventEmitter {
     get info() {
         var _a, _b, _c, _d, _e;
         this.ensureInitialized();
-        return lib_1.literal({
+        return (0, lib_1.literal)({
             name: this.product.name,
+            vendorId: products_1.XKEYS_VENDOR_ID,
             productId: this.product.productId,
             interface: this.product.interface,
             unitId: this.unitId,
@@ -2586,7 +2587,7 @@ class XKeys extends events_1.EventEmitter {
             colCount: this.product.colCount,
             rowCount: this.product.rowCount,
             layout: ((_a = this.product.layouts) === null || _a === void 0 ? void 0 : _a.map((region) => {
-                return lib_1.literal({
+                return (0, lib_1.literal)({
                     name: region[0],
                     index: region[1],
                     startRow: region[2],
@@ -2611,7 +2612,7 @@ class XKeys extends events_1.EventEmitter {
      * Returns an object with current Button states
      */
     getButtons() {
-        return Object.assign({}, this._buttonStates); // Return copy
+        return new Map(this._buttonStates); // Make a copy
     }
     /**
      * Sets the indicator-LED on the device, usually a red and green LED at the top of many X-keys
@@ -2707,7 +2708,8 @@ class XKeys extends events_1.EventEmitter {
     }
     /**
      * Sets the backlightintensity of the device
-     * @param intensity 0-255
+     * @param blueIntensity 0-255
+     * @param redIntensity 0-255
      */
     setBacklightIntensity(blueIntensity, redIntensity) {
         this.ensureInitialized();
@@ -2729,7 +2731,7 @@ class XKeys extends events_1.EventEmitter {
      */
     saveBackLights() {
         this.ensureInitialized();
-        this._write([0, 199]);
+        this._write([0, 199, 1]);
     }
     /**
      * Sets the flash frequency of LEDs for the entire X-keys. Flashing will always be synchronized
@@ -2801,6 +2803,15 @@ class XKeys extends events_1.EventEmitter {
                 break; // quit at 16 chars
         }
         this._write(byteVals);
+    }
+    /**
+     * Writes a Buffer of data bytes to the X-keys device
+     * Used to send custom messages to X-keys for testing and development
+     * @param buffer The buffer written to the device
+     * @returns undefined
+     */
+    writeData(message) {
+        this._write(message);
     }
     /** (Internal function) Called when there has been detected that the device has been disconnected */
     async _handleDeviceDisconnected() {
@@ -5266,7 +5277,7 @@ function appendLog(str) {
 }
 let currentXkeys = null;
 async function openDevice(device) {
-    const xkeys = await xkeys_webhid_1.setupXkeysPanel(device);
+    const xkeys = await (0, xkeys_webhid_1.setupXkeysPanel)(device);
     currentXkeys = xkeys;
     appendLog(`Connected to "${xkeys.info.name}"`);
     xkeys.on('down', (keyIndex) => {
@@ -5293,7 +5304,7 @@ async function openDevice(device) {
 window.addEventListener('load', async () => {
     appendLog('Page loaded');
     // Attempt to open a previously selected device:
-    const devices = await xkeys_webhid_1.getOpenedXKeysPanels();
+    const devices = await (0, xkeys_webhid_1.getOpenedXKeysPanels)();
     if (devices.length > 0) {
         appendLog(`"${devices[0].productName}" already granted in a previous session`);
         console.log(devices[0]);
@@ -5311,7 +5322,7 @@ consentButton === null || consentButton === void 0 ? void 0 : consentButton.addE
     // Prompt for a device
     try {
         appendLog('Asking user for permissions...');
-        devices = await xkeys_webhid_1.requestXkeysPanels();
+        devices = await (0, xkeys_webhid_1.requestXkeysPanels)();
     }
     catch (error) {
         appendLog(`No device access granted: ${error}`);
