@@ -2,19 +2,21 @@ import { BackLightType, PRODUCTS } from '@xkeys-lib/core'
 
 describe('products.ts', () => {
 	test('productIds should be unique', async () => {
-		const productIds = new Set<number>()
+		const productIds = new Map<string, string>()
 		for (const product of Object.values(PRODUCTS)) {
 			for (const hidDevice of product.hidDevices) {
 				const productId: number = hidDevice[0]
-				// const interface: number = hidDevice[1]
+				const productInterface: number = hidDevice[1]
 
+				const idPair = `${productId}-${productInterface}`
+				// console.log('idPair', idPair)
 				try {
-					expect(productIds.has(productId)).toBeFalsy()
+					expect(productIds.has(idPair)).toBeFalsy()
 				} catch (err) {
-					console.log('productid', productId)
+					console.log('productid', idPair, productIds.get(idPair))
 					throw err
 				}
-				productIds.add(productId)
+				productIds.set(idPair, product.name)
 			}
 		}
 	})
