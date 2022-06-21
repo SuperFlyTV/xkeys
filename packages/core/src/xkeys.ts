@@ -43,7 +43,7 @@ export class XKeys extends EventEmitter {
 	private _unitIdIsSet = false
 	private _disconnected = false
 
-	/** Vendor id for the X-keys panels */ 
+	/** Vendor id for the X-keys panels */
 	static get vendorId(): number {
 		return XKEYS_VENDOR_ID
 	}
@@ -96,10 +96,10 @@ export class XKeys extends EventEmitter {
 				rdData[5]=data.readUInt8(10)  // remap button bits
 				rdData[6]=data.readUInt8(11)  // remap button bits
 				rdData[7]=data.readUInt8(12)  // remap button bits
-				// Add Bailoff to button byte, 
+				// Add Bailoff to button byte,
 				if (data.readUInt8(4)>=160){
-					// set bit 5 to 1 
-					
+					// set bit 5 to 1
+
 					rdData[7]= rdData[7]|16
 
 				}
@@ -109,7 +109,7 @@ export class XKeys extends EventEmitter {
 				rdData[11]=data.readUInt8(3)  // remap analog bytes
 				rdData[12]=data.readUInt8(5)  // remap analog bytes
 				rdData[13]=data.readUInt8(6)  // remap analog bytes
-				
+
 
 
 				for (let i = 0; i < 15; i++) {
@@ -132,10 +132,10 @@ export class XKeys extends EventEmitter {
 
 				return // quit here because this data would be interperted as button data and give bad results.
 			}
-			// TODO: Add other special reports here. 
+			// TODO: Add other special reports here.
 			// A standard data report will be sent when something physical happens on the keys, button press, or lever moved for example
-			// other special reports may be sent in responce to a request or some data input on the device. 
-			// 
+			// other special reports may be sent in responce to a request or some data input on the device.
+			//
 			if (data.readUInt8(1) > 3) return // Protect against all special data reports now and into the future.
 
 			const newButtonStates: ButtonStates = new Map()
@@ -212,13 +212,13 @@ export class XKeys extends EventEmitter {
 			this.product.hasTrackball?.forEach((trackball, index) => {
 				let x = 256*data.readUInt8(trackball.trackXbyte_H)+data.readUInt8(trackball.trackXbyte_L) // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
 				let y = 256*data.readUInt8(trackball.trackYbyte_H)+data.readUInt8(trackball.trackYbyte_L)  // Trackball Y
-				
-				
+
+
 
 				newAnalogStates.trackball[index] = {
 					x:x,
 					y:y,
-					
+
 				}
 			})
 			this.product.hasTbar?.forEach((tBar, index) => {
@@ -226,7 +226,7 @@ export class XKeys extends EventEmitter {
 				newAnalogStates.tbar[index] = d
 			})
 			this.product.hasRotary?.forEach((rotary, index) => {
-				const d = data.readUInt8(rotary.rotaryByte) 
+				const d = data.readUInt8(rotary.rotaryByte)
 				newAnalogStates.rotary[index] = d
 			})
 
@@ -276,7 +276,7 @@ export class XKeys extends EventEmitter {
 				const oldValue = this._analogStates.joystick[index]
 				if (!oldValue) {
 					const emitValue: JoystickValueEmit = {
-						...newValue, 
+						...newValue,
 						// Calculate deltaZ, since that is not trivial to do:
 						deltaZ: 0,
 					}
@@ -453,7 +453,7 @@ export class XKeys extends EventEmitter {
 			this._write([0, 181, ledIndex, color.g, color.r, color.b, flashing ? 1 : 0]) // Byte order is actually G,R,B,F)
 		} else if (this.product.backLightType === BackLightType.RGBx2) {// backlight LED type 6, 2 banks of full RGB LEDs
 			const ledIndex = keyIndex - 1 // 0 based linear numbering sort of...
-			
+
 			if (bankIndex !== undefined) {
 				this._write([0, 165, ledIndex, bankIndex, color.r, color.g, color.b, flashing ? 1 : 0])
 			} else {
@@ -494,7 +494,7 @@ export class XKeys extends EventEmitter {
 	/**
 	 * Sets the backlight of all buttons
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
-	  * @param bankIndex number: Which LED bank (top or bottom) to control. 
+	  * @param bankIndex number: Which LED bank (top or bottom) to control.
 	 */
 	public setAllBacklights(color: Color | string | boolean | null,bankIndex?: number): void {
 		this.ensureInitialized()

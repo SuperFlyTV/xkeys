@@ -19,7 +19,7 @@ export interface AnalogStates {
 
 	// todo: Implement these:
 	// slider?: number[] // x with feedback
-	 trackball: TrackballValue[]
+	trackball: TrackballValue[]
 	// trackpad?: {x: number, y: number, z: number}[] // z: proximity/force
 }
 export interface JoystickValue {
@@ -38,7 +38,7 @@ export interface TrackballValue {
 	x: number
 	/**  Y (delta vertical movement), positive value is "up". 2 byte */
 	y: number
-	
+
 }
 export interface JoystickValueEmit extends JoystickValue {
 	/** Joystick delta Z, a delta value that behaves properly when Z rolls over 255 to 0 */

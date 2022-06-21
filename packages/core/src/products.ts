@@ -46,25 +46,25 @@ export interface Product {
 	}[]
 	/** If the X-keys panel has a Trackball. */
 	hasTrackball?: {
-		trackXbyte_L: number // the index of the low byte of 2 byte X position 
-		trackXbyte_H: number // the index of the high byte of 2 byte X position 
+		trackXbyte_L: number // the index of the low byte of 2 byte X position
+		trackXbyte_H: number // the index of the high byte of 2 byte X position
 		trackYbyte_L: number // the index of the low byte of 2 byte Y position
 		trackYbyte_H: number // the index of the high byte of 2 byte Y position
 	}[]
 	/** If the X-keys panel has a Trackpad. */
 	hasTrackpad?: {
-		padXbyte_L: number // the index of the low byte of 2 byte X position 
-		padXbyte_H: number // the index of the high byte of 2 byte X position 
+		padXbyte_L: number // the index of the low byte of 2 byte X position
+		padXbyte_H: number // the index of the high byte of 2 byte X position
 		padYbyte_L: number // the index of the low byte of 2 byte Y position
 		padYbyte_H: number // the index of the high byte of 2 byte Y position
-		pinchByte:  number // the index of the pinch byte 
+		pinchByte:  number // the index of the pinch byte
 		scrollByte: number // the index of the scroll byte
-		
+
 	}[]
 	/** If the X-keys device has an Analog to Digital converter. Often used to measure voltage*/
-		hasADC?: {
-		adcByte_L: number // the index of the low byte of 2 byte ACD Value 
-		adcByte_H: number // the index of the high byte of 2 byte ACD Value 
+	hasADC?: {
+		adcByte_L: number // the index of the low byte of 2 byte ACD Value
+		adcByte_H: number // the index of the high byte of 2 byte ACD Value
 	}[]
 	/** If the X-keys panel has any Rotary Knobs. */
 	hasRotary?: { rotaryByte: number }[] // the index of any rotary control bytes (twist knob)
@@ -412,7 +412,6 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasTbar: [
 			{
 				tbarByte: 28, //this gives a clean 0-255 value
-				//tbarByteRaw: 29, // should only use cal t-bar on byte index 28
 			},
 		],
 
@@ -737,7 +736,6 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasTbar: [
 			{
 				tbarByte: 17,
-			//	tbarByteRaw: 15, // should only use cal t-bar on byte index 17
 			},
 		],
 		backLightType: BackLightType.LEGACY,
@@ -745,9 +743,9 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestampByte: 31, // ms time since device boot 4 byte BE
 		disableButtons: [6, 7, 8, 14, 15, 16, 22, 23, 24, 30, 31, 32, 73, 74, 75, 73], // These bits are messy, better to ignore them
 	}),
-	
+
 	XBK4X6: literal<Product>({  //new product, expected release Q4 2022
-		name: 'X-blox XBK-4x6 Module', // 24 key module with RGB backLight LEDs 
+		name: 'X-blox XBK-4x6 Module', // 24 key module with RGB backLight LEDs
 		hidDevices: [
 			[1365, 0],
 			[1366, 0],
@@ -767,7 +765,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XBK3X6: literal<Product>({ //new product, expected release Q4 2022
-		name: 'X-blox XBK-3x6 Module', // 18 key module with RGB backLight LEDs 
+		name: 'X-blox XBK-3x6 Module', // 18 key module with RGB backLight LEDs
 		hidDevices: [
 			[1378, 0],
 			[1379, 0],
@@ -787,7 +785,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XBA4X3JOG: literal<Product>({//new product, expected release Q4 2022
-		name: 'X-blox XBA-4x3 Jog-Shuttle Module', // 12 key module with Jog Shuttle & RGB backLight LEDs 
+		name: 'X-blox XBA-4x3 Jog-Shuttle Module', // 12 key module with Jog Shuttle & RGB backLight LEDs
 		hidDevices: [
 			[1388, 0],
 			[1389, 0],
@@ -809,7 +807,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XBA3X6TBAR: literal<Product>({//new product, expected release Q4 2022
-		name: 'X-blox XBA-3x6 T-bar Module', // 14 key module with T-bar,  RGB backLight LEDs 
+		name: 'X-blox XBA-3x6 T-bar Module', // 14 key module with T-bar,  RGB backLight LEDs
 		hidDevices: [
 			[1396, 0],
 			[1397, 0],
@@ -827,7 +825,6 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasTbar: [
 			{
 				tbarByte: 9,
-				//tbarByteRaw: 7, // should only use cal t-bar on byte index 9
 			},
 		],
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank,Standard Index
@@ -835,7 +832,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XBA4X3TRACKBALL: literal<Product>({//new product, expected release Q4 2022
-		name: 'X-blox XBA-4x3 Trackball Module', // 12 key module with Trackball & RGB backLight LEDs 
+		name: 'X-blox XBA-4x3 Trackball Module', // 12 key module with Trackball & RGB backLight LEDs
 		hidDevices: [
 			[1488, 0],
 			[1489, 0],
@@ -879,18 +876,18 @@ export const PRODUCTS: { [name: string]: Product } = {
 			['Keys', 0, 1, 1, 6, 8], // left side satellite keys, optional
 			['QWERTY-85', 0, 1, 9, 6, 24], // Main QWERTY section, required
 			['Keys', 1, 1, 25, 6, 32],// right side satellite keys, optional
-			
+
 		], // control name, control index, startRow, startCol, endRow, endCol
-		colCount: 32, // number of physical columns, not all rows have all columns because of the offset of the keys and large keys such space bar and shifts. 
+		colCount: 32, // number of physical columns, not all rows have all columns because of the offset of the keys and large keys such space bar and shifts.
 		rowCount: 6, // number of physical rows
 		hasPS: false,
-		
+
 		backLightType: BackLightType.RGBx2, //RGB 1 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 36, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XBK16X6: literal<Product>({  //new product, expected release Q1 2023
-		name: 'X-blox XBK-16x6 Module', // 96 key module with RGB backLight LEDs 
+		name: 'X-blox XBK-16x6 Module', // 96 key module with RGB backLight LEDs
 		hidDevices: [
 			[1496, 0],
 			[1497, 0],
@@ -916,7 +913,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		bBits: 8, // see documentation
 		colCount: 4, //  2 ports per side of unit ,
 		rowCount: 2, // each port has 2 switches
-		hasPS: true, // may be inside box and require extra wires if needed. 
+		hasPS: true, // may be inside box and require extra wires if needed.
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
 		btnLocation: [
@@ -939,7 +936,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		bBits: 8, // see documentation
 		colCount: 4, //  2 ports per side of unit ,
 		rowCount: 2, // each port has 2 switches
-		hasPS: true, // may be inside box and require extra wires if needed. 
+		hasPS: true, // may be inside box and require extra wires if needed.
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
 		btnLocation: [
@@ -962,24 +959,24 @@ export const PRODUCTS: { [name: string]: Product } = {
 		bBits: 8, // see documentation
 		colCount: 4, //  2 ports per side of unit ,
 		rowCount: 2, // each port has 2 switches
-		hasPS: true, // may be inside box and require extra wires if needed. 
+		hasPS: true, // may be inside box and require extra wires if needed.
 		hasGPIO:true,
 		hasADC: [
 			{
-				adcByte_L: 6, //ADC Value, Low byte of 2 byte date,  
-				adcByte_H: 7, //ADC Value, High byte of 2 byte date, 
+				adcByte_L: 6, //ADC Value, Low byte of 2 byte date,
+				adcByte_H: 7, //ADC Value, High byte of 2 byte date,
 			},
 			{
-				adcByte_L: 8, //ADC Value, Low byte of 2 byte date,  
-				adcByte_H: 9, //ADC Value, High byte of 2 byte date, 
+				adcByte_L: 8, //ADC Value, Low byte of 2 byte date,
+				adcByte_H: 9, //ADC Value, High byte of 2 byte date,
 			},
 			{
-				adcByte_L: 10, //ADC Value, Low byte of 2 byte date,  
-				adcByte_H: 11, //ADC Value, High byte of 2 byte date, 
+				adcByte_L: 10, //ADC Value, Low byte of 2 byte date,
+				adcByte_H: 11, //ADC Value, High byte of 2 byte date,
 			},
 			{
-				adcByte_L: 12, //ADC Value, Low byte of 2 byte date,  
-				adcByte_H: 13, //ADC Value, High byte of 2 byte date, 
+				adcByte_L: 12, //ADC Value, Low byte of 2 byte date,
+				adcByte_H: 13, //ADC Value, High byte of 2 byte date,
 			},
 		],
 		backLightType: BackLightType.NONE, // no back light LEDs
@@ -998,7 +995,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		]
 	}),
 	XBA4X3TRACKPAD: literal<Product>({ //prototype product,
-		name: 'X-blox XBA-Track Pad Module', // 12 key module with Trackball & RGB backLight LEDs 
+		name: 'X-blox XBA-Track Pad Module', // 12 key module with Trackball & RGB backLight LEDs
 		hidDevices: [
 			[1422, 0],
 			[1423, 0],
@@ -1019,7 +1016,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 				padXbyte_H: 7, //Delta X motion, High byte of 2 byte date, X ball motion = 256*DELTA_X_H + DELTA_X_L.
 				padYbyte_L: 8, //Delta Y motion, Low byte of 2 byte date,  Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
 				padYbyte_H: 9, //Delta Y motion, High byte of 2 byte date, Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
-				pinchByte: 10, // the index of the pinch byte 
+				pinchByte: 10, // the index of the pinch byte
 				scrollByte: 11,// the index of the scroll byte
 			},
 		],
@@ -1027,7 +1024,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
-		
+
 	XK433REMOTE: literal<Product>({ //prototype product,
 		name: 'XK-433RF Remote', // 8 RF remote buttons and four 3.5 mm ports, contacts for a stereo Plug
 		hidDevices: [
@@ -1044,7 +1041,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			['Remote', 0, 1, 1, 2, 4],
 			['SwitchPorts', 0, 1, 1, 2, 2],
 			['SwitchPorts', 1, 1, 3, 2, 4],
-			
+
 		], // control name, control index, startRow, startCol, endRow, endCol
 		colCount: 4, //  2 ports per side of unit , numbered 1-2 and 3-4
 		rowCount: 2, // each port has 2 switches
@@ -1070,13 +1067,13 @@ export const PRODUCTS: { [name: string]: Product } = {
 		// due to the stereo jack some buttons may always be down when a single pole (mono) plug is plugged in.
 	}),
 	RailDriver: literal<Product>({ //In production: www.raildriver.com
-		name: 'RailDriver Cab Controller', // The RailDriver is a special product that does not conform the the standard X-keys format. It is described here assuming the buttons are remapped and 2 header bytes are added to the data message. 
+		name: 'RailDriver Cab Controller', // The RailDriver is a special product that does not conform the the standard X-keys format. It is described here assuming the buttons are remapped and 2 header bytes are added to the data message.
 		hidDevices: [
 			[210, 0],
 			[210, -1],
 
 			],
-		bBytes: 6, // this asssumes the button bytes will be remapped. 
+		bBytes: 6, // this asssumes the button bytes will be remapped.
 		bBits: 8, // see documentation
 		layouts: [
 			['Cab Buttons', 0, 1, 1, 2, 4],
@@ -1089,50 +1086,50 @@ export const PRODUCTS: { [name: string]: Product } = {
 			['Wiper', 0, 1, 9, 4, 9],
 			['Lights', 0, 3, 9, 4, 9],
 
-			
-			
+
+
 		], // control name, control index, startRow, startCol, endRow, endCol
 		colCount: 6, // not valid here because the cab layout, see documentation
-		rowCount: 8, // 
-		hasPS: false, // 
+		rowCount: 8, //
+		hasPS: false, //
 		hasTbar: [  // the raildriver has 5 lever controls, we will call them T-bars for this mapping
 			{
 				tbarByte: 8, //Reverser Lever
-				
+
 			},
 			{
 				tbarByte: 9, //Throttle Lever
-				
+
 			},
 			{
 				tbarByte: 10, //Auto Brake Lever
-				
+
 			},
 			{
 				tbarByte: 11, //Independent Brake
-				
+
 			},
 			//{
-			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right, 
-				
+			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right,
+
 			//},
 		],
-		hasRotary: [  // the raildriver has 2 rotary controls, 
+		hasRotary: [  // the raildriver has 2 rotary controls,
 			{
 				rotaryByte: 12, //Upper twist knob
-				
+
 			},
 			{
 				rotaryByte: 13, //Lower twist knob
-				
+
 			},
-			
+
 		],
 		backLightType: BackLightType.NONE, // no back light LEDs
 		backLight2offset: 0,
 		//timestamp: none, RailDriver has no time stamp
-		
+
 	}),
-	
+
 
 }
