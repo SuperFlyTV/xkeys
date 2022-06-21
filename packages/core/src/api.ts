@@ -38,7 +38,6 @@ export interface TrackballValue {
 	x: number
 	/**  Y (delta vertical movement), positive value is "up". 2 byte */
 	y: number
-
 }
 export interface JoystickValueEmit extends JoystickValue {
 	/** Joystick delta Z, a delta value that behaves properly when Z rolls over 255 to 0 */

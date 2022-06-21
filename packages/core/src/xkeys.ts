@@ -77,43 +77,40 @@ export class XKeys extends EventEmitter {
 		const found = findProdct()
 
 		this.device.on('data', (data: Buffer) => {
-			if(deviceInfo.productId===210) {
+			if (deviceInfo.productId === 210) {
 				// Note: THe RailDriver is an older device, which doesn't follow the rest of xkeys data structure.
 				// To make it easy for us, we'll just remap the data to work for us.
 
-				var rdData = new Uint8Array(32);
-				rdData[0]=0  // this sets the Unit ID to 0 always
+				var rdData = new Uint8Array(32)
+				rdData[0] = 0 // this sets the Unit ID to 0 always
 				if (!this._firmwareVersionIsSet) {
-					rdData[1]=214 // Fake initial message to set _firmwareVersion
+					rdData[1] = 214 // Fake initial message to set _firmwareVersion
 				} else if (!this._unitIdIsSet) {
-					rdData[1]=3 // Fake initial message to set _unitId
+					rdData[1] = 3 // Fake initial message to set _unitId
 				} else {
-					rdData[1]=0  // no pg switch, byte is always 0
+					rdData[1] = 0 // no pg switch, byte is always 0
 				}
-				rdData[2]=data.readUInt8(7)  // remap button bits
-				rdData[3]=data.readUInt8(8)  // remap button bits
-				rdData[4]=data.readUInt8(9)  // remap button bits
-				rdData[5]=data.readUInt8(10)  // remap button bits
-				rdData[6]=data.readUInt8(11)  // remap button bits
-				rdData[7]=data.readUInt8(12)  // remap button bits
+				rdData[2] = data.readUInt8(7) // remap button bits
+				rdData[3] = data.readUInt8(8) // remap button bits
+				rdData[4] = data.readUInt8(9) // remap button bits
+				rdData[5] = data.readUInt8(10) // remap button bits
+				rdData[6] = data.readUInt8(11) // remap button bits
+				rdData[7] = data.readUInt8(12) // remap button bits
 				// Add Bailoff to button byte,
-				if (data.readUInt8(4)>=160){
+				if (data.readUInt8(4) >= 160) {
 					// set bit 5 to 1
 
-					rdData[7]= rdData[7]|16
-
+					rdData[7] = rdData[7] | 16
 				}
-				rdData[8]=data.readUInt8(0)  // remap analog bytes
-				rdData[9]=data.readUInt8(1)  // remap analog bytes
-				rdData[10]=data.readUInt8(2)  // remap analog bytes
-				rdData[11]=data.readUInt8(3)  // remap analog bytes
-				rdData[12]=data.readUInt8(5)  // remap analog bytes
-				rdData[13]=data.readUInt8(6)  // remap analog bytes
-
-
+				rdData[8] = data.readUInt8(0) // remap analog bytes
+				rdData[9] = data.readUInt8(1) // remap analog bytes
+				rdData[10] = data.readUInt8(2) // remap analog bytes
+				rdData[11] = data.readUInt8(3) // remap analog bytes
+				rdData[12] = data.readUInt8(5) // remap analog bytes
+				rdData[13] = data.readUInt8(6) // remap analog bytes
 
 				for (let i = 0; i < 15; i++) {
-					data[i]=rdData[i]
+					data[i] = rdData[i]
 				}
 			}
 
@@ -210,15 +207,12 @@ export class XKeys extends EventEmitter {
 				}
 			})
 			this.product.hasTrackball?.forEach((trackball, index) => {
-				let x = 256*data.readUInt8(trackball.trackXbyte_H)+data.readUInt8(trackball.trackXbyte_L) // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
-				let y = 256*data.readUInt8(trackball.trackYbyte_H)+data.readUInt8(trackball.trackYbyte_L)  // Trackball Y
-
-
+				let x = 256 * data.readUInt8(trackball.trackXbyte_H) + data.readUInt8(trackball.trackXbyte_L) // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
+				let y = 256 * data.readUInt8(trackball.trackYbyte_H) + data.readUInt8(trackball.trackYbyte_L) // Trackball Y
 
 				newAnalogStates.trackball[index] = {
-					x:x,
-					y:y,
-
+					x: x,
+					y: y,
 				}
 			})
 			this.product.hasTbar?.forEach((tBar, index) => {
@@ -302,7 +296,6 @@ export class XKeys extends EventEmitter {
 				// We only need to emit the value when not zero, since the trackball motion are relative values.
 				if (newValue.x !== 0 || newValue.y !== 0) this.emit('trackball', index, newValue, eventMetadata)
 			})
-
 
 			// Store the new states:
 			this._buttonStates = newButtonStates
@@ -448,11 +441,13 @@ export class XKeys extends EventEmitter {
 
 		const location = this._findBtnLocation(keyIndex)
 
-		if (this.product.backLightType === BackLightType.REMAP_24) { // obsloete, Consier removing MHH
+		if (this.product.backLightType === BackLightType.REMAP_24) {
+			// obsloete, Consier removing MHH
 			const ledIndex = (location.col - 1) * 8 + location.row - 1
 			// backlight LED type 5 is the RGB 24 buttons
 			this._write([0, 181, ledIndex, color.g, color.r, color.b, flashing ? 1 : 0]) // Byte order is actually G,R,B,F)
-		} else if (this.product.backLightType === BackLightType.RGBx2) {// backlight LED type 6, 2 banks of full RGB LEDs
+		} else if (this.product.backLightType === BackLightType.RGBx2) {
+			// backlight LED type 6, 2 banks of full RGB LEDs
 			const ledIndex = keyIndex - 1 // 0 based linear numbering sort of...
 
 			if (bankIndex !== undefined) {
@@ -495,9 +490,9 @@ export class XKeys extends EventEmitter {
 	/**
 	 * Sets the backlight of all buttons
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
-	  * @param bankIndex number: Which LED bank (top or bottom) to control.
+	 * @param bankIndex number: Which LED bank (top or bottom) to control.
 	 */
-	public setAllBacklights(color: Color | string | boolean | null,bankIndex?: number): void {
+	public setAllBacklights(color: Color | string | boolean | null, bankIndex?: number): void {
 		this.ensureInitialized()
 		color = this._interpretColor(color, this.product.backLightType)
 
@@ -508,8 +503,8 @@ export class XKeys extends EventEmitter {
 				this._write([0, 166, bankIndex, color.r, color.g, color.b])
 			} else {
 				// There are  2 leds in under a key, 0 for top and 1 for bottom.
-				this._write([0, 166,  0, color.r, color.g, color.b] )
-				this._write([0, 166,  1, color.r, color.g, color.b] )
+				this._write([0, 166, 0, color.r, color.g, color.b])
+				this._write([0, 166, 1, color.r, color.g, color.b])
 			}
 		} else {
 			// Blue LEDs:
