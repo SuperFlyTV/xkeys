@@ -14,10 +14,12 @@ export interface AnalogStates {
 	joystick: JoystickValue[]
 	/** 0 to 255 */
 	tbar: number[]
+	/** 0 to 255 */
+	rotary: number[]
 
 	// todo: Implement these:
 	// slider?: number[] // x with feedback
-	// trackball?: {x: number, y: number}[]
+	 trackball: TrackballValue[]
 	// trackpad?: {x: number, y: number, z: number}[] // z: proximity/force
 }
 export interface JoystickValue {
@@ -30,6 +32,13 @@ export interface JoystickValue {
 	 * Note: Use .deltaZ instead
 	 */
 	z: number
+}
+export interface TrackballValue {
+	/**  X (delta horisontal movement). 2 byte */
+	x: number
+	/**  Y (delta vertical movement), positive value is "up". 2 byte */
+	y: number
+	
 }
 export interface JoystickValueEmit extends JoystickValue {
 	/** Joystick delta Z, a delta value that behaves properly when Z rolls over 255 to 0 */
@@ -60,6 +69,8 @@ export interface XKeysEvents {
 	shuttle: (index: number, value: number, eventMetadata: EventMetadata) => void
 	joystick: (index: number, value: JoystickValueEmit, eventMetadata: EventMetadata) => void
 	tbar: (index: number, value: number, eventMetadata: EventMetadata) => void
+	trackball: (index: number, value: TrackballValue, eventMetadata: EventMetadata) => void
+	rotary: (index: number, value: number, eventMetadata: EventMetadata) => void
 
 	disconnected: () => void
 	reconnected: () => void
@@ -111,12 +122,16 @@ export interface XKeysInfo {
 	hasPS: boolean
 	/** The number of joysticks available on the device */
 	hasJoystick: number
+	/** The number of trackballs available on the device */
+	hasTrackball: number
 	/** The number of jog wheels available on the device */
 	hasJog: number
 	/** The number of shuttles available on the device */
 	hasShuttle: number
 	/** The number of T-bars available on the device */
 	hasTbar: number
+	/** The number of rotary knobs available on the device */
+	hasRotary: number
 	/** If the device has an LCD display */
 	hasLCD: boolean
 	/** If the device has GPIO support */

@@ -56,6 +56,10 @@ watcher.on('connected', (xkeysPanel) => {
 	xkeysPanel.on('tbar', (index, position, metadata) => {
 		console.log(`T-bar ${index} position has changed`, position, metadata)
 	})
+	// Listen to rotary changes:
+	xkeysPanel.on('rotary', (index, position, metadata) => {
+		console.log(`Rotary ${index} position has changed`, position, metadata)
+	})
 })
 
 // To stop watching, call
