@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { HIDDevice as CoreHIDDevice } from '@xkeys-lib/core'
 import { EventEmitter } from 'events'
 import Queue from 'p-queue'
@@ -35,7 +36,7 @@ export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 
 	public async close(): Promise<void> {
 		await this.device.close()
-		this.device.removeEventListener('inputreport', this._handleInputreport)
+		this.device.removeEventListener('inputreport', this._handleInputreport.bind(this))
 	}
 	private _handleInputreport(event: HIDInputReportEvent) {
 		const buf = WebBuffer.from(event.data.buffer)

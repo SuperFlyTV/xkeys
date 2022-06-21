@@ -81,7 +81,7 @@ export class XKeys extends EventEmitter {
 				// Note: THe RailDriver is an older device, which doesn't follow the rest of xkeys data structure.
 				// To make it easy for us, we'll just remap the data to work for us.
 
-				var rdData = new Uint8Array(32)
+				const rdData = new Uint8Array(32)
 				rdData[0] = 0 // this sets the Unit ID to 0 always
 				if (!this._firmwareVersionIsSet) {
 					rdData[1] = 214 // Fake initial message to set _firmwareVersion
@@ -207,12 +207,9 @@ export class XKeys extends EventEmitter {
 				}
 			})
 			this.product.hasTrackball?.forEach((trackball, index) => {
-				let x = 256 * data.readUInt8(trackball.trackXbyte_H) + data.readUInt8(trackball.trackXbyte_L) // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
-				let y = 256 * data.readUInt8(trackball.trackYbyte_H) + data.readUInt8(trackball.trackYbyte_L) // Trackball Y
-
 				newAnalogStates.trackball[index] = {
-					x: x,
-					y: y,
+					x: 256 * data.readUInt8(trackball.trackXbyte_H) + data.readUInt8(trackball.trackXbyte_L), // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
+					y: 256 * data.readUInt8(trackball.trackYbyte_H) + data.readUInt8(trackball.trackYbyte_L), // Trackball Y
 				}
 			})
 			this.product.hasTbar?.forEach((tBar, index) => {
@@ -322,7 +319,6 @@ export class XKeys extends EventEmitter {
 
 	/** Initialize the device. This ensures that the essential information from the device about its state has been received. */
 	public async init(): Promise<void> {
-		console.log('initialization start..........')
 		const pReceivedVersion = new Promise<void>((resolve) => {
 			this.receivedVersionResolve = resolve
 		})
@@ -337,7 +333,6 @@ export class XKeys extends EventEmitter {
 		await pReceivedGenerateData
 
 		this._initialized = true
-		console.log('initialization done!!!!!!!!')
 	}
 	/** Closes the device. Subsequent commands will raise errors. */
 	public async close(): Promise<void> {

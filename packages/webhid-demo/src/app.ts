@@ -38,47 +38,49 @@ async function openDevice(device: HIDDevice): Promise<void> {
 	})
 }
 
-window.addEventListener('load', async () => {
+window.addEventListener('load', () => {
 	appendLog('Page loaded')
-
 	// Attempt to open a previously selected device:
-	const devices = await getOpenedXKeysPanels()
-	if (devices.length > 0) {
-		appendLog(`"${devices[0].productName}" already granted in a previous session`)
-		console.log(devices[0])
-		openDevice(devices[0]).catch(console.error)
-	}
+	getOpenedXKeysPanels()
+		.then((devices) => {
+			if (devices.length > 0) {
+				appendLog(`"${devices[0].productName}" already granted in a previous session`)
+				console.log(devices[0])
+				openDevice(devices[0]).catch(console.error)
+			}
+		})
+		.catch(console.error)
 })
 
 const consentButton = document.getElementById('consent-button')
-consentButton?.addEventListener('click', async () => {
+consentButton?.addEventListener('click', () => {
 	if (currentXkeys) {
 		appendLog('Closing device')
-		await currentXkeys.close()
+		currentXkeys.close().catch(console.error)
 		currentXkeys = null
 	}
-	let devices: HIDDevice[]
 	// Prompt for a device
-	try {
-		appendLog('Asking user for permissions...')
-		devices = await requestXkeysPanels()
-	} catch (error) {
-		appendLog(`No device access granted: ${error}`)
-		return
-	}
-	if (devices.length === 0) {
-		appendLog('No device was selected')
-		return
-	}
-	appendLog(`Access granted to "${devices[0].productName}"`)
-	openDevice(devices[0]).catch(console.error)
+
+	appendLog('Asking user for permissions...')
+	requestXkeysPanels()
+		.then((devices) => {
+			if (devices.length === 0) {
+				appendLog('No device was selected')
+				return
+			}
+			appendLog(`Access granted to "${devices[0].productName}"`)
+			openDevice(devices[0]).catch(console.error)
+		})
+		.catch((error) => {
+			appendLog(`No device access granted: ${error}`)
+		})
 })
 
 const closeButton = document.getElementById('close-button')
-closeButton?.addEventListener('click', async () => {
+closeButton?.addEventListener('click', () => {
 	if (currentXkeys) {
 		appendLog('Closing device')
-		await currentXkeys.close()
+		currentXkeys.close().catch(console.error)
 		currentXkeys = null
 	}
 })
