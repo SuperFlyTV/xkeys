@@ -29,11 +29,25 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Prepare Environment
+        if: matrix.node_version != 10
         run: |
           yarn
           yarn build
         env:
           CI: true
+      - name: Prepare Environment (Node 10)
+        if: matrix.node_version == 10
+        run: |
+          sudo apt-get update
+          sudo apt-get install libudev-dev
+
+          # yarn --prod
+
+          yarn --ignore-engines
+          yarn build
+        env:
+          CI: true
+
       - name: Run unit tests
         run: |
           yarn test

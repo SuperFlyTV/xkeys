@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.4](https://github.com/SuperFlyTV/xkeys/compare/v2.3.3...v2.3.4) (2022-06-06)
+
+
+### Bug Fixes
+
+* ignore engines for node10 in ci ([8c88b43](https://github.com/SuperFlyTV/xkeys/commit/8c88b43f9d694ac82d094b82042c82bde25e5bd1))
+* pre-commit hook ([887fbb2](https://github.com/SuperFlyTV/xkeys/commit/887fbb2f9b89369dfaa0ccf851646252af9686af))
+* Watcher: async handling of adding/removing devices ([61f0b28](https://github.com/SuperFlyTV/xkeys/commit/61f0b28571a3df72b49f4bd84b6d842408e86acd))
+
+
+
+
+
 ## [2.3.2](https://github.com/SuperFlyTV/xkeys/compare/v2.3.0...v2.3.2) (2021-12-12)
 
 

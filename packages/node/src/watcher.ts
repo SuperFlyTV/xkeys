@@ -60,6 +60,8 @@ export class XKeysWatcher extends EventEmitter {
 	} = {}
 	private isMonitoring = true
 	private updateConnectedDevicesTimeout: NodeJS.Timeout | null = null
+	private updateConnectedDevicesIsRunning = false
+	private updateConnectedDevicesRunAgain = false
 	private shouldFindChangedReTries = 0
 
 	public debug = false
@@ -85,12 +87,12 @@ export class XKeysWatcher extends EventEmitter {
 			USBDetect().on(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
 		} else {
 			this.pollingInterval = setInterval(() => {
-				this.updateConnectedDevices()
+				this.triggerUpdateConnectedDevices(true)
 			}, this.options?.pollingInterval ?? 1000)
 		}
 
 		// Also do a sweep for all currently connected X-keys panels:
-		this.updateConnectedDevices()
+		this.triggerUpdateConnectedDevices(true)
 	}
 	/**
 	 * Stop the watcher
@@ -132,7 +134,7 @@ export class XKeysWatcher extends EventEmitter {
 		this.debugLog('onAddedUSBDevice')
 		if (this.isMonitoring) {
 			this.shouldFindChangedReTries++
-			this.triggerUpdateConnectedDevices()
+			this.triggerUpdateConnectedDevices(true)
 		}
 	}
 	private onRemovedUSBDevice = (_device: USBDetectNS.Device) => {
@@ -140,19 +142,45 @@ export class XKeysWatcher extends EventEmitter {
 		this.debugLog('onRemovedUSBDevice')
 		if (this.isMonitoring) {
 			this.shouldFindChangedReTries++
-			this.triggerUpdateConnectedDevices()
+			this.triggerUpdateConnectedDevices(true)
 		}
 	}
-	private triggerUpdateConnectedDevices(timeout = 100): void {
-		if (!this.updateConnectedDevicesTimeout) {
-			this.updateConnectedDevicesTimeout = setTimeout(() => {
-				this.updateConnectedDevicesTimeout = null
+	private triggerUpdateConnectedDevices(asap: boolean): void {
+		if (this.updateConnectedDevicesIsRunning) {
+			// It is already running, so we'll run it again later, when it's done:
+			this.updateConnectedDevicesRunAgain = true
+			return
+		} else if (this.updateConnectedDevicesTimeout) {
+			// It is already scheduled to run.
 
-				this.updateConnectedDevices()
-			}, timeout)
+			if (asap) {
+				// Set it to run now:
+				clearTimeout(this.updateConnectedDevicesTimeout)
+				this.updateConnectedDevicesTimeout = null
+			} else {
+				return
+			}
+		}
+
+		if (!this.updateConnectedDevicesTimeout) {
+			this.updateConnectedDevicesRunAgain = false
+			this.updateConnectedDevicesTimeout = setTimeout(
+				() => {
+					this.updateConnectedDevicesTimeout = null
+					this.updateConnectedDevicesIsRunning = true
+
+					this.updateConnectedDevices()
+						.catch(console.error)
+						.finally(() => {
+							this.updateConnectedDevicesIsRunning = false
+							if (this.updateConnectedDevicesRunAgain) this.triggerUpdateConnectedDevices(true)
+						})
+				},
+				asap ? 10 : 1000
+			)
 		}
 	}
-	private updateConnectedDevices(): void {
+	private async updateConnectedDevices(): Promise<void> {
 		const pathMap: { [devicePath: string]: true } = {}
 
 		this.debugLog('updateConnectedDevices')
@@ -177,7 +205,7 @@ export class XKeysWatcher extends EventEmitter {
 				// A device has been removed
 				this.debugLog('removed')
 				removed++
-				if (o.xkeys) this.handleRemovedDevice(o.xkeys)
+				if (o.xkeys) await this.handleRemovedDevice(o.xkeys)
 
 				delete this.seenDevicePaths[devicePath]
 			}
@@ -196,7 +224,7 @@ export class XKeysWatcher extends EventEmitter {
 			// We expected to find something changed, but didn't.
 			// Try again later:
 			this.shouldFindChangedReTries--
-			this.triggerUpdateConnectedDevices(1000)
+			this.triggerUpdateConnectedDevices(false)
 		} else {
 			this.shouldFindChangedReTries = 0
 		}
@@ -205,7 +233,7 @@ export class XKeysWatcher extends EventEmitter {
 		this.debugLog('handleNewDevice', devicePath)
 
 		setupXkeysPanel(devicePath)
-			.then((xkeysPanel: XKeys) => {
+			.then(async (xkeysPanel: XKeys) => {
 				this.setupXkeysPanels.push(xkeysPanel)
 				// Since this is async, check if the panel is still connected
 				if (this.seenDevicePaths[devicePath]) {
@@ -235,7 +263,7 @@ export class XKeysWatcher extends EventEmitter {
 							// We want the XKeys-instance to emit a 'reconnected' event.
 							// This means that we kill off the newly created xkeysPanel, and
 
-							previousXKeysPanel._handleDeviceReconnected(
+							await previousXKeysPanel._handleDeviceReconnected(
 								xkeysPanel._getHIDDevice(),
 								xkeysPanel._getDeviceInfo()
 							)
@@ -249,7 +277,7 @@ export class XKeysWatcher extends EventEmitter {
 						this.emit('connected', xkeysPanel)
 					}
 				} else {
-					this.handleRemovedDevice(xkeysPanel)
+					await this.handleRemovedDevice(xkeysPanel)
 				}
 			})
 			.catch((err) => {
@@ -269,8 +297,8 @@ export class XKeysWatcher extends EventEmitter {
 
 		return nextId
 	}
-	private handleRemovedDevice(xkeysPanel: XKeys) {
-		xkeysPanel._handleDeviceDisconnected()
+	private async handleRemovedDevice(xkeysPanel: XKeys) {
+		await xkeysPanel._handleDeviceDisconnected()
 	}
 	private debugLog(...args: any[]) {
 		if (this.debug) console.log(...args)

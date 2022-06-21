@@ -80,6 +80,8 @@ export interface XKeysInfo {
 	/** Name of the device */
 	name: string
 
+	/** Vendor id of the HID device */
+	vendorId: number
 	/** Product id of the HID device */
 	productId: number
 	/** Interface number of the HID device */
