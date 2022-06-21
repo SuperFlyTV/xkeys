@@ -133,6 +133,9 @@ export interface XKeysInfo {
 	hasTbar: number
 	/** The number of rotary knobs available on the device */
 	hasRotary: number
+	/** The number of extra buttons available on the device */
+	hasExtraButtons: number
+
 	/** If the device has an LCD display */
 	hasLCD: boolean
 	/** If the device has GPIO support */

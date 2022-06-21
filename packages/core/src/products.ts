@@ -51,6 +51,13 @@ export interface Product {
 		trackYbyte_L: number // the index of the low byte of 2 byte Y position
 		trackYbyte_H: number // the index of the high byte of 2 byte Y position
 	}[]
+
+	/** If the X-keys panel has special buttons or digital inputs that do not map to the standand matrix. */
+	hasExtraButtons?: {
+		ebByte: number // the index of the byte to find the extra button
+		ebBit: number // the index of the bit in that byte
+		
+	}[]
 	/** If the X-keys panel has a Trackpad. */
 	hasTrackpad?: {
 		padXbyte_L: number // the index of the low byte of 2 byte X position
@@ -749,11 +756,11 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hidDevices: [
 			[1365, 0],
 			[1366, 0],
-			[1327, 0],
-			[1328, 0],
-			[1329, 0],
-			[1330, 0],
-			[1331, 0],
+			[1367, 0],
+			[1368, 0],
+			[1369, 0],
+			[1370, 0],
+			[1371, 0],
 		],
 		bBytes: 4, // number of button bytes
 		bBits: 6, // number button bits per byte
@@ -836,7 +843,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XBA4X3TRACKBALL: literal<Product>({
 		//new product, expected release Q4 2022
-		name: 'X-blox XBA-4x3 Trackball Module', // 12 key module with Trackball & RGB backLight LEDs
+		name: 'X-blox XBA-4x3 Trackball Module', // 12 key module with Trackball + 2 buttons & RGB backLight LEDs
 		hidDevices: [
 			[1488, 0],
 			[1489, 0],
@@ -847,21 +854,33 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1494, 0],
 		],
 		bBytes: 4, // number of button bytes
-		bBits: 3, // number button bits per byte
+		bBits: 3, // number button bits per byte, : the 2 extra trackball buttons are on the 4 and 5 bits of byte 4, 
 		colCount: 4, // number of physical columns
-		rowCount: 3, // number of physical rows
+		rowCount: 3, // number of physical rows, sort of not counting the trackball buttons 
 		hasPS: false,
 		hasTrackball: [
 			{
-				trackXbyte_L: 6, //Delta X motion, Low byte of 2 byte date,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
-				trackXbyte_H: 7, //Delta X motion, High byte of 2 byte date, X ball motion = 256*DELTA_X_H + DELTA_X_L.
-				trackYbyte_L: 8, //Delta Y motion, Low byte of 2 byte date,  Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
-				trackYbyte_H: 9, //Delta Y motion, High byte of 2 byte date, Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
+				trackXbyte_L: 7, //Delta X motion, Low byte of 2 byte date,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
+				trackXbyte_H: 8, //Delta X motion, High byte of 2 byte date, X ball motion = 256*DELTA_X_H + DELTA_X_L.
+				trackYbyte_L: 9, //Delta Y motion, Low byte of 2 byte date,  Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
+				trackYbyte_H: 10, //Delta Y motion, High byte of 2 byte date, Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
+			},
+		],
+		hasExtraButtons: // this handles extra button like would be beside the track ball. 
+		[
+			{
+				ebByte: 5, // the byte for the extra button
+				ebBit: 3 // the bit of the extra button
+			},
+			{
+				ebByte: 5, // the byte for the extra button
+				ebBit: 4 // the bit of the extra button
 			},
 		],
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+		
 	}),
 	XBK_QWERTY: literal<Product>({
 		//new product, expected release Q1 2023
@@ -962,7 +981,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	XCMOTORDRIVER: literal<Product>({
 		//prototype product,
 		name: 'XC-Motor Driver', // Connections for 4 DC  Motors or 2 Stepper Motors, 4 Analog to Digital voltages, and 5 GPIOs
-		hidDevices: [[1364, 0]],
+		hidDevices: [[1456, 0]],
 		bBytes: 1,
 		bBits: 8, // see documentation
 		colCount: 4, //  2 ports per side of unit ,
@@ -1113,7 +1132,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 				tbarByte: 11, //Independent Brake
 			},
 			//{
-			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right,
+			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right, this is changed to a single bit in the remapping. 
 
 			//},
 		],

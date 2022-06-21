@@ -60,6 +60,9 @@ watcher.on('connected', (xkeysPanel) => {
 	xkeysPanel.on('rotary', (index, position, metadata) => {
 		console.log(`Rotary ${index} position has changed`, position, metadata)
 	})
+	xkeysPanel.on('trackball', (index, position, metadata) => {
+		console.log(`trackball ${index} position has changed`, position, metadata) // {x, y}
+	})
 })
 
 // To stop watching, call
