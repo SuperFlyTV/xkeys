@@ -299,10 +299,10 @@ export class XKeys extends EventEmitter {
 				if (newValue !== oldValue) this.emit('rotary', index, newValue, eventMetadata)
 			})
 			newAnalogStates.trackball.forEach((newValue, index) => {
-				const oldValue = this._analogStates.trackball[index]
-				if (oldValue.x !== newValue.x || oldValue.y !== newValue.y) this.emit('trackball', index, newValue, eventMetadata)
+				// We only need to emit the value when not zero, since the trackball motion are relative values.
+				if (newValue.x !== 0 || newValue.y !== 0) this.emit('trackball', index, newValue, eventMetadata)
 			})
-			
+
 
 			// Store the new states:
 			this._buttonStates = newButtonStates
