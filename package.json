@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
+    "build:core": "yarn build --scope=@xkeys-lib/core",
     "lint:raw": "lerna exec --stream -- eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
     "lint": "yarn lint:raw .",
     "lintfix": "yarn lint --fix",
@@ -24,7 +25,7 @@
     "lerna": "lerna"
   },
   "devDependencies": {
-    "@sofie-automation/code-standard-preset": "~1.0",
+    "@sofie-automation/code-standard-preset": "~2.0.2",
     "@types/jest": "^26.0.20",
     "cross-env": "^7.0.3",
     "glob": "^7.1.6",

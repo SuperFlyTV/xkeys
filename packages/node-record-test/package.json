@@ -38,7 +38,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "dependencies": {
     "@xkeys-lib/core": "2.3.4",

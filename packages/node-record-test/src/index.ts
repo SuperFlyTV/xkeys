@@ -165,6 +165,7 @@ async function startRecording(panel: HID_Device) {
 	// @ts-expect-error hack
 	const xkeysDevice = xkeys.device as HIDDevice
 
+	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const orgWrite = xkeysDevice.write
 	xkeysDevice.write = (data: number[]) => {
 		bufferedWrites.push(Buffer.from(data))
@@ -299,7 +300,7 @@ async function startRecording(panel: HID_Device) {
 	handleEvent('disconnected')
 }
 
-function askQuestion(query: string): Promise<string | number> {
+async function askQuestion(query: string): Promise<string | number> {
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
@@ -359,6 +360,6 @@ function doColorLoop(xkeys: XKeys, keyIndex: number) {
 		},
 	}
 }
-function waitTime(time: number) {
+async function waitTime(time: number) {
 	return new Promise((resolve) => setTimeout(resolve, time))
 }
