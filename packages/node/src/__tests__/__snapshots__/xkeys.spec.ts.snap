@@ -6,6 +6,7 @@ Object {
   "emitsTimestamp": true,
   "firmwareVersion": 1,
   "hasDMX": false,
+  "hasExtraButtons": 0,
   "hasGPIO": false,
   "hasJog": 0,
   "hasJoystick": 0,
