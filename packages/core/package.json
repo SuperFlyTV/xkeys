@@ -37,7 +37,7 @@
   },
   "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "keywords": [
     "xkeys",
