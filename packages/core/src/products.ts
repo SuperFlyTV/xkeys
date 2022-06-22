@@ -56,7 +56,6 @@ export interface Product {
 	hasExtraButtons?: {
 		ebByte: number // the index of the byte to find the extra button
 		ebBit: number // the index of the bit in that byte
-		
 	}[]
 	/** If the X-keys panel has a Trackpad. */
 	hasTrackpad?: {
@@ -854,9 +853,9 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1494, 0],
 		],
 		bBytes: 4, // number of button bytes
-		bBits: 3, // number button bits per byte, : the 2 extra trackball buttons are on the 4 and 5 bits of byte 4, 
+		bBits: 3, // number button bits per byte, : the 2 extra trackball buttons are on the 4 and 5 bits of byte 4,
 		colCount: 4, // number of physical columns
-		rowCount: 3, // number of physical rows, sort of not counting the trackball buttons 
+		rowCount: 3, // number of physical rows, sort of not counting the trackball buttons
 		hasPS: false,
 		hasTrackball: [
 			{
@@ -866,21 +865,20 @@ export const PRODUCTS: { [name: string]: Product } = {
 				trackYbyte_H: 10, //Delta Y motion, High byte of 2 byte date, Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
 			},
 		],
-		hasExtraButtons: // this handles extra button like would be beside the track ball. 
-		[
+		// this handles extra button like would be beside the track ball.
+		hasExtraButtons: [
 			{
 				ebByte: 5, // the byte for the extra button
-				ebBit: 3 // the bit of the extra button
+				ebBit: 3, // the bit of the extra button
 			},
 			{
 				ebByte: 5, // the byte for the extra button
-				ebBit: 4 // the bit of the extra button
+				ebBit: 4, // the bit of the extra button
 			},
 		],
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
-		
 	}),
 	XBK_QWERTY: literal<Product>({
 		//new product, expected release Q1 2023
@@ -1132,7 +1130,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 				tbarByte: 11, //Independent Brake
 			},
 			//{
-			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right, this is changed to a single bit in the remapping. 
+			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right, this is changed to a single bit in the remapping.
 
 			//},
 		],

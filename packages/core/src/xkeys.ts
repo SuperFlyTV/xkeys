@@ -191,12 +191,11 @@ export class XKeys extends EventEmitter {
 
 				const d = data.readUInt8(exButton.ebByte)
 				const bit = d & (1 << exButton.ebBit) ? true : false
-				const startIndex = this.product.bBytes*this.product.bBits  + 1 // find the end of the button array 
+				const startIndex = this.product.bBytes * this.product.bBits + 1 // find the end of the button array
 
-
-				newButtonStates.set(startIndex +index, bit) // start the extra buttons after that. 
+				newButtonStates.set(startIndex + index, bit) // start the extra buttons after that.
 			})
-			
+
 			this.product.hasJog?.forEach((jog, index) => {
 				const d = data[jog.jogByte] // Jog
 				newAnalogStates.jog[index] = d < 128 ? d : d - 256
@@ -220,11 +219,11 @@ export class XKeys extends EventEmitter {
 			})
 			this.product.hasTrackball?.forEach((trackball, index) => {
 				const x = 256 * data.readUInt8(trackball.trackXbyte_H) + data.readUInt8(trackball.trackXbyte_L) // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
-				const y= 256 * data.readUInt8(trackball.trackYbyte_H) + data.readUInt8(trackball.trackYbyte_L) // Trackball Y
+				const y = 256 * data.readUInt8(trackball.trackYbyte_H) + data.readUInt8(trackball.trackYbyte_L) // Trackball Y
 
 				newAnalogStates.trackball[index] = {
-					x: 	 x < 32768 ? x : x - 65536, // -32768 to 32768// Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
-					y:  y < 32768 ? y : y - 65536, // -32768 to 32768// Trackball Y
+					x: x < 32768 ? x : x - 65536, // -32768 to 32768// Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
+					y: y < 32768 ? y : y - 65536, // -32768 to 32768// Trackball Y
 				}
 			})
 			this.product.hasTbar?.forEach((tBar, index) => {
