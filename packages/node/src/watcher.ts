@@ -1,36 +1,30 @@
-import type * as USBDetectNS from 'usb-detection'
+import type { usb } from 'usb'
 import { EventEmitter } from 'events'
 import { XKeys, XKEYS_VENDOR_ID } from '@xkeys-lib/core'
 import { listAllConnectedPanels, setupXkeysPanel } from '.'
 
-interface USBDetectType {
-	startMonitoring: typeof USBDetectNS.startMonitoring
-	stopMonitoring: typeof USBDetectNS.stopMonitoring
-	on: typeof USBDetectNS.on
-}
-
-let USBDetectImport: USBDetectType | undefined
+let USBImport: typeof usb | undefined
 let hasTriedImport = false
 
-// Because usb-detection is an optional dependency, we have to use in a somewhat messy way:
-function USBDetect(): USBDetectType {
-	if (USBDetectImport) return USBDetectImport
+// Because usb is an optional dependency, we have to use in a somewhat messy way:
+function USBDetect(): typeof usb {
+	if (USBImport) return USBImport
 
 	if (!hasTriedImport) {
 		hasTriedImport = true
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			const usbDetection = require('usb-detection')
-			USBDetectImport = usbDetection
-			return usbDetection
+			const usb: typeof import('usb') = require('usb')
+			USBImport = usb.usb
+			return USBImport
 		} catch (err) {
 			// It's not installed
 		}
 	}
 	// else emit error:
-	throw `XKeysWatcher requires the dependency "usb-detection" to be installed, it might have been skipped due to your platform being unsupported (this is an issue with "usb-detection", not the X-keys library).
+	throw `XKeysWatcher requires the dependency "usb" to be installed, it might have been skipped due to your platform being unsupported (this is an issue with "usb", not the X-keys library).
 Possible solutions are:
-* You can try to install the depencency manually, by running "npm install usb-detection".
+* You can try to install the depencency manually, by running "npm install usb".
 * Use the fallback "usePolling" functionality instead: new XKeysWatcher({ usePolling: true})
 * Otherwise you can still connect to X-keys panels manually by using XKeys.setupXkeysPanel().
 `
@@ -47,7 +41,6 @@ export declare interface XKeysWatcher {
 	on<U extends keyof XKeysWatcherEvents>(event: U, listener: XKeysWatcherEvents[U]): this
 	emit<U extends keyof XKeysWatcherEvents>(event: U, ...args: Parameters<XKeysWatcherEvents[U]>): boolean
 }
-let watcherCount = 0
 /**
  * Set up a watcher for newly connected X-keys panels.
  * Note: It is highly recommended to set up a listener for the disconnected event on the X-keys panel, to clean up after a disconnected device.
@@ -76,15 +69,9 @@ export class XKeysWatcher extends EventEmitter {
 		super()
 
 		if (!this.options?.usePolling) {
-			watcherCount++
-			if (watcherCount === 1) {
-				// We've just started watching
-				USBDetect().startMonitoring()
-			}
-
 			// Watch for added devices:
-			USBDetect().on(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
-			USBDetect().on(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
+			USBDetect().on('attach', this.onAddedUSBDevice)
+			USBDetect().on('detach', this.onRemovedUSBDevice)
 		} else {
 			this.pollingInterval = setInterval(() => {
 				this.triggerUpdateConnectedDevices(true)
@@ -103,15 +90,8 @@ export class XKeysWatcher extends EventEmitter {
 
 		if (!this.options?.usePolling) {
 			// Remove the listeners:
-			// @ts-expect-error usb-detection exposes wrong types:
-			USBDetect().removeListener(`add:${XKEYS_VENDOR_ID}`, this.onAddedUSBDevice)
-			// @ts-expect-error usb-detection exposes wrong types:
-			USBDetect().removeListener(`remove:${XKEYS_VENDOR_ID}`, this.onRemovedUSBDevice)
-
-			watcherCount--
-			if (watcherCount === 0) {
-				USBDetect().stopMonitoring()
-			}
+			USBDetect().off('attach', this.onAddedUSBDevice)
+			USBDetect().off('detach', this.onRemovedUSBDevice)
 		}
 
 		if (this.pollingInterval) {
@@ -129,20 +109,24 @@ export class XKeysWatcher extends EventEmitter {
 			await Promise.all(ps)
 		}
 	}
-	private onAddedUSBDevice = (_device: USBDetectNS.Device) => {
-		// Called whenever a new USB device is added
-		this.debugLog('onAddedUSBDevice')
-		if (this.isMonitoring) {
-			this.shouldFindChangedReTries++
-			this.triggerUpdateConnectedDevices(true)
+	private onAddedUSBDevice = (device: usb.Device) => {
+		if (device.deviceDescriptor.idVendor === XKEYS_VENDOR_ID) {
+			// Called whenever a new USB device is added
+			this.debugLog('onAddedUSBDevice')
+			if (this.isMonitoring) {
+				this.shouldFindChangedReTries++
+				this.triggerUpdateConnectedDevices(true)
+			}
 		}
 	}
-	private onRemovedUSBDevice = (_device: USBDetectNS.Device) => {
-		// Called whenever a new USB device is removed
-		this.debugLog('onRemovedUSBDevice')
-		if (this.isMonitoring) {
-			this.shouldFindChangedReTries++
-			this.triggerUpdateConnectedDevices(true)
+	private onRemovedUSBDevice = (device: usb.Device) => {
+		if (device.deviceDescriptor.idVendor === XKEYS_VENDOR_ID) {
+			// Called whenever a new USB device is removed
+			this.debugLog('onRemovedUSBDevice')
+			if (this.isMonitoring) {
+				this.shouldFindChangedReTries++
+				this.triggerUpdateConnectedDevices(true)
+			}
 		}
 	}
 	private triggerUpdateConnectedDevices(asap: boolean): void {
@@ -186,8 +170,8 @@ export class XKeysWatcher extends EventEmitter {
 		this.debugLog('updateConnectedDevices')
 		// Note:
 		// This implementation is a bit awkward,
-		// the reason for that is that I couldn't find a good way to relate the output from usb-detection to node-hid devices
-		// So we're just using the usb-detection to trigger a re-check for new devices and cache the seen devices
+		// there isnt a good way to relate the output from usb to node-hid devices
+		// So we're just using the events to trigger a re-check for new devices and cache the seen devices
 
 		listAllConnectedPanels().forEach((xkeysDevice) => {
 			if (xkeysDevice.path) {

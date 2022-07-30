@@ -13,6 +13,7 @@
 		"declarationMap": true,
 		// Target: node 10
 		"target": "es2018",
-		"lib": ["es2018"]
+		"lib": ["es2018"],
+		"skipLibCheck": true
 	}
 }
