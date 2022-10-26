@@ -46,7 +46,7 @@
     "tslib": "^2.4.0"
   },
   "optionalDependencies": {
-    "usb": "^2.5.0"
+    "usb": "^2.5.2"
   },
   "keywords": [
     "xkeys",
