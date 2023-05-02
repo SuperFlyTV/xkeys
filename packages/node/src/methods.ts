@@ -70,7 +70,7 @@ export async function setupXkeysPanel(devicePathOrHIDDevice?: HID.Device | HID.H
 
 		if (!deviceInfo) {
 			// @ts-expect-error getDeviceInfo missing in typings
-			const nodeHidInfo: HID.Device = await this.device.getDeviceInfo()
+			const nodeHidInfo: HID.Device = await device.getDeviceInfo()
 			// Look through HID.devices(), bevause HID.Device contains the productId
 			deviceInfo = {
 				product: nodeHidInfo.product,
