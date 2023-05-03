@@ -1,20 +1,19 @@
 # Change Log
 
+**NOTE: (The full changelog is published here!)[https://github.com/SuperFlyTV/xkeys/blob/master/CHANGELOG.md]**
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.0-alpha.0](https://github.com/SuperFlyTV/xkeys/compare/v2.3.4...v3.0.0-alpha.0) (2022-06-22)
+# [3.0.0](https://github.com/SuperFlyTV/xkeys/compare/v2.4.0...v3.0.0) (2023-05-03)
 
 ### Bug Fixes
 
 - issue with trackball ([5e2021a](https://github.com/SuperFlyTV/xkeys/commit/5e2021af49d12a7367d39f638c375210db343714))
+
 # [2.4.0](https://github.com/SuperFlyTV/xkeys/compare/v2.3.4...v2.4.0) (2022-10-26)
 
 **Note:** Version bump only for package @xkeys-lib/core
-
-
-
-
 
 ## [2.3.4](https://github.com/SuperFlyTV/xkeys/compare/v2.3.3...v2.3.4) (2022-06-06)
 

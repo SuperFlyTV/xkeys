@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0-alpha.0](https://github.com/SuperFlyTV/xkeys/compare/v2.3.4...v3.0.0-alpha.0) (2022-06-22)
+# [3.0.0](https://github.com/SuperFlyTV/xkeys/compare/v2.4.0...v3.0.0) (2023-05-03)
+
+### Bug Fixes
+
+- issue with trackball ([5e2021a](https://github.com/SuperFlyTV/xkeys/commit/5e2021af49d12a7367d39f638c375210db343714))
 
 ### Features
 
