@@ -833,7 +833,8 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: false,
 		hasTbar: [
 			{
-				tbarByte: 9,
+				tbarByte: 8, // value Was incorrect, 8 is correct
+
 			},
 		],
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank,Standard Index
