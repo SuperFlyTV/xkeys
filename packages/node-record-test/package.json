@@ -31,11 +31,11 @@
   ],
   "scripts": {
     "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json",
+    "build:main": "tsc -p tsconfig.build.json",
     "build-record-test": "npm run build && rimraf ./deploy/xkeys-nodejs-test-recorder.exe && nexe dist/record-test.js -t windows-x64-12.18.1 -o ./deploy/xkeys-nodejs-test-recorder.exe && node scripts/copy-natives.js win32-x64"
   },
   "files": [
-    "dist"
+    "dist/**"
   ],
   "engines": {
     "node": ">=10"

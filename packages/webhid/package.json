@@ -20,10 +20,10 @@
   },
   "scripts": {
     "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json"
+    "build:main": "tsc -p tsconfig.build.json"
   },
   "files": [
-    "dist"
+    "dist/**"
   ],
   "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [

@@ -30,9 +30,12 @@
   ],
   "scripts": {
     "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json",
+    "build:main": "tsc -p tsconfig.build.json",
     "__test": "jest"
   },
+  "files": [
+    "dist/**"
+  ],
   "engines": {
     "node": ">=10"
   },
