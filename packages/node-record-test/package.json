@@ -40,6 +40,16 @@
   "engines": {
     "node": ">=10"
   },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
+  "keywords": [
+    "xkeys",
+    "x-keys",
+    "hid",
+    "usb",
+    "hardware",
+    "interface",
+    "controller"
+  ],
   "dependencies": {
     "@xkeys-lib/core": "2.4.0",
     "readline": "^1.3.0",
@@ -49,14 +59,5 @@
   "optionalDependencies": {
     "find": "^0.3.0",
     "nexe": "^3.3.7"
-  },
-  "keywords": [
-    "xkeys",
-    "x-keys",
-    "hid",
-    "usb",
-    "hardware",
-    "interface",
-    "controller"
-  ]
+  }
 }

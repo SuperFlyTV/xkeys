@@ -4,9 +4,14 @@
   "description": "NPM package to interact with the X-keys panels",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "license": "MIT",
+  "homepage": "https://github.com/SuperFlyTV/xkeys",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SuperFlyTV/xkeys.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SuperFlyTV/xkeys/issues"
   },
   "author": {
     "name": "Johan Nyman",
@@ -23,22 +28,15 @@
       "url": "https://github.com/cyraxx"
     }
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SuperFlyTV/xkeys/issues"
-  },
-  "homepage": "https://github.com/SuperFlyTV/xkeys#readme",
   "scripts": {
     "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json"
+    "build:main": "tsc -p tsconfig.json",
+    "__test": "jest"
   },
-  "dependencies": {
-    "tslib": "^2.4.0"
-  },
-  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "engines": {
     "node": ">=10"
   },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [
     "xkeys",
     "x-keys",
@@ -48,6 +46,9 @@
     "interface",
     "controller"
   ],
+  "dependencies": {
+    "tslib": "^2.4.0"
+  },
   "publishConfig": {
     "access": "public"
   }

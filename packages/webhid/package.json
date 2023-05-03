@@ -18,6 +18,14 @@
     "email": "johan@superfly.tv",
     "url": "https://github.com/nytamin"
   },
+  "scripts": {
+    "build": "rimraf dist && yarn build:main",
+    "build:main": "tsc -p tsconfig.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [
     "xkeys",
     "x-keys",
@@ -27,13 +35,6 @@
     "interface",
     "controller",
     "webhid"
-  ],
-  "scripts": {
-    "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json"
-  },
-  "files": [
-    "dist"
   ],
   "dependencies": {
     "@types/w3c-web-hid": "^1.0.3",
