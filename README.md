@@ -74,6 +74,9 @@ const watcher = new XKeysWatcher({
 	// usePolling: false
 	// pollingInterval= 1000
 })
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
+})
 
 watcher.on('connected', (xkeysPanel) => {
 	console.log(`X-keys panel of type ${xkeysPanel.info.name} connected`)
@@ -192,6 +195,9 @@ const watcher = new XKeysWatcher({
 	// automaticUnitIdMode: false
 	// usePolling: false
 	// pollingInterval= 1000
+})
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
 })
 watcher.on('connected', (xkeysPanel) => {
 	// xkeysPanel connected...

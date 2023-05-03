@@ -23,6 +23,9 @@ const watcher = new XKeysWatcher({
 	// usePolling: true,
 	// pollingInterval: 1000,
 })
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
+})
 
 watcher.on('connected', (xkeysPanel) => {
 	// This callback is called when a panel is initially connected.
