@@ -8,6 +8,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - issue with trackball ([5e2021a](https://github.com/SuperFlyTV/xkeys/commit/5e2021af49d12a7367d39f638c375210db343714))
+# [2.4.0](https://github.com/SuperFlyTV/xkeys/compare/v2.3.4...v2.4.0) (2022-10-26)
+
+**Note:** Version bump only for package @xkeys-lib/core
+
+
+
+
 
 ## [2.3.4](https://github.com/SuperFlyTV/xkeys/compare/v2.3.3...v2.3.4) (2022-06-06)
 

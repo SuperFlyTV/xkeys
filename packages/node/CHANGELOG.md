@@ -7,6 +7,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package xkeys
 
+# [2.4.0](https://github.com/SuperFlyTV/xkeys/compare/v2.3.4...v2.4.0) (2022-10-26)
+
+
+### Bug Fixes
+
+* update usb dep ([e1bc906](https://github.com/SuperFlyTV/xkeys/commit/e1bc9060e4ef82dce690a2bb76fb01601ed28f7a))
+
+
+### Features
+
+* replace usb-detection with usb ([d6349ef](https://github.com/SuperFlyTV/xkeys/commit/d6349ef0b0477045dd8a540887918cc2af8370aa))
+
+
+
 ## [2.3.4](https://github.com/SuperFlyTV/xkeys/compare/v2.3.3...v2.3.4) (2022-06-06)
 
 ### Bug Fixes

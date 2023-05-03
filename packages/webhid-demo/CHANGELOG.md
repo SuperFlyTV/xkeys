@@ -7,6 +7,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @xkeys-lib/webhid-demo
 
+# [2.4.0](https://github.com/SuperFlyTV/xkeys/compare/v2.3.4...v2.4.0) (2022-10-26)
+
+**Note:** Version bump only for package @xkeys-lib/webhid-demo
+
+## [2.3.4](https://github.com/SuperFlyTV/xkeys/compare/v2.3.3...v2.3.4) (2022-06-06)
+
+**Note:** Version bump only for package @xkeys-lib/webhid-demo
+
 ## [2.3.4](https://github.com/SuperFlyTV/xkeys/compare/v2.3.3...v2.3.4) (2022-06-06)
 
 **Note:** Version bump only for package @xkeys-lib/webhid-demo

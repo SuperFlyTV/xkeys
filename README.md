@@ -58,7 +58,7 @@ If you're upgrading from `<2.0.0`, please read the [_Migrations_](#Migrations) s
 
 This is the recommended way to use this library, to automatically be connected or reconnected to the panel.
 
-_Note: The watcher depends on the [node-usb-detection](https://github.com/MadLittleMods/node-usb-detection) library, which might be unsupported on some platforms._
+_Note: The watcher depends on the [node-usb](https://github.com/node-usb/node-usb) library, which might be unsupported on some platforms._
 
 ```javascript
 const { XKeysWatcher } = require('xkeys')
@@ -73,6 +73,9 @@ const watcher = new XKeysWatcher({
 	// automaticUnitIdMode: false
 	// usePolling: false
 	// pollingInterval= 1000
+})
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
 })
 
 watcher.on('connected', (xkeysPanel) => {
@@ -193,12 +196,16 @@ const watcher = new XKeysWatcher({
 	// usePolling: false
 	// pollingInterval= 1000
 })
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
+})
 watcher.on('connected', (xkeysPanel) => {
 	// xkeysPanel connected...
 })
 ```
 
 #### automaticUnitIdMode
+
 When this is set to `true`, the XKeysWatcher will enable the `"reconnected"` event for the xkeysPanels.
 
 By default, there is no unique identifier stored on the X-keys panel that can be used to differ between
@@ -208,7 +215,7 @@ if none has been set previously.
 
 #### usePolling
 
-When this is set, the XKeysWatcher will not use the `usb-detection` library for detecting connected panels,
+When this is set, the XKeysWatcher will not use the `usb` library for detecting connected panels,
 but instead resort to polling at an interval (`pollingInterval`).
 This is compatible with more systems and OS:es, but might result in slower detection of new panels.
 
@@ -221,16 +228,16 @@ xkeysPanel.on('down', (keyIndex, metadata) => {
 })
 ```
 
-| Event | Description |
-| -- | --- |
-| `"error"`        | Triggered on error. Emitted with `(error)`. |
-| `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(keyIndex, metadata)`. |
-| `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(index, jogValue, metadata)` |
-| `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(index, shuttleValue, metadata)` |
-| `"joystick"`     | Triggered when the joystick is moved. Emitted with `(index, {x, y, z, deltaZ})` |
-| `"tbar"`         | Triggered when the T-bar is moved. Emitted with `(index, tbarPosition, metadata)` |
-| `"disconnected"` | Triggered when panel is disconnected. |
-| `"reconnected"`  | Triggered when panel is reconnection. Only emitted when [automaticUnitIdMode](#automaticUnitIdMode) is enabled.  |
+| Event            | Description                                                                                                     |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| `"error"`        | Triggered on error. Emitted with `(error)`.                                                                     |
+| `"down"`, `"up"` | Triggered when a button is pressed/released. Emitted with `(keyIndex, metadata)`.                               |
+| `"jog"`          | Triggered when the jog wheel is moved. Emitted with `(index, jogValue, metadata)`                               |
+| `"shuttle"`      | Triggered when the shuttle is moved. Emitted with `(index, shuttleValue, metadata)`                             |
+| `"joystick"`     | Triggered when the joystick is moved. Emitted with `(index, {x, y, z, deltaZ})`                                 |
+| `"tbar"`         | Triggered when the T-bar is moved. Emitted with `(index, tbarPosition, metadata)`                               |
+| `"disconnected"` | Triggered when panel is disconnected.                                                                           |
+| `"reconnected"`  | Triggered when panel is reconnection. Only emitted when [automaticUnitIdMode](#automaticUnitIdMode) is enabled. |
 
 ### xkeysPanel Methods
 
@@ -335,25 +342,26 @@ Version `2.0.0` is a breaking changes, which requires several changes in how to 
 
 The most notable changes are:
 
-| Before, `<2.0.0`                                     | Changes in `>=2.0.0` |
-| -- | -- |
-| `let myXkeys = new XKeys()`                          | `let myXkeys = await XKeys.setupXkeysPanel()` |
+| Before, `<2.0.0`                                     | Changes in `>=2.0.0`                                                                                                                                                          |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `let myXkeys = new XKeys()`                          | `let myXkeys = await XKeys.setupXkeysPanel()`                                                                                                                                 |
 | `myXkeys.on('down', (keyIndex) => {} )`              | The numbering of `keyIndexes` has changed:<br/>_ The PS-button is on index 0.<br/>_ Other buttons start on index 1.<br/>\* Numbering of buttons have changed for some models. |
-| `myXkeys.on('downKey', (keyIndex) => {} )`           | Use `.on('down')` instead |
-| `myXkeys.on('upKey', (keyIndex) => {} )`             | Use `.on('up')` instead   |
-| `myXkeys.on('downAlt', (keyIndex) => {} )`           | Use `.on('down')` instead (PS-button is on index 0) |
-| `myXkeys.on('upAlt', (keyIndex) => {} )`             | Use `.on('up')` instead (PS-button is on index 0)   |
-| `myXkeys.on('jog', (position) => {} )`               | `myXkeys.on('jog', (index, position) => {} )`  |
-| `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )` |
-| `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )` |
-| `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )` |
-| `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs  |
-| `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs  |
-| `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)  |
+| `myXkeys.on('downKey', (keyIndex) => {} )`           | Use `.on('down')` instead                                                                                                                                                     |
+| `myXkeys.on('upKey', (keyIndex) => {} )`             | Use `.on('up')` instead                                                                                                                                                       |
+| `myXkeys.on('downAlt', (keyIndex) => {} )`           | Use `.on('down')` instead (PS-button is on index 0)                                                                                                                           |
+| `myXkeys.on('upAlt', (keyIndex) => {} )`             | Use `.on('up')` instead (PS-button is on index 0)                                                                                                                             |
+| `myXkeys.on('jog', (position) => {} )`               | `myXkeys.on('jog', (index, position) => {} )`                                                                                                                                 |
+| `myXkeys.on('shuttle', (position) => {} )`           | `myXkeys.on('shuttle', (index, position) => {} )`                                                                                                                             |
+| `myXkeys.on('tbar', (position, rawPosition) => {} )` | `myXkeys.on('tbar', (index, position) => {} )`                                                                                                                                |
+| `myXkeys.on('joystick', (position) => {} )`          | `myXkeys.on('joystick', (index, position) => {} )`                                                                                                                            |
+| `myXkeys.setBacklight(...)`                          | Arguments have changed, see docs                                                                                                                                              |
+| `myXkeys.setAllBacklights(...)`                      | Arguments have changed, see docs                                                                                                                                              |
+| `myXkeys.setLED(index, ...)`                         | `myXkeys.setIndicatorLED(index, ...)` (index 1 = the red, 2 = the green one)                                                                                                  |
 
 ### 2.1.1
 
 Version `2.1.1` has a minor change for when stopping the XKeysWatcher instance:
+
 ```javascript
 const watcher = new XKeysWatcher()
 await watcher.stop() // Now returns a promise
@@ -379,7 +387,7 @@ To install Yarn, just run `npm install -g yarn`.
 
 If you'd like to run and test your local changes, `yarn link` is a useful tool to symlink your local `xkeys` dependency into your test repo.
 
-``` bash
+```bash
 # To set up the xkeys-repo for linking:
 cd your/xkeys/repo
 yarn lerna exec yarn link # This runs "yarn link" in all of the mono-repo packages
@@ -421,25 +429,28 @@ yarn build # To ensure that there are no syntax or build errors
 yarn lint # To ensure that the formatting follows the right rules
 yarn test # To ensure that your code passes the unit tests.
 ```
-If you're adding a new functionality, adding unit tests for it is much appreciated.
 
+If you're adding a new functionality, adding unit tests for it is much appreciated.
 
 ### Notes to maintainers
 
 #### Making a nightly build
-* Push your changes to any branch
-* Trigger a run of [CI: publish-nightly](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-nightly.yml)
+
+- Push your changes to any branch
+- Trigger a run of [CI: publish-nightly](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-nightly.yml)
 
 #### Making a Pre-release
-* Update the branch (preferrably the master branch)
-* `yarn release:bump-prerelease` and push the changes (including the tag)
-* Trigger a run of [CI: publish-prerelease](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-prerelease.yml)
+
+- Update the branch (preferrably the master branch)
+- `yarn release:bump-prerelease` and push the changes (including the tag)
+- Trigger a run of [CI: publish-prerelease](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-prerelease.yml)
 
 #### Making a Release
-* Update the the master branch
-* `yarn release:bump-release` and push the changes (including the tag)
-* Trigger a run of [CI: publish-release](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-release.yml) to publish to NPM.
-* Trigger a run of [CI: publish-demo](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-demo.yml) to update the docs.
+
+- Update the the master branch
+- `yarn release:bump-release` and push the changes (including the tag)
+- Trigger a run of [CI: publish-release](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-release.yml) to publish to NPM.
+- Trigger a run of [CI: publish-demo](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-demo.yml) to update the docs.
 
 ### License
 
