@@ -46,7 +46,6 @@
       "yarn lint --fix"
     ]
   },
-  "main": "dist/index.js",
   "author": "Johan Nyman <johan@nytamin.se>",
   "license": "MIT"
 }

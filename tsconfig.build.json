@@ -1,19 +1,31 @@
 {
 	"extends": "@sofie-automation/code-standard-preset/ts/tsconfig.lib",
-	"exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
-	"include": ["<rootDir>/src/**/*"],
+	"exclude": [
+		"node_modules/**",
+		"**/__tests__",
+		"**/__mocks__"
+	],
+	"include": [
+		"<rootDir>/src/**/*"
+	],
 	"compilerOptions": {
 		"outDir": "./dist",
 		"baseUrl": "./",
 		"paths": {
-			"*": ["./node_modules/*"]
+			"*": [
+				"./node_modules/*"
+			]
 		},
-		"types": ["node"],
+		"types": [
+			"node"
+		],
 		"importHelpers": false,
 		"declarationMap": true,
 		// Target: node 10
 		"target": "es2018",
-		"lib": ["es2018"],
+		"lib": [
+			"es2018"
+		],
 		"skipLibCheck": true
 	}
 }
