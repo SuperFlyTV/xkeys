@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 12.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 16.x
       - name: Check if token is set
         id: check-npm-token
         run: |
@@ -59,6 +59,15 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           npm whoami
+      - name: Git commit
+        if: ${{ steps.check-npm-token.outputs.is-ok }}
+        run: |
+          git config --global user.email "ci@github.com"
+          git config --global user.name "Github CI"
+          git add -A
+          git commit -m "Make lerna happy"
+        env:
+          CI: true
       - name: Publish nightly to NPM
         if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: yarn lerna:publish from-package --dist-tag nightly --no-verify-access --yes

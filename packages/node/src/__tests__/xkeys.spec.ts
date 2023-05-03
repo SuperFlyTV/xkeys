@@ -33,7 +33,7 @@ describe('Unit tests', () => {
 
 		resetSentData()
 
-		expect(myXkeysPanel.firmwareVersion).toBe(0)
+		expect(myXkeysPanel.firmwareVersion).toBe(1)
 		resetSentData()
 		expect(myXkeysPanel.unitId).toBe(0)
 		resetSentData()

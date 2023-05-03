@@ -1,6 +1,6 @@
 {
   "name": "xkeys-webhid",
-  "version": "2.4.0",
+  "version": "3.0.0-alpha.0",
   "description": "An npm module for interfacing with the X-keys panels in a browser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -18,6 +18,14 @@
     "email": "johan@superfly.tv",
     "url": "https://github.com/nytamin"
   },
+  "scripts": {
+    "build": "rimraf dist && yarn build:main",
+    "build:main": "tsc -p tsconfig.build.json"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [
     "xkeys",
     "x-keys",
@@ -28,20 +36,13 @@
     "controller",
     "webhid"
   ],
-  "scripts": {
-    "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json"
-  },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "@types/w3c-web-hid": "^1.0.3",
-    "@xkeys-lib/core": "2.4.0",
+    "@xkeys-lib/core": "3.0.0-alpha.0",
     "buffer": "^6.0.3",
     "p-queue": "^6.6.2"
   },
   "engines": {
-    "node": ">=10.10"
+    "node": ">=14"
   }
 }

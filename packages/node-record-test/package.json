@@ -1,6 +1,6 @@
 {
   "name": "@xkeys-lib/record-test",
-  "version": "2.4.0",
+  "version": "3.0.0-alpha.0",
   "private": true,
   "description": "A script for recording tests",
   "main": "dist/index.js",
@@ -31,25 +31,16 @@
   ],
   "scripts": {
     "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json",
+    "build:main": "tsc -p tsconfig.build.json",
     "build-record-test": "npm run build && rimraf ./deploy/xkeys-nodejs-test-recorder.exe && nexe dist/record-test.js -t windows-x64-12.18.1 -o ./deploy/xkeys-nodejs-test-recorder.exe && node scripts/copy-natives.js win32-x64"
   },
   "files": [
-    "dist"
+    "dist/**"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
-  "dependencies": {
-    "@xkeys-lib/core": "2.4.0",
-    "readline": "^1.3.0",
-    "tslib": "^2.4.0",
-    "xkeys": "2.4.0"
-  },
-  "optionalDependencies": {
-    "find": "^0.3.0",
-    "nexe": "^3.3.7"
-  },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [
     "xkeys",
     "x-keys",
@@ -58,5 +49,15 @@
     "hardware",
     "interface",
     "controller"
-  ]
+  ],
+  "dependencies": {
+    "@xkeys-lib/core": "3.0.0-alpha.0",
+    "readline": "^1.3.0",
+    "tslib": "^2.4.0",
+    "xkeys": "3.0.0-alpha.0"
+  },
+  "optionalDependencies": {
+    "find": "^0.3.0",
+    "nexe": "^3.3.7"
+  }
 }
