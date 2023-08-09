@@ -452,7 +452,7 @@ export class XKeys extends EventEmitter {
 		const location = this._findBtnLocation(keyIndex)
 
 		if (this.product.backLightType === BackLightType.REMAP_24) {
-			// obsloete, Consider removing MHH
+			// obsolete, Consider removing MHH
 			const ledIndex = (location.col - 1) * 8 + location.row - 1
 			// backlight LED type 5 is the RGB 24 buttons
 			this._write([0, 181, ledIndex, color.g, color.r, color.b, flashing ? 1 : 0]) // Byte order is actually G,R,B,F)
