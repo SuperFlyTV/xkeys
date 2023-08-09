@@ -112,6 +112,23 @@ export class XKeys extends EventEmitter {
 				for (let i = 0; i < 15; i++) {
 					data[i] = rdData[i]
 				}
+			} else if (deviceInfo.productId === 255) {
+				// Note: The VEC Footpedal is an older device, which doesn't follow the rest of xkeys data structure.
+				// To make it easy for us, we'll just remap the data to work for us.
+
+				const rdData = new Uint8Array(32)
+				rdData[0] = 0 // this sets the Unit ID to 0 always
+				if (!this._firmwareVersionIsSet) {
+					rdData[1] = 214 // Fake initial message to set _firmwareVersion
+				} else if (!this._unitIdIsSet) {
+					rdData[1] = 3 // Fake initial message to set _unitId
+				} else {
+					rdData[1] = 0 // no pg switch, byte is always 0
+				}
+				rdData[2] = data.readUInt8(0) // remap button bits
+				rdData[3] = data.readUInt8(1) // remap button bits
+
+				data = Buffer.from(rdData)
 			}
 
 			//------------------------
@@ -332,19 +349,22 @@ export class XKeys extends EventEmitter {
 	}
 
 	/** Initialize the device. This ensures that the essential information from the device about its state has been received. */
-	public async init(): Promise<void> {
-		const pReceivedVersion = new Promise<void>((resolve) => {
-			this.receivedVersionResolve = resolve
-		})
-		const pReceivedGenerateData = new Promise<void>((resolve) => {
-			this.receivedGenerateDataResolve = resolve
-		})
+	public async init(deviceInfo: DeviceInfo): Promise<void> {
+		if (deviceInfo.productId !== 255) {
+			// Note: The VEC Footpedal is an older device, which doesn't accept any writes so we don't do any initialization for it
+			const pReceivedVersion = new Promise<void>((resolve) => {
+				this.receivedVersionResolve = resolve
+			})
+			const pReceivedGenerateData = new Promise<void>((resolve) => {
+				this.receivedGenerateDataResolve = resolve
+			})
 
-		this._getVersion()
-		this._generateData()
+			this._getVersion()
+			this._generateData()
 
-		await pReceivedVersion
-		await pReceivedGenerateData
+			await pReceivedVersion
+			await pReceivedGenerateData
+		}
 
 		this._initialized = true
 	}
@@ -655,7 +675,7 @@ export class XKeys extends EventEmitter {
 			// Re-vitalize:
 			this.device = device
 			this.product = this._setupDevice(deviceInfo)
-			await this.init()
+			await this.init(deviceInfo)
 
 			this.emit('reconnected')
 		}

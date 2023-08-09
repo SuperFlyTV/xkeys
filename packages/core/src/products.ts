@@ -1147,4 +1147,25 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLight2offset: 0,
 		//timestamp: none, RailDriver has no time stamp
 	}),
+	VECFootpedal: literal<Product>({
+		name: 'VEC Footpedal',
+		hidDevices: [
+			[255, 0],
+		],
+		bBytes: 1,
+		bBits: 4, // Bit 1=left pedal, bit 2=middle pedal, bit 3=right pedal, bits 4-8=0.
+		colCount: 3, //  3 pedals in a row
+		rowCount: 1, //  number of physical rows
+		hasPS: false, //
+		backLightType: BackLightType.NONE, // no back light LEDs
+		backLight2offset: 0,
+		//timestamp: none, VECFootpedal has no time stamp
+		btnLocation: [
+			[0, 0],
+			[1, 1],
+			[1, 2],
+			[1, 3],
+		],
+		disableButtons: [0],
+	}),
 }
