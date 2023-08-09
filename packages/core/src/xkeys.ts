@@ -54,7 +54,7 @@ export class XKeys extends EventEmitter {
 		this.product = this._setupDevice(deviceInfo)
 	}
 	private _setupDevice(deviceInfo: DeviceInfo) {
-		const findProdct = (): { product: Product; productId: number; interface: number } => {
+		const findProduct = (): { product: Product; productId: number; interface: number } => {
 			for (const product of Object.values(PRODUCTS)) {
 				for (const hidDevice of product.hidDevices) {
 					if (
@@ -74,7 +74,7 @@ export class XKeys extends EventEmitter {
 				`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}", interface: "${deviceInfo.interface}").\nPlease report this as an issue on our github page!`
 			)
 		}
-		const found = findProdct()
+		const found = findProduct()
 
 		this.device.on('data', (data: Buffer) => {
 			if (deviceInfo.productId === 210) {
