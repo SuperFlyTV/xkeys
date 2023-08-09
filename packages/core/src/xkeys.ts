@@ -78,7 +78,7 @@ export class XKeys extends EventEmitter {
 
 		this.device.on('data', (data: Buffer) => {
 			if (deviceInfo.productId === 210) {
-				// Note: THe RailDriver is an older device, which doesn't follow the rest of xkeys data structure.
+				// Note: The RailDriver is an older device, which doesn't follow the rest of xkeys data structure.
 				// To make it easy for us, we'll just remap the data to work for us.
 
 				const rdData = new Uint8Array(32)
