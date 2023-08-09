@@ -24,7 +24,7 @@ function USBDetect(): typeof usb {
 	// else emit error:
 	throw `XKeysWatcher requires the dependency "usb" to be installed, it might have been skipped due to your platform being unsupported (this is an issue with "usb", not the X-keys library).
 Possible solutions are:
-* You can try to install the depencency manually, by running "npm install usb".
+* You can try to install the dependency manually, by running "npm install usb".
 * Use the fallback "usePolling" functionality instead: new XKeysWatcher({ usePolling: true})
 * Otherwise you can still connect to X-keys panels manually by using XKeys.setupXkeysPanel().
 `
@@ -170,7 +170,7 @@ export class XKeysWatcher extends EventEmitter {
 		this.debugLog('updateConnectedDevices')
 		// Note:
 		// This implementation is a bit awkward,
-		// there isnt a good way to relate the output from usb to node-hid devices
+		// there isn't a good way to relate the output from usb to node-hid devices
 		// So we're just using the events to trigger a re-check for new devices and cache the seen devices
 
 		listAllConnectedPanels().forEach((xkeysDevice) => {
@@ -236,7 +236,7 @@ export class XKeysWatcher extends EventEmitter {
 					if (this.options?.automaticUnitIdMode) {
 						if (xkeysPanel.unitId === 0) {
 							// if it is 0, we assume that it's new from the factory and can be safely changed
-							xkeysPanel.setUnitId(this._getNextUniqueId(xkeysPanel)) // the lookup-cache is stored either in memory, or preferrably on disk
+							xkeysPanel.setUnitId(this._getNextUniqueId(xkeysPanel)) // the lookup-cache is stored either in memory, or preferably on disk
 						}
 						// the PID+UID pair is enough to uniquely identify a panel.
 						const uniqueIdentifier: string = xkeysPanel.uniqueId

@@ -22,7 +22,7 @@ export interface Product {
 	colCount: number
 	/** The number of physical rows */
 	rowCount: number
-	/** If the X-keys panel has the Program Switch button. This is a special switch not in the normal switch matrix, if exsists, there's only ever one per panel. */
+	/** If the X-keys panel has the Program Switch button. This is a special switch not in the normal switch matrix, if exists, there's only ever one per panel. */
 	hasPS: boolean
 	/** Byte offset for legacy backLight, bank 2 */
 	backLight2offset: number
@@ -183,7 +183,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1213, 0],
 			[1216, 0],
 		],
-		bBytes: 4, // 4	buttton data bytes
+		bBytes: 4, // 4	button data bytes
 		bBits: 4, // not really rows, but the data comes like that (it is physically one row) row1= 0,1,2,3	row2=4,5,6,7 row3= 8,9,10,11 row4=12,13,14,15
 		colCount: 16, // number of physical columns
 		rowCount: 1, // number of physical rows
@@ -286,7 +286,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1279, 0],
 			[1282, 0],
 		],
-		bBytes: 4, // 4	buttton data bytes
+		bBytes: 4, // 4	button data bytes
 		bBits: 8,
 		colCount: 16, // number of physical columns,
 		rowCount: 2, //  number of physical rows
@@ -306,7 +306,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1360, 0],
 			[1361, 0],
 		],
-		bBytes: 5, // 5	buttton data bytes
+		bBytes: 5, // 5	button data bytes
 		bBits: 8, // row1=0,8,16,24,32 row2=1,9,17,25,33 row3=2,10,18,26,34 row4=3,11,19,27,35 row5=4,12,20,28,36 row6=5,13,21,29,37 row7=6,14,22,30,38 row8=7,15,23,31,39
 		colCount: 20, // number of physical columns,
 		rowCount: 2, //  number of physical rows
@@ -497,7 +497,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestampByte: 18, // ms time since device boot 4 byte BE
 		btnLocation: [
 			[0, 0],
-			[0, 0], // the keyIndex of 1 on this panel does not exsit
+			[0, 0], // the keyIndex of 1 on this panel does not exist
 			[1, 1],
 			[1, 2],
 			[1, 3],
@@ -526,7 +526,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[2, 0],
 			[1, 3],
 		], // bit 3 has been mapped to R1,C0 this is the bit that is set if any plug is in the 3.5 mm socket. Helps tell between no switch attached or just no switches pressed.
-		disableButtons: [4], // Exclude index 4, redundent on index 3, note some or all of the buttons may be triggered when plugging switch into 3.5 mm socket
+		disableButtons: [4], // Exclude index 4, redundant on index 3, note some or all of the buttons may be triggered when plugging switch into 3.5 mm socket
 	}),
 	XK12SI: literal<Product>({
 		name: 'XK-12 Switch Interface', // six 3.5 mm ports, contacts for a stereo Plug
@@ -1099,7 +1099,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[210, 0],
 			[210, -1],
 		],
-		bBytes: 6, // this asssumes the button bytes will be remapped.
+		bBytes: 6, // this assumes the button bytes will be remapped.
 		bBits: 8, // see documentation
 		layouts: [
 			['Cab Buttons', 0, 1, 1, 2, 4],

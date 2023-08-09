@@ -131,7 +131,7 @@ export class XKeys extends EventEmitter {
 			}
 			// TODO: Add other special reports here.
 			// A standard data report will be sent when something physical happens on the keys, button press, or lever moved for example
-			// other special reports may be sent in responce to a request or some data input on the device.
+			// other special reports may be sent in response to a request or some data input on the device.
 			//
 			if (data.readUInt8(1) > 3) return // Protect against all special data reports now and into the future.
 
@@ -452,7 +452,7 @@ export class XKeys extends EventEmitter {
 		const location = this._findBtnLocation(keyIndex)
 
 		if (this.product.backLightType === BackLightType.REMAP_24) {
-			// obsloete, Consier removing MHH
+			// obsloete, Consider removing MHH
 			const ledIndex = (location.col - 1) * 8 + location.row - 1
 			// backlight LED type 5 is the RGB 24 buttons
 			this._write([0, 181, ledIndex, color.g, color.r, color.b, flashing ? 1 : 0]) // Byte order is actually G,R,B,F)
@@ -619,7 +619,7 @@ export class XKeys extends EventEmitter {
 			liteByte = 0
 		}
 		byteVals[3] = liteByte // set the LCD backlight on or off.
-		// loop throught the string and load array with acsii byte values
+		// loop through the string and load array with acsii byte values
 		let i
 		for (i = 0; i < displayChar.length; i++) {
 			byteVals[i + 4] = displayChar.charCodeAt(i)
@@ -803,7 +803,7 @@ export class XKeys extends EventEmitter {
 	private ensureInitialized() {
 		if (!this._initialized) throw new Error('XKeys.init() must be run first!')
 	}
-	/** Calcuate delta value */
+	/** Calculate delta value */
 	static calculateDelta(newValue: number, oldValue: number, overflow = 256): number {
 		let delta = newValue - oldValue
 		if (delta < -overflow * 0.5) delta += overflow // Deal with when the new value overflows
