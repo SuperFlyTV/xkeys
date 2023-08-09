@@ -312,7 +312,7 @@ xkeysPanel.setFrequency(8)
 
 ```javascript
 // Sets the UID (unit Id) value in the X-keys hardware
-// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill the EEPROM! (An EEPROM only support a few thousands of write operations.)
 xkeysPanel.setUnitId(unitId)
 ```
 
@@ -320,7 +320,7 @@ xkeysPanel.setUnitId(unitId)
 
 ```javascript
 // Save the backlights (so they are restored to this after a power cycle).
-// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill the EEPROM! (An EEPROM only support a few thousands of write operations.)
 xkeysPanel.saveBackLights()
 ```
 
