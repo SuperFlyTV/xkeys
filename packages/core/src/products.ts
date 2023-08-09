@@ -451,7 +451,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 16, //  number of virtual columns
 		rowCount: 8, //   number of virtual rows
 		hasPS: true, // slide switch on board
-		backLightType: BackLightType.NONE, // no back light, only the 2 standard indicator LEDs, also availe on header, see documentation
+		backLightType: BackLightType.NONE, // no back light, only the 2 standard indicator LEDs, also available on header, see documentation
 		backLight2offset: 0,
 		timestampByte: 18, // ms time since device boot 4 byte BE
 		// many buttons may be disabled or not as the custom wiring determines this.
