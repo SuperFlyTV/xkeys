@@ -32,25 +32,19 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 
 	const deviceWrap = new WebHIDDevice(browserDevice)
 
-	let deviceInfo:
+	const deviceInfo:
 		| {
 				product: string | undefined
 				productId: number
 				interface: number | null
 		  }
-		| undefined
-
-	deviceInfo = {
+		| undefined = {
 		product: browserDevice.productName,
 		productId: productId,
 		interface: null, // todo: Check what to use here (collection.usage?)
 	}
 
-	const xkeys = new XKeys(
-		deviceWrap,
-		deviceInfo,
-		undefined
-	)
+	const xkeys = new XKeys(deviceWrap, deviceInfo, undefined)
 
 	// Wait for the device to initialize:
 	await xkeys.init(deviceInfo)

@@ -1149,9 +1149,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	VECFootpedal: literal<Product>({
 		name: 'VEC Footpedal',
-		hidDevices: [
-			[255, 0],
-		],
+		hidDevices: [[255, 0]],
 		bBytes: 1,
 		bBits: 4, // Bit 1=left pedal, bit 2=middle pedal, bit 3=right pedal, bits 4-8=0.
 		colCount: 3, //  3 pedals in a row
