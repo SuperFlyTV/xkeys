@@ -114,7 +114,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 		bBytes: 4, // number of button bytes
 		bBits: 6, // number button bits per byte
-		layouts: [['Keys', 0, 1, 1, 6, 4]], // reigon type name, index, startRow, startCol, endRow, endCol
+		layouts: [['Keys', 0, 1, 1, 6, 4]], // region type name, index, startRow, startCol, endRow, endCol
 		colCount: 4, // number of physical columns
 		rowCount: 6, // number of physical rows
 		hasPS: true,
@@ -262,7 +262,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		layouts: [
 			['Keys', 0, 1, 1, 8, 10],
 			['Joystick', 0, 4, 4, 6, 7],
-		], // reigon type name, index, startRow, startCol, endRow, endCol
+		], // region type name, index, startRow, startCol, endRow, endCol
 		colCount: 10, // number of physical columns,
 		rowCount: 8, //  number of physical rows
 		hasPS: true,
