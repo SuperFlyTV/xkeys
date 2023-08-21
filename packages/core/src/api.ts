@@ -119,7 +119,7 @@ export interface XKeysInfo {
 	/** If the X-keys panel emits timestamps (if not, timestamp will be undefined) */
 	emitsTimestamp: boolean
 
-	/** If the product has the Program Switch button, this is a special switch not in the normal switch matrix. If exsists, only one per X-keys. */
+	/** If the product has the Program Switch button, this is a special switch not in the normal switch matrix. If exists, only one per X-keys. */
 	hasPS: boolean
 	/** The number of joysticks available on the device */
 	hasJoystick: number
