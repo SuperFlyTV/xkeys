@@ -349,8 +349,8 @@ export class XKeys extends EventEmitter {
 	}
 
 	/** Initialize the device. This ensures that the essential information from the device about its state has been received. */
-	public async init(deviceInfo: DeviceInfo): Promise<void> {
-		if (deviceInfo.productId !== 255) {
+	public async init(): Promise<void> {
+		if (this.deviceInfo.productId !== 255) {
 			// Note: The VEC Footpedal is an older device, which doesn't accept any writes so we don't do any initialization for it
 			const pReceivedVersion = new Promise<void>((resolve) => {
 				this.receivedVersionResolve = resolve
@@ -675,7 +675,7 @@ export class XKeys extends EventEmitter {
 			// Re-vitalize:
 			this.device = device
 			this.product = this._setupDevice(deviceInfo)
-			await this.init(deviceInfo)
+			await this.init()
 
 			this.emit('reconnected')
 		}

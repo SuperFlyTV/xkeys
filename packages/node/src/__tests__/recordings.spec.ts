@@ -171,7 +171,7 @@ describe('Recorded tests', () => {
 				.join('\n')}`
 		)
 
-		// This number should be decreased as more recordings are added
+		// This number should be increased as more recordings are added
 		expect(Object.values(products).length).toBeLessThanOrEqual(22)
 	})
 })
