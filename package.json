@@ -19,7 +19,7 @@
     "send-coverage": "jest && codecov",
     "release:bump-release": "lerna version --exact --conventional-commits --conventional-graduate --no-push",
     "release:bump-prerelease": "lerna version --exact --conventional-commits --conventional-prerelease --no-push",
-    "build-record-test": "lerna exec build-record-test",
+    "build-record-test": "cd packages/node-record-test && yarn build-record-test",
     "lerna:version": "lerna version --exact",
     "lerna:publish": "lerna publish",
     "lerna": "lerna"
