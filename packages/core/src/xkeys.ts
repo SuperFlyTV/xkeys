@@ -39,7 +39,7 @@ export class XKeys extends EventEmitter {
 	private _initialized = false
 	private _firmwareVersion = 0 // is set after init()
 	private _firmwareVersionIsSet = false
-	private _unidId = 0 // is set after init()
+	private _unitId = 0 // is set after init()
 	private _unitIdIsSet = false
 	private _disconnected = false
 
@@ -160,7 +160,7 @@ export class XKeys extends EventEmitter {
 			if (genData) {
 				// Note, the generateData is used to get the full state
 
-				this._unidId = UID
+				this._unitId = UID
 				this._unitIdIsSet = true
 
 				this.receivedGenerateDataResolve?.()
@@ -361,7 +361,7 @@ export class XKeys extends EventEmitter {
 	 * From factory it's set to 0, but it can be changed using this.setUnitId()
 	 */
 	public get unitId(): number {
-		return this._unidId
+		return this._unitId
 	}
 	/** Various information about the device and its capabilities */
 	public get info(): XKeysInfo {
@@ -585,7 +585,7 @@ export class XKeys extends EventEmitter {
 		}
 
 		this._write([0, 189, unitId])
-		this._unidId = unitId
+		this._unitId = unitId
 	}
 	/**
 	 * Reboots the device
