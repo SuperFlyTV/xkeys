@@ -441,7 +441,7 @@ If you're adding a new functionality, adding unit tests for it is much appreciat
 
 #### Making a Pre-release
 
-- Update the branch (preferrably the master branch)
+- Update the branch (preferably the master branch)
 - `yarn release:bump-prerelease` and push the changes (including the tag)
 - Trigger a run of [CI: publish-prerelease](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-prerelease.yml)
 

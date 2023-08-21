@@ -5,7 +5,7 @@ const { exec } = require('child_process')
 const fsReadFile = promisify(fs.readFile)
 const fsWriteFile = promisify(fs.writeFile)
 
-// This function installs all dependencies exept node-hid
+// This function installs all dependencies except node-hid
 // It is used during CI/tests, where the binaries aren't used anyway
 
 function run(command) {

@@ -12,7 +12,7 @@ const { XKeysWatcher } = require('xkeys')
 	To reset the unitId of the panels, run the reset-unitId.js example.
 */
 
-/** A persistant memory to store data for connected panels */
+/** A persistent memory to store data for connected panels */
 const memory = {}
 
 // Set up the watcher for xkeys:
