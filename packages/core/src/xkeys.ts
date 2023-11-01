@@ -619,7 +619,7 @@ export class XKeys extends EventEmitter {
 			liteByte = 0
 		}
 		byteVals[3] = liteByte // set the LCD backlight on or off.
-		// loop through the string and load array with acsii byte values
+		// loop through the string and load array with ascii byte values
 		let i
 		for (i = 0; i < displayChar.length; i++) {
 			byteVals[i + 4] = displayChar.charCodeAt(i)

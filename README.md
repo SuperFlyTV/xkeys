@@ -64,7 +64,7 @@ _Note: The watcher depends on the [node-usb](https://github.com/node-usb/node-us
 const { XKeysWatcher } = require('xkeys')
 
 /*
-	This example connects to any conncted x-keys panels and logs
+	This example connects to any connected x-keys panels and logs
 	whenever a button is pressed or analog thing is moved
 */
 

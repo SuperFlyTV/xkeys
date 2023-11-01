@@ -1,7 +1,7 @@
 const { XKeysWatcher } = require('xkeys')
 
 /*
-	This example connects to any conncted x-keys panels and logs
+	This example connects to any connected x-keys panels and logs
 	whenever a button is pressed or analog thing is moved
 */
 
