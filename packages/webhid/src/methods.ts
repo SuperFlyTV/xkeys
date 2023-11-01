@@ -22,7 +22,14 @@ export async function getOpenedXKeysPanels(): Promise<HIDDevice[]> {
 }
 
 function isValidXkeysUsage(device: HIDDevice): boolean {
-	return device.vendorId === XKEYS_VENDOR_ID && !!device.collections.find((collection) => collection.usagePage === 12)
+	if (device.vendorId !== XKEYS_VENDOR_ID) return false
+
+	return !!device.collections.find((collection) => {
+		if (collection.usagePage !== 12) return false
+
+		// Check the write-length of the device is > 20
+		return !!collection.outputReports?.find((report) => !!report.items?.find((item) => item.reportCount ?? 0 > 20))
+	})
 }
 
 /** Sets up a connection to a HID device (the X-keys panel) */
