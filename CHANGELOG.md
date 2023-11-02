@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/SuperFlyTV/xkeys/compare/v3.0.0...v3.0.1) (2023-11-02)
+
+
+### Bug Fixes
+
+* filter for correct usage/usagePage when finding xkeys devices ([8b9fdd1](https://github.com/SuperFlyTV/xkeys/commit/8b9fdd1eb69abf03cfbc67f5b503bd01a8623bc5))
+* filter for correct usage/usagePage when finding xkeys devices ([68f3e86](https://github.com/SuperFlyTV/xkeys/commit/68f3e869139b2a846e2be4209f5201f7e4893494))
+
+
+
+
+
 # [3.0.0](https://github.com/SuperFlyTV/xkeys/compare/v2.4.0...v3.0.0) (2023-05-03)
 
 ### Bug Fixes

@@ -1,9 +1,15 @@
 # Change Log
 
-**NOTE: (The full changelog is published here!)[https://github.com/SuperFlyTV/xkeys/blob/master/CHANGELOG.md]**
-
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [3.0.1](https://github.com/SuperFlyTV/xkeys/compare/v3.0.0...v3.0.1) (2023-11-02)
+
+**Note:** Version bump only for package xkeys
+
+
+
+
 
 # [3.0.0](https://github.com/SuperFlyTV/xkeys/compare/v2.4.0...v3.0.0) (2023-05-03)
 

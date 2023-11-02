@@ -1,6 +1,6 @@
 {
   "name": "@xkeys-lib/core",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "NPM package to interact with the X-keys panels",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
