@@ -1612,6 +1612,10 @@ function literal(o) {
 exports.literal = literal;
 function describeEvent(event, args) {
     const metadataStr = (metadata) => {
+        if (typeof metadata !== 'object')
+            return `${metadata}`;
+        if (metadata === null)
+            return 'null';
         const strs = [];
         Object.entries(metadata).forEach(([key, value]) => {
             strs.push(`${key}: ${value}`);
@@ -1686,6 +1690,8 @@ var BackLightType;
     BackLightType[BackLightType["LINEAR"] = 4] = "LINEAR";
     /** Backlight LED type 5 is the RGB 24 buttons */
     BackLightType[BackLightType["REMAP_24"] = 5] = "REMAP_24";
+    /** Backlight LED type 6 is the RGB 2 banks most XKB modules */
+    BackLightType[BackLightType["RGBx2"] = 6] = "RGBx2";
 })(BackLightType = exports.BackLightType || (exports.BackLightType = {}));
 exports.PRODUCTS = {
     // Note: The byte numbers are byte index (starts with 0) and will be offset from PIE SDK documentation by -2
@@ -1998,8 +2004,7 @@ exports.PRODUCTS = {
         hasPS: false,
         hasTbar: [
             {
-                tbarByte: 28,
-                tbarByteRaw: 29, // should only use cal t-bar on byte index 28
+                tbarByte: 28, //this gives a clean 0-255 value
             },
         ],
         backLightType: BackLightType.LEGACY,
@@ -2106,7 +2111,7 @@ exports.PRODUCTS = {
             [2, 0],
             [1, 3],
         ],
-        disableButtons: [4], // Exclude index 4, redundent on index 3, note some or all of the buttons may be triggered when plugging switch into 3.5 mm socket
+        disableButtons: [4], // Exclude index 4, redundant on index 3, note some or all of the buttons may be triggered when plugging switch into 3.5 mm socket
     }),
     XK12SI: (0, lib_1.literal)({
         name: 'XK-12 Switch Interface',
@@ -2315,13 +2320,407 @@ exports.PRODUCTS = {
         hasTbar: [
             {
                 tbarByte: 17,
-                tbarByteRaw: 15, // should only use cal t-bar on byte index 17
             },
         ],
         backLightType: BackLightType.LEGACY,
         backLight2offset: 80,
         timestampByte: 31,
         disableButtons: [6, 7, 8, 14, 15, 16, 22, 23, 24, 30, 31, 32, 73, 74, 75, 73], // These bits are messy, better to ignore them
+    }),
+    XBK4X6: (0, lib_1.literal)({
+        //new product, expected release Q4 2022
+        name: 'X-blox XBK-4x6 Module',
+        hidDevices: [
+            [1365, 0],
+            [1366, 0],
+            [1367, 0],
+            [1368, 0],
+            [1369, 0],
+            [1370, 0],
+            [1371, 0],
+        ],
+        bBytes: 4,
+        bBits: 6,
+        colCount: 4,
+        rowCount: 6,
+        hasPS: false,
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XBK3X6: (0, lib_1.literal)({
+        //new product, expected release Q4 2022
+        name: 'X-blox XBK-3x6 Module',
+        hidDevices: [
+            [1378, 0],
+            [1379, 0],
+            [1380, 0],
+            [1381, 0],
+            [1382, 0],
+            [1383, 0],
+            [1384, 0],
+        ],
+        bBytes: 3,
+        bBits: 6,
+        colCount: 3,
+        rowCount: 6,
+        hasPS: false,
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XBA4X3JOG: (0, lib_1.literal)({
+        //new product, expected release Q4 2022
+        name: 'X-blox XBA-4x3 Jog-Shuttle Module',
+        hidDevices: [
+            [1388, 0],
+            [1389, 0],
+            [1390, 0],
+            [1391, 0],
+            [1392, 0],
+            [1393, 0],
+            [1394, 0],
+        ],
+        bBytes: 4,
+        bBits: 3,
+        colCount: 4,
+        rowCount: 3,
+        hasPS: false,
+        hasJog: [{ jogByte: 12 }],
+        hasShuttle: [{ shuttleByte: 13 }],
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XBA3X6TBAR: (0, lib_1.literal)({
+        //new product, expected release Q4 2022
+        name: 'X-blox XBA-3x6 T-bar Module',
+        hidDevices: [
+            [1396, 0],
+            [1397, 0],
+            [1398, 0],
+            [1399, 0],
+            [1400, 0],
+            [1401, 0],
+            [1402, 0],
+        ],
+        bBytes: 3,
+        bBits: 6,
+        colCount: 3,
+        rowCount: 6,
+        hasPS: false,
+        hasTbar: [
+            {
+                tbarByte: 8, // value Was incorrect, 8 is correct
+            },
+        ],
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XBA4X3TRACKBALL: (0, lib_1.literal)({
+        //new product, expected release Q4 2022
+        name: 'X-blox XBA-4x3 Trackball Module',
+        hidDevices: [
+            [1488, 0],
+            [1489, 0],
+            [1490, 0],
+            [1491, 0],
+            [1492, 0],
+            [1493, 0],
+            [1494, 0],
+        ],
+        bBytes: 4,
+        bBits: 3,
+        colCount: 4,
+        rowCount: 3,
+        hasPS: false,
+        hasTrackball: [
+            {
+                trackXbyte_L: 7,
+                trackXbyte_H: 8,
+                trackYbyte_L: 9,
+                trackYbyte_H: 10, //Delta Y motion, High byte of 2 byte date, Y ball motion = 256*DELTA_Y_H + DELTA_Y_L.
+            },
+        ],
+        // this handles extra button like would be beside the track ball.
+        hasExtraButtons: [
+            {
+                ebByte: 5,
+                ebBit: 3, // the bit of the extra button
+            },
+            {
+                ebByte: 5,
+                ebBit: 4, // the bit of the extra button
+            },
+        ],
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XBK_QWERTY: (0, lib_1.literal)({
+        //new product, expected release Q1 2023
+        name: 'X-blox XBK-QWERTY Module',
+        hidDevices: [
+            [1343, 0],
+            [1344, 0],
+            [1345, 0],
+            [1346, 0],
+            [1347, 0],
+            [1348, 0],
+            [1349, 0],
+        ],
+        bBytes: 32,
+        bBits: 6,
+        layouts: [
+            ['Keys', 0, 1, 1, 6, 8],
+            ['QWERTY-85', 0, 1, 9, 6, 24],
+            ['Keys', 1, 1, 25, 6, 32], // right side satellite keys, optional
+        ],
+        colCount: 32,
+        rowCount: 6,
+        hasPS: false,
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 36, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XBK16X6: (0, lib_1.literal)({
+        //new product, expected release Q1 2023
+        name: 'X-blox XBK-16x6 Module',
+        hidDevices: [
+            [1496, 0],
+            [1497, 0],
+            [1498, 0],
+            [1499, 0],
+            [1500, 0],
+            [1501, 0],
+            [1502, 0],
+        ],
+        bBytes: 16,
+        bBits: 6,
+        colCount: 16,
+        rowCount: 6,
+        hasPS: false,
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XCDRCSERVO: (0, lib_1.literal)({
+        //new product, expected release Q1 2023
+        name: 'XC-RC Servo',
+        hidDevices: [[1364, 0]],
+        bBytes: 1,
+        bBits: 8,
+        colCount: 4,
+        rowCount: 2,
+        hasPS: true,
+        backLightType: BackLightType.NONE,
+        backLight2offset: 0,
+        btnLocation: [
+            // columns are port number and row 1 is the first switch on the port and 2 is second
+            [0, 0],
+            [2, 1],
+            [1, 1],
+            [2, 2],
+            [1, 2],
+            [2, 3],
+            [1, 3],
+            [2, 4],
+            [1, 4],
+        ],
+    }),
+    XCRELAY: (0, lib_1.literal)({
+        //prototype product,
+        name: 'XC-Relay',
+        hidDevices: [[1363, 0]],
+        bBytes: 1,
+        bBits: 8,
+        colCount: 4,
+        rowCount: 2,
+        hasPS: true,
+        backLightType: BackLightType.NONE,
+        backLight2offset: 0,
+        btnLocation: [
+            // columns are port number and row 1 is the first switch on the port and 2 is second
+            [0, 0],
+            [2, 1],
+            [1, 1],
+            [2, 2],
+            [1, 2],
+            [2, 3],
+            [1, 3],
+            [2, 4],
+            [1, 4],
+        ],
+    }),
+    XCMOTORDRIVER: (0, lib_1.literal)({
+        //prototype product,
+        name: 'XC-Motor Driver',
+        hidDevices: [[1456, 0]],
+        bBytes: 1,
+        bBits: 8,
+        colCount: 4,
+        rowCount: 2,
+        hasPS: true,
+        hasGPIO: true,
+        hasADC: [
+            {
+                adcByte_L: 6,
+                adcByte_H: 7, //ADC Value, High byte of 2 byte date,
+            },
+            {
+                adcByte_L: 8,
+                adcByte_H: 9, //ADC Value, High byte of 2 byte date,
+            },
+            {
+                adcByte_L: 10,
+                adcByte_H: 11, //ADC Value, High byte of 2 byte date,
+            },
+            {
+                adcByte_L: 12,
+                adcByte_H: 13, //ADC Value, High byte of 2 byte date,
+            },
+        ],
+        backLightType: BackLightType.NONE,
+        backLight2offset: 0,
+        btnLocation: [
+            // columns are port number and row 1 is the first switch on the port and 2 is second
+            [0, 0],
+            [2, 1],
+            [1, 1],
+            [2, 2],
+            [1, 2],
+            [2, 3],
+            [1, 3],
+            [2, 4],
+            [1, 4],
+        ],
+    }),
+    XBA4X3TRACKPAD: (0, lib_1.literal)({
+        //prototype product,
+        name: 'X-blox XBA-Track Pad Module',
+        hidDevices: [
+            [1422, 0],
+            [1423, 0],
+            [1424, 0],
+            [1425, 0],
+            [1426, 0],
+            [1427, 0],
+            [1428, 0],
+        ],
+        bBytes: 4,
+        bBits: 3,
+        colCount: 4,
+        rowCount: 3,
+        hasPS: false,
+        hasTrackpad: [
+            {
+                padXbyte_L: 6,
+                padXbyte_H: 7,
+                padYbyte_L: 8,
+                padYbyte_H: 9,
+                pinchByte: 10,
+                scrollByte: 11, // the index of the scroll byte
+            },
+        ],
+        backLightType: BackLightType.RGBx2,
+        backLight2offset: 0,
+        timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+    }),
+    XK433REMOTE: (0, lib_1.literal)({
+        //prototype product,
+        name: 'XK-433RF Remote',
+        hidDevices: [
+            [1505, 0],
+            [1506, 0],
+            [1507, 0],
+            [1508, 0],
+            [1509, 0],
+            [1510, 0],
+        ],
+        bBytes: 2,
+        bBits: 8,
+        layouts: [
+            ['Remote', 0, 1, 1, 2, 4],
+            ['SwitchPorts', 0, 1, 1, 2, 2],
+            ['SwitchPorts', 1, 1, 3, 2, 4],
+        ],
+        colCount: 4,
+        rowCount: 2,
+        hasPS: true,
+        backLightType: BackLightType.NONE,
+        backLight2offset: 0,
+        timestampByte: 31,
+        btnLocation: [
+            [0, 0],
+            [2, 1],
+            [1, 1],
+            [2, 2],
+            [1, 2],
+            [2, 3],
+            [1, 3],
+            [2, 4],
+            [1, 4],
+            [2, 5],
+            [1, 5],
+            [2, 6],
+            [1, 6],
+        ], // column indicates port #, mono plugs map to row 1, stereo plugs to row 1 and 2
+        // due to the stereo jack some buttons may always be down when a single pole (mono) plug is plugged in.
+    }),
+    RailDriver: (0, lib_1.literal)({
+        //In production: www.raildriver.com
+        name: 'RailDriver Cab Controller',
+        hidDevices: [
+            [210, 0],
+            [210, -1],
+        ],
+        bBytes: 6,
+        bBits: 8,
+        layouts: [
+            ['Cab Buttons', 0, 1, 1, 2, 4],
+            ['Horn', 0, 1, 3, 2, 3],
+            ['Reverser', 0, 1, 4, 4, 4],
+            ['Throttle', 0, 1, 5, 4, 5],
+            ['Auto Brake', 0, 1, 6, 4, 6],
+            ['Ind Brake', 0, 1, 7, 4, 7],
+            ['Bail Off', 0, 1, 8, 4, 8],
+            ['Wiper', 0, 1, 9, 4, 9],
+            ['Lights', 0, 3, 9, 4, 9],
+        ],
+        colCount: 6,
+        rowCount: 8,
+        hasPS: false,
+        hasTbar: [
+            // the raildriver has 5 lever controls, we will call them T-bars for this mapping
+            {
+                tbarByte: 8, //Reverser Lever
+            },
+            {
+                tbarByte: 9, //Throttle Lever
+            },
+            {
+                tbarByte: 10, //Auto Brake Lever
+            },
+            {
+                tbarByte: 11, //Independent Brake
+            },
+            //{
+            //	tbarByte: 12, //Bail Off, moving Ind Brake to Right, this is changed to a single bit in the remapping.
+            //},
+        ],
+        hasRotary: [
+            // the raildriver has 2 rotary controls,
+            {
+                rotaryByte: 12, //Upper twist knob
+            },
+            {
+                rotaryByte: 13, //Lower twist knob
+            },
+        ],
+        backLightType: BackLightType.NONE,
+        backLight2offset: 0,
+        //timestamp: none, RailDriver has no time stamp
     }),
 };
 //# sourceMappingURL=products.js.map
@@ -2352,10 +2751,14 @@ class XKeys extends events_1.EventEmitter {
             joystick: [],
             shuttle: [],
             tbar: [],
+            rotary: [],
+            trackball: [],
         };
         this._initialized = false;
-        this._unidId = 0; // is set after init()
         this._firmwareVersion = 0; // is set after init()
+        this._firmwareVersionIsSet = false;
+        this._unitId = 0; // is set after init()
+        this._unitIdIsSet = false;
         this._disconnected = false;
         this.product = this._setupDevice(deviceInfo);
     }
@@ -2364,7 +2767,7 @@ class XKeys extends events_1.EventEmitter {
         return products_1.XKEYS_VENDOR_ID;
     }
     _setupDevice(deviceInfo) {
-        const findProdct = () => {
+        const findProduct = () => {
             for (const product of Object.values(products_1.PRODUCTS)) {
                 for (const hidDevice of product.hidDevices) {
                     if (hidDevice[0] === deviceInfo.productId &&
@@ -2380,19 +2783,59 @@ class XKeys extends events_1.EventEmitter {
             // else:
             throw new Error(`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}", interface: "${deviceInfo.interface}").\nPlease report this as an issue on our github page!`);
         };
-        const found = findProdct();
+        const found = findProduct();
         this.device.on('data', (data) => {
-            var _a, _b, _c, _d, _e, _f;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+            if (deviceInfo.productId === 210) {
+                // Note: The RailDriver is an older device, which doesn't follow the rest of xkeys data structure.
+                // To make it easy for us, we'll just remap the data to work for us.
+                const rdData = new Uint8Array(32);
+                rdData[0] = 0; // this sets the Unit ID to 0 always
+                if (!this._firmwareVersionIsSet) {
+                    rdData[1] = 214; // Fake initial message to set _firmwareVersion
+                }
+                else if (!this._unitIdIsSet) {
+                    rdData[1] = 3; // Fake initial message to set _unitId
+                }
+                else {
+                    rdData[1] = 0; // no pg switch, byte is always 0
+                }
+                rdData[2] = data.readUInt8(7); // remap button bits
+                rdData[3] = data.readUInt8(8); // remap button bits
+                rdData[4] = data.readUInt8(9); // remap button bits
+                rdData[5] = data.readUInt8(10); // remap button bits
+                rdData[6] = data.readUInt8(11); // remap button bits
+                rdData[7] = data.readUInt8(12); // remap button bits
+                // Add Bailoff to button byte,
+                if (data.readUInt8(4) >= 160) {
+                    // set bit 5 to 1
+                    rdData[7] = rdData[7] | 16;
+                }
+                rdData[8] = data.readUInt8(0); // remap analog bytes
+                rdData[9] = data.readUInt8(1); // remap analog bytes
+                rdData[10] = data.readUInt8(2); // remap analog bytes
+                rdData[11] = data.readUInt8(3); // remap analog bytes
+                rdData[12] = data.readUInt8(5); // remap analog bytes
+                rdData[13] = data.readUInt8(6); // remap analog bytes
+                for (let i = 0; i < 15; i++) {
+                    data[i] = rdData[i];
+                }
+            }
+            //------------------------
             if (data.readUInt8(1) === 214) {
                 // this is a special report that does not correlate to the regular data report, it is created by sending getVersion()
                 const firmVersion = data.readUInt8(10);
                 // data.readUInt8(0) the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
                 // data.readUInt16LE(11) // PID is also in this report as a double check.
-                this._firmwareVersion = firmVersion; // Firmware version
-                (_a = this.receivedVersionResolve) === null || _a === void 0 ? void 0 : _a.call(// Firmware version
-                this);
-                return; // quit here because this data would be interperted as button data and give bad results.
+                this._firmwareVersion = firmVersion || 1; // Firmware version
+                this._firmwareVersionIsSet = true;
+                (_a = this.receivedVersionResolve) === null || _a === void 0 ? void 0 : _a.call(this);
+                return; // quit here because this data would be interpreted as button data and give bad results.
             }
+            // TODO: Add other special reports here.
+            // A standard data report will be sent when something physical happens on the keys, button press, or lever moved for example
+            // other special reports may be sent in response to a request or some data input on the device.
+            //
             if (data.readUInt8(1) > 3)
                 return; // Protect against all special data reports now and into the future.
             const newButtonStates = new Map();
@@ -2401,6 +2844,8 @@ class XKeys extends events_1.EventEmitter {
                 joystick: [],
                 shuttle: [],
                 tbar: [],
+                rotary: [],
+                trackball: [],
             };
             // UID, unit id, is used to uniquely identify a certain panel, from factory it's set to 0, it can be set by a user with this.setUID()
             const UID = data.readUInt8(0); // the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
@@ -2414,7 +2859,8 @@ class XKeys extends events_1.EventEmitter {
             const genData = dd & (1 << 1) ? true : false;
             if (genData) {
                 // Note, the generateData is used to get the full state
-                this._unidId = UID;
+                this._unitId = UID;
+                this._unitIdIsSet = true;
                 (_b = this.receivedGenerateDataResolve) === null || _b === void 0 ? void 0 : _b.call(this);
             }
             // Note: first button data (bByte) is on byte index 2
@@ -2432,15 +2878,23 @@ class XKeys extends events_1.EventEmitter {
                 const bit = d & (1 << 0) ? true : false; // get first bit only
                 newButtonStates.set(0, bit); // always keyIndex of PS to 0
             }
-            (_c = this.product.hasJog) === null || _c === void 0 ? void 0 : _c.forEach((jog, index) => {
+            (_c = this.product.hasExtraButtons) === null || _c === void 0 ? void 0 : _c.forEach((exButton, index) => {
+                //const d = data[jog.jogByte] // Jog
+                //newAnalogStates.jog[index] = d < 128 ? d : d - 256
+                const d = data.readUInt8(exButton.ebByte);
+                const bit = d & (1 << exButton.ebBit) ? true : false;
+                const startIndex = this.product.bBytes * this.product.bBits + 1; // find the end of the button array
+                newButtonStates.set(startIndex + index, bit); // start the extra buttons after that.
+            });
+            (_d = this.product.hasJog) === null || _d === void 0 ? void 0 : _d.forEach((jog, index) => {
                 const d = data[jog.jogByte]; // Jog
                 newAnalogStates.jog[index] = d < 128 ? d : d - 256;
             });
-            (_d = this.product.hasShuttle) === null || _d === void 0 ? void 0 : _d.forEach((shuttle, index) => {
+            (_e = this.product.hasShuttle) === null || _e === void 0 ? void 0 : _e.forEach((shuttle, index) => {
                 const d = data[shuttle.shuttleByte]; // Shuttle
                 newAnalogStates.shuttle[index] = d < 128 ? d : d - 256;
             });
-            (_e = this.product.hasJoystick) === null || _e === void 0 ? void 0 : _e.forEach((joystick, index) => {
+            (_f = this.product.hasJoystick) === null || _f === void 0 ? void 0 : _f.forEach((joystick, index) => {
                 const x = data.readUInt8(joystick.joyXbyte); // Joystick X
                 let y = data.readUInt8(joystick.joyYbyte); // Joystick Y
                 const z = data.readUInt8(joystick.joyZbyte); // Joystick Z (twist of joystick)
@@ -2453,9 +2907,21 @@ class XKeys extends events_1.EventEmitter {
                     z: z, // joystick z is a continuous value that rolls over to 0 after 255
                 };
             });
-            (_f = this.product.hasTbar) === null || _f === void 0 ? void 0 : _f.forEach((tBar, index) => {
+            (_g = this.product.hasTrackball) === null || _g === void 0 ? void 0 : _g.forEach((trackball, index) => {
+                const x = 256 * data.readUInt8(trackball.trackXbyte_H) + data.readUInt8(trackball.trackXbyte_L); // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
+                const y = 256 * data.readUInt8(trackball.trackYbyte_H) + data.readUInt8(trackball.trackYbyte_L); // Trackball Y
+                newAnalogStates.trackball[index] = {
+                    x: x < 32768 ? x : x - 65536,
+                    y: y < 32768 ? y : y - 65536, // -32768 to 32768// Trackball Y
+                };
+            });
+            (_h = this.product.hasTbar) === null || _h === void 0 ? void 0 : _h.forEach((tBar, index) => {
                 const d = data.readUInt8(tBar.tbarByte); // T-bar (calibrated)
                 newAnalogStates.tbar[index] = d;
+            });
+            (_j = this.product.hasRotary) === null || _j === void 0 ? void 0 : _j.forEach((rotary, index) => {
+                const d = data.readUInt8(rotary.rotaryByte);
+                newAnalogStates.rotary[index] = d;
             });
             // Disabled/nonexisting buttons: important as some "buttons" in the jog & shuttle devices are used for shuttle events in hardware.
             if (this.product.disableButtons) {
@@ -2524,6 +2990,16 @@ class XKeys extends events_1.EventEmitter {
                 if (newValue !== oldValue)
                     this.emit('tbar', index, newValue, eventMetadata);
             });
+            newAnalogStates.rotary.forEach((newValue, index) => {
+                const oldValue = this._analogStates.rotary[index];
+                if (newValue !== oldValue)
+                    this.emit('rotary', index, newValue, eventMetadata);
+            });
+            newAnalogStates.trackball.forEach((newValue, index) => {
+                // We only need to emit the value when not zero, since the trackball motion are relative values.
+                if (newValue.x !== 0 || newValue.y !== 0)
+                    this.emit('trackball', index, newValue, eventMetadata);
+            });
             // Store the new states:
             this._buttonStates = newButtonStates;
             this._analogStates = newAnalogStates;
@@ -2571,11 +3047,11 @@ class XKeys extends events_1.EventEmitter {
      * From factory it's set to 0, but it can be changed using this.setUnitId()
      */
     get unitId() {
-        return this._unidId;
+        return this._unitId;
     }
     /** Various information about the device and its capabilities */
     get info() {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         this.ensureInitialized();
         return (0, lib_1.literal)({
             name: this.product.name,
@@ -2599,9 +3075,12 @@ class XKeys extends events_1.EventEmitter {
             emitsTimestamp: this.product.timestampByte !== undefined,
             hasPS: this.product.hasPS,
             hasJoystick: ((_b = this.product.hasJoystick) === null || _b === void 0 ? void 0 : _b.length) || 0,
-            hasJog: ((_c = this.product.hasJog) === null || _c === void 0 ? void 0 : _c.length) || 0,
-            hasShuttle: ((_d = this.product.hasShuttle) === null || _d === void 0 ? void 0 : _d.length) || 0,
-            hasTbar: ((_e = this.product.hasTbar) === null || _e === void 0 ? void 0 : _e.length) || 0,
+            hasTrackball: ((_c = this.product.hasTrackball) === null || _c === void 0 ? void 0 : _c.length) || 0,
+            hasExtraButtons: ((_d = this.product.hasExtraButtons) === null || _d === void 0 ? void 0 : _d.length) || 0,
+            hasJog: ((_e = this.product.hasJog) === null || _e === void 0 ? void 0 : _e.length) || 0,
+            hasShuttle: ((_f = this.product.hasShuttle) === null || _f === void 0 ? void 0 : _f.length) || 0,
+            hasTbar: ((_g = this.product.hasTbar) === null || _g === void 0 ? void 0 : _g.length) || 0,
+            hasRotary: ((_h = this.product.hasRotary) === null || _h === void 0 ? void 0 : _h.length) || 0,
             hasLCD: this.product.hasLCD || false,
             hasGPIO: this.product.hasGPIO || false,
             hasSerialData: this.product.hasSerialData || false,
@@ -2616,7 +3095,7 @@ class XKeys extends events_1.EventEmitter {
     }
     /**
      * Sets the indicator-LED on the device, usually a red and green LED at the top of many X-keys
-     * @param ledIndex the LED to set (1 = green, 2 = red)
+     * @param ledIndex the LED to set (1 = green (top), 2 = red (bottom))
      * @param on boolean: on or off
      * @param flashing boolean: flashing or not (if on)
      * @returns undefined
@@ -2634,12 +3113,13 @@ class XKeys extends events_1.EventEmitter {
      * Sets the backlight of a button
      * @param keyIndex The button of which to set the backlight color
      * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
+     * @param bankIndex number: Which LED bank (top or bottom) to set the color of. (Only applicable to RGB-based panels. )
      * @param flashing boolean: flashing or not (if on)
      * @returns undefined
      */
     setBacklight(keyIndex, 
     /** RGB, RRGGBB, #RRGGBB */
-    color, flashing) {
+    color, flashing, bankIndex) {
         this.ensureInitialized();
         if (keyIndex === 0)
             return; // PS-button has no backlight
@@ -2647,12 +3127,24 @@ class XKeys extends events_1.EventEmitter {
         color = this._interpretColor(color, this.product.backLightType);
         const location = this._findBtnLocation(keyIndex);
         if (this.product.backLightType === products_1.BackLightType.REMAP_24) {
+            // obsolete, Consider removing MHH
             const ledIndex = (location.col - 1) * 8 + location.row - 1;
             // backlight LED type 5 is the RGB 24 buttons
             this._write([0, 181, ledIndex, color.g, color.r, color.b, flashing ? 1 : 0]); // Byte order is actually G,R,B,F)
-            return;
         }
-        if (this.product.backLightType === products_1.BackLightType.STICK_BUTTONS) {
+        else if (this.product.backLightType === products_1.BackLightType.RGBx2) {
+            // backlight LED type 6, 2 banks of full RGB LEDs
+            const ledIndex = keyIndex - 1; // 0 based linear numbering sort of...
+            if (bankIndex !== undefined) {
+                this._write([0, 165, ledIndex, bankIndex, color.r, color.g, color.b, flashing ? 1 : 0]);
+            }
+            else {
+                // There are  2 leds in under a key, 0 for top and 1 for bottom.
+                this._write([0, 165, ledIndex, 0, color.r, color.g, color.b, flashing ? 1 : 0]);
+                this._write([0, 165, ledIndex, 1, color.r, color.g, color.b, flashing ? 1 : 0]);
+            }
+        }
+        else if (this.product.backLightType === products_1.BackLightType.STICK_BUTTONS) {
             // The stick buttons, that requires special mapping.
             let ledIndex = location.col - 1; // 0 based linear numbering sort of...
             if (ledIndex > 11)
@@ -2683,13 +3175,21 @@ class XKeys extends events_1.EventEmitter {
     /**
      * Sets the backlight of all buttons
      * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
+     * @param bankIndex number: Which LED bank (top or bottom) to control.
      */
-    setAllBacklights(color) {
+    setAllBacklights(color, bankIndex) {
         this.ensureInitialized();
         color = this._interpretColor(color, this.product.backLightType);
-        if (this.product.backLightType === products_1.BackLightType.REMAP_24) {
-            // backlight LED type 5 is the RGB 24 buttons
-            this._write([0, 182, color.g, color.r, color.b]); // Byte order is actually G,R,B
+        if (this.product.backLightType === products_1.BackLightType.RGBx2) {
+            // backlight LED type 6 is the RGB devices
+            if (bankIndex !== undefined) {
+                this._write([0, 166, bankIndex, color.r, color.g, color.b]);
+            }
+            else {
+                // There are  2 leds in under a key, 0 for top and 1 for bottom.
+                this._write([0, 166, 0, color.r, color.g, color.b]);
+                this._write([0, 166, 1, color.r, color.g, color.b]);
+            }
         }
         else {
             // Blue LEDs:
@@ -2748,7 +3248,7 @@ class XKeys extends events_1.EventEmitter {
     /**
      * Sets the UID (unit Id) value in the X-keys hardware
      * Note: EEPROM command, don't call this function too often, or you'll kill the EEPROM!
-     * (An EEPROM only support a few thousands of write operations.)
+     * (An EEPROM only supports a few thousands of write operations.)
      * @param unitId Unit id ("UID"). Allowed values: 0-255. 0 is factory default
      * @returns undefined
      */
@@ -2758,7 +3258,7 @@ class XKeys extends events_1.EventEmitter {
             throw new Error(`Invalid UID: ${unitId} (needs to be between 0 - 255)`);
         }
         this._write([0, 189, unitId]);
-        this._unidId = unitId;
+        this._unitId = unitId;
     }
     /**
      * Reboots the device
@@ -2795,7 +3295,7 @@ class XKeys extends events_1.EventEmitter {
             liteByte = 0;
         }
         byteVals[3] = liteByte; // set the LCD backlight on or off.
-        // loop throught the string and load array with acsii byte values
+        // loop through the string and load array with ascii byte values
         let i;
         for (i = 0; i < displayChar.length; i++) {
             byteVals[i + 4] = displayChar.charCodeAt(i);
@@ -2806,7 +3306,7 @@ class XKeys extends events_1.EventEmitter {
     }
     /**
      * Writes a Buffer of data bytes to the X-keys device
-     * Used to send custom messages to X-keys for testing and development
+     * Used to send custom messages to X-keys for testing and development, see documentation for valid messages
      * @param buffer The buffer written to the device
      * @returns undefined
      */
@@ -2905,7 +3405,7 @@ class XKeys extends events_1.EventEmitter {
         this._write([0, 177]);
     }
     /**
-     * Gets the frimware version and UID : forces the unit to send a special data report with firmware version and Unit ID.
+     * Gets the firmware version and UID : forces the unit to send a special data report with firmware version and Unit ID.
      * @param none
      * @returns undefined //an input report will be generated by the X-keys with byte 2 set to 214. This has the firmware version and UID.
      */
@@ -2922,15 +3422,27 @@ class XKeys extends events_1.EventEmitter {
                 return { r: 0, g: 0, b: 0 };
         }
         else if (typeof color === 'string') {
-            // Handle a few "worded" colors:
+            // Note: Handle a few "worded" colors, these colors are tweaked to look nice with the X-keys LEDs:
             if (color === 'red')
                 color = 'ff0000';
             else if (color === 'blue')
                 color = '0000ff';
+            else if (color === 'violet')
+                color = '600096';
+            else if (color === 'aquamarine')
+                color = '00ff45';
+            else if (color === 'turquoise')
+                color = '00ff81';
             else if (color === 'purple')
-                color = 'ff00ff';
+                color = '960096';
             else if (color === 'redblue')
                 color = 'ff00ff';
+            else if (color === 'pink')
+                color = 'ff0828';
+            else if (color === 'orange')
+                color = 'ff1400';
+            else if (color === 'yellow')
+                color = 'ff8000';
             else if (color === 'green')
                 color = '00ff00';
             else if (color === 'black')
@@ -2958,6 +3470,14 @@ class XKeys extends events_1.EventEmitter {
                     b: parseInt(m[3] + m[3], 16),
                 };
             }
+            else if ((m = color.match(/([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3})/))) {
+                // '255,127,0' // comma separated integers
+                return {
+                    r: parseInt(m[1], 10),
+                    g: parseInt(m[2], 10),
+                    b: parseInt(m[3], 10),
+                };
+            }
             else {
                 // Fallback:
                 this.emit('error', new Error(`Unable to interpret color "${color}"`));
@@ -2977,7 +3497,7 @@ class XKeys extends events_1.EventEmitter {
         if (!this._initialized)
             throw new Error('XKeys.init() must be run first!');
     }
-    /** Calcuate delta value */
+    /** Calculate delta value */
     static calculateDelta(newValue, oldValue, overflow = 256) {
         let delta = newValue - oldValue;
         if (delta < -overflow * 0.5)
@@ -3026,13 +3546,14 @@ const core_1 = __webpack_require__(613);
 const web_hid_wrapper_1 = __webpack_require__(901);
 /** Prompts the user for which X-keys panel to select */
 async function requestXkeysPanels() {
-    return navigator.hid.requestDevice({
+    const allDevices = await navigator.hid.requestDevice({
         filters: [
             {
                 vendorId: core_1.XKEYS_VENDOR_ID,
             },
         ],
     });
+    return allDevices.filter(isValidXkeysUsage);
 }
 exports.requestXkeysPanels = requestXkeysPanels;
 /**
@@ -3040,14 +3561,28 @@ exports.requestXkeysPanels = requestXkeysPanels;
  * The browser remembers what the user previously allowed your site to access, and this will open those without the request dialog
  */
 async function getOpenedXKeysPanels() {
-    return await navigator.hid.getDevices();
+    const allDevices = await navigator.hid.getDevices();
+    return allDevices.filter(isValidXkeysUsage);
 }
 exports.getOpenedXKeysPanels = getOpenedXKeysPanels;
+function isValidXkeysUsage(device) {
+    if (device.vendorId !== core_1.XKEYS_VENDOR_ID)
+        return false;
+    return !!device.collections.find((collection) => {
+        var _a;
+        if (collection.usagePage !== 12)
+            return false;
+        // Check the write-length of the device is > 20
+        return !!((_a = collection.outputReports) === null || _a === void 0 ? void 0 : _a.find((report) => { var _a; return !!((_a = report.items) === null || _a === void 0 ? void 0 : _a.find((item) => { var _a; return (_a = item.reportCount) !== null && _a !== void 0 ? _a : 0 > 20; })); }));
+    });
+}
 /** Sets up a connection to a HID device (the X-keys panel) */
 async function setupXkeysPanel(browserDevice) {
     var _a;
     if (!((_a = browserDevice === null || browserDevice === void 0 ? void 0 : browserDevice.collections) === null || _a === void 0 ? void 0 : _a.length))
         throw Error(`device collections is empty`);
+    if (!isValidXkeysUsage(browserDevice))
+        throw new Error(`Device has incorrect usage/interface`);
     if (!browserDevice.productId)
         throw Error(`Device has no productId!`);
     const productId = browserDevice.productId;
@@ -3061,8 +3596,14 @@ async function setupXkeysPanel(browserDevice) {
         interface: null, // todo: Check what to use here (collection.usage?)
     }, undefined);
     // Wait for the device to initialize:
-    await xkeys.init();
-    return xkeys;
+    try {
+        await xkeys.init();
+        return xkeys;
+    }
+    catch (e) {
+        await deviceWrap.close();
+        throw e;
+    }
 }
 exports.setupXkeysPanel = setupXkeysPanel;
 //# sourceMappingURL=methods.js.map
@@ -3104,7 +3645,7 @@ class WebHIDDevice extends events_1.EventEmitter {
     }
     async close() {
         await this.device.close();
-        this.device.removeEventListener('inputreport', this._handleInputreport);
+        this.device.removeEventListener('inputreport', this._handleInputreport.bind(this));
     }
     _handleInputreport(event) {
         const buf = buffer_1.Buffer.from(event.data.buffer);
@@ -5301,45 +5842,46 @@ async function openDevice(device) {
         appendLog(`T-bar #${index}: ${value}`);
     });
 }
-window.addEventListener('load', async () => {
+window.addEventListener('load', () => {
     appendLog('Page loaded');
     // Attempt to open a previously selected device:
-    const devices = await (0, xkeys_webhid_1.getOpenedXKeysPanels)();
-    if (devices.length > 0) {
-        appendLog(`"${devices[0].productName}" already granted in a previous session`);
-        console.log(devices[0]);
-        openDevice(devices[0]).catch(console.error);
-    }
+    (0, xkeys_webhid_1.getOpenedXKeysPanels)()
+        .then((devices) => {
+        if (devices.length > 0) {
+            appendLog(`"${devices[0].productName}" already granted in a previous session`);
+            console.log(devices[0]);
+            openDevice(devices[0]).catch(console.error);
+        }
+    })
+        .catch(console.error);
 });
 const consentButton = document.getElementById('consent-button');
-consentButton === null || consentButton === void 0 ? void 0 : consentButton.addEventListener('click', async () => {
+consentButton === null || consentButton === void 0 ? void 0 : consentButton.addEventListener('click', () => {
     if (currentXkeys) {
         appendLog('Closing device');
-        await currentXkeys.close();
+        currentXkeys.close().catch(console.error);
         currentXkeys = null;
     }
-    let devices;
     // Prompt for a device
-    try {
-        appendLog('Asking user for permissions...');
-        devices = await (0, xkeys_webhid_1.requestXkeysPanels)();
-    }
-    catch (error) {
+    appendLog('Asking user for permissions...');
+    (0, xkeys_webhid_1.requestXkeysPanels)()
+        .then((devices) => {
+        if (devices.length === 0) {
+            appendLog('No device was selected');
+            return;
+        }
+        appendLog(`Access granted to "${devices[0].productName}"`);
+        openDevice(devices[0]).catch(console.error);
+    })
+        .catch((error) => {
         appendLog(`No device access granted: ${error}`);
-        return;
-    }
-    if (devices.length === 0) {
-        appendLog('No device was selected');
-        return;
-    }
-    appendLog(`Access granted to "${devices[0].productName}"`);
-    openDevice(devices[0]).catch(console.error);
+    });
 });
 const closeButton = document.getElementById('close-button');
-closeButton === null || closeButton === void 0 ? void 0 : closeButton.addEventListener('click', async () => {
+closeButton === null || closeButton === void 0 ? void 0 : closeButton.addEventListener('click', () => {
     if (currentXkeys) {
         appendLog('Closing device');
-        await currentXkeys.close();
+        currentXkeys.close().catch(console.error);
         currentXkeys = null;
     }
 });
