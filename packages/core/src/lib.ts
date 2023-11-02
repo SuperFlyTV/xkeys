@@ -9,8 +9,11 @@ export function literal<T>(o: T): T {
 
 export function describeEvent(event: string, args: any[]): string {
 	const metadataStr = (metadata: any) => {
+		if (typeof metadata == 'object') return `${metadata}`
+		if (metadata === null) return 'null'
+
 		const strs: string[] = []
-		Object.entries(metadata).forEach(([key, value]) => {
+		Object.entries<any>(metadata).forEach(([key, value]) => {
 			strs.push(`${key}: ${value}`)
 		})
 		return strs.join(', ')

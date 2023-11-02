@@ -432,7 +432,7 @@ yarn test # To ensure that your code passes the unit tests.
 
 If you're adding a new functionality, adding unit tests for it is much appreciated.
 
-### Notes to maintainers
+### Notes for maintainers
 
 #### Making a nightly build
 

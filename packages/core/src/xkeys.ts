@@ -55,7 +55,7 @@ export class XKeys extends EventEmitter {
 	}
 	private _setupDevice(deviceInfo: DeviceInfo) {
 		const findProduct = (): { product: Product; productId: number; interface: number } => {
-			for (const product of Object.values(PRODUCTS)) {
+			for (const product of Object.values<Product>(PRODUCTS)) {
 				for (const hidDevice of product.hidDevices) {
 					if (
 						hidDevice[0] === deviceInfo.productId &&
