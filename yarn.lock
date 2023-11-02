@@ -1598,7 +1598,7 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sofie-automation/code-standard-preset@~2.5.2":
+"@sofie-automation/code-standard-preset@^2.5.2":
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/@sofie-automation/code-standard-preset/-/code-standard-preset-2.5.2.tgz#468bd1c4c32be976431f50f76ff54329c2cfffe0"
   integrity sha512-xzAMUp/FHvNwkMC2pl8isOVLcWUmoQ9Mw1FdiYwDSHyOkLmbJ/nwYrl6iWR/7LbkGk45RAKkbkfFyhsqTh4xzA==
