@@ -63,6 +63,6 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 		return xkeys
 	} catch (e) {
 		await deviceWrap.close()
-		throw new Error('Failed to initialise device')
+		throw e
 	}
 }
