@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { HIDDevice } from '@xkeys-lib/core'
 import { EventEmitter } from 'events'
 import * as HID from 'node-hid'

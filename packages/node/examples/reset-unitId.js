@@ -6,6 +6,9 @@ const { XKeysWatcher } = require('xkeys')
 */
 
 const watcher = new XKeysWatcher()
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
+})
 
 watcher.on('connected', (xkeysPanel) => {
 	console.log(

@@ -4,16 +4,19 @@ exports[`Unit tests XKeys methods 1`] = `
 Object {
   "colCount": 4,
   "emitsTimestamp": true,
-  "firmwareVersion": 0,
+  "firmwareVersion": 1,
   "hasDMX": false,
+  "hasExtraButtons": 0,
   "hasGPIO": false,
   "hasJog": 0,
   "hasJoystick": 0,
   "hasLCD": false,
   "hasPS": true,
+  "hasRotary": 0,
   "hasSerialData": false,
   "hasShuttle": 0,
   "hasTbar": 0,
+  "hasTrackball": 0,
   "interface": 0,
   "layout": Array [
     Object {

@@ -1,7 +1,7 @@
 const { XKeysWatcher } = require('xkeys')
 
 /*
-	This example connects to any conncted x-keys panels and logs
+	This example connects to any connected x-keys panels and logs
 	whenever a button is pressed or analog thing is moved
 */
 
@@ -12,6 +12,9 @@ const watcher = new XKeysWatcher({
 	// pollingInterval= 1000
 })
 
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
+})
 watcher.on('connected', (xkeysPanel) => {
 	console.log(`X-keys panel of type ${xkeysPanel.info.name} connected`)
 
@@ -55,6 +58,13 @@ watcher.on('connected', (xkeysPanel) => {
 	// Listen to t-bar changes:
 	xkeysPanel.on('tbar', (index, position, metadata) => {
 		console.log(`T-bar ${index} position has changed`, position, metadata)
+	})
+	// Listen to rotary changes:
+	xkeysPanel.on('rotary', (index, position, metadata) => {
+		console.log(`Rotary ${index} position has changed`, position, metadata)
+	})
+	xkeysPanel.on('trackball', (index, position, metadata) => {
+		console.log(`trackball ${index} position has changed`, position, metadata) // {x, y}
 	})
 })
 

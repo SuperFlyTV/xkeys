@@ -1,6 +1,6 @@
 {
   "name": "xkeys",
-  "version": "2.5.0-1",
+  "version": "3.1.0-0",
   "description": "An npm module for interfacing with the X-keys panels in Node.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -30,23 +30,16 @@
   ],
   "scripts": {
     "build": "rimraf dist && yarn build:main",
-    "build:main": "tsc -p tsconfig.json",
+    "build:main": "tsc -p tsconfig.build.json",
     "test": "jest"
   },
   "files": [
-    "dist"
+    "dist/**"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
-  "dependencies": {
-    "@xkeys-lib/core": "2.4.0",
-    "node-hid": "npm:@julusian/hid@^3.0.0-0",
-    "tslib": "^2.4.0"
-  },
-  "optionalDependencies": {
-    "usb": "^2.5.2"
-  },
+  "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
   "keywords": [
     "xkeys",
     "x-keys",
@@ -55,5 +48,13 @@
     "hardware",
     "interface",
     "controller"
-  ]
+  ],
+  "dependencies": {
+    "@xkeys-lib/core": "3.0.1",
+    "node-hid": "^3.0.0",
+    "tslib": "^2.4.0"
+  },
+  "optionalDependencies": {
+    "usb": "^2.5.2"
+  }
 }

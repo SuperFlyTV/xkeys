@@ -1,4 +1,4 @@
-import { XKeys } from '@xkeys-lib/core'
+import { Product, XKeys } from '@xkeys-lib/core'
 import { PRODUCTS } from '@xkeys-lib/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice } from './node-hid-wrapper'
@@ -106,7 +106,7 @@ export function listAllConnectedPanels(): HID_Device[] {
 		if (!device.path) return false
 
 		let found = false
-		for (const product of Object.values(PRODUCTS)) {
+		for (const product of Object.values<Product>(PRODUCTS)) {
 			for (const hidDevice of product.hidDevices) {
 				if (hidDevice[0] === device.productId && hidDevice[1] === device.interface) {
 					found = true

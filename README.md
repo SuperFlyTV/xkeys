@@ -64,7 +64,7 @@ _Note: The watcher depends on the [node-usb](https://github.com/node-usb/node-us
 const { XKeysWatcher } = require('xkeys')
 
 /*
-	This example connects to any conncted x-keys panels and logs
+	This example connects to any connected x-keys panels and logs
 	whenever a button is pressed or analog thing is moved
 */
 
@@ -73,6 +73,9 @@ const watcher = new XKeysWatcher({
 	// automaticUnitIdMode: false
 	// usePolling: false
 	// pollingInterval= 1000
+})
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
 })
 
 watcher.on('connected', (xkeysPanel) => {
@@ -193,6 +196,9 @@ const watcher = new XKeysWatcher({
 	// usePolling: false
 	// pollingInterval= 1000
 })
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
+})
 watcher.on('connected', (xkeysPanel) => {
 	// xkeysPanel connected...
 })
@@ -306,7 +312,7 @@ xkeysPanel.setFrequency(8)
 
 ```javascript
 // Sets the UID (unit Id) value in the X-keys hardware
-// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill the EEPROM! (An EEPROM only support a few thousands of write operations.)
 xkeysPanel.setUnitId(unitId)
 ```
 
@@ -314,7 +320,7 @@ xkeysPanel.setUnitId(unitId)
 
 ```javascript
 // Save the backlights (so they are restored to this after a power cycle).
-// Note: This writes to the EEPROM, don't call this function too often, or you'll kill thEEPROM! (An EEPROM only support a few thousands of write operations.)
+// Note: This writes to the EEPROM, don't call this function too often, or you'll kill the EEPROM! (An EEPROM only support a few thousands of write operations.)
 xkeysPanel.saveBackLights()
 ```
 
@@ -426,7 +432,7 @@ yarn test # To ensure that your code passes the unit tests.
 
 If you're adding a new functionality, adding unit tests for it is much appreciated.
 
-### Notes to maintainers
+### Notes for maintainers
 
 #### Making a nightly build
 
@@ -435,7 +441,7 @@ If you're adding a new functionality, adding unit tests for it is much appreciat
 
 #### Making a Pre-release
 
-- Update the branch (preferrably the master branch)
+- Update the branch (preferably the master branch)
 - `yarn release:bump-prerelease` and push the changes (including the tag)
 - Trigger a run of [CI: publish-prerelease](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-prerelease.yml)
 

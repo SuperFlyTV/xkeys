@@ -29,14 +29,18 @@ export class XKeys extends EventEmitter {
 		joystick: [],
 		shuttle: [],
 		tbar: [],
+		rotary: [],
+		trackball: [],
 	}
 
 	private receivedVersionResolve?: () => void
 	private receivedGenerateDataResolve?: () => void
 
 	private _initialized = false
-	private _unidId = 0 // is set after init()
 	private _firmwareVersion = 0 // is set after init()
+	private _firmwareVersionIsSet = false
+	private _unitId = 0 // is set after init()
+	private _unitIdIsSet = false
 	private _disconnected = false
 
 	/** Vendor id for the X-keys panels */
@@ -50,8 +54,8 @@ export class XKeys extends EventEmitter {
 		this.product = this._setupDevice(deviceInfo)
 	}
 	private _setupDevice(deviceInfo: DeviceInfo) {
-		const findProdct = (): { product: Product; productId: number; interface: number } => {
-			for (const product of Object.values(PRODUCTS)) {
+		const findProduct = (): { product: Product; productId: number; interface: number } => {
+			for (const product of Object.values<Product>(PRODUCTS)) {
 				for (const hidDevice of product.hidDevices) {
 					if (
 						hidDevice[0] === deviceInfo.productId &&
@@ -70,9 +74,47 @@ export class XKeys extends EventEmitter {
 				`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}", interface: "${deviceInfo.interface}").\nPlease report this as an issue on our github page!`
 			)
 		}
-		const found = findProdct()
+		const found = findProduct()
 
 		this.device.on('data', (data: Buffer) => {
+			if (deviceInfo.productId === 210) {
+				// Note: The RailDriver is an older device, which doesn't follow the rest of xkeys data structure.
+				// To make it easy for us, we'll just remap the data to work for us.
+
+				const rdData = new Uint8Array(32)
+				rdData[0] = 0 // this sets the Unit ID to 0 always
+				if (!this._firmwareVersionIsSet) {
+					rdData[1] = 214 // Fake initial message to set _firmwareVersion
+				} else if (!this._unitIdIsSet) {
+					rdData[1] = 3 // Fake initial message to set _unitId
+				} else {
+					rdData[1] = 0 // no pg switch, byte is always 0
+				}
+				rdData[2] = data.readUInt8(7) // remap button bits
+				rdData[3] = data.readUInt8(8) // remap button bits
+				rdData[4] = data.readUInt8(9) // remap button bits
+				rdData[5] = data.readUInt8(10) // remap button bits
+				rdData[6] = data.readUInt8(11) // remap button bits
+				rdData[7] = data.readUInt8(12) // remap button bits
+				// Add Bailoff to button byte,
+				if (data.readUInt8(4) >= 160) {
+					// set bit 5 to 1
+
+					rdData[7] = rdData[7] | 16
+				}
+				rdData[8] = data.readUInt8(0) // remap analog bytes
+				rdData[9] = data.readUInt8(1) // remap analog bytes
+				rdData[10] = data.readUInt8(2) // remap analog bytes
+				rdData[11] = data.readUInt8(3) // remap analog bytes
+				rdData[12] = data.readUInt8(5) // remap analog bytes
+				rdData[13] = data.readUInt8(6) // remap analog bytes
+
+				for (let i = 0; i < 15; i++) {
+					data[i] = rdData[i]
+				}
+			}
+
+			//------------------------
 			if (data.readUInt8(1) === 214) {
 				// this is a special report that does not correlate to the regular data report, it is created by sending getVersion()
 
@@ -80,12 +122,17 @@ export class XKeys extends EventEmitter {
 				// data.readUInt8(0) the unit ID is the first byte, index 0, used to tell between 2 identical X-keys, UID is set by user
 				// data.readUInt16LE(11) // PID is also in this report as a double check.
 
-				this._firmwareVersion = firmVersion // Firmware version
+				this._firmwareVersion = firmVersion || 1 // Firmware version
+				this._firmwareVersionIsSet = true
 
 				this.receivedVersionResolve?.()
 
-				return // quit here because this data would be interperted as button data and give bad results.
+				return // quit here because this data would be interpreted as button data and give bad results.
 			}
+			// TODO: Add other special reports here.
+			// A standard data report will be sent when something physical happens on the keys, button press, or lever moved for example
+			// other special reports may be sent in response to a request or some data input on the device.
+			//
 			if (data.readUInt8(1) > 3) return // Protect against all special data reports now and into the future.
 
 			const newButtonStates: ButtonStates = new Map()
@@ -94,6 +141,8 @@ export class XKeys extends EventEmitter {
 				joystick: [],
 				shuttle: [],
 				tbar: [],
+				rotary: [],
+				trackball: [],
 			}
 
 			// UID, unit id, is used to uniquely identify a certain panel, from factory it's set to 0, it can be set by a user with this.setUID()
@@ -111,7 +160,8 @@ export class XKeys extends EventEmitter {
 			if (genData) {
 				// Note, the generateData is used to get the full state
 
-				this._unidId = UID
+				this._unitId = UID
+				this._unitIdIsSet = true
 
 				this.receivedGenerateDataResolve?.()
 			}
@@ -135,6 +185,17 @@ export class XKeys extends EventEmitter {
 				const bit = d & (1 << 0) ? true : false // get first bit only
 				newButtonStates.set(0, bit) // always keyIndex of PS to 0
 			}
+			this.product.hasExtraButtons?.forEach((exButton, index) => {
+				//const d = data[jog.jogByte] // Jog
+				//newAnalogStates.jog[index] = d < 128 ? d : d - 256
+
+				const d = data.readUInt8(exButton.ebByte)
+				const bit = d & (1 << exButton.ebBit) ? true : false
+				const startIndex = this.product.bBytes * this.product.bBits + 1 // find the end of the button array
+
+				newButtonStates.set(startIndex + index, bit) // start the extra buttons after that.
+			})
+
 			this.product.hasJog?.forEach((jog, index) => {
 				const d = data[jog.jogByte] // Jog
 				newAnalogStates.jog[index] = d < 128 ? d : d - 256
@@ -156,9 +217,22 @@ export class XKeys extends EventEmitter {
 					z: z, // joystick z is a continuous value that rolls over to 0 after 255
 				}
 			})
+			this.product.hasTrackball?.forEach((trackball, index) => {
+				const x = 256 * data.readUInt8(trackball.trackXbyte_H) + data.readUInt8(trackball.trackXbyte_L) // Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
+				const y = 256 * data.readUInt8(trackball.trackYbyte_H) + data.readUInt8(trackball.trackYbyte_L) // Trackball Y
+
+				newAnalogStates.trackball[index] = {
+					x: x < 32768 ? x : x - 65536, // -32768 to 32768// Trackball X //Delta X motion,  X ball motion = 256*DELTA_X_H + DELTA_X_L.
+					y: y < 32768 ? y : y - 65536, // -32768 to 32768// Trackball Y
+				}
+			})
 			this.product.hasTbar?.forEach((tBar, index) => {
 				const d = data.readUInt8(tBar.tbarByte) // T-bar (calibrated)
 				newAnalogStates.tbar[index] = d
+			})
+			this.product.hasRotary?.forEach((rotary, index) => {
+				const d = data.readUInt8(rotary.rotaryByte)
+				newAnalogStates.rotary[index] = d
 			})
 
 			// Disabled/nonexisting buttons: important as some "buttons" in the jog & shuttle devices are used for shuttle events in hardware.
@@ -225,6 +299,14 @@ export class XKeys extends EventEmitter {
 				const oldValue = this._analogStates.tbar[index]
 				if (newValue !== oldValue) this.emit('tbar', index, newValue, eventMetadata)
 			})
+			newAnalogStates.rotary.forEach((newValue, index) => {
+				const oldValue = this._analogStates.rotary[index]
+				if (newValue !== oldValue) this.emit('rotary', index, newValue, eventMetadata)
+			})
+			newAnalogStates.trackball.forEach((newValue, index) => {
+				// We only need to emit the value when not zero, since the trackball motion are relative values.
+				if (newValue.x !== 0 || newValue.y !== 0) this.emit('trackball', index, newValue, eventMetadata)
+			})
 
 			// Store the new states:
 			this._buttonStates = newButtonStates
@@ -279,7 +361,7 @@ export class XKeys extends EventEmitter {
 	 * From factory it's set to 0, but it can be changed using this.setUnitId()
 	 */
 	public get unitId(): number {
-		return this._unidId
+		return this._unitId
 	}
 	/** Various information about the device and its capabilities */
 	public get info(): XKeysInfo {
@@ -292,7 +374,7 @@ export class XKeys extends EventEmitter {
 			interface: this.product.interface,
 
 			unitId: this.unitId,
-			firmwareVersion: this._firmwareVersion, // added this imporant to defend against older firmware bugs
+			firmwareVersion: this._firmwareVersion, // added this important to defend against older firmware bugs
 
 			colCount: this.product.colCount,
 			rowCount: this.product.rowCount,
@@ -311,9 +393,12 @@ export class XKeys extends EventEmitter {
 			emitsTimestamp: this.product.timestampByte !== undefined,
 			hasPS: this.product.hasPS,
 			hasJoystick: this.product.hasJoystick?.length || 0,
+			hasTrackball: this.product.hasTrackball?.length || 0,
+			hasExtraButtons: this.product.hasExtraButtons?.length || 0,
 			hasJog: this.product.hasJog?.length || 0,
 			hasShuttle: this.product.hasShuttle?.length || 0,
 			hasTbar: this.product.hasTbar?.length || 0,
+			hasRotary: this.product.hasRotary?.length || 0,
 			hasLCD: this.product.hasLCD || false,
 			hasGPIO: this.product.hasGPIO || false,
 			hasSerialData: this.product.hasSerialData || false,
@@ -330,7 +415,7 @@ export class XKeys extends EventEmitter {
 
 	/**
 	 * Sets the indicator-LED on the device, usually a red and green LED at the top of many X-keys
-	 * @param ledIndex the LED to set (1 = green, 2 = red)
+	 * @param ledIndex the LED to set (1 = green (top), 2 = red (bottom))
 	 * @param on boolean: on or off
 	 * @param flashing boolean: flashing or not (if on)
 	 * @returns undefined
@@ -347,6 +432,7 @@ export class XKeys extends EventEmitter {
 	 * Sets the backlight of a button
 	 * @param keyIndex The button of which to set the backlight color
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
+	 * @param bankIndex number: Which LED bank (top or bottom) to set the color of. (Only applicable to RGB-based panels. )
 	 * @param flashing boolean: flashing or not (if on)
 	 * @returns undefined
 	 */
@@ -354,7 +440,8 @@ export class XKeys extends EventEmitter {
 		keyIndex: number,
 		/** RGB, RRGGBB, #RRGGBB */
 		color: Color | string | boolean | null,
-		flashing?: boolean
+		flashing?: boolean,
+		bankIndex?: number
 	): void {
 		this.ensureInitialized()
 		if (keyIndex === 0) return // PS-button has no backlight
@@ -365,13 +452,22 @@ export class XKeys extends EventEmitter {
 		const location = this._findBtnLocation(keyIndex)
 
 		if (this.product.backLightType === BackLightType.REMAP_24) {
+			// obsolete, Consider removing MHH
 			const ledIndex = (location.col - 1) * 8 + location.row - 1
 			// backlight LED type 5 is the RGB 24 buttons
 			this._write([0, 181, ledIndex, color.g, color.r, color.b, flashing ? 1 : 0]) // Byte order is actually G,R,B,F)
-			return
-		}
+		} else if (this.product.backLightType === BackLightType.RGBx2) {
+			// backlight LED type 6, 2 banks of full RGB LEDs
+			const ledIndex = keyIndex - 1 // 0 based linear numbering sort of...
 
-		if (this.product.backLightType === BackLightType.STICK_BUTTONS) {
+			if (bankIndex !== undefined) {
+				this._write([0, 165, ledIndex, bankIndex, color.r, color.g, color.b, flashing ? 1 : 0])
+			} else {
+				// There are  2 leds in under a key, 0 for top and 1 for bottom.
+				this._write([0, 165, ledIndex, 0, color.r, color.g, color.b, flashing ? 1 : 0])
+				this._write([0, 165, ledIndex, 1, color.r, color.g, color.b, flashing ? 1 : 0])
+			}
+		} else if (this.product.backLightType === BackLightType.STICK_BUTTONS) {
 			// The stick buttons, that requires special mapping.
 
 			let ledIndex = location.col - 1 // 0 based linear numbering sort of...
@@ -404,15 +500,22 @@ export class XKeys extends EventEmitter {
 	/**
 	 * Sets the backlight of all buttons
 	 * @param color r,g,b or string (RGB, RRGGBB, #RRGGBB)
+	 * @param bankIndex number: Which LED bank (top or bottom) to control.
 	 */
-	public setAllBacklights(color: Color | string | boolean | null): void {
+	public setAllBacklights(color: Color | string | boolean | null, bankIndex?: number): void {
 		this.ensureInitialized()
 		color = this._interpretColor(color, this.product.backLightType)
 
-		if (this.product.backLightType === BackLightType.REMAP_24) {
-			// backlight LED type 5 is the RGB 24 buttons
+		if (this.product.backLightType === BackLightType.RGBx2) {
+			// backlight LED type 6 is the RGB devices
 
-			this._write([0, 182, color.g, color.r, color.b]) // Byte order is actually G,R,B
+			if (bankIndex !== undefined) {
+				this._write([0, 166, bankIndex, color.r, color.g, color.b])
+			} else {
+				// There are  2 leds in under a key, 0 for top and 1 for bottom.
+				this._write([0, 166, 0, color.r, color.g, color.b])
+				this._write([0, 166, 1, color.r, color.g, color.b])
+			}
 		} else {
 			// Blue LEDs:
 			this._write([0, 182, 0, color.b])
@@ -471,7 +574,7 @@ export class XKeys extends EventEmitter {
 	/**
 	 * Sets the UID (unit Id) value in the X-keys hardware
 	 * Note: EEPROM command, don't call this function too often, or you'll kill the EEPROM!
-	 * (An EEPROM only support a few thousands of write operations.)
+	 * (An EEPROM only supports a few thousands of write operations.)
 	 * @param unitId Unit id ("UID"). Allowed values: 0-255. 0 is factory default
 	 * @returns undefined
 	 */
@@ -482,7 +585,7 @@ export class XKeys extends EventEmitter {
 		}
 
 		this._write([0, 189, unitId])
-		this._unidId = unitId
+		this._unitId = unitId
 	}
 	/**
 	 * Reboots the device
@@ -516,7 +619,7 @@ export class XKeys extends EventEmitter {
 			liteByte = 0
 		}
 		byteVals[3] = liteByte // set the LCD backlight on or off.
-		// loop throught the string and load array with acsii byte values
+		// loop through the string and load array with ascii byte values
 		let i
 		for (i = 0; i < displayChar.length; i++) {
 			byteVals[i + 4] = displayChar.charCodeAt(i)
@@ -528,7 +631,7 @@ export class XKeys extends EventEmitter {
 
 	/**
 	 * Writes a Buffer of data bytes to the X-keys device
-	 * Used to send custom messages to X-keys for testing and development
+	 * Used to send custom messages to X-keys for testing and development, see documentation for valid messages
 	 * @param buffer The buffer written to the device
 	 * @returns undefined
 	 */
@@ -630,7 +733,7 @@ export class XKeys extends EventEmitter {
 		this._write([0, 177])
 	}
 	/**
-	 * Gets the frimware version and UID : forces the unit to send a special data report with firmware version and Unit ID.
+	 * Gets the firmware version and UID : forces the unit to send a special data report with firmware version and Unit ID.
 	 * @param none
 	 * @returns undefined //an input report will be generated by the X-keys with byte 2 set to 214. This has the firmware version and UID.
 	 */
@@ -644,11 +747,17 @@ export class XKeys extends EventEmitter {
 			if (color) return { r: 0, g: 0, b: 255 }
 			else return { r: 0, g: 0, b: 0 }
 		} else if (typeof color === 'string') {
-			// Handle a few "worded" colors:
+			// Note: Handle a few "worded" colors, these colors are tweaked to look nice with the X-keys LEDs:
 			if (color === 'red') color = 'ff0000'
 			else if (color === 'blue') color = '0000ff'
-			else if (color === 'purple') color = 'ff00ff'
+			else if (color === 'violet') color = '600096'
+			else if (color === 'aquamarine') color = '00ff45'
+			else if (color === 'turquoise') color = '00ff81'
+			else if (color === 'purple') color = '960096'
 			else if (color === 'redblue') color = 'ff00ff'
+			else if (color === 'pink') color = 'ff0828'
+			else if (color === 'orange') color = 'ff1400'
+			else if (color === 'yellow') color = 'ff8000'
 			else if (color === 'green') color = '00ff00'
 			else if (color === 'black') color = '000000'
 			else if (color === 'white') color = 'ffffff'
@@ -670,6 +779,13 @@ export class XKeys extends EventEmitter {
 					g: parseInt(m[2] + m[2], 16),
 					b: parseInt(m[3] + m[3], 16),
 				}
+			} else if ((m = color.match(/([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3})/))) {
+				// '255,127,0' // comma separated integers
+				return {
+					r: parseInt(m[1], 10),
+					g: parseInt(m[2], 10),
+					b: parseInt(m[3], 10),
+				}
 			} else {
 				// Fallback:
 				this.emit('error', new Error(`Unable to interpret color "${color}"`))
@@ -687,7 +803,7 @@ export class XKeys extends EventEmitter {
 	private ensureInitialized() {
 		if (!this._initialized) throw new Error('XKeys.init() must be run first!')
 	}
-	/** Calcuate delta value */
+	/** Calculate delta value */
 	static calculateDelta(newValue: number, oldValue: number, overflow = 256): number {
 		let delta = newValue - oldValue
 		if (delta < -overflow * 0.5) delta += overflow // Deal with when the new value overflows
