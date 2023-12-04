@@ -14,6 +14,7 @@ import { HID_Device } from './api'
  */
 export function setupXkeysPanel(): Promise<XKeys>
 export function setupXkeysPanel(HIDDevice: HID.Device): Promise<XKeys>
+export function setupXkeysPanel(HIDAsync: HID.HIDAsync): Promise<XKeys>
 export function setupXkeysPanel(devicePath: string): Promise<XKeys>
 export async function setupXkeysPanel(
 	devicePathOrHIDDevice?: HID.Device | HID.HID | HID.HIDAsync | string
@@ -69,10 +70,23 @@ export async function setupXkeysPanel(
 				'HID.HID not supported as argument to setupXkeysPanel, use HID.devices() to find the device and provide that instead.'
 			)
 		} else if (devicePathOrHIDDevice instanceof HID.HIDAsync) {
-			// Can't use this, since devicePath is missing
-			throw new Error(
-				'HID.HIDAsync not supported as argument to setupXkeysPanel, use HID.devicesAsync() to find the device and provide that instead.'
-			)
+			// @ts-expect-error getDeviceInfo missing in typings
+			const dInfo = await devicePathOrHIDDevice.getDeviceInfo()
+
+			if (!dInfo.path)
+				throw new Error(
+					// Can't use this, we need a path to the device
+					'HID.HIDAsync device did not provide a path, so its not supported as argument to setupXkeysPanel, use HID.devicesAsync() to find the device and provide that instead.'
+				)
+
+			devicePath = dInfo.path
+			device = devicePathOrHIDDevice
+
+			deviceInfo = {
+				product: dInfo.product,
+				productId: dInfo.productId,
+				interface: dInfo.interface,
+			}
 		} else {
 			throw new Error('setupXkeysPanel: invalid arguments')
 		}
