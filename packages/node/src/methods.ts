@@ -3,16 +3,21 @@ import { PRODUCTS } from '@xkeys-lib/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice } from './node-hid-wrapper'
 
-import { isHID_Device, isHID_HID } from './lib'
+import { isHID_Device } from './lib'
 
 import { HID_Device } from './api'
 
-/** Sets up a connection to a HID device (the X-keys panel) */
+/**
+ * Sets up a connection to a HID device (the X-keys panel)
+ *
+ * If called without arguments, it will select any connected X-keys panel.
+ */
 export function setupXkeysPanel(): Promise<XKeys>
 export function setupXkeysPanel(HIDDevice: HID.Device): Promise<XKeys>
-export function setupXkeysPanel(HIDDevice: HID.HIDAsync): Promise<XKeys>
 export function setupXkeysPanel(devicePath: string): Promise<XKeys>
-export async function setupXkeysPanel(devicePathOrHIDDevice?: HID.Device | HID.HIDAsync | string): Promise<XKeys> {
+export async function setupXkeysPanel(
+	devicePathOrHIDDevice?: HID.Device | HID.HID | HID.HIDAsync | string
+): Promise<XKeys> {
 	let devicePath: string
 	let device: HID.HIDAsync | undefined
 	let deviceInfo:
@@ -52,18 +57,30 @@ export async function setupXkeysPanel(devicePathOrHIDDevice?: HID.Device | HID.H
 				productId: devicePathOrHIDDevice.productId,
 				interface: devicePathOrHIDDevice.interface,
 			}
-		} else if (isHID_HID(devicePathOrHIDDevice)) {
-			// is HID.HID
+		} else if (
+			typeof devicePathOrHIDDevice === 'object' &&
+			typeof (devicePathOrHIDDevice as any).devicePath === 'string'
+		) {
+			// (backwards compatibility): has { devicePath: string }
 
-			device = devicePathOrHIDDevice
-			devicePath = devicePathOrHIDDevice.devicePath
-			// deviceInfo is set later
+			devicePath = (devicePathOrHIDDevice as any).devicePath
+			device = await HID.HIDAsync.open(devicePath)
 		} else if (typeof devicePathOrHIDDevice === 'string') {
 			// is string (path)
 
 			devicePath = devicePathOrHIDDevice
 			device = await HID.HIDAsync.open(devicePath)
 			// deviceInfo is set later
+		} else if (devicePathOrHIDDevice instanceof HID.HID) {
+			// Can't use this, since devicePath is missing
+			throw new Error(
+				'HID.HID not supported as argument to setupXkeysPanel, use HID.devices() to find the device and provide that instead.'
+			)
+		} else if (devicePathOrHIDDevice instanceof HID.HIDAsync) {
+			// Can't use this, since devicePath is missing
+			throw new Error(
+				'HID.HIDAsync not supported as argument to setupXkeysPanel, use HID.devicesAsync() to find the device and provide that instead.'
+			)
 		} else {
 			throw new Error('setupXkeysPanel: invalid arguments')
 		}
@@ -71,7 +88,7 @@ export async function setupXkeysPanel(devicePathOrHIDDevice?: HID.Device | HID.H
 		if (!deviceInfo) {
 			// @ts-expect-error getDeviceInfo missing in typings
 			const nodeHidInfo: HID.Device = await device.getDeviceInfo()
-			// Look through HID.devices(), bevause HID.Device contains the productId
+			// Look through HID.devices(), because HID.Device contains the productId
 			deviceInfo = {
 				product: nodeHidInfo.product,
 				productId: nodeHidInfo.productId,
