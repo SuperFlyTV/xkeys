@@ -57,14 +57,6 @@ export async function setupXkeysPanel(
 				productId: devicePathOrHIDDevice.productId,
 				interface: devicePathOrHIDDevice.interface,
 			}
-		} else if (
-			typeof devicePathOrHIDDevice === 'object' &&
-			typeof (devicePathOrHIDDevice as any).devicePath === 'string'
-		) {
-			// (backwards compatibility): has { devicePath: string }
-
-			devicePath = (devicePathOrHIDDevice as any).devicePath
-			device = await HID.HIDAsync.open(devicePath)
 		} else if (typeof devicePathOrHIDDevice === 'string') {
 			// is string (path)
 
