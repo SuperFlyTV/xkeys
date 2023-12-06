@@ -54,6 +54,8 @@ If you're upgrading from `<2.0.0`, please read the [_Migrations_](#Migrations) s
 
 ## Getting started - Node.js
 
+_[See examples folder for more examples.](./packages/node/examples/)_
+
 ### Watch for connected X-keys (recommended)
 
 This is the recommended way to use this library, to automatically be connected or reconnected to the panel.

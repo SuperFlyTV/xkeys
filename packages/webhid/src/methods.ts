@@ -38,6 +38,7 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 	if (!isValidXkeysUsage(browserDevice)) throw new Error(`Device has incorrect usage/interface`)
 	if (!browserDevice.productId) throw Error(`Device has no productId!`)
 
+	const vendorId = browserDevice.vendorId
 	const productId = browserDevice.productId
 
 	if (!browserDevice.opened) {
@@ -50,6 +51,7 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 		deviceWrap,
 		{
 			product: browserDevice.productName,
+			vendorId: vendorId,
 			productId: productId,
 			interface: null, // todo: Check what to use here (collection.usage?)
 		},
