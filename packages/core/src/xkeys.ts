@@ -466,7 +466,7 @@ export class XKeys extends EventEmitter {
 			if (bankIndex !== undefined) {
 				this._write([0, 165, ledIndex, bankIndex, color.r, color.g, color.b, flashing ? 1 : 0])
 			} else {
-				// There are  2 leds in under a key, 0 for top and 1 for bottom.
+				// There are  2 LEDs in under a key, 0 for top and 1 for bottom.
 				this._write([0, 165, ledIndex, 0, color.r, color.g, color.b, flashing ? 1 : 0])
 				this._write([0, 165, ledIndex, 1, color.r, color.g, color.b, flashing ? 1 : 0])
 			}
@@ -515,7 +515,7 @@ export class XKeys extends EventEmitter {
 			if (bankIndex !== undefined) {
 				this._write([0, 166, bankIndex, color.r, color.g, color.b])
 			} else {
-				// There are  2 leds in under a key, 0 for top and 1 for bottom.
+				// There are  2 LEDs in under a key, 0 for top and 1 for bottom.
 				this._write([0, 166, 0, color.r, color.g, color.b])
 				this._write([0, 166, 1, color.r, color.g, color.b])
 			}
@@ -535,7 +535,7 @@ export class XKeys extends EventEmitter {
 		this._write([0, 184])
 	}
 	/**
-	 * Sets the backlightintensity of the device
+	 * Sets the backlight intensity of the device
 	 * @param blueIntensity 0-255
 	 * @param redIntensity 0-255
 	 */
@@ -608,12 +608,12 @@ export class XKeys extends EventEmitter {
 	public writeLcdDisplay(line: number, displayChar: string, backlight: boolean): void {
 		this.ensureInitialized()
 		if (!this.product.hasLCD) return // only used for LCD display devices.
-		const byteVals = [0, 206, 0, 1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] // load the array with 206 op code and spaces
+		const byteValues = [0, 206, 0, 1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] // load the array with 206 op code and spaces
 
 		// change line number to 0 or 1 and set line # byte
 		if (line < 2) line = 0
 		if (line > 1) line = 1
-		byteVals[2] = line
+		byteValues[2] = line
 		// change backlight to 0 or 1 and set backlight byte
 		let liteByte
 		if (backlight) {
@@ -621,15 +621,15 @@ export class XKeys extends EventEmitter {
 		} else {
 			liteByte = 0
 		}
-		byteVals[3] = liteByte // set the LCD backlight on or off.
+		byteValues[3] = liteByte // set the LCD backlight on or off.
 		// loop through the string and load array with ascii byte values
 		let i
 		for (i = 0; i < displayChar.length; i++) {
-			byteVals[i + 4] = displayChar.charCodeAt(i)
+			byteValues[i + 4] = displayChar.charCodeAt(i)
 			if (i > 15) break // quit at 16 chars
 		}
 
-		this._write(byteVals)
+		this._write(byteValues)
 	}
 
 	/**
@@ -714,11 +714,11 @@ export class XKeys extends EventEmitter {
 		let location: { row: number; col: number } = { row: 0, col: 0 }
 		// derive the Row and Column from the button index for many products
 		if (keyIndex !== 0) {
-			// program switch is always on index 0 and always R:0, C:0 unless remapped by btnLocaion array
+			// program switch is always on index 0 and always R:0, C:0 unless remapped by btnLocation array
 			location.row = keyIndex - this.product.bBits * (Math.ceil(keyIndex / this.product.bBits) - 1)
 			location.col = Math.ceil(keyIndex / this.product.bBits)
 		}
-		// if the product has a btnLocaion array, then look up the Row and Column
+		// if the product has a btnLocation array, then look up the Row and Column
 		if (this.product.btnLocation !== undefined) {
 			location = {
 				row: this.product.btnLocation[keyIndex][0],

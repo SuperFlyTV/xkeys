@@ -52,7 +52,7 @@ export interface Product {
 		trackYbyte_H: number // the index of the high byte of 2 byte Y position
 	}[]
 
-	/** If the X-keys panel has special buttons or digital inputs that do not map to the standand matrix. */
+	/** If the X-keys panel has special buttons or digital inputs that do not map to the standard matrix. */
 	hasExtraButtons?: {
 		ebByte: number // the index of the byte to find the extra button
 		ebBit: number // the index of the bit in that byte
@@ -359,7 +359,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		],
 	}),
 	XK60: literal<Product>({
-		name: 'XK-60', // the USB hardwware string will report "xkeys 80 HID" because it uses the same firmware as 80, the PID tells the difference
+		name: 'XK-60', // the USB hardware string will report "xkeys 80 HID" because it uses the same firmware as 80, the PID tells the difference
 		hidDevices: [
 			[1121, 0],
 			[1123, 0],
@@ -594,7 +594,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasGPIO: true,
 		timestampByte: 31, // ms time since device boot 4 byte BE
 		//The input data will always be in the 2 data bytes described, but this device may be configured in several ways
-		// it is best to Qwery the device and get its current setup data, using GetIoConfiguration function
+		// it is best to Query the device and get its current setup data, using GetIoConfiguration function
 	}),
 	XCRS232: literal<Product>({
 		name: 'XC-RS232-DB9', // DB9 connector for RS232 and six 3.5 mm ports, contacts for a stereo Plug
@@ -669,7 +669,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[2, 4],
 			[1, 4],
 		],
-		//Sends DMX512 Data to DMX512 devivces on the , see documentation
+		//Sends DMX512 Data to DMX512 devices on the , see documentation
 	}),
 
 	XK16LCD: literal<Product>({
@@ -882,7 +882,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 	XBK_QWERTY: literal<Product>({
 		//new product, expected release Q1 2023
-		name: 'X-blox XBK-QWERTY Module', // Typing Keyboard module with up to 32 columns & RGB backLight LEDs, basic module has only 16 columns, extra satilite boards add extra columns, see documentation
+		name: 'X-blox XBK-QWERTY Module', // Typing Keyboard module with up to 32 columns & RGB backLight LEDs, basic module has only 16 columns, extra satellite boards add extra columns, see documentation
 		hidDevices: [
 			[1343, 0],
 			[1344, 0],

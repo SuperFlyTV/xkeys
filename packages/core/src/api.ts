@@ -23,7 +23,7 @@ export interface AnalogStates {
 	// trackpad?: {x: number, y: number, z: number}[] // z: proximity/force
 }
 export interface JoystickValue {
-	/** Joystick X (horisontal movement). -127 to 127 */
+	/** Joystick X (horizontal movement). -127 to 127 */
 	x: number
 	/** Joystick Y (vertical movement), positive value is "up". -127 to 127 */
 	y: number
@@ -34,7 +34,7 @@ export interface JoystickValue {
 	z: number
 }
 export interface TrackballValue {
-	/**  X (delta horisontal movement). 2 byte */
+	/**  X (delta horizontal movement). 2 byte */
 	x: number
 	/**  Y (delta vertical movement), positive value is "up". 2 byte */
 	y: number
