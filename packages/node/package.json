@@ -1,6 +1,6 @@
 {
   "name": "xkeys",
-  "version": "3.0.1",
+  "version": "3.1.0-0",
   "description": "An npm module for interfacing with the X-keys panels in Node.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,6 +26,10 @@
     {
       "name": "Andreas Reich",
       "url": "https://github.com/cyraxx"
+    },
+    {
+      "name": "Julian Waller",
+      "url": "https://github.com/Julusian"
     }
   ],
   "scripts": {
@@ -50,9 +54,8 @@
     "controller"
   ],
   "dependencies": {
-    "@types/node-hid": "^1.3.1",
     "@xkeys-lib/core": "3.0.1",
-    "node-hid": "^2.1.1",
+    "node-hid": "^3.0.0",
     "tslib": "^2.4.0"
   },
   "optionalDependencies": {

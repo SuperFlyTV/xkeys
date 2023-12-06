@@ -1,62 +1,63 @@
 import { EventEmitter } from 'events'
+import type { Device } from 'node-hid'
+import { XKEYS_VENDOR_ID } from '..'
 
-export interface Device {
-	vendorId: number
-	productId: number
-	path?: string
-	serialNumber?: string
-	manufacturer?: string
-	product?: string
-	release: number
-	interface: number
-	usagePage?: number
-	usage?: number
-}
-
-let mockWriteHandler: undefined | ((hid: HID, message: number[]) => void) = undefined
-export function setMockWriteHandler(handler: (hid: HID, message: number[]) => void) {
+let mockWriteHandler: undefined | ((hid: HIDAsync, message: number[]) => void) = undefined
+export function setMockWriteHandler(handler: (hid: HIDAsync, message: number[]) => void) {
 	mockWriteHandler = handler
 }
 
 // export class HID extends EventEmitter {
-export class HID extends EventEmitter {
+export class HIDAsync extends EventEmitter {
 	private mockWriteHandler
+
+	static async open(path: string): Promise<HIDAsync> {
+		return new HIDAsync(path)
+	}
 
 	constructor(_path: string) {
 		super()
 		this.mockWriteHandler = mockWriteHandler
 	}
 	// constructor(vid: number, pid: number);
-	close(): void {
+	async close(): Promise<void> {
 		// void
 	}
-	pause(): void {
+	async pause(): Promise<void> {
 		// void
 	}
-	read(_callback: (err: any, data: number[]) => void): void {
-		// void
+	async read(_timeOut?: number): Promise<Buffer | undefined> {
+		return undefined
 	}
-	readSync(): number[] {
-		return []
-	}
-	readTimeout(_timeOut: number): number[] {
-		return []
-	}
-	sendFeatureReport(_data: number[]): number {
+	async sendFeatureReport(_data: number[]): Promise<number> {
 		return 0
 	}
-	getFeatureReport(_reportIdd: number, _reportLength: number): number[] {
-		return []
+	async getFeatureReport(_reportIdd: number, _reportLength: number): Promise<Buffer> {
+		return Buffer.alloc(0)
 	}
-	resume(): void {
+	async resume(): Promise<void> {
 		// void
 	}
-	write(message: number[]): number {
+	async write(message: number[]): Promise<number> {
 		this.mockWriteHandler?.(this, message)
 		return 0
 	}
-	setNonBlocking(_noBlock: boolean): void {
+	async setNonBlocking(_noBlock: boolean): Promise<void> {
 		// void
+	}
+
+	async generateDeviceInfo(): Promise<Device> {
+		// HACK: For typings
+		return this.getDeviceInfo()
+	}
+
+	async getDeviceInfo(): Promise<Device> {
+		return {
+			vendorId: XKEYS_VENDOR_ID,
+			productId: 0,
+			release: 0,
+			interface: 0,
+		}
 	}
 }
 export function devices(): Device[] {

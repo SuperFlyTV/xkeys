@@ -7,7 +7,7 @@ export function getSentData() {
 	return sentData
 }
 
-export function handleXkeysMessages(hid: HID.HID, message: number[]) {
+export function handleXkeysMessages(hid: HID.HIDAsync, message: number[]) {
 	// Replies to a few of the messages that are sent to the XKeys
 
 	sentData.push(Buffer.from(message).toString('hex'))
