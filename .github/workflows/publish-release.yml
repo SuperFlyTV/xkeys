@@ -108,7 +108,7 @@ jobs:
           if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
             echo "env NPM_TOKEN not set!"
           else
-            echo ::set-output name=is-ok::"1"
+            echo "is-ok="1"" >> $GITHUB_OUTPUT
           fi
       - name: Prepare Environment
         if: ${{ steps.check-npm-token.outputs.is-ok }}
