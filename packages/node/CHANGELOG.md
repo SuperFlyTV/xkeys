@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/SuperFlyTV/xkeys/compare/v3.0.1...v3.1.0) (2024-01-11)
+
+
+### Bug Fixes
+
+* expose Xkeys.filterDevice() static method, used to filter for compatible X-keys devices when manually handling HID devices ([ab542a8](https://github.com/SuperFlyTV/xkeys/commit/ab542a8630c749f79cd21c4589eb263c6017ea99))
+* remove hack (possible HID.HID that exposed a devicePath) ([fca382d](https://github.com/SuperFlyTV/xkeys/commit/fca382dd5109a8447ed7ba51d485de255487bd6d))
+* remove support for HID.HID and HID.Async devices in setupXKeysPanel. ([1bc87ba](https://github.com/SuperFlyTV/xkeys/commit/1bc87ba26227831eb7f312e59eb15f9ed47497e1))
+* support providing HID.HIDAsync into setupXkeysPanel() ([190d4a1](https://github.com/SuperFlyTV/xkeys/commit/190d4a1c2dfa1232b250318c30131624cf67fb23))
+* typo ([095c064](https://github.com/SuperFlyTV/xkeys/commit/095c0640a52b920774965192cfb868badb82f012))
+
+
+### Features
+
+* use async node-hid ([429c5ea](https://github.com/SuperFlyTV/xkeys/commit/429c5ea6e83f5a8a025180d3c6a15943bddaf5d6))
+
+
+
+
+
 ## [3.0.1](https://github.com/SuperFlyTV/xkeys/compare/v3.0.0...v3.0.1) (2023-11-02)
 
 **Note:** Version bump only for package xkeys

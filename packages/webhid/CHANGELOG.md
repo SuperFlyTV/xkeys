@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/SuperFlyTV/xkeys/compare/v3.0.1...v3.1.0) (2024-01-11)
+
+
+### Bug Fixes
+
+* expose Xkeys.filterDevice() static method, used to filter for compatible X-keys devices when manually handling HID devices ([ab542a8](https://github.com/SuperFlyTV/xkeys/commit/ab542a8630c749f79cd21c4589eb263c6017ea99))
+
+
+
+
+
 ## [3.0.1](https://github.com/SuperFlyTV/xkeys/compare/v3.0.0...v3.0.1) (2023-11-02)
 
 
