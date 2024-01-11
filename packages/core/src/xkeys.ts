@@ -47,6 +47,9 @@ export class XKeys extends EventEmitter {
 	static get vendorId(): number {
 		return XKEYS_VENDOR_ID
 	}
+	/**
+	 * Takes a HID device as input. If the HID device is NOT an X-Keys returns null, otherwise some info about it.
+	 */
 	static filterDevice(deviceInfo: DeviceInfo): { product: Product; productId: number; interface: number } | null {
 		if (deviceInfo.vendorId !== XKEYS_VENDOR_ID) return null
 
