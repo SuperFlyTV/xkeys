@@ -47,6 +47,25 @@ export class XKeys extends EventEmitter {
 	static get vendorId(): number {
 		return XKEYS_VENDOR_ID
 	}
+	static filterDevice(deviceInfo: DeviceInfo): { product: Product; productId: number; interface: number } | null {
+		if (deviceInfo.vendorId !== XKEYS_VENDOR_ID) return null
+
+		for (const product of Object.values<Product>(PRODUCTS)) {
+			for (const hidDevice of product.hidDevices) {
+				if (
+					hidDevice[0] === deviceInfo.productId &&
+					(deviceInfo.interface === null || hidDevice[1] === deviceInfo.interface)
+				) {
+					return {
+						product,
+						productId: hidDevice[0],
+						interface: hidDevice[1],
+					} // Return & break out of the loops
+				}
+			}
+		}
+		return null
+	}
 
 	constructor(private device: HIDDevice, private deviceInfo: DeviceInfo, private _devicePath: string | undefined) {
 		super()
@@ -54,27 +73,11 @@ export class XKeys extends EventEmitter {
 		this.product = this._setupDevice(deviceInfo)
 	}
 	private _setupDevice(deviceInfo: DeviceInfo) {
-		const findProduct = (): { product: Product; productId: number; interface: number } => {
-			for (const product of Object.values<Product>(PRODUCTS)) {
-				for (const hidDevice of product.hidDevices) {
-					if (
-						hidDevice[0] === deviceInfo.productId &&
-						(deviceInfo.interface === null || hidDevice[1] === deviceInfo.interface)
-					) {
-						return {
-							product,
-							productId: hidDevice[0],
-							interface: hidDevice[1],
-						} // Return & break out of the loops
-					}
-				}
-			}
-			// else:
+		const found = XKeys.filterDevice(deviceInfo)
+		if (!found)
 			throw new Error(
 				`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}", interface: "${deviceInfo.interface}").\nPlease report this as an issue on our github page!`
 			)
-		}
-		const found = findProduct()
 
 		this.device.on('data', (data: Buffer) => {
 			if (deviceInfo.productId === 210) {
@@ -813,7 +816,9 @@ export class XKeys extends EventEmitter {
 }
 type HIDMessage = (string | number)[]
 interface DeviceInfo {
+	/** Name of the panel */
 	product: string | undefined
+	vendorId: number
 	productId: number
 	interface: number | null // null means "anything goes", used when interface isn't available
 }

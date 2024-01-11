@@ -1,5 +1,4 @@
-import { Product, XKeys } from '@xkeys-lib/core'
-import { PRODUCTS } from '@xkeys-lib/core'
+import { XKeys } from '@xkeys-lib/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice } from './node-hid-wrapper'
 
@@ -24,6 +23,7 @@ export async function setupXkeysPanel(
 	let deviceInfo:
 		| {
 				product: string | undefined
+				vendorId: number
 				productId: number
 				interface: number
 		  }
@@ -42,6 +42,7 @@ export async function setupXkeysPanel(
 
 			deviceInfo = {
 				product: connectedXkeys[0].product,
+				vendorId: connectedXkeys[0].vendorId,
 				productId: connectedXkeys[0].productId,
 				interface: connectedXkeys[0].interface,
 			}
@@ -55,6 +56,7 @@ export async function setupXkeysPanel(
 
 			deviceInfo = {
 				product: devicePathOrHIDDevice.product,
+				vendorId: devicePathOrHIDDevice.vendorId,
 				productId: devicePathOrHIDDevice.productId,
 				interface: devicePathOrHIDDevice.interface,
 			}
@@ -84,6 +86,7 @@ export async function setupXkeysPanel(
 
 			deviceInfo = {
 				product: dInfo.product,
+				vendorId: dInfo.vendorId,
 				productId: dInfo.productId,
 				interface: dInfo.interface,
 			}
@@ -97,6 +100,7 @@ export async function setupXkeysPanel(
 			// Look through HID.devices(), because HID.Device contains the productId
 			deviceInfo = {
 				product: nodeHidInfo.product,
+				vendorId: nodeHidInfo.vendorId,
 				productId: nodeHidInfo.productId,
 				interface: nodeHidInfo.interface,
 			}
@@ -125,20 +129,16 @@ export function listAllConnectedPanels(): HID_Device[] {
 	const connectedXkeys = HID.devices().filter((device) => {
 		// Filter to only return the supported devices:
 
-		if (device.vendorId !== XKeys.vendorId) return false
 		if (!device.path) return false
 
-		let found = false
-		for (const product of Object.values<Product>(PRODUCTS)) {
-			for (const hidDevice of product.hidDevices) {
-				if (hidDevice[0] === device.productId && hidDevice[1] === device.interface) {
-					found = true
-					break
-				}
-			}
-			if (found) break
-		}
-		return found
+		const found = XKeys.filterDevice({
+			product: device.product,
+			interface: device.interface,
+			vendorId: device.vendorId,
+			productId: device.productId,
+		})
+		if (!found) return false
+		return true
 	})
 	return connectedXkeys as HID_Device[]
 }
