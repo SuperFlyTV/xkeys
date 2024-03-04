@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/SuperFlyTV/xkeys/compare/v3.1.0...v3.1.1) (2024-03-04)
+
+
+### Bug Fixes
+
+* clarify which github page. ([07d7b4f](https://github.com/SuperFlyTV/xkeys/commit/07d7b4f2402ffcaeeba375f5e7f74b4df9eb8de3))
+
+
+
+
+
 # [3.1.0](https://github.com/SuperFlyTV/xkeys/compare/v3.0.1...v3.1.0) (2024-01-11)
 
 
