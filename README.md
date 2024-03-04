@@ -451,8 +451,8 @@ If you're adding a new functionality, adding unit tests for it is much appreciat
 
 - Update the the master branch
 - `yarn release:bump-release` and push the changes (including the tag)
-- Trigger a run of [CI: publish-release](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-release.yml) to publish to NPM.
-- Trigger a run of [CI: publish-demo](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-demo.yml) to update the docs.
+- Trigger a run of [Publish Release-version to NPM](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-release.yml) to publish to NPM.
+- Trigger a run of [Publish the WebHID demo to pages](https://github.com/SuperFlyTV/xkeys/actions/workflows/publish-demo.yml) to update the docs.
 
 ### License
 
