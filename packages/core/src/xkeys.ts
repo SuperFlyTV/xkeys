@@ -79,7 +79,7 @@ export class XKeys extends EventEmitter {
 		const found = XKeys.filterDevice(deviceInfo)
 		if (!found)
 			throw new Error(
-				`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}", interface: "${deviceInfo.interface}").\nPlease report this as an issue on our github page!`
+				`Unknown/Unsupported X-keys: "${deviceInfo.product}" (productId: "${deviceInfo.productId}", interface: "${deviceInfo.interface}").\nPlease report this as an issue on the xkeys github page! (https://github.com/SuperFlyTV/xkeys)`
 			)
 
 		this.device.on('data', (data: Buffer) => {
