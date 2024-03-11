@@ -172,6 +172,6 @@ describe('Recorded tests', () => {
 		)
 
 		// This number should be decreased as more recordings are added
-		expect(Object.values(products).length).toBeLessThanOrEqual(21)
+		expect(Object.values(products).length).toBeLessThanOrEqual(23)
 	})
 })

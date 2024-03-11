@@ -122,18 +122,6 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLight2offset: 32,
 		timestampByte: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
-	XK24RGB: literal<Product>({
-		name: 'XK-24M-RGB', // prototype XK24 with RGB backLight LEDs and mechanical
-		hidDevices: [[1404, 0]],
-		bBytes: 4, // number of button bytes
-		bBits: 6, // number button bits per byte
-		colCount: 4, // number of physical columns
-		rowCount: 6, // number of physical rows
-		hasPS: true,
-		backLightType: BackLightType.REMAP_24, //RGB Standard Index
-		backLight2offset: 0, // RGBs have no offset.
-		timestampByte: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
-	}),
 	XK4: literal<Product>({
 		name: 'XK-4 Stick',
 		hidDevices: [
@@ -673,7 +661,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 	}),
 
 	XK16LCD: literal<Product>({
-		name: 'XK-16 LCD', // Has a 16x2 Alpha Numeric back lit LCD Display
+		name: 'XK-16 LCD', // Has a 16x2 Alpha Numeric back lit LCD Display, limited release not currently for sale (as of March 2024)
 		hidDevices: [
 			[1316, 0],
 			[1317, 0],
@@ -693,8 +681,8 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLight2offset: 32,
 		timestampByte: 31, // ms time since device boot 4 byte BE
 	}),
-	XKE180BROAD: literal<Product>({
-		name: 'XKE-180 Broadcast Keyboard', //
+	XKE180KEYBOARD: literal<Product>({
+		name: 'XKE-180 Broadcast Keyboard', // Released ad Control Room Keyboard
 		hidDevices: [[1443, 0]],
 		bBytes: 31,
 		bBits: 7, //
@@ -749,9 +737,9 @@ export const PRODUCTS: { [name: string]: Product } = {
 		disableButtons: [6, 7, 8, 14, 15, 16, 22, 23, 24, 30, 31, 32, 73, 74, 75, 73], // These bits are messy, better to ignore them
 	}),
 
-	XBK4X6: literal<Product>({
-		//new product, expected release Q4 2022
-		name: 'X-blox XBK-4x6 Module', // 24 key module with RGB backLight LEDs
+	XBM24KEY: literal<Product>({
+		// Released Q1 2024
+		name: 'X-blox XBM-24 Key Module', // 24 key module, 4x6 key layout with RGB backLight LEDs
 		hidDevices: [
 			[1365, 0],
 			[1366, 0],
@@ -766,13 +754,14 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 4, // number of physical columns
 		rowCount: 6, // number of physical rows
 		hasPS: false,
+		hasGPIO: true, // This is on byte 6 all XBM modules have 4 GPIO header on back
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
-	XBK3X6: literal<Product>({
-		//new product, expected release Q4 2022
-		name: 'X-blox XBK-3x6 Module', // 18 key module with RGB backLight LEDs
+	XBM18KEY: literal<Product>({
+		// Released Q1 2024
+		name: 'X-blox XBM-18 Key Module', // 18 key module, 3x6 Key layout with RGB backLight LEDs
 		hidDevices: [
 			[1378, 0],
 			[1379, 0],
@@ -787,13 +776,14 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 3, // number of physical columns
 		rowCount: 6, // number of physical rows
 		hasPS: false,
+		hasGPIO: true, // // This is on byte 5 all XBM modules have 4 GPIO header on back
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank,Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
-	XBA4X3JOG: literal<Product>({
-		//new product, expected release Q4 2022
-		name: 'X-blox XBA-4x3 Jog-Shuttle Module', // 12 key module with Jog Shuttle & RGB backLight LEDs
+	XBM12JOG: literal<Product>({
+		// Released Q1 2024
+		name: 'X-blox XBM-4x3 Jog-Shuttle Module', // 12 key module with Jog Shuttle & RGB backLight LEDs
 		hidDevices: [
 			[1388, 0],
 			[1389, 0],
@@ -808,15 +798,39 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 4, // number of physical columns
 		rowCount: 3, // number of physical rows
 		hasPS: false,
+		hasGPIO: true, // // This is on byte 6 all XBM modules have 4 GPIO header on back
 		hasJog: [{ jogByte: 12 }],
 		hasShuttle: [{ shuttleByte: 13 }],
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
-	XBA3X6TBAR: literal<Product>({
-		//new product, expected release Q4 2022
-		name: 'X-blox XBA-3x6 T-bar Module', // 14 key module with T-bar,  RGB backLight LEDs
+	XBM12HANDWHEEL: literal<Product>({
+		// Released Q1 2024
+		name: 'X-blox XBM-12 Handwheel Module', // 12 key module, 4x6 layout with 100 position jog wheel
+		hidDevices: [
+			[1512, 0],
+			[1513, 0],
+			[1514, 0],
+			[1515, 0],
+			[1516, 0],
+			[1517, 0],
+			[1518, 0],
+		],
+		bBytes: 4, // number of button bytes
+		bBits: 3, // number button bits per byte
+		colCount: 4, // number of physical columns
+		rowCount: 3, // number of physical rows
+		hasPS: false,
+		hasJog: [{ jogByte: 12 }],
+		hasGPIO: true, // // This is on byte 6, all XBM modules have 4 GPIO header on back
+		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
+		backLight2offset: 0, // RGBs have no offset.
+		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+	}),
+	XBM14TBAR: literal<Product>({
+		// Released Q4 2023
+		name: 'X-blox XBM-14 T-bar Module', // 14 key module with T-bar, 3x6 layout,  RGB backLight LEDs
 		hidDevices: [
 			[1396, 0],
 			[1397, 0],
@@ -833,15 +847,16 @@ export const PRODUCTS: { [name: string]: Product } = {
 		hasPS: false,
 		hasTbar: [
 			{
-				tbarByte: 8, // value Was incorrect, 8 is correct
+				tbarByte: 8, //
 			},
 		],
-		backLightType: BackLightType.RGBx2, //RGB 2 Bank,Standard Index
+		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
+		hasGPIO: true, // // This is on byte 5, all XBM modules have 4 GPIO header on back
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
-	XBA4X3TRACKBALL: literal<Product>({
-		//new product, expected release Q4 2022
+	XBM12TRACKBALL: literal<Product>({
+		// Released Q1 2024
 		name: 'X-blox XBA-4x3 Trackball Module', // 12 key module with Trackball + 2 buttons & RGB backLight LEDs
 		hidDevices: [
 			[1488, 0],
@@ -876,13 +891,14 @@ export const PRODUCTS: { [name: string]: Product } = {
 				ebBit: 4, // the bit of the extra button
 			},
 		],
+		hasGPIO: true, // // This is on byte 6, all XBM modules have 4 GPIO header on back
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 	XBK_QWERTY: literal<Product>({
-		//new product, expected release Q1 2023
-		name: 'X-blox XBK-QWERTY Module', // Typing Keyboard module with up to 32 columns & RGB backLight LEDs, basic module has only 16 columns, extra satellite boards add extra columns, see documentation
+		//new product, expected release Q3 2024
+		name: 'X-blox XBK-QWERTY Module', // Typing Keyboard module with up to 32 columns & RGB backLight LEDs, basic module has only 16 columns, extra satilite boards add extra columns, see documentation
 		hidDevices: [
 			[1343, 0],
 			[1344, 0],
@@ -907,9 +923,9 @@ export const PRODUCTS: { [name: string]: Product } = {
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 36, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
-	XBK16X6: literal<Product>({
+	XBM96KEY: literal<Product>({
 		//new product, expected release Q1 2023
-		name: 'X-blox XBK-16x6 Module', // 96 key module with RGB backLight LEDs
+		name: 'X-blox XBK-96Key Module', // 96 key module, 16x6 layout with RGB backLight LEDs
 		hidDevices: [
 			[1496, 0],
 			[1497, 0],
@@ -924,6 +940,7 @@ export const PRODUCTS: { [name: string]: Product } = {
 		colCount: 16, // number of physical columns
 		rowCount: 6, // number of physical rows
 		hasPS: false,
+		hasGPIO: true, // // This is on byte 18, all XBM modules have 4 GPIO header on back
 		backLightType: BackLightType.RGBx2, //RGB 2 Bank, Standard Index
 		backLight2offset: 0, // RGBs have no offset.
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
@@ -951,6 +968,119 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[2, 4],
 			[1, 4],
 		],
+	}),
+	RailDriver: literal<Product>({
+		// In production: www.raildriver.com
+		name: 'RailDriver Cab Controller', // The RailDriver is a special product that does not conform the the standard X-keys format. It is described here assuming the buttons are remapped and 2 header bytes are added to the data message.
+		hidDevices: [
+			[210, 0],
+			[210, -1],
+		],
+		bBytes: 6, // this assumes the button bytes will be remapped.
+		bBits: 8, // see documentation
+		layouts: [
+			['Cab Buttons', 0, 1, 1, 2, 4],
+			['Horn', 0, 1, 3, 2, 3],
+			['Reverser', 0, 1, 4, 4, 4],
+			['Throttle', 0, 1, 5, 4, 5],
+			['Auto Brake', 0, 1, 6, 4, 6],
+			['Ind Brake', 0, 1, 7, 4, 7],
+			['Bail Off', 0, 1, 8, 4, 8],
+			['Wiper', 0, 1, 9, 4, 9],
+			['Lights', 0, 3, 9, 4, 9],
+		], // control name, control index, startRow, startCol, endRow, endCol
+		colCount: 6, // not valid here because the cab layout, see documentation
+		rowCount: 8, //
+		hasPS: false, //
+		hasTbar: [
+			// the raildriver has 5 lever controls, we will call them T-bars for this mapping
+			{
+				tbarByte: 8, //Reverser Lever
+			},
+			{
+				tbarByte: 9, //Throttle Lever
+			},
+			{
+				tbarByte: 10, //Auto Brake Lever
+			},
+			{
+				tbarByte: 11, //Independent Brake
+			},
+			//{
+			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right, this is changed to a single bit in the remapping.
+
+			//},
+		],
+		hasRotary: [
+			// the raildriver has 2 rotary controls,
+			{
+				rotaryByte: 12, //Upper twist knob
+			},
+			{
+				rotaryByte: 13, //Lower twist knob
+			},
+		],
+		backLightType: BackLightType.NONE, // no back light LEDs
+		backLight2offset: 0,
+		//timestamp: none, RailDriver has no time stamp
+	}),
+
+	// ============================================================================================
+	// ============== Experimental / Prototype / Discontinued Products ============================
+	// ============================================================================================
+
+	XK24RGB: literal<Product>({
+		name: 'XK-24M-RGB', // prototype XK24 with RGB backLight LEDs and mechanical
+		hidDevices: [[1404, 0]],
+		bBytes: 4, // number of button bytes
+		bBits: 6, // number button bits per byte
+		colCount: 4, // number of physical columns
+		rowCount: 6, // number of physical rows
+		hasPS: true,
+		backLightType: BackLightType.REMAP_24, //RGB Standard Index
+		backLight2offset: 0, // RGBs have no offset.
+		timestampByte: 6, // index of first of 4 bytes, ms time since device boot, 4 byte BE
+	}),
+	XK433REMOTE: literal<Product>({
+		//prototype product,
+		name: 'XK-433RF Remote', // 8 RF remote buttons and four 3.5 mm ports, contacts for a stereo Plug
+		hidDevices: [
+			[1505, 0],
+			[1506, 0],
+			[1507, 0],
+			[1508, 0],
+			[1509, 0],
+			[1510, 0],
+		],
+		bBytes: 2, // byte 1 is RF buttons
+		bBits: 8, // see documentation
+		layouts: [
+			['Remote', 0, 1, 1, 2, 4],
+			['SwitchPorts', 0, 1, 1, 2, 2],
+			['SwitchPorts', 1, 1, 3, 2, 4],
+		], // control name, control index, startRow, startCol, endRow, endCol
+		colCount: 4, //  2 ports per side of unit , numbered 1-2 and 3-4
+		rowCount: 2, // each port has 2 switches
+		hasPS: true, // maybe inside box, extra wired required
+		backLightType: BackLightType.NONE, // no back light LEDs
+		backLight2offset: 0,
+		timestampByte: 31, // ms time since device boot 4 byte BE
+		btnLocation: [
+			[0, 0],
+			[2, 1],
+			[1, 1],
+			[2, 2],
+			[1, 2],
+			[2, 3],
+			[1, 3],
+			[2, 4],
+			[1, 4],
+			[2, 5],
+			[1, 5],
+			[2, 6],
+			[1, 6],
+		], // column indicates port #, mono plugs map to row 1, stereo plugs to row 1 and 2
+		// due to the stereo jack some buttons may always be down when a single pole (mono) plug is plugged in.
 	}),
 	XCRELAY: literal<Product>({
 		//prototype product,
@@ -1019,9 +1149,9 @@ export const PRODUCTS: { [name: string]: Product } = {
 			[1, 4],
 		],
 	}),
-	XBA4X3TRACKPAD: literal<Product>({
+	XBM12TRACKPAD: literal<Product>({
 		//prototype product,
-		name: 'X-blox XBA-Track Pad Module', // 12 key module with Trackball & RGB backLight LEDs
+		name: 'X-blox XBM-Track Pad Module', // 12 key module with TrackPad & RGB backLight LEDs
 		hidDevices: [
 			[1422, 0],
 			[1423, 0],
@@ -1051,100 +1181,40 @@ export const PRODUCTS: { [name: string]: Product } = {
 		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 
-	XK433REMOTE: literal<Product>({
+	XBM4FADER: literal<Product>({
 		//prototype product,
-		name: 'XK-433RF Remote', // 8 RF remote buttons and four 3.5 mm ports, contacts for a stereo Plug
+		name: 'X-blox XBM-Fader Module', // 4 Motor Slider Fader, 4 key module with TrackPad & RGB backLight LEDs
 		hidDevices: [
-			[1505, 0],
-			[1506, 0],
-			[1507, 0],
-			[1508, 0],
-			[1509, 0],
-			[1510, 0],
+			[1480, 0],
+			[1481, 0],
+			[1482, 0],
+			[1483, 0],
+			[1484, 0],
+			[1485, 0],
+			[1486, 0],
 		],
-		bBytes: 2, // byte 1 is RF buttons
-		bBits: 8, // see documentation
-		layouts: [
-			['Remote', 0, 1, 1, 2, 4],
-			['SwitchPorts', 0, 1, 1, 2, 2],
-			['SwitchPorts', 1, 1, 3, 2, 4],
-		], // control name, control index, startRow, startCol, endRow, endCol
-		colCount: 4, //  2 ports per side of unit , numbered 1-2 and 3-4
-		rowCount: 2, // each port has 2 switches
-		hasPS: true, // maybe inside box, extra wired required
-		backLightType: BackLightType.NONE, // no back light LEDs
-		backLight2offset: 0,
-		timestampByte: 31, // ms time since device boot 4 byte BE
-		btnLocation: [
-			[0, 0],
-			[2, 1],
-			[1, 1],
-			[2, 2],
-			[1, 2],
-			[2, 3],
-			[1, 3],
-			[2, 4],
-			[1, 4],
-			[2, 5],
-			[1, 5],
-			[2, 6],
-			[1, 6],
-		], // column indicates port #, mono plugs map to row 1, stereo plugs to row 1 and 2
-		// due to the stereo jack some buttons may always be down when a single pole (mono) plug is plugged in.
-	}),
-	RailDriver: literal<Product>({
-		//In production: www.raildriver.com
-		name: 'RailDriver Cab Controller', // The RailDriver is a special product that does not conform the the standard X-keys format. It is described here assuming the buttons are remapped and 2 header bytes are added to the data message.
-		hidDevices: [
-			[210, 0],
-			[210, -1],
-		],
-		bBytes: 6, // this assumes the button bytes will be remapped.
-		bBits: 8, // see documentation
-		layouts: [
-			['Cab Buttons', 0, 1, 1, 2, 4],
-			['Horn', 0, 1, 3, 2, 3],
-			['Reverser', 0, 1, 4, 4, 4],
-			['Throttle', 0, 1, 5, 4, 5],
-			['Auto Brake', 0, 1, 6, 4, 6],
-			['Ind Brake', 0, 1, 7, 4, 7],
-			['Bail Off', 0, 1, 8, 4, 8],
-			['Wiper', 0, 1, 9, 4, 9],
-			['Lights', 0, 3, 9, 4, 9],
-		], // control name, control index, startRow, startCol, endRow, endCol
-		colCount: 6, // not valid here because the cab layout, see documentation
-		rowCount: 8, //
-		hasPS: false, //
+		bBytes: 1, // number of button bytes
+		bBits: 8, // number button bits per byte
+		colCount: 4, // number of physical columns
+		rowCount: 1, // number of physical rows
+		hasPS: false,
 		hasTbar: [
-			// the raildriver has 5 lever controls, we will call them T-bars for this mapping
+			// the slider fader has 4 analog 0-255 inputs we will call them T-bars for this mapping
 			{
-				tbarByte: 8, //Reverser Lever
+				tbarByte: 5, //fader 1
 			},
 			{
-				tbarByte: 9, //Throttle Lever
+				tbarByte: 6, //fader 2
 			},
 			{
-				tbarByte: 10, //Auto Brake Lever
+				tbarByte: 7, //fader 3
 			},
 			{
-				tbarByte: 11, //Independent Brake
-			},
-			//{
-			//	tbarByte: 12, //Bail Off, moving Ind Brake to Right, this is changed to a single bit in the remapping.
-
-			//},
-		],
-		hasRotary: [
-			// the raildriver has 2 rotary controls,
-			{
-				rotaryByte: 12, //Upper twist knob
-			},
-			{
-				rotaryByte: 13, //Lower twist knob
+				tbarByte: 8, //fader 4
 			},
 		],
-		backLightType: BackLightType.NONE, // no back light LEDs
-		backLight2offset: 0,
-		//timestamp: none, RailDriver has no time stamp
+		backLightType: BackLightType.RGBx2, //RGB 1 Bank, Standard Index
+		backLight2offset: 0, // RGBs have no offset.
+		timestampByte: 31, // index of first of 4 bytes, ms time since device boot, 4 byte BE
 	}),
 }
