@@ -549,7 +549,10 @@ export class XKeys extends EventEmitter {
 		blueIntensity = Math.max(Math.min(blueIntensity, 255), 0)
 		redIntensity = Math.max(Math.min(redIntensity, 255), 0)
 
-		if (this.product.backLightType === 2) {
+		if (
+			this.product.backLightType === BackLightType.LEGACY ||
+			this.product.backLightType === BackLightType.LINEAR
+		) {
 			this._write([0, 187, blueIntensity, redIntensity])
 		} else {
 			this._write([0, 187, blueIntensity])
