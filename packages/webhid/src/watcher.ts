@@ -27,11 +27,14 @@ export class XKeysWatcher extends EventEmitter {
   private readonly seenHidDevices: Set<HIDDevice> = new Set()
   /** A list of the devices we've called setupXkeysPanels for. */
   private setupXKeysPanels: XKeys[] = []
+  private readonly hidDeviceToXKeysPanel: WeakMap<HIDDevice, XKeys> = new WeakMap()
+  private readonly hidDeviceToDisconnectedListener: WeakMap<HIDDevice, (...args: unknown[]) => void> = new WeakMap()
 
   constructor(private readonly options?: XKeysWatcherOptions) {
     // eslint-disable-next-line constructor-super
     super()
     this.triggerUpdateConnectedDevices(true)
+    navigator.hid.on('disconnect', this.handleDisconnect)
   }
 
   /**
@@ -40,6 +43,8 @@ export class XKeysWatcher extends EventEmitter {
    * @param closeAllDevices Set to false in order to NOT close all devices. Use this if you only want to stop the watching. Defaults to true.
    */
   public async stop(closeAllDevices = true): Promise<void> {
+    navigator.hid.removeListener('disconnect', this.handleDisconnect)
+
     if (this.pollingTimeout !== undefined) {
       clearTimeout(this.pollingTimeout)
       this.pollingTimeout = undefined
@@ -66,9 +71,10 @@ export class XKeysWatcher extends EventEmitter {
     )
   }
 
+  
   private async updateConnectedDevices() {
     const devices = await getOpenedXKeysPanels()
-
+    
     // Removed devices:
     this.seenHidDevices.forEach((device) => {
       if (!devices.includes(device)) {
@@ -78,7 +84,7 @@ export class XKeysWatcher extends EventEmitter {
     })
     const unseenDevices = devices.filter((device) => !this.seenHidDevices.has(device))
     unseenDevices.forEach((device) => this.seenHidDevices.add(device))
-
+    
     // Added devices:
     await Promise.all(
       unseenDevices.map((device) => {
@@ -93,20 +99,36 @@ export class XKeysWatcher extends EventEmitter {
 
     try {
       const xKeysPanel = await setupXkeysPanel(device)
-
+      this.hidDeviceToXKeysPanel.set(device, xKeysPanel)
       this.setupXKeysPanels.push(xKeysPanel)
 
       this.emit('connected', xKeysPanel)
 
-      // Listen to the disconnected event, because often if comes faster from the X-keys than from this watcher.
-      xKeysPanel.once('disconnected', () => {
-        this.seenHidDevices.delete(device)
-      })
+      const disconnectedListener = () => {
+        this.cleanupDevice(device)
+      }
+      this.hidDeviceToDisconnectedListener.set(device, disconnectedListener)
+      xKeysPanel.once('disconnected', disconnectedListener)
     } catch (e) {
       this.emit('error', e)
     }
   }
+  
+  private handleDisconnect = (device: HIDDevice) => {
+    this.cleanupDevice(device)
+  }
 
+  private cleanupDevice(device: HIDDevice) {
+    const xKeys = this.hidDeviceToXKeysPanel.get(device)
+    const disconnectedListener = this.hidDeviceToDisconnectedListener.get(device)
+    if (xKeys && disconnectedListener) {
+      xKeys.removeListener('disconnected', disconnectedListener)
+    }
+    this.seenHidDevices.delete(device)
+    this.hidDeviceToXKeysPanel.delete(device)
+    this.hidDeviceToDisconnectedListener.delete(device)
+  }
+  
   private debugLog(...args: any[]) {
     if (this.debug) console.log(...args)
   }
