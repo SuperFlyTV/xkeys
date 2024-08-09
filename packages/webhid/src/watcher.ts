@@ -104,11 +104,11 @@ export class XKeysWatcher extends EventEmitter {
 
       this.emit('connected', xKeysPanel)
 
-      const disconnectedListener = () => {
+      const handleDisconnected = () => {
         this.cleanupDevice(device)
       }
-      this.hidDeviceToDisconnectedListener.set(device, disconnectedListener)
-      xKeysPanel.once('disconnected', disconnectedListener)
+      this.hidDeviceToDisconnectedListener.set(device, handleDisconnected)
+      xKeysPanel.once('disconnected', handleDisconnected)
     } catch (e) {
       this.emit('error', e)
     }
