@@ -16,9 +16,6 @@ export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 	constructor(device: HIDDevice) {
 		super()
 
-		this._handleInputreport = this._handleInputreport.bind(this)
-		this._handleError = this._handleError.bind(this)
-
 		this.device = device
 
 		this.device.addEventListener('inputreport', this._handleInputreport)
