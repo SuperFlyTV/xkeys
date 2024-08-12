@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events'
-
-import { XKeys, getOpenedXKeysPanels, setupXkeysPanel } from 'xkeys-webhid'
+import { XKeys } from '@xkeys-lib/core'
+import { getOpenedXKeysPanels, setupXkeysPanel } from './methods'
 
 export type XKeysWatcherEvents = {
 	connected: (xkeysPanel: XKeys) => void
@@ -31,10 +31,9 @@ export class XKeysWatcher extends EventEmitter {
 	private readonly hidDeviceToDisconnectedListener: WeakMap<HIDDevice, (...args: unknown[]) => void> = new WeakMap()
 
 	constructor(private readonly options?: XKeysWatcherOptions) {
-		// eslint-disable-next-line constructor-super
 		super()
 		this.triggerUpdateConnectedDevices(true)
-		navigator.hid.on('disconnect', this.handleDisconnect)
+		navigator.hid.addEventListener('disconnect', this.handleDisconnect)
 	}
 
 	/**
@@ -43,7 +42,7 @@ export class XKeysWatcher extends EventEmitter {
 	 * @param closeAllDevices Set to false in order to NOT close all devices. Use this if you only want to stop the watching. Defaults to true.
 	 */
 	public async stop(closeAllDevices = true): Promise<void> {
-		navigator.hid.removeListener('disconnect', this.handleDisconnect)
+		navigator.hid.removeEventListener('disconnect', this.handleDisconnect)
 
 		if (this.pollingTimeout !== undefined) {
 			clearTimeout(this.pollingTimeout)
@@ -113,8 +112,8 @@ export class XKeysWatcher extends EventEmitter {
 		}
 	}
 
-	private handleDisconnect = (device: HIDDevice) => {
-		this.cleanupDevice(device)
+	private handleDisconnect = (event: HIDConnectionEvent) => {
+		this.cleanupDevice(event.device)
 	}
 
 	private cleanupDevice(device: HIDDevice) {
@@ -135,7 +134,7 @@ export class XKeysWatcher extends EventEmitter {
 
 export type XKeysWatcherOptions = {
 	/**
-	 * The interval to use for checking for new devices.
+	 * The interval to use for checking for new devices (defaults to 1000) [ms].
 	 * Note: This is a lower bound; the real poll rate may be slower if individual polling cycles take longer than the interval.
 	 */
 	pollingInterval?: number
