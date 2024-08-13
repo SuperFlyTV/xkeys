@@ -61,7 +61,9 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 
 	// Setup listener for disconnect:
 	GlobalDisconnectListener.listenForDisconnect(browserDevice, () => {
-		xkeys._handleDeviceDisconnected()
+		xkeys._handleDeviceDisconnected().catch((e) => {
+			console.error(`Xkeys: Error handling disconnect:`, e)
+		})
 	})
 
 	// Wait for the device to initialize:

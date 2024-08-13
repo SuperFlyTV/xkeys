@@ -3,7 +3,7 @@ export class GlobalDisconnectListener {
 	private static isSetup = false
 
 	/** Add listener for disconnect event, for a HIDDevice. The callback will be fired once. */
-	static listenForDisconnect(device: HIDDevice, callback: () => void) {
+	static listenForDisconnect(device: HIDDevice, callback: () => void): void {
 		this.setup()
 		this.listeners.set(device, callback)
 	}
