@@ -485,11 +485,11 @@ export class XKeys extends EventEmitter {
 		} else if (this.product.backLightType === BackLightType.LINEAR) {
 			// The 40 buttons, that requires special mapping.
 
-			const ledIndex = keyIndex - 1 // 0 based linear numbering sort of...
+			const ledIndexBlue = keyIndex - 1 // 0 based linear numbering sort of...
+			const ledIndexRed = ledIndexBlue + this.product.backLight2offset
 
-			const on: boolean = color.r > 0 || color.g > 0 || color.b > 0
-
-			this._write([0, 181, ledIndex, on ? (flashing ? 2 : 1) : 0, 1])
+			this._write([0, 181, ledIndexBlue, color.b > 0 ? (flashing ? 2 : 1) : 0, 0])
+			this._write([0, 181, ledIndexRed, color.r > 0 || color.g > 0 ? (flashing ? 2 : 1) : 0, 0])
 		} else if (this.product.backLightType === BackLightType.LEGACY) {
 			const ledIndexBlue = (location.col - 1) * 8 + location.row - 1
 			const ledIndexRed = ledIndexBlue + (this.product.backLight2offset || 0)
@@ -549,7 +549,10 @@ export class XKeys extends EventEmitter {
 		blueIntensity = Math.max(Math.min(blueIntensity, 255), 0)
 		redIntensity = Math.max(Math.min(redIntensity, 255), 0)
 
-		if (this.product.backLightType === 2) {
+		if (
+			this.product.backLightType === BackLightType.LEGACY ||
+			this.product.backLightType === BackLightType.LINEAR
+		) {
 			this._write([0, 187, blueIntensity, redIntensity])
 		} else {
 			this._write([0, 187, blueIntensity])

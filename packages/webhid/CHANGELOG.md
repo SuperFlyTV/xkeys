@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/SuperFlyTV/xkeys/compare/v3.1.1...v3.1.2) (2024-08-12)
+
+
+### Bug Fixes
+
+* event listeners in node-hid-wapper to follow style in web-hid-wrapper. ([ee1d6c6](https://github.com/SuperFlyTV/xkeys/commit/ee1d6c6c110ddb70fbdeafd389c9c4504ee17f8c))
+
+
+
+
+
 ## [3.1.1](https://github.com/SuperFlyTV/xkeys/compare/v3.1.0...v3.1.1) (2024-03-04)
 
 **Note:** Version bump only for package xkeys-webhid

@@ -10,8 +10,6 @@ import * as HID from 'node-hid'
 export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 	constructor(private device: HID.HIDAsync) {
 		super()
-		this._handleData = this._handleData.bind(this)
-		this._handleError = this._handleError.bind(this)
 
 		this.device.on('error', this._handleError)
 		this.device.on('data', this._handleData)
@@ -35,10 +33,10 @@ export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 		this.device.removeListener('data', this._handleData)
 	}
 
-	private _handleData(data: Buffer) {
+	private _handleData = (data: Buffer) => {
 		this.emit('data', data)
 	}
-	private _handleError(error: any) {
+	private _handleError = (error: any) => {
 		this.emit('error', error)
 	}
 }

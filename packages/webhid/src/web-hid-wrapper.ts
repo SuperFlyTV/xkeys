@@ -16,9 +16,6 @@ export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 	constructor(device: HIDDevice) {
 		super()
 
-		this._handleInputreport = this._handleInputreport.bind(this)
-		this._handleError = this._handleError.bind(this)
-
 		this.device = device
 
 		this.device.addEventListener('inputreport', this._handleInputreport)
@@ -36,13 +33,14 @@ export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 
 	public async close(): Promise<void> {
 		await this.device.close()
-		this.device.removeEventListener('inputreport', this._handleInputreport.bind(this))
+		this.device.removeEventListener('inputreport', this._handleInputreport)
+		this.device.removeEventListener('error', this._handleError)
 	}
-	private _handleInputreport(event: HIDInputReportEvent) {
+	private _handleInputreport = (event: HIDInputReportEvent) => {
 		const buf = WebBuffer.from(event.data.buffer)
 		this.emit('data', buf)
 	}
-	private _handleError(error: any) {
+	private _handleError = (error: any) => {
 		this.emit('error', error)
 	}
 }
