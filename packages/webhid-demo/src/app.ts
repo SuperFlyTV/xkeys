@@ -16,6 +16,14 @@ async function openDevice(device: HIDDevice): Promise<void> {
 
 	appendLog(`Connected to "${xkeys.info.name}"`)
 
+	xkeys.on('disconnected', () => {
+		appendLog(`${xkeys.info.name} was disconnected`)
+		// Clean up stuff:
+		xkeys.removeAllListeners()
+	})
+	xkeys.on('error', (...errs) => {
+		appendLog('X-keys error:' + errs.join(','))
+	})
 	xkeys.on('down', (keyIndex: number) => {
 		appendLog(`Button ${keyIndex} down`)
 		xkeys.setBacklight(keyIndex, 'blue')
