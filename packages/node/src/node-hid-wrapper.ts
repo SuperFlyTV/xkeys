@@ -8,6 +8,8 @@ import * as HID from 'node-hid'
  * This translates it into the common format (@see HIDDevice) defined by @xkeys-lib/core
  */
 export class NodeHIDDevice extends EventEmitter implements HIDDevice {
+	static CLOSE_WAIT_TIME = 300
+
 	constructor(private device: HID.HIDAsync) {
 		super()
 
@@ -27,7 +29,7 @@ export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 		// For some unknown reason, we need to wait a bit before returning because it
 		// appears that the HID-device isn't actually closed properly until after a short while.
 		// (This issue has been observed in Electron, where a app.quit() causes the application to crash with "Exit status 3221226505".)
-		await new Promise((resolve) => setTimeout(resolve, 300))
+		await new Promise((resolve) => setTimeout(resolve, NodeHIDDevice.CLOSE_WAIT_TIME))
 
 		this.device.removeListener('error', this._handleError)
 		this.device.removeListener('data', this._handleData)

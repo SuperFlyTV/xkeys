@@ -1,6 +1,6 @@
 import { XKeys, XKEYS_VENDOR_ID } from '@xkeys-lib/core'
 import { WebHIDDevice } from './web-hid-wrapper'
-import { GlobalDisconnectListener } from './globalDisconnectListener'
+import { GlobalConnectListener } from './globalConnectListener'
 
 /** Prompts the user for which X-keys panel to select */
 export async function requestXkeysPanels(): Promise<HIDDevice[]> {
@@ -11,7 +11,10 @@ export async function requestXkeysPanels(): Promise<HIDDevice[]> {
 			},
 		],
 	})
-	return allDevices.filter(isValidXkeysUsage)
+	const newDevices = allDevices.filter(isValidXkeysUsage)
+
+	if (newDevices.length > 0) GlobalConnectListener.notifyConnectedDevice() // A fix for when the 'connect' event isn't fired
+	return newDevices
 }
 /**
  * Reopen previously selected devices.
@@ -60,7 +63,7 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 	)
 
 	// Setup listener for disconnect:
-	GlobalDisconnectListener.listenForDisconnect(browserDevice, () => {
+	GlobalConnectListener.listenForDisconnectOnce(browserDevice, () => {
 		xkeys._handleDeviceDisconnected().catch((e) => {
 			console.error(`Xkeys: Error handling disconnect:`, e)
 		})

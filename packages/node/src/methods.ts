@@ -28,7 +28,6 @@ export async function setupXkeysPanel(
 				interface: number
 		  }
 		| undefined
-
 	try {
 		if (!devicePathOrHIDDevice) {
 			// Device not provided, will then select any connected device:
