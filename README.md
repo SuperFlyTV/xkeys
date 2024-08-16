@@ -24,6 +24,8 @@ $ yarn add xkeys
 
 ### To use in browser
 
+Uses WebHID, see list of supported browsers: [caniuse.com/webhid](https://caniuse.com/webhid).
+
 ```bash
 $ npm install --save xkeys-webhid
 or
@@ -63,7 +65,7 @@ This is the recommended way to use this library, to automatically be connected o
 _Note: The watcher depends on the [node-usb](https://github.com/node-usb/node-usb) library, which might be unsupported on some platforms._
 
 ```javascript
-const { XKeysWatcher } = require('xkeys')
+const { XKeysWatcher } = require('xkeys') // or 'xkeys-webhid' in a browser
 
 /*
 	This example connects to any connected x-keys panels and logs
@@ -181,13 +183,35 @@ listAllConnectedPanels().forEach((connectedPanel) => {
 
 See the example implementation at [packages/webhid-demo](packages/webhid-demo).
 
+```javascript
+const { XKeysWatcher, requestXkeysPanels } = require('xkeys-webhid')
+
+const watcher = new XKeysWatcher({})
+watcher.on('error', (e) => {
+	console.log('Error in XKeysWatcher', e)
+})
+watcher.on('connected', (xkeysPanel) => {
+	// This will be triggered whenever a panel is connected, or permissions is granted.
+	// >> See the example above for setting up the xkeysPanel <<
+})
+
+myHTMLButton.addEventListener('click', async () => {
+	// Open the Request device permissions dialog:
+	requestXkeysPanels().catch((error) => console.error(error))
+
+	// Notes:
+	// When the user has granted permissions, the browser will remember this between sessions.
+	// However, if the panel is disconnected and reconnected, the user will have to grant permissions again.
+})
+```
+
 ### Demo
 
 If you are using a Chromium v89+ based browser, you can try out the [webhid demo](https://SuperFlyTV.github.io/xkeys/).
 
 ## API documentation
 
-### XKeysWatcher (Node.js only)
+### XKeysWatcher
 
 The XKeysWatcher has a few different options that can be set upon initialization:
 
@@ -204,6 +228,7 @@ watcher.on('error', (e) => {
 watcher.on('connected', (xkeysPanel) => {
 	// xkeysPanel connected...
 })
+// Note: In a browser, user must first grant permissions to access the X-keys, using requestXkeysPanels().
 ```
 
 #### automaticUnitIdMode
