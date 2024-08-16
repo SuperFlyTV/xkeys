@@ -1,4 +1,4 @@
-import { getOpenedXKeysPanels, requestXkeysPanels, setupXkeysPanel, XKeys } from 'xkeys-webhid'
+import { requestXkeysPanels, XKeys, XKeysWatcher } from 'xkeys-webhid'
 
 const connectedXkeys = new Set<XKeys>()
 
@@ -9,51 +9,57 @@ function appendLog(str: string) {
 	}
 }
 
-async function openDevice(device: HIDDevice): Promise<void> {
-	const xkeys = await setupXkeysPanel(device)
+function initialize() {
+	// Set up the watcher for xkeys:
+	const watcher = new XKeysWatcher({
+		// automaticUnitIdMode: false
+		// usePolling: true,
+		// pollingInterval= 1000
+	})
+	watcher.on('error', (e) => {
+		appendLog(`Error in XkeysWatcher: ${e}`)
+	})
+	watcher.on('connected', (xkeys) => {
+		connectedXkeys.add(xkeys)
 
-	connectedXkeys.add(xkeys)
+		const id = xkeys.info.name
 
-	const id = xkeys.info.name
+		appendLog(`${id}: Connected`)
 
-	appendLog(`${id}: Connected`)
+		xkeys.on('disconnected', () => {
+			appendLog(`${id}: Disconnected`)
+			// Clean up stuff:
+			xkeys.removeAllListeners()
 
-	xkeys.on('disconnected', () => {
-		appendLog(`${id}: Disconnected`)
-		// Clean up stuff:
-		xkeys.removeAllListeners()
+			connectedXkeys.delete(xkeys)
+			updateDeviceList()
+		})
+		xkeys.on('error', (...errs) => {
+			appendLog(`${id}: X-keys error: ${errs.join(',')}`)
+		})
+		xkeys.on('down', (keyIndex: number) => {
+			appendLog(`${id}: Button ${keyIndex} down`)
+			xkeys.setBacklight(keyIndex, 'blue')
+		})
+		xkeys.on('up', (keyIndex: number) => {
+			appendLog(`${id}: Button ${keyIndex} up`)
+			xkeys.setBacklight(keyIndex, null)
+		})
+		xkeys.on('jog', (index, value) => {
+			appendLog(`${id}: Jog #${index}: ${value}`)
+		})
+		xkeys.on('joystick', (index, value) => {
+			appendLog(`${id}: Joystick #${index}: ${JSON.stringify(value)}`)
+		})
+		xkeys.on('shuttle', (index, value) => {
+			appendLog(`${id}: Shuttle #${index}: ${value}`)
+		})
+		xkeys.on('tbar', (index, value) => {
+			appendLog(`${id}: T-bar #${index}: ${value}`)
+		})
 
-		connectedXkeys.delete(xkeys)
 		updateDeviceList()
 	})
-	xkeys.on('error', (...errs) => {
-		appendLog(`${id}: X-keys error: ${errs.join(',')}`)
-	})
-	xkeys.on('down', (keyIndex: number) => {
-		appendLog(`${id}: Button ${keyIndex} down`)
-		xkeys.setBacklight(keyIndex, 'blue')
-	})
-	xkeys.on('up', (keyIndex: number) => {
-		appendLog(`${id}: Button ${keyIndex} up`)
-		xkeys.setBacklight(keyIndex, null)
-	})
-	xkeys.on('jog', (index, value) => {
-		appendLog(`${id}: Jog #${index}: ${value}`)
-	})
-	xkeys.on('joystick', (index, value) => {
-		appendLog(`${id}: Joystick #${index}: ${JSON.stringify(value)}`)
-	})
-	xkeys.on('shuttle', (index, value) => {
-		appendLog(`${id}: Shuttle #${index}: ${value}`)
-	})
-	xkeys.on('tbar', (index, value) => {
-		appendLog(`${id}: T-bar #${index}: ${value}`)
-	})
-
-	updateDeviceList()
-}
-
-function initialize() {
 	window.addEventListener('load', () => {
 		appendLog('Page loaded')
 
@@ -61,17 +67,6 @@ function initialize() {
 			appendLog('>>>>>  WebHID not supported in this browser  <<<<<')
 			return
 		}
-
-		// Attempt to open a previously selected device:
-		getOpenedXKeysPanels()
-			.then((devices) => {
-				for (const device of devices) {
-					appendLog(`"${device.productName}" already granted in a previous session`)
-					console.log(device)
-					openDevice(device).catch(appendLog)
-				}
-			})
-			.catch(console.error)
 	})
 
 	const consentButton = document.getElementById('consent-button')
@@ -86,8 +81,8 @@ function initialize() {
 				} else {
 					for (const device of devices) {
 						appendLog(`Access granted to "${device.productName}"`)
-						openDevice(device).catch(console.error)
 					}
+					// Note The XKeysWatcher will now pick up the device automatically
 				}
 			})
 			.catch((error) => {
@@ -116,8 +111,8 @@ function updateDeviceList() {
 				button.addEventListener('click', () => {
 					appendLog(xkeys.info.name + ' Closing device')
 					xkeys.close().catch(console.error)
-					// currentXkeys = null
 				})
+				div.appendChild(button)
 
 				container.appendChild(div)
 			})
