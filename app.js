@@ -3702,6 +3702,7 @@ exports.XKeys = void 0;
 __exportStar(__webpack_require__(441), exports);
 __exportStar(__webpack_require__(815), exports);
 __exportStar(__webpack_require__(313), exports);
+__exportStar(__webpack_require__(468), exports);
 __exportStar(__webpack_require__(602), exports);
 var xkeys_1 = __webpack_require__(622);
 Object.defineProperty(exports, "XKeys", ({ enumerable: true, get: function () { return xkeys_1.XKeys; } }));
@@ -4841,6 +4842,211 @@ exports.PRODUCTS = {
 
 /***/ }),
 
+/***/ 468:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GenericXKeysWatcher = void 0;
+const events_1 = __webpack_require__(531);
+/**
+ * Set up a watcher for newly connected X-keys panels.
+ * Note: It is highly recommended to set up a listener for the disconnected event on the X-keys panel, to clean up after a disconnected device.
+ */
+class GenericXKeysWatcher extends events_1.EventEmitter {
+    constructor(_options) {
+        super();
+        this._options = _options;
+        this.updateConnectedDevicesTimeout = null;
+        this.updateConnectedDevicesIsRunning = false;
+        this.updateConnectedDevicesRunAgain = false;
+        this.seenDevices = new Set();
+        this.setupXkeys = new Map();
+        /** A value that is incremented whenever we expect to find a new or removed device in updateConnectedDevices(). */
+        this.shouldFindChangedReTries = 0;
+        this.isActive = true;
+        this.debug = false;
+        /** A list of the devices we've called setupNewDevice() for */
+        // private setupXkeysPanels: XKeys[] = []
+        this.prevConnectedIdentifiers = {};
+        /** Unique unitIds grouped into productId groups. */
+        this.uniqueIds = new Map();
+        // Do a sweep for all currently connected X-keys panels:
+        this.triggerUpdateConnectedDevices(false);
+    }
+    get options() {
+        var _a, _b, _c, _d, _e, _f;
+        return {
+            automaticUnitIdMode: (_b = (_a = this._options) === null || _a === void 0 ? void 0 : _a.automaticUnitIdMode) !== null && _b !== void 0 ? _b : false,
+            usePolling: (_d = (_c = this._options) === null || _c === void 0 ? void 0 : _c.usePolling) !== null && _d !== void 0 ? _d : false,
+            pollingInterval: (_f = (_e = this._options) === null || _e === void 0 ? void 0 : _e.pollingInterval) !== null && _f !== void 0 ? _f : 1000,
+        };
+    }
+    /**
+     * Stop the watcher
+     * @param closeAllDevices Set to false in order to NOT close all devices. Use this if you only want to stop the watching. Defaults to true
+     */
+    async stop(closeAllDevices = true) {
+        // To be implemented by the subclass and call super.stop() at the end
+        this.isActive = false;
+        if (closeAllDevices) {
+            // In order for an application to close gracefully,
+            // we need to close all devices that we've called setupXkeysPanel() on:
+            await Promise.all(Array.from(this.seenDevices.keys()).map(async (device) => this.handleRemovedDevice(device)));
+        }
+    }
+    triggerUpdateConnectedDevices(somethingWasAddedOrRemoved) {
+        if (somethingWasAddedOrRemoved) {
+            this.shouldFindChangedReTries++;
+        }
+        if (this.updateConnectedDevicesIsRunning) {
+            // It is already running, so we'll run it again later, when it's done:
+            this.updateConnectedDevicesRunAgain = true;
+            return;
+        }
+        else if (this.updateConnectedDevicesTimeout) {
+            // It is already scheduled to run.
+            if (somethingWasAddedOrRemoved) {
+                // Set it to run now:
+                clearTimeout(this.updateConnectedDevicesTimeout);
+                this.updateConnectedDevicesTimeout = null;
+            }
+            else {
+                return;
+            }
+        }
+        if (!this.updateConnectedDevicesTimeout) {
+            this.updateConnectedDevicesRunAgain = false;
+            this.updateConnectedDevicesTimeout = setTimeout(() => {
+                this.updateConnectedDevicesTimeout = null;
+                this.updateConnectedDevicesIsRunning = true;
+                this.updateConnectedDevices()
+                    .catch(console.error)
+                    .finally(() => {
+                    this.updateConnectedDevicesIsRunning = false;
+                    if (this.updateConnectedDevicesRunAgain)
+                        this.triggerUpdateConnectedDevices(false);
+                });
+            }, somethingWasAddedOrRemoved ? 10 : Math.min(this.options.pollingInterval * 0.5, 300));
+        }
+    }
+    async updateConnectedDevices() {
+        this.debugLog('updateConnectedDevices');
+        const connectedDevices = await this.getConnectedDevices();
+        let removed = 0;
+        let added = 0;
+        // Removed devices:
+        for (const device of this.seenDevices.keys()) {
+            if (!connectedDevices.has(device)) {
+                // A device has been removed
+                this.debugLog('removed');
+                removed++;
+                await this.handleRemovedDevice(device);
+            }
+        }
+        // Added devices:
+        for (const connectedDevice of connectedDevices.keys()) {
+            if (!this.seenDevices.has(connectedDevice)) {
+                // A device has been added
+                this.debugLog('added');
+                added++;
+                this.seenDevices.add(connectedDevice);
+                this.handleNewDevice(connectedDevice);
+            }
+        }
+        if (this.shouldFindChangedReTries > 0 && (added === 0 || removed === 0)) {
+            // We expected to find something changed, but didn't.
+            // Try again later:
+            this.shouldFindChangedReTries--;
+            this.triggerUpdateConnectedDevices(false);
+        }
+        else {
+            this.shouldFindChangedReTries = 0;
+        }
+    }
+    handleNewDevice(device) {
+        // This is called when a new device has been added / connected
+        this.setupXkeysPanel(device)
+            .then(async (xKeysPanel) => {
+            // Since this is async, check if the panel is still connected:
+            if (this.seenDevices.has(device)) {
+                await this.setupNewDevice(device, xKeysPanel);
+            }
+            else {
+                await this.handleRemovedDevice(device);
+            }
+        })
+            .catch((err) => {
+            this.emit('error', err);
+        });
+    }
+    async handleRemovedDevice(device) {
+        // This is called when a device has been removed / disconnected
+        this.seenDevices.delete(device);
+        const xkeys = this.setupXkeys.get(device);
+        this.debugLog('aa');
+        if (xkeys) {
+            this.debugLog('bb');
+            await xkeys._handleDeviceDisconnected();
+            this.setupXkeys.delete(device);
+        }
+    }
+    async setupNewDevice(device, xKeysPanel) {
+        // Store for future reference:
+        this.setupXkeys.set(device, xKeysPanel);
+        xKeysPanel.once('disconnected', () => {
+            this.handleRemovedDevice(device).catch((e) => this.emit('error', e));
+        });
+        // this.setupXkeysPanels.push(xkeysPanel)
+        if (this.options.automaticUnitIdMode) {
+            if (xKeysPanel.unitId === 0) {
+                // if it is 0, we assume that it's new from the factory and can be safely changed
+                xKeysPanel.setUnitId(this._getNextUniqueId(xKeysPanel)); // the lookup-cache is stored either in memory, or preferably on disk
+            }
+            // the PID+UID pair is enough to uniquely identify a panel.
+            const uniqueIdentifier = xKeysPanel.uniqueId;
+            const previousXKeysPanel = this.prevConnectedIdentifiers[uniqueIdentifier];
+            if (previousXKeysPanel) {
+                // This panel has been connected before.
+                // We want the XKeys-instance to emit a 'reconnected' event.
+                // This means that we kill off the newly created xkeysPanel, and
+                await previousXKeysPanel._handleDeviceReconnected(xKeysPanel._getHIDDevice(), xKeysPanel._getDeviceInfo());
+            }
+            else {
+                // It seems that this panel hasn't been connected before
+                this.emit('connected', xKeysPanel);
+                this.prevConnectedIdentifiers[uniqueIdentifier] = xKeysPanel;
+            }
+        }
+        else {
+            // Default behavior:
+            this.emit('connected', xKeysPanel);
+        }
+    }
+    _getNextUniqueId(xkeysPanel) {
+        let nextId = this.uniqueIds.get(xkeysPanel.info.productId);
+        if (!nextId) {
+            nextId = 32; // Starting at 32
+        }
+        else {
+            nextId++;
+        }
+        if (nextId > 255)
+            throw new Error('No more unique ids available!');
+        this.uniqueIds.set(xkeysPanel.info.productId, nextId);
+        return nextId;
+    }
+    debugLog(...args) {
+        if (this.debug)
+            console.log(...args);
+    }
+}
+exports.GenericXKeysWatcher = GenericXKeysWatcher;
+//# sourceMappingURL=watcher.js.map
+
+/***/ }),
+
 /***/ 622:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -5634,6 +5840,91 @@ exports.XKeys = XKeys;
 
 /***/ }),
 
+/***/ 223:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GlobalConnectListener = void 0;
+/**
+ * This class is used to register listener for connect and disconnect events for HID devices.
+ * It allows for a few clever tricks, such as
+ * * listenForDisconnectOnce() listens for a disconnect event for a specific device, and then removes the listener.
+ * * handles a special case where the 'connect' event isn't fired when adding permissions for a HID device.
+ */
+class GlobalConnectListener {
+    /** Add listener for any connect event */
+    static listenForAnyConnect(callback) {
+        this.setup();
+        this.anyConnectListeners.add(callback);
+        return {
+            stop: () => this.anyConnectListeners.delete(callback),
+        };
+    }
+    /** Add listener for any disconnect event */
+    static listenForAnyDisconnect(callback) {
+        this.setup();
+        this.anyDisconnectListeners.add(callback);
+        return {
+            stop: () => this.anyDisconnectListeners.delete(callback),
+        };
+    }
+    /** Add listener for disconnect event, for a HIDDevice. The callback will be fired once. */
+    static listenForDisconnectOnce(device, callback) {
+        this.setup();
+        this.disconnectListenersOnce.set(device, callback);
+    }
+    static notifyConnectedDevice() {
+        this.handleConnect();
+    }
+    static setup() {
+        if (this.isSetup)
+            return;
+        navigator.hid.addEventListener('disconnect', this.handleDisconnect);
+        navigator.hid.addEventListener('connect', this.handleConnect);
+        this.isSetup = true;
+    }
+    static maybeTeardown() {
+        if (this.disconnectListenersOnce.size === 0 &&
+            this.anyDisconnectListeners.size === 0 &&
+            this.anyConnectListeners.size === 0) {
+            // If there are no listeners, we can teardown the global listener:
+            this.teardown();
+        }
+    }
+    static teardown() {
+        navigator.hid.removeEventListener('disconnect', this.handleDisconnect);
+        navigator.hid.removeEventListener('connect', this.handleConnect);
+        this.disconnectListenersOnce.clear();
+        this.isSetup = false;
+    }
+}
+exports.GlobalConnectListener = GlobalConnectListener;
+_a = GlobalConnectListener;
+GlobalConnectListener.anyConnectListeners = new Set();
+GlobalConnectListener.anyDisconnectListeners = new Set();
+GlobalConnectListener.disconnectListenersOnce = new Map();
+GlobalConnectListener.isSetup = false;
+GlobalConnectListener.handleDisconnect = (ev) => {
+    _a.anyDisconnectListeners.forEach((callback) => callback());
+    _a.disconnectListenersOnce.forEach((callback, device) => {
+        if (device === ev.device) {
+            callback();
+            // Also remove the listener:
+            _a.disconnectListenersOnce.delete(device);
+        }
+    });
+    _a.maybeTeardown();
+};
+GlobalConnectListener.handleConnect = () => {
+    _a.anyConnectListeners.forEach((callback) => callback());
+};
+//# sourceMappingURL=globalConnectListener.js.map
+
+/***/ }),
+
 /***/ 415:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -5651,8 +5942,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__webpack_require__(613), exports);
-__exportStar(__webpack_require__(901), exports);
 __exportStar(__webpack_require__(812), exports);
+__exportStar(__webpack_require__(808), exports);
+__exportStar(__webpack_require__(901), exports);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -5666,6 +5958,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.setupXkeysPanel = exports.getOpenedXKeysPanels = exports.requestXkeysPanels = void 0;
 const core_1 = __webpack_require__(613);
 const web_hid_wrapper_1 = __webpack_require__(901);
+const globalConnectListener_1 = __webpack_require__(223);
 /** Prompts the user for which X-keys panel to select */
 async function requestXkeysPanels() {
     const allDevices = await navigator.hid.requestDevice({
@@ -5675,7 +5968,10 @@ async function requestXkeysPanels() {
             },
         ],
     });
-    return allDevices.filter(isValidXkeysUsage);
+    const newDevices = allDevices.filter(isValidXkeysUsage);
+    if (newDevices.length > 0)
+        globalConnectListener_1.GlobalConnectListener.notifyConnectedDevice(); // A fix for when the 'connect' event isn't fired
+    return newDevices;
 }
 exports.requestXkeysPanels = requestXkeysPanels;
 /**
@@ -5719,6 +6015,12 @@ async function setupXkeysPanel(browserDevice) {
         productId: productId,
         interface: null, // todo: Check what to use here (collection.usage?)
     }, undefined);
+    // Setup listener for disconnect:
+    globalConnectListener_1.GlobalConnectListener.listenForDisconnectOnce(browserDevice, () => {
+        xkeys._handleDeviceDisconnected().catch((e) => {
+            console.error(`Xkeys: Error handling disconnect:`, e);
+        });
+    });
     // Wait for the device to initialize:
     try {
         await xkeys.init();
@@ -5731,6 +6033,66 @@ async function setupXkeysPanel(browserDevice) {
 }
 exports.setupXkeysPanel = setupXkeysPanel;
 //# sourceMappingURL=methods.js.map
+
+/***/ }),
+
+/***/ 808:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.XKeysWatcher = void 0;
+const core_1 = __webpack_require__(613);
+const methods_1 = __webpack_require__(812);
+const globalConnectListener_1 = __webpack_require__(223);
+/**
+ * Set up a watcher for newly connected X-keys panels.
+ * Note: It is highly recommended to set up a listener for the disconnected event on the X-keys panel, to clean up after a disconnected device.
+ */
+class XKeysWatcher extends core_1.GenericXKeysWatcher {
+    constructor(options) {
+        super(options);
+        this.eventListeners = [];
+        this.pollingInterval = undefined;
+        this.handleConnectEvent = () => {
+            // Called whenever a device is connected or disconnected
+            if (!this.isActive)
+                return;
+            this.triggerUpdateConnectedDevices(true);
+        };
+        if (!this.options.usePolling) {
+            this.eventListeners.push(globalConnectListener_1.GlobalConnectListener.listenForAnyDisconnect(this.handleConnectEvent));
+            this.eventListeners.push(globalConnectListener_1.GlobalConnectListener.listenForAnyConnect(this.handleConnectEvent));
+        }
+        else {
+            this.pollingInterval = setInterval(() => {
+                this.triggerUpdateConnectedDevices(false);
+            }, this.options.pollingInterval);
+        }
+    }
+    /**
+     * Stop the watcher
+     * @param closeAllDevices Set to false in order to NOT close all devices. Use this if you only want to stop the watching. Defaults to true
+     */
+    async stop(closeAllDevices = true) {
+        this.eventListeners.forEach((listener) => listener.stop());
+        if (this.pollingInterval) {
+            clearInterval(this.pollingInterval);
+            this.pollingInterval = undefined;
+        }
+        await super.stop(closeAllDevices);
+    }
+    async getConnectedDevices() {
+        // Returns a Set of devicePaths of the connected devices
+        return new Set(await (0, methods_1.getOpenedXKeysPanels)());
+    }
+    async setupXkeysPanel(device) {
+        return (0, methods_1.setupXkeysPanel)(device);
+    }
+}
+exports.XKeysWatcher = XKeysWatcher;
+//# sourceMappingURL=watcher.js.map
 
 /***/ }),
 
@@ -5819,81 +6181,114 @@ var __webpack_unused_export__;
 
 __webpack_unused_export__ = ({ value: true });
 const xkeys_webhid_1 = __webpack_require__(415);
+const connectedXkeys = new Set();
 function appendLog(str) {
     const logElm = document.getElementById('log');
     if (logElm) {
         logElm.textContent = `${str}\n${logElm.textContent}`;
     }
 }
-let currentXkeys = null;
-async function openDevice(device) {
-    const xkeys = await (0, xkeys_webhid_1.setupXkeysPanel)(device);
-    currentXkeys = xkeys;
-    appendLog(`Connected to "${xkeys.info.name}"`);
-    xkeys.on('down', (keyIndex) => {
-        appendLog(`Button ${keyIndex} down`);
-        xkeys.setBacklight(keyIndex, 'blue');
+function initialize() {
+    // Set up the watcher for xkeys:
+    const watcher = new xkeys_webhid_1.XKeysWatcher({
+    // automaticUnitIdMode: false
+    // usePolling: true,
+    // pollingInterval= 1000
     });
-    xkeys.on('up', (keyIndex) => {
-        appendLog(`Button ${keyIndex} up`);
-        xkeys.setBacklight(keyIndex, null);
+    watcher.on('error', (e) => {
+        appendLog(`Error in XkeysWatcher: ${e}`);
     });
-    xkeys.on('jog', (index, value) => {
-        appendLog(`Jog #${index}: ${value}`);
+    watcher.on('connected', (xkeys) => {
+        connectedXkeys.add(xkeys);
+        const id = xkeys.info.name;
+        appendLog(`${id}: Connected`);
+        xkeys.on('disconnected', () => {
+            appendLog(`${id}: Disconnected`);
+            // Clean up stuff:
+            xkeys.removeAllListeners();
+            connectedXkeys.delete(xkeys);
+            updateDeviceList();
+        });
+        xkeys.on('error', (...errs) => {
+            appendLog(`${id}: X-keys error: ${errs.join(',')}`);
+        });
+        xkeys.on('down', (keyIndex) => {
+            appendLog(`${id}: Button ${keyIndex} down`);
+            xkeys.setBacklight(keyIndex, 'blue');
+        });
+        xkeys.on('up', (keyIndex) => {
+            appendLog(`${id}: Button ${keyIndex} up`);
+            xkeys.setBacklight(keyIndex, null);
+        });
+        xkeys.on('jog', (index, value) => {
+            appendLog(`${id}: Jog #${index}: ${value}`);
+        });
+        xkeys.on('joystick', (index, value) => {
+            appendLog(`${id}: Joystick #${index}: ${JSON.stringify(value)}`);
+        });
+        xkeys.on('shuttle', (index, value) => {
+            appendLog(`${id}: Shuttle #${index}: ${value}`);
+        });
+        xkeys.on('tbar', (index, value) => {
+            appendLog(`${id}: T-bar #${index}: ${value}`);
+        });
+        updateDeviceList();
     });
-    xkeys.on('joystick', (index, value) => {
-        appendLog(`Joystick #${index}: ${JSON.stringify(value)}`);
-    });
-    xkeys.on('shuttle', (index, value) => {
-        appendLog(`Shuttle #${index}: ${value}`);
-    });
-    xkeys.on('tbar', (index, value) => {
-        appendLog(`T-bar #${index}: ${value}`);
-    });
-}
-window.addEventListener('load', () => {
-    appendLog('Page loaded');
-    // Attempt to open a previously selected device:
-    (0, xkeys_webhid_1.getOpenedXKeysPanels)()
-        .then((devices) => {
-        if (devices.length > 0) {
-            appendLog(`"${devices[0].productName}" already granted in a previous session`);
-            console.log(devices[0]);
-            openDevice(devices[0]).catch(console.error);
-        }
-    })
-        .catch(console.error);
-});
-const consentButton = document.getElementById('consent-button');
-consentButton === null || consentButton === void 0 ? void 0 : consentButton.addEventListener('click', () => {
-    if (currentXkeys) {
-        appendLog('Closing device');
-        currentXkeys.close().catch(console.error);
-        currentXkeys = null;
-    }
-    // Prompt for a device
-    appendLog('Asking user for permissions...');
-    (0, xkeys_webhid_1.requestXkeysPanels)()
-        .then((devices) => {
-        if (devices.length === 0) {
-            appendLog('No device was selected');
+    window.addEventListener('load', () => {
+        appendLog('Page loaded');
+        if (!navigator.hid) {
+            appendLog('>>>>>  WebHID not supported in this browser  <<<<<');
             return;
         }
-        appendLog(`Access granted to "${devices[0].productName}"`);
-        openDevice(devices[0]).catch(console.error);
-    })
-        .catch((error) => {
-        appendLog(`No device access granted: ${error}`);
     });
-});
-const closeButton = document.getElementById('close-button');
-closeButton === null || closeButton === void 0 ? void 0 : closeButton.addEventListener('click', () => {
-    if (currentXkeys) {
-        appendLog('Closing device');
-        currentXkeys.close().catch(console.error);
-        currentXkeys = null;
+    const consentButton = document.getElementById('consent-button');
+    consentButton === null || consentButton === void 0 ? void 0 : consentButton.addEventListener('click', () => {
+        // Prompt for a device
+        appendLog('Asking user for permissions...');
+        (0, xkeys_webhid_1.requestXkeysPanels)()
+            .then((devices) => {
+            if (devices.length === 0) {
+                appendLog('No device was selected');
+            }
+            else {
+                for (const device of devices) {
+                    appendLog(`Access granted to "${device.productName}"`);
+                }
+                // Note The XKeysWatcher will now pick up the device automatically
+            }
+        })
+            .catch((error) => {
+            appendLog(`No device access granted: ${error}`);
+        });
+    });
+}
+function updateDeviceList() {
+    // Update the list of connected devices:
+    const container = document.getElementById('devices');
+    if (container) {
+        container.innerHTML = '';
+        if (connectedXkeys.size === 0) {
+            container.innerHTML = '<i>No devices connected</i>';
+        }
+        else {
+            connectedXkeys.forEach((xkeys) => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+					<b>${xkeys.info.name}</b>
+				`;
+                const button = document.createElement('button');
+                button.innerText = 'Close device';
+                button.addEventListener('click', () => {
+                    appendLog(xkeys.info.name + ' Closing device');
+                    xkeys.close().catch(console.error);
+                });
+                div.appendChild(button);
+                container.appendChild(div);
+            });
+        }
     }
-});
+}
+initialize();
 
 })();
 
