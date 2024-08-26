@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/SuperFlyTV/xkeys/compare/v3.1.2...v3.2.0) (2024-08-26)
+
+
+### Features
+
+* Add XkeysWatcher to WebHID version, rework XkeysWatcher to share code between node & webHID versions ([34bbd3c](https://github.com/SuperFlyTV/xkeys/commit/34bbd3cbd765d97f3d4f52690f78d4cfef5817a2))
+
+
+
+
+
 ## [3.1.2](https://github.com/SuperFlyTV/xkeys/compare/v3.1.1...v3.1.2) (2024-08-12)
 
 
