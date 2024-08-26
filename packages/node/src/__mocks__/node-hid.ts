@@ -6,6 +6,10 @@ let mockWriteHandler: undefined | ((hid: HIDAsync, message: number[]) => void) =
 export function setMockWriteHandler(handler: (hid: HIDAsync, message: number[]) => void) {
 	mockWriteHandler = handler
 }
+let mockDevices: Device[] = []
+export function mockSetDevices(devices: Device[]) {
+	mockDevices = devices
+}
 
 // export class HID extends EventEmitter {
 export class HIDAsync extends EventEmitter {
@@ -15,9 +19,22 @@ export class HIDAsync extends EventEmitter {
 		return new HIDAsync(path)
 	}
 
-	constructor(_path: string) {
+	private _deviceInfo: Device = {
+		vendorId: XKEYS_VENDOR_ID,
+		productId: 0,
+		release: 0,
+		interface: 0,
+		product: 'N/A Mock',
+	}
+
+	constructor(path: string) {
 		super()
 		this.mockWriteHandler = mockWriteHandler
+
+		const existingDevice = mockDevices.find((d) => d.path === path)
+		if (existingDevice) {
+			this._deviceInfo = existingDevice
+		}
 	}
 	// constructor(vid: number, pid: number);
 	async close(): Promise<void> {
@@ -25,6 +42,7 @@ export class HIDAsync extends EventEmitter {
 	}
 	async pause(): Promise<void> {
 		// void
+		throw new Error('Mock not implemented.')
 	}
 	async read(_timeOut?: number): Promise<Buffer | undefined> {
 		return undefined
@@ -37,6 +55,7 @@ export class HIDAsync extends EventEmitter {
 	}
 	async resume(): Promise<void> {
 		// void
+		throw new Error('Mock not implemented.')
 	}
 	async write(message: number[]): Promise<number> {
 		this.mockWriteHandler?.(this, message)
@@ -44,6 +63,7 @@ export class HIDAsync extends EventEmitter {
 	}
 	async setNonBlocking(_noBlock: boolean): Promise<void> {
 		// void
+		throw new Error('Mock not implemented.')
 	}
 
 	async generateDeviceInfo(): Promise<Device> {
@@ -52,17 +72,13 @@ export class HIDAsync extends EventEmitter {
 	}
 
 	async getDeviceInfo(): Promise<Device> {
-		return {
-			vendorId: XKEYS_VENDOR_ID,
-			productId: 0,
-			release: 0,
-			interface: 0,
-		}
+		return this._deviceInfo
 	}
 }
 export function devices(): Device[] {
-	return []
+	return mockDevices
 }
 export function setDriverType(_type: 'hidraw' | 'libusb'): void {
+	throw new Error('Mock not implemented.')
 	// void
 }

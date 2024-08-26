@@ -1,5 +1,6 @@
 export * from './lib'
 export * from './api'
 export * from './products'
+export * from './watcher'
 export * from './genericHIDDevice'
 export { XKeys } from './xkeys'
