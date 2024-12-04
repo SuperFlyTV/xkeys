@@ -70,29 +70,37 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 	})
 
 	let alreadyRejected = false
-	return new Promise((resolve, reject) => {
-		const xkeysStopgapErrorHandler = (e: unknown) => {
-			if (alreadyRejected) {
-				console.error(`Xkeys: Error emitted after setup already rejected:`, e)
-				return
+	try {
+		await new Promise<void>((resolve, reject) => {
+			const markRejected = (e: unknown) => {
+				reject(e)
+				alreadyRejected = true
 			}
-			deviceWrap
-				.close()
-				.then(() => reject())
-				.catch(reject)
-				.finally(() => (alreadyRejected = true))
-		}
-		// Handle all error events until the instance is returned
-		xkeys.on('error', xkeysStopgapErrorHandler)
+			const xkeysStopgapErrorHandler = (e: unknown) => {
+				if (alreadyRejected) {
+					console.error(`Xkeys: Error emitted after setup already rejected:`, e)
+					return
+				}
 
-		// Wait for the device to initialize:
-		xkeys
-			.init()
-			.then(() => {
-				resolve(xkeys)
-				xkeys.removeListener('error', xkeysStopgapErrorHandler)
-			})
-			.catch(reject)
-			.finally(() => (alreadyRejected = true))
-	})
+				markRejected(e)
+			}
+
+			// Handle all error events until the instance is returned
+			xkeys.on('error', xkeysStopgapErrorHandler)
+
+			// Wait for the device to initialize:
+			xkeys
+				.init()
+				.then(() => {
+					resolve()
+					xkeys.removeListener('error', xkeysStopgapErrorHandler)
+				})
+				.catch(markRejected)
+		})
+
+		return xkeys
+	} catch (e) {
+		await deviceWrap.close()
+		throw e
+	}
 }
