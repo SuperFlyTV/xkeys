@@ -76,16 +76,18 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 				console.error(`Xkeys: Error emitted after setup already rejected:`, e)
 				return
 			}
-			deviceWrap.close()
+			deviceWrap
+				.close()
 				.then(() => reject())
 				.catch(reject)
 				.finally(() => (alreadyRejected = true))
 		}
-	    // Handle all error events until the instance is returned
+		// Handle all error events until the instance is returned
 		xkeys.on('error', xkeysStopgapErrorHandler)
-		
+
 		// Wait for the device to initialize:
-		xkeys.init()
+		xkeys
+			.init()
 			.then(() => {
 				resolve(xkeys)
 				xkeys.removeListener('error', xkeysStopgapErrorHandler)
