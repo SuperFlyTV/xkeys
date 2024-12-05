@@ -3,7 +3,7 @@ import * as HID from 'node-hid'
 import { Product, PRODUCTS, describeEvent } from '@xkeys-lib/core'
 import * as HIDMock from '../__mocks__/node-hid'
 import { setupXkeysPanel, XKeys, XKeysEvents } from '../'
-import { getSentData, handleXkeysMessages, resetSentData, sleep } from './lib'
+import { getSentData, handleXkeysMessages, resetSentData } from './lib'
 
 describe('Recorded tests', () => {
 	async function setupTestPanel(params: { productId: number }): Promise<XKeys> {
