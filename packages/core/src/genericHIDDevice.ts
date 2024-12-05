@@ -8,5 +8,8 @@ export interface HIDDevice {
 
 	write(data: number[]): void
 
+	/** Returns a promise which settles when all writes has completed */
+	flush(): Promise<void>
+
 	close(): Promise<void>
 }

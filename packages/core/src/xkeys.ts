@@ -647,6 +647,12 @@ export class XKeys extends EventEmitter {
 	public writeData(message: HIDMessage): void {
 		this._write(message)
 	}
+	/**
+	 * Returns a Promise that settles when all writes have been completed
+	 */
+	public async flush(): Promise<void> {
+		await this.device.flush()
+	}
 
 	/** (Internal function) Called when there has been detected that the device has been disconnected */
 	public async _handleDeviceDisconnected(): Promise<void> {

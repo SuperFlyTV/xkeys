@@ -4,6 +4,9 @@ import { NodeHIDDevice, XKeys, XKeysWatcher } from '..'
 import { handleXkeysMessages, sleep, sleepTicks } from './lib'
 
 describe('XKeysWatcher', () => {
+	afterEach(() => {
+		HIDMock.resetMockWriteHandler()
+	})
 	test('Detect device (w polling)', async () => {
 		const POLL_INTERVAL = 10
 		NodeHIDDevice.CLOSE_WAIT_TIME = 0 // We can override this to speed up the unit tests

@@ -26,6 +26,9 @@ describe('Recorded tests', () => {
 		expect(HID.setMockWriteHandler).toBeTruthy()
 	})
 	beforeEach(() => {})
+	afterEach(() => {
+		HIDMock.resetMockWriteHandler()
+	})
 
 	const dirPath = './src/__tests__/recordings/'
 
@@ -132,6 +135,8 @@ describe('Recorded tests', () => {
 
 					// @ts-expect-error hack
 					xkeysDevice[action.method](...action.arguments)
+
+					await xkeysDevice.flush()
 
 					expect(getSentData()).toEqual(action.sentData)
 					resetSentData()
