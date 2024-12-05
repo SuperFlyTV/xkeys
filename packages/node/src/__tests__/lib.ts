@@ -49,6 +49,16 @@ export function handleXkeysMessages(hid: HID.HIDAsync, message: number[]) {
 export function resetSentData() {
 	sentData = []
 }
+/** Like sleep() but 1ms at a time, allows for the event loop to run promises, etc.. */
+export async function sleepTicks(ms: number) {
+	for (let i = 0; i < ms; i++) {
+		await sleep(1)
+	}
+}
+
+export async function sleep(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
 declare global {
 	namespace jest {

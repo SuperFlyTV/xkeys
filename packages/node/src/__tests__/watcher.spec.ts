@@ -1,7 +1,7 @@
 import * as HID from 'node-hid'
 import * as HIDMock from '../__mocks__/node-hid'
 import { NodeHIDDevice, XKeys, XKeysWatcher } from '..'
-import { handleXkeysMessages } from './lib'
+import { handleXkeysMessages, sleep, sleepTicks } from './lib'
 
 describe('XKeysWatcher', () => {
 	test('Detect device (w polling)', async () => {
@@ -70,13 +70,3 @@ describe('XKeysWatcher', () => {
 		expect(onError).toHaveBeenCalledTimes(0)
 	})
 })
-/** Like sleep() but 1ms at a time, allows for the event loop to run promises, etc.. */
-async function sleepTicks(ms: number) {
-	for (let i = 0; i < ms; i++) {
-		await sleep(1)
-	}
-}
-
-async function sleep(ms: number) {
-	return new Promise((resolve) => setTimeout(resolve, ms))
-}
