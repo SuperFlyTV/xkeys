@@ -116,6 +116,34 @@ export async function setupXkeysPanel(
 		// Wait for the device to initialize:
 		await xkeys.init()
 
+		let alreadyRejected = false
+		await new Promise<void>((resolve, reject) => {
+			const markRejected = (e: unknown) => {
+				reject(e)
+				alreadyRejected = true
+			}
+			const xkeysStopgapErrorHandler = (e: unknown) => {
+				if (alreadyRejected) {
+					console.error(`Xkeys: Error emitted after setup already rejected:`, e)
+					return
+				}
+
+				markRejected(e)
+			}
+
+			// Handle all error events until the instance is returned
+			xkeys.on('error', xkeysStopgapErrorHandler)
+
+			// Wait for the device to initialize:
+			xkeys
+				.init()
+				.then(() => {
+					resolve()
+					xkeys.removeListener('error', xkeysStopgapErrorHandler)
+				})
+				.catch(markRejected)
+		})
+
 		return xkeys
 	} catch (e) {
 		if (device) await device.close().catch(() => null) // Suppress error
