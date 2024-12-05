@@ -137,4 +137,95 @@ describe('Unit tests', () => {
 
 		expect(onError).toHaveBeenCalledTimes(0)
 	})
+	test('flush()', async () => {
+		const hidDevice = {
+			vendorId: XKeys.vendorId,
+			productId: 1029,
+			interface: 0,
+			path: 'mockPath',
+		} as HID.Device
+
+		const mockWriteStart = jest.fn()
+		const mockWriteEnd = jest.fn()
+		HIDMock.setMockWriteHandler(async (hid, message) => {
+			mockWriteStart()
+			await sleep(10)
+			mockWriteEnd()
+			handleXkeysMessages(hid, message)
+		})
+
+		const myXkeysPanel = await setupXkeysPanel(hidDevice)
+
+		const errorListener = jest.fn(console.error)
+		myXkeysPanel.on('error', errorListener)
+
+		mockWriteStart.mockClear()
+		mockWriteEnd.mockClear()
+
+		myXkeysPanel.toggleAllBacklights()
+
+		expect(mockWriteStart).toBeCalledTimes(1)
+		expect(mockWriteEnd).toBeCalledTimes(0) // Should not have been called yet
+
+		// cleanup:
+		await myXkeysPanel.flush() // waits for all writes to finish
+
+		expect(mockWriteEnd).toBeCalledTimes(1)
+
+		await myXkeysPanel.close() // close the device.
+		myXkeysPanel.off('error', errorListener)
+
+		expect(errorListener).toHaveBeenCalledTimes(0)
+	})
+	test('flush() with error', async () => {
+		const hidDevice = {
+			vendorId: XKeys.vendorId,
+			productId: 1029,
+			interface: 0,
+			path: 'mockPath',
+		} as HID.Device
+
+		const mockWriteStart = jest.fn()
+		const mockWriteEnd = jest.fn()
+		HIDMock.setMockWriteHandler(async (hid, message) => {
+			mockWriteStart()
+			await sleep(10)
+			mockWriteEnd()
+			// console.log('message', message)
+
+			if (message[0] === 0 && message[1] === 184) {
+				// toggleAllBacklights
+				throw new Error('Mock error')
+			}
+
+			handleXkeysMessages(hid, message)
+		})
+
+		const myXkeysPanel = await setupXkeysPanel(hidDevice)
+
+		const errorListener = jest.fn((e) => {
+			if (`${e}`.includes('Mock error')) return // ignore
+			console.error(e)
+		})
+		myXkeysPanel.on('error', errorListener)
+
+		mockWriteStart.mockClear()
+		mockWriteEnd.mockClear()
+
+		myXkeysPanel.toggleAllBacklights()
+
+		expect(mockWriteStart).toBeCalledTimes(1)
+		expect(errorListener).toBeCalledTimes(0) // Should not have been called yet
+
+		// cleanup:
+		await myXkeysPanel.flush() // waits for all writes to finish
+
+		expect(errorListener).toBeCalledTimes(1)
+		errorListener.mockClear()
+
+		await myXkeysPanel.close() // close the device.
+		myXkeysPanel.off('error', errorListener)
+
+		expect(errorListener).toHaveBeenCalledTimes(0)
+	})
 })

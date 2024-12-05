@@ -41,6 +41,9 @@ export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 		this.device.removeListener('error', this._handleError)
 		this.device.removeListener('data', this._handleData)
 	}
+	public async flush(): Promise<void> {
+		await this.writeQueue.onIdle()
+	}
 
 	private _handleData = (data: Buffer) => {
 		this.emit('data', data)
