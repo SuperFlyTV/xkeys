@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { HIDDevice } from '@xkeys-lib/core'
 import { EventEmitter } from 'events'
+import Queue from 'p-queue'
 import * as HID from 'node-hid'
 
 /**
@@ -10,6 +11,8 @@ import * as HID from 'node-hid'
 export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 	static CLOSE_WAIT_TIME = 300
 
+	private readonly writeQueue = new Queue({ concurrency: 1 })
+
 	constructor(private device: HID.HIDAsync) {
 		super()
 
@@ -18,9 +21,13 @@ export class NodeHIDDevice extends EventEmitter implements HIDDevice {
 	}
 
 	public write(data: number[]): void {
-		this.device.write(data).catch((err) => {
-			this.emit('error', err)
-		})
+		this.writeQueue
+			.add(async () => {
+				await this.device.write(data)
+			})
+			.catch((err) => {
+				this.emit('error', err)
+			})
 	}
 
 	public async close(): Promise<void> {
