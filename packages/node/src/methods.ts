@@ -113,9 +113,6 @@ export async function setupXkeysPanel(
 
 		const xkeys = new XKeys(deviceWrap, deviceInfo, devicePath)
 
-		// Wait for the device to initialize:
-		await xkeys.init()
-
 		let alreadyRejected = false
 		await new Promise<void>((resolve, reject) => {
 			const markRejected = (e: unknown) => {
