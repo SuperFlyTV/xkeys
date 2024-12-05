@@ -53,7 +53,7 @@ describe('XKeysWatcher', () => {
 			{
 				HIDMock.mockSetDevices([])
 
-				await sleep(POLL_INTERVAL)
+				await sleepTicks(POLL_INTERVAL)
 				expect(onDisconnected).toHaveBeenCalledTimes(1)
 			}
 		} catch (e) {
@@ -70,6 +70,13 @@ describe('XKeysWatcher', () => {
 		expect(onError).toHaveBeenCalledTimes(0)
 	})
 })
+/** Like sleep() but 1ms at a time, allows for the event loop to run promises, etc.. */
+async function sleepTicks(ms: number) {
+	for (let i = 0; i < ms; i++) {
+		await sleep(1)
+	}
+}
+
 async function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms))
 }
