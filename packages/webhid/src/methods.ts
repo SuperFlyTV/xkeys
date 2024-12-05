@@ -69,9 +69,34 @@ export async function setupXkeysPanel(browserDevice: HIDDevice): Promise<XKeys> 
 		})
 	})
 
-	// Wait for the device to initialize:
+	let alreadyRejected = false
 	try {
-		await xkeys.init()
+		await new Promise<void>((resolve, reject) => {
+			const markRejected = (e: unknown) => {
+				reject(e)
+				alreadyRejected = true
+			}
+			const xkeysStopgapErrorHandler = (e: unknown) => {
+				if (alreadyRejected) {
+					console.error(`Xkeys: Error emitted after setup already rejected:`, e)
+					return
+				}
+
+				markRejected(e)
+			}
+
+			// Handle all error events until the instance is returned
+			xkeys.on('error', xkeysStopgapErrorHandler)
+
+			// Wait for the device to initialize:
+			xkeys
+				.init()
+				.then(() => {
+					resolve()
+					xkeys.removeListener('error', xkeysStopgapErrorHandler)
+				})
+				.catch(markRejected)
+		})
 
 		return xkeys
 	} catch (e) {
