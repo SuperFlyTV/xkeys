@@ -3,7 +3,7 @@ import * as HID from 'node-hid'
 import { Product, PRODUCTS, describeEvent } from '@xkeys-lib/core'
 import * as HIDMock from '../__mocks__/node-hid'
 import { setupXkeysPanel, XKeys, XKeysEvents } from '../'
-import { getSentData, handleXkeysMessages, resetSentData } from './lib'
+import { getSentData, handleXkeysMessages, resetSentData, sleep } from './lib'
 
 describe('Recorded tests', () => {
 	async function setupTestPanel(params: { productId: number }): Promise<XKeys> {
@@ -26,6 +26,9 @@ describe('Recorded tests', () => {
 		expect(HID.setMockWriteHandler).toBeTruthy()
 	})
 	beforeEach(() => {})
+	afterEach(() => {
+		HIDMock.resetMockWriteHandler()
+	})
 
 	const dirPath = './src/__tests__/recordings/'
 
@@ -132,6 +135,8 @@ describe('Recorded tests', () => {
 
 					// @ts-expect-error hack
 					xkeysDevice[action.method](...action.arguments)
+
+					await xkeysDevice.flush()
 
 					expect(getSentData()).toEqual(action.sentData)
 					resetSentData()

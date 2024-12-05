@@ -6,6 +6,9 @@ let mockWriteHandler: undefined | ((hid: HIDAsync, message: number[]) => void) =
 export function setMockWriteHandler(handler: (hid: HIDAsync, message: number[]) => void) {
 	mockWriteHandler = handler
 }
+export function resetMockWriteHandler() {
+	mockWriteHandler = undefined
+}
 let mockDevices: Device[] = []
 export function mockSetDevices(devices: Device[]) {
 	mockDevices = devices
@@ -58,7 +61,7 @@ export class HIDAsync extends EventEmitter {
 		throw new Error('Mock not implemented.')
 	}
 	async write(message: number[]): Promise<number> {
-		this.mockWriteHandler?.(this, message)
+		await this.mockWriteHandler?.(this, message)
 		return 0
 	}
 	async setNonBlocking(_noBlock: boolean): Promise<void> {
