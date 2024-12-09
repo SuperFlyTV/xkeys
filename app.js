@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 277:
+/***/ 28:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -159,7 +159,7 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ 291:
+/***/ 810:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -173,8 +173,8 @@ function fromByteArray (uint8) {
 
 
 
-const base64 = __webpack_require__(277)
-const ieee754 = __webpack_require__(608)
+const base64 = __webpack_require__(28)
+const ieee754 = __webpack_require__(801)
 const customInspectSymbol =
   (typeof Symbol === 'function' && typeof Symbol['for'] === 'function') // eslint-disable-line dot-notation
     ? Symbol['for']('nodejs.util.inspect.custom') // eslint-disable-line dot-notation
@@ -2273,7 +2273,7 @@ function BufferBigIntNotDefined () {
 
 /***/ }),
 
-/***/ 399:
+/***/ 646:
 /***/ ((module) => {
 
 "use strict";
@@ -2617,7 +2617,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 531:
+/***/ 621:
 /***/ ((module) => {
 
 "use strict";
@@ -3122,7 +3122,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 
 /***/ }),
 
-/***/ 608:
+/***/ 801:
 /***/ ((__unused_webpack_module, exports) => {
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -3214,7 +3214,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 /***/ }),
 
-/***/ 490:
+/***/ 651:
 /***/ ((module) => {
 
 "use strict";
@@ -3237,15 +3237,15 @@ module.exports = (promise, onFinally) => {
 
 /***/ }),
 
-/***/ 10:
+/***/ 968:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const EventEmitter = __webpack_require__(399);
-const p_timeout_1 = __webpack_require__(402);
-const priority_queue_1 = __webpack_require__(986);
+const EventEmitter = __webpack_require__(646);
+const p_timeout_1 = __webpack_require__(891);
+const priority_queue_1 = __webpack_require__(856);
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const empty = () => { };
 const timeoutError = new p_timeout_1.TimeoutError();
@@ -3524,7 +3524,7 @@ exports["default"] = PQueue;
 
 /***/ }),
 
-/***/ 982:
+/***/ 152:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3553,13 +3553,13 @@ exports["default"] = lowerBound;
 
 /***/ }),
 
-/***/ 986:
+/***/ 856:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const lower_bound_1 = __webpack_require__(982);
+const lower_bound_1 = __webpack_require__(152);
 class PriorityQueue {
     constructor() {
         this._queue = [];
@@ -3593,13 +3593,13 @@ exports["default"] = PriorityQueue;
 
 /***/ }),
 
-/***/ 402:
+/***/ 891:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-const pFinally = __webpack_require__(490);
+const pFinally = __webpack_require__(651);
 
 class TimeoutError extends Error {
 	constructor(message) {
@@ -3658,7 +3658,7 @@ module.exports.TimeoutError = TimeoutError;
 
 /***/ }),
 
-/***/ 815:
+/***/ 497:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3672,7 +3672,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 /***/ }),
 
-/***/ 602:
+/***/ 417:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3682,7 +3682,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 /***/ }),
 
-/***/ 613:
+/***/ 601:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -3699,18 +3699,18 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.XKeys = void 0;
-__exportStar(__webpack_require__(441), exports);
-__exportStar(__webpack_require__(815), exports);
-__exportStar(__webpack_require__(313), exports);
-__exportStar(__webpack_require__(468), exports);
-__exportStar(__webpack_require__(602), exports);
-var xkeys_1 = __webpack_require__(622);
+__exportStar(__webpack_require__(74), exports);
+__exportStar(__webpack_require__(497), exports);
+__exportStar(__webpack_require__(593), exports);
+__exportStar(__webpack_require__(429), exports);
+__exportStar(__webpack_require__(417), exports);
+var xkeys_1 = __webpack_require__(413);
 Object.defineProperty(exports, "XKeys", ({ enumerable: true, get: function () { return xkeys_1.XKeys; } }));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ 441:
+/***/ 74:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3781,14 +3781,14 @@ exports.describeEvent = describeEvent;
 
 /***/ }),
 
-/***/ 313:
+/***/ 593:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PRODUCTS = exports.BackLightType = exports.XKEYS_VENDOR_ID = void 0;
-const lib_1 = __webpack_require__(441);
+const lib_1 = __webpack_require__(74);
 /*
  * This file contains information about the various X-keys panels
  */
@@ -4842,14 +4842,14 @@ exports.PRODUCTS = {
 
 /***/ }),
 
-/***/ 468:
+/***/ 429:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.GenericXKeysWatcher = void 0;
-const events_1 = __webpack_require__(531);
+const events_1 = __webpack_require__(621);
 /**
  * Set up a watcher for newly connected X-keys panels.
  * Note: It is highly recommended to set up a listener for the disconnected event on the X-keys panel, to clean up after a disconnected device.
@@ -5047,16 +5047,16 @@ exports.GenericXKeysWatcher = GenericXKeysWatcher;
 
 /***/ }),
 
-/***/ 622:
+/***/ 413:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.XKeys = void 0;
-const events_1 = __webpack_require__(531);
-const products_1 = __webpack_require__(313);
-const lib_1 = __webpack_require__(441);
+const events_1 = __webpack_require__(621);
+const products_1 = __webpack_require__(593);
+const lib_1 = __webpack_require__(74);
 class XKeys extends events_1.EventEmitter {
     constructor(device, deviceInfo, _devicePath) {
         super();
@@ -5641,6 +5641,12 @@ class XKeys extends events_1.EventEmitter {
     writeData(message) {
         this._write(message);
     }
+    /**
+     * Returns a Promise that settles when all writes have been completed
+     */
+    async flush() {
+        await this.device.flush();
+    }
     /** (Internal function) Called when there has been detected that the device has been disconnected */
     async _handleDeviceDisconnected() {
         if (!this._disconnected) {
@@ -5840,7 +5846,7 @@ exports.XKeys = XKeys;
 
 /***/ }),
 
-/***/ 223:
+/***/ 674:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -5925,7 +5931,7 @@ GlobalConnectListener.handleConnect = () => {
 
 /***/ }),
 
-/***/ 415:
+/***/ 253:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5941,24 +5947,24 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(613), exports);
-__exportStar(__webpack_require__(812), exports);
-__exportStar(__webpack_require__(808), exports);
-__exportStar(__webpack_require__(901), exports);
+__exportStar(__webpack_require__(601), exports);
+__exportStar(__webpack_require__(263), exports);
+__exportStar(__webpack_require__(225), exports);
+__exportStar(__webpack_require__(617), exports);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
 
-/***/ 812:
+/***/ 263:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.setupXkeysPanel = exports.getOpenedXKeysPanels = exports.requestXkeysPanels = void 0;
-const core_1 = __webpack_require__(613);
-const web_hid_wrapper_1 = __webpack_require__(901);
-const globalConnectListener_1 = __webpack_require__(223);
+const core_1 = __webpack_require__(601);
+const web_hid_wrapper_1 = __webpack_require__(617);
+const globalConnectListener_1 = __webpack_require__(674);
 /** Prompts the user for which X-keys panel to select */
 async function requestXkeysPanels() {
     const allDevices = await navigator.hid.requestDevice({
@@ -6021,9 +6027,31 @@ async function setupXkeysPanel(browserDevice) {
             console.error(`Xkeys: Error handling disconnect:`, e);
         });
     });
-    // Wait for the device to initialize:
+    let alreadyRejected = false;
     try {
-        await xkeys.init();
+        await new Promise((resolve, reject) => {
+            const markRejected = (e) => {
+                reject(e);
+                alreadyRejected = true;
+            };
+            const xkeysStopgapErrorHandler = (e) => {
+                if (alreadyRejected) {
+                    console.error(`Xkeys: Error emitted after setup already rejected:`, e);
+                    return;
+                }
+                markRejected(e);
+            };
+            // Handle all error events until the instance is returned
+            xkeys.on('error', xkeysStopgapErrorHandler);
+            // Wait for the device to initialize:
+            xkeys
+                .init()
+                .then(() => {
+                resolve();
+                xkeys.removeListener('error', xkeysStopgapErrorHandler);
+            })
+                .catch(markRejected);
+        });
         return xkeys;
     }
     catch (e) {
@@ -6036,16 +6064,16 @@ exports.setupXkeysPanel = setupXkeysPanel;
 
 /***/ }),
 
-/***/ 808:
+/***/ 225:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.XKeysWatcher = void 0;
-const core_1 = __webpack_require__(613);
-const methods_1 = __webpack_require__(812);
-const globalConnectListener_1 = __webpack_require__(223);
+const core_1 = __webpack_require__(601);
+const methods_1 = __webpack_require__(263);
+const globalConnectListener_1 = __webpack_require__(674);
 /**
  * Set up a watcher for newly connected X-keys panels.
  * Note: It is highly recommended to set up a listener for the disconnected event on the X-keys panel, to clean up after a disconnected device.
@@ -6096,16 +6124,16 @@ exports.XKeysWatcher = XKeysWatcher;
 
 /***/ }),
 
-/***/ 901:
+/***/ 617:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.WebHIDDevice = void 0;
-const events_1 = __webpack_require__(531);
-const p_queue_1 = __webpack_require__(10);
-const buffer_1 = __webpack_require__(291);
+const events_1 = __webpack_require__(621);
+const p_queue_1 = __webpack_require__(968);
+const buffer_1 = __webpack_require__(810);
 /**
  * The wrapped browser HIDDevice.
  * This translates it into the common format (@see CoreHIDDevice) defined by @xkeys-lib/core
@@ -6133,6 +6161,9 @@ class WebHIDDevice extends events_1.EventEmitter {
             .catch((err) => {
             this.emit('error', err);
         });
+    }
+    async flush() {
+        await this.reportQueue.onIdle();
     }
     async close() {
         await this.device.close();
@@ -6180,7 +6211,7 @@ var exports = __webpack_exports__;
 var __webpack_unused_export__;
 
 __webpack_unused_export__ = ({ value: true });
-const xkeys_webhid_1 = __webpack_require__(415);
+const xkeys_webhid_1 = __webpack_require__(253);
 const connectedXkeys = new Set();
 function appendLog(str) {
     const logElm = document.getElementById('log');
