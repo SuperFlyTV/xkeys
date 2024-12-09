@@ -1,6 +1,8 @@
 # xkeys
 
 [![Node CI](https://github.com/SuperFlyTV/xkeys/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/SuperFlyTV/xkeys/actions/workflows/lint-and-test.yml)
+[![npm: xkeys](https://img.shields.io/npm/v/xkeys.svg?label=npm:&nbsp;xkeys)](https://www.npmjs.com/package/xkeys)
+[![npm: xkeys-webhid](https://img.shields.io/npm/v/xkeys-webhid.svg?label=npm:&nbsp;xkeys-webhid)](https://www.npmjs.com/package/xkeys-webhid)
 
 A Node.js module to interact with the [X-keys panels](https://xkeys.com/xkeys.html).
 
