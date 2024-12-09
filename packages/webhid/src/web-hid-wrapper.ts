@@ -30,6 +30,9 @@ export class WebHIDDevice extends EventEmitter implements CoreHIDDevice {
 				this.emit('error', err)
 			})
 	}
+	public async flush(): Promise<void> {
+		await this.reportQueue.onIdle()
+	}
 
 	public async close(): Promise<void> {
 		await this.device.close()
