@@ -83,7 +83,7 @@ export abstract class GenericXKeysWatcher<HID_Identifier> extends EventEmitter {
 	}
 
 	public getConnectedPanels(): Promise<Set<XKeys>> {
-		return new Set(await Promise.all((await this.getConnectedDevices()).map((device) => this.setupXkeysPanel(device))))
+		return new Set(await Promise.all([...(await this.getConnectedDevices())].map((device) => this.setupXkeysPanel(device))))
 	}
 
 	protected triggerUpdateConnectedDevices(somethingWasAddedOrRemoved: boolean): void {
