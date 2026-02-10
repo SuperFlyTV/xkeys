@@ -130,6 +130,14 @@ watcher.on('connected', (xkeysPanel) => {
 	})
 })
 
+watcher.getConnectedPanels().then((xkeysPanelSet) => {
+  if (xkeysPanelSet.size)
+    console.log(
+      `Found initially connected X-keys panels`,
+      [...xkeysPanelSet].map((xkeysPanel) => xkeysPanel.info.name),
+    );
+});
+
 // To stop watching, call
 // watcher.stop().catch(console.error)
 ```
