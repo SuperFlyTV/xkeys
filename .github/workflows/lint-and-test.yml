@@ -12,49 +12,33 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   lint:
-    name: Linting
+    name: Lint
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    timeout-minutes: 15
 
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
       - name: Prepare Environment
         run: |
+          corepack enable
           yarn install --immutable
           yarn build
         env:
           CI: true
-      - name: Run Linting
+      - name: Run lint
         run: |
           yarn lint
         env:
           CI: true
 
-  # GitHub Action to automate the identification of common misspellings in text files.
-  # https://github.com/codespell-project/actions-codespell
-  # https://github.com/codespell-project/codespell
-  codespell:
-    name: Check for spelling errors
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: codespell-project/actions-codespell@master
-        with:
-          check_filenames: true
-          skip: "./.git,./yarn.lock"
-          ignore_words_list: ans
+
 
   test:
     name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
@@ -102,3 +86,19 @@ jobs:
           yarn test
         env:
           CI: true
+
+  # GitHub Action to automate the identification of common misspellings in text files.
+  # https://github.com/codespell-project/actions-codespell
+  # https://github.com/codespell-project/codespell
+  codespell:
+    name: Check for spelling errors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: codespell-project/actions-codespell@master
+        with:
+          check_filenames: true
+          skip: "./.git,./yarn.lock"
+          ignore_words_list: ans
