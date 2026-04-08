@@ -140,6 +140,6 @@ jobs:
         env:
           CI: true
       - name: Publish to NPM
-        run: yarn lerna:publish from-package --no-verify-access --yes
+        run: yarn lerna:publish from-package --no-verify-access --no-git-reset --dist-tag ${{ steps.release-tag.outputs.tag }} --yes
         env:
           CI: true
