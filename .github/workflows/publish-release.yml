@@ -140,7 +140,6 @@ jobs:
         env:
           CI: true
       - name: Publish to NPM
-        if: ${{ steps.check-npm-token.outputs.is-ok }}
         run: yarn lerna:publish from-package --no-verify-access --yes
         env:
           CI: true
