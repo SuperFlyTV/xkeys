@@ -125,6 +125,8 @@ export abstract class GenericXKeysWatcher<HID_Identifier> extends EventEmitter {
 	protected abstract setupXkeysPanel(device: HID_Identifier): Promise<XKeys>
 
 	private async updateConnectedDevices(): Promise<void> {
+		// Note: Don't call this function directly, use triggerUpdateConnectedDevices() instead
+
 		this.debugLog('updateConnectedDevices')
 
 		const connectedDevices = await this.getConnectedDevices()
@@ -158,6 +160,11 @@ export abstract class GenericXKeysWatcher<HID_Identifier> extends EventEmitter {
 			this.triggerUpdateConnectedDevices(false)
 		} else {
 			this.shouldFindChangedReTries = 0
+
+			if (removed > 0) {
+				// Escape hatch for a situation where a device is removed and re-added right after, see https://github.com/SuperFlyTV/xkeys/issues/129
+				this.triggerUpdateConnectedDevices(false)
+			}
 		}
 	}
 
